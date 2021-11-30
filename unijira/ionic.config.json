@@ -1,0 +1,7 @@
+{
+  "name": "unijira",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
