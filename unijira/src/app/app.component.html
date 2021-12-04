@@ -1,3 +1,42 @@
 <ion-app>
-  <ion-router-outlet></ion-router-outlet>
+  <app-loading *ngIf="loading"></app-loading>
+  <ion-header *ngIf="isLogged">
+    <ion-toolbar>
+      <ion-buttons slot="secondary">
+        <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end"></ion-toggle>
+        <ion-button (click)="toggleLoading(!loading)">
+          <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+        </ion-button>
+        <ion-button>
+          <ion-icon slot="icon-only" name="search"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <ion-buttons slot="primary">
+        <ion-button color="secondary">
+          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
+        </ion-button>
+      </ion-buttons>
+      <img src="/assets/logo1.png" width="45px" class="main-icon" height="40px"/>
+      <ion-title class="titleicon" style="display:inline-block">UniJira</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-split-pane content-id="content" when="md" class="content-h" *ngIf="isLogged">
+    <ion-menu>
+      <ion-content>
+        <ion-list>
+          <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
+            <ion-item style="padding: 10px;"
+                      [routerLink]="page.url"
+                      routerDirection="root">
+              {{page.name}}
+            </ion-item>
+          </ion-menu-toggle>
+        </ion-list>
+      </ion-content>
+    </ion-menu>
+    <ion-content>
+      <ion-router-outlet id="content" main></ion-router-outlet>
+    </ion-content>
+  </ion-split-pane>
+  <ion-router-outlet *ngIf="!isLogged"></ion-router-outlet>
 </ion-app>

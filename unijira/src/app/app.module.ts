@@ -6,12 +6,20 @@ import { IonicModule, IonicRouteStrategy } from '@ionic/angular';
 
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
+import { StoreModule } from '@ngrx/store';
+import {sessionReducer} from "./store/session.reducer";
+import {SessionService} from "./store/session.service";
+import {LoadingComponent} from "./loading/loading.component";
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoadingComponent],
   entryComponents: [],
-  imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule],
-  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
+  imports: [BrowserModule,
+    IonicModule.forRoot(),
+    AppRoutingModule,
+    StoreModule.forRoot({sessionReducer})
+  ],
+  providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SessionService],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

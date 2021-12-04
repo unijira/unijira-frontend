@@ -1,0 +1,19 @@
+ion-split-pane {
+  --side-min-width: 100px;
+  --side-max-width: calc(100% - 300px);
+  --side-width:300px;
+}
+
+.content-h {
+  padding-top: 56px !important;
+}
+
+.titleicon div{
+  display:inline-block;
+  margin-bottom:10px;
+}
+
+.main-icon {
+  margin-left: 10px;
+  display:inline-block;
+}
