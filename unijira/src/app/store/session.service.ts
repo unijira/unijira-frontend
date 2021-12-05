@@ -2,9 +2,9 @@ import {Injectable} from "@angular/core";
 import {SessionState} from "./session.reducer";
 import {createFeatureSelector, createReducer, createSelector} from "@ngrx/store";
 import { Store } from '@ngrx/store';
-import {isLoggedAction, loadingAction} from "./session.action";
+import {isLoggedAction, loadingAction, setUserAction} from "./session.action";
 import {Observable} from "rxjs";
-
+import { User } from '../models/User'
 @Injectable()
 export class SessionService {
 
@@ -31,5 +31,8 @@ export class SessionService {
     const selectIsLoggedIn = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
       (state) => {return state.isLoggedIn});
     return this.store.select(selectIsLoggedIn);
+  }
+  setUser(user: User) {
+    this.store.dispatch(setUserAction({ user: user }));
   }
 }

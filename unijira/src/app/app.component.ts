@@ -29,7 +29,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.isLoggedSubscription = sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
-      this.router.navigate(['/login']);
+      // this.router.navigate(['/login']);
     });
 
     this.pages.push({name: "tab 1", url: "/home"});
