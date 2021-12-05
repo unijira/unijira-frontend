@@ -1,0 +1,46 @@
+<ion-content>
+  <div id="registration-form">
+    <img src="/assets/logo.png" width="250px" class="main-icon" />
+    <form [formGroup]="registrationFG">
+      <ion-item>
+        <ion-label position="floating">Email</ion-label>
+        <ion-input type="text" [formControl]="emailFC"></ion-input>
+      </ion-item>
+
+      <ion-item lines="full">
+        <ion-label position="floating">Password</ion-label>
+        <ion-input type="password" [formControl]="passwordFC1"></ion-input>
+      </ion-item>
+      <ion-item lines="full">
+        <ion-label position="floating">Confirm Password</ion-label>
+        <ion-input type="password" [formControl]="passwordFC2"></ion-input>
+      </ion-item>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            (click)="onSubmit()"
+            >Sign Up</ion-button
+          >
+        </ion-col>
+        <ion-col>
+          <ion-button
+            type="submit"
+            color="primary"
+            expand="block"
+            [routerLink]="['/login']"
+            >Sign In</ion-button
+          >
+        </ion-col>
+      </ion-row>
+      <ion-row ng-if="serverResponse">
+        <ion-col>
+          <h3 class="msg-ok">{{ serverResponseOk }}</h3>
+          <h3 class="msg-err">{{ serverResponseErr }}</h3>
+        </ion-col>
+      </ion-row>
+    </form>
+  </div>
+</ion-content>

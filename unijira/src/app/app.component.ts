@@ -30,10 +30,14 @@ export class AppComponent implements OnInit, OnDestroy {
       this.loading = load;
     });
 
+
+    this.isLoggedSubscription = sessionService.getIsUserLogged().subscribe(log => {
+      this.isLogged = log;
+      // this.router.navigate(['/login']);
+    });
+
     translateService.setDefaultLang('it');
     translateService.use('it');
-
-
 
     this.pages.push({name: "tab 1", url: "/home"});
     this.pages.push({name: "tab 2", url: "/home"});
