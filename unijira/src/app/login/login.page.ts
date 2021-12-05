@@ -21,14 +21,16 @@ export class LoginPage implements OnInit {
   constructor(
     private router: Router,
     private sessionService: SessionService
-    ) { }
+    ) {
+    this.sessionService.userLogged(false);
+  }
 
   ngOnInit() {
   }
 
   logIn() {
     this.loginFG.markAllAsTouched();
-    this.emailFC.updateValueAndValidity();
+    this.loginFG.updateValueAndValidity();
     if (this.loginFG.valid && this.emailFC.value === 'admin' && this.passwordFC.value === 'admin') {
       this.sessionService.userLogged(true);
       this.router.navigate(['/home']);
