@@ -1,0 +1,37 @@
+<ion-content>
+  <div class="sprint">
+    <div *ngIf="(this.sprint.tasks.length == 0)">
+      <p>Sprint vuoto</p>
+    </div>
+    <ion-list dragula="bag" [(dragulaModel)]="sprint.tasks" lines="none">
+      <ion-card *ngFor="let task of sprint.tasks">
+        <ion-card-header>
+          <ion-card-subtitle></ion-card-subtitle>
+          <ion-card-title>{{task.name}}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+        </ion-card-content>
+      </ion-card>
+    </ion-list>
+  </div>
+
+  <div class="backlog">
+    <div *ngIf="(this.backlog.length == 0)">
+      <p>Backlog vuoto</p>
+    </div>
+    <ion-reorder-group (ionItemReorder)="doReorderB($event)" disabled="false">
+      <ion-list dragula="bag" [(dragulaModel)]="this.backlog" lines="none">
+        <ion-card *ngFor="let task of backlog">
+          <ion-card-header>
+            <ion-card-subtitle></ion-card-subtitle>
+            <ion-card-title>{{task.name}}</ion-card-title>
+          </ion-card-header>
+
+          <ion-card-content>
+          </ion-card-content>
+        </ion-card>
+      </ion-list>
+    </ion-reorder-group>
+  </div>
+</ion-content>
