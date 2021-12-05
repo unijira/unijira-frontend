@@ -11,9 +11,18 @@ import { SessionService } from '../store/session.service';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit {
-  emailFC: FormControl = new FormControl('', Validators.required);
-  passwordFC1: FormControl = new FormControl('', Validators.required);
-  passwordFC2: FormControl = new FormControl('', Validators.required);
+  emailFC: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
+  passwordFC1: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+  ]);
+  passwordFC2: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+  ]);
 
   serverResponseOk: String = null;
   serverResponseErr: String = null;
@@ -33,21 +42,27 @@ export class RegistrationPage implements OnInit {
   ngOnInit() {}
 
   onSubmit() {
-    let user = {
-      username: this.emailFC.value,
-      password: this.passwordFC1.value,
-    };
-    console.log('Dati ', user);
-    this.accountService.register(user).subscribe(
-      (response) => {
-        this.serverResponseOk = 'OK';
-        this.serverResponseErr = '';
-        this.registrationFG.reset()
-      },
-      (error) => {
-        this.serverResponseOk = '';
-        this.serverResponseErr = 'Errore';
-      }
-    );
+    if (
+      this.registrationFG.valid &&
+      this.passwordFC1.value === this.passwordFC2.value
+    ) {
+      let user = {
+        username: this.emailFC.value,
+        password: this.passwordFC1.value,
+      };
+
+      this.accountService.register(user).subscribe(
+        (response) => {
+          this.serverResponseOk = 'OK';
+          this.serverResponseErr = '';
+          this.registrationFG.reset();
+        },
+        (error) => {
+          this.serverResponseOk = '';
+          this.serverResponseErr = 'Errore';
+        }
+      );
+    } else {
+    }
   }
 }
