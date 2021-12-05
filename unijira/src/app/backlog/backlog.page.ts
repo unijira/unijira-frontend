@@ -83,7 +83,7 @@ export class BacklogPage implements OnInit {
     this.backlog.tasks[0].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
     this.backlog.tasks[1].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Paola+Guarasci`;
     this.backlog.tasks[2].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Ciccio+Pasticcio`;
-    debugger;
+
     this.sprint.tasks = [];
     this.sprint.tasks.push(new Task());
     this.sprint.tasks[0].name = 'Task N';
