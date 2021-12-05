@@ -7,8 +7,8 @@
         <ion-button (click)="toggleLoading(!loading)">
           <ion-icon slot="icon-only" name="person-circle"></ion-icon>
         </ion-button>
-        <ion-button>
-          <ion-icon slot="icon-only" name="search"></ion-icon>
+        <ion-button (click)="switchLanguage()">
+          <span>{{translateService.currentLang}}</span>
         </ion-button>
       </ion-buttons>
       <ion-buttons slot="primary">
