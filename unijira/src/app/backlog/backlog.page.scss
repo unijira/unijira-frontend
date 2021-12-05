@@ -69,8 +69,19 @@
   justify-content: end;
   display: flex;
   flex-wrap: nowrap;
+  align-items: center;
 }
 
 .icon-area > * {
   margin-left: 10px;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  border: 1px solid darkslategrey;
+}
+
+.avatar{
+  width: 30px;
+  height: 30px;
 }

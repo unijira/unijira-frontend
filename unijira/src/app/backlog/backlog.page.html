@@ -70,14 +70,9 @@
             *ngIf="task.children?.length > 0"
             name="git-branch"
           ></ion-icon>
-          <ion-thumbnail *ngIf="task.assignedTo && task.assignedTo.lenght > 0">
-            <img ng-src="{{ task.assignedTo[0].avatar }}" />
+          <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
+            <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
           </ion-thumbnail>
-
-          <div *ngIf="task.assignedTo && task.assignedTo.lenght > 0">
-            {{ task.assignedTo[0].avatar }}
-          </div>
-
           <ion-icon class="edit-icon" name="create"></ion-icon>
         </ion-col>
       </ion-row>
