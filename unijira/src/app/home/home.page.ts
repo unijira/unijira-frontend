@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionService} from "../store/session.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-home',
@@ -8,7 +9,7 @@ import {SessionService} from "../store/session.service";
 })
 export class HomePage implements OnInit{
 
-  constructor(private sessionService: SessionService) {}
+  constructor(private sessionService: SessionService, private translate: TranslateService) {}
 
   ngOnInit() {
     this.sessionService.toggleLoading(true);

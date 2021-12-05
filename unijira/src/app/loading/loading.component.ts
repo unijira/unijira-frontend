@@ -1,5 +1,6 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {LoadingController} from "@ionic/angular";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-loading',
@@ -8,15 +9,17 @@ import {LoadingController} from "@ionic/angular";
 })
 export class LoadingComponent implements OnInit, OnDestroy {
 
-  constructor(public loadingController: LoadingController) { }
+  constructor(public loadingController: LoadingController, private translate: TranslateService) { }
 
   loading: any;
 
   async presentLoading() {
+    let loadingMesage: string = '';
+    this.translate.get('loading', {value: 'world'}).subscribe((res: string) => loadingMesage = res);
     this.loading = await this.loadingController.create({
       spinner: 'bubbles',
       cssClass: 'loading-class',
-      message: 'Please wait...',
+      message: loadingMesage,
       duration: 120000
     });
     await this.loading.present();
