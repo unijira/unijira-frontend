@@ -7,11 +7,10 @@
     <div *ngIf="(this.sprint.tasks.length == 0)">
       <p>Sprint vuoto</p>
     </div>
-    <ion-list dragula="bag" [(dragulaModel)]="sprint.tasks" lines="none">
+    <ion-list dragula="bag" [(dragulaModel)]="sprint.tasks" lines="none" class="light-gray-bg">
       <ion-row
         *ngFor="let task of sprint.tasks"
-        class="ion-align-items-end"
-        class="task-item"
+        class="ion-align-items-end task-item white-bg"
       >
         <ion-col size="1"> {{ task.type }} </ion-col>
         <ion-col> {{ task.name }} </ion-col>
@@ -30,14 +29,9 @@
             *ngIf="task.children?.length > 0"
             name="git-branch"
           ></ion-icon>
-          <ion-thumbnail *ngIf="task.assignedTo && task.assignedTo.lenght > 0">
-            <img ng-src="{{ task.assignedTo[0].avatar }}" />
+          <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
+            <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
           </ion-thumbnail>
-
-          <div *ngIf="task.assignedTo && task.assignedTo.lenght > 0">
-            {{ task.assignedTo[0].avatar }}
-          </div>
-
           <ion-icon class="edit-icon" name="create"></ion-icon>
         </ion-col>
       </ion-row>
@@ -49,11 +43,10 @@
       <p>Backlog vuoto</p>
     </div>
 
-    <ion-list dragula="bag" [(dragulaModel)]="this.backlog.tasks" lines="none">
+    <ion-list dragula="bag" [(dragulaModel)]="this.backlog.tasks" lines="none" class="light-gray-bg">
       <ion-row
         *ngFor="let task of backlog.tasks"
-        class="ion-align-items-end"
-        class="task-item"
+        class="ion-align-items-end white-bg task-item"
       >
         <ion-col size="1"> {{ task.type }} </ion-col>
         <ion-col> {{ task.name }} </ion-col>
