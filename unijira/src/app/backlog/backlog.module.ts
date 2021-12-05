@@ -8,8 +8,9 @@ import { BacklogPageRoutingModule } from './backlog-routing.module';
 
 import { BacklogPage } from './backlog.page';
 import {DragulaModule} from "ng2-dragula";
-
+import { AccordionComponent } from '../accordion/accordion.component';
 @NgModule({
+  entryComponents: [AccordionComponent],
   imports: [
     CommonModule,
     FormsModule,
@@ -17,6 +18,6 @@ import {DragulaModule} from "ng2-dragula";
     BacklogPageRoutingModule,
     DragulaModule.forRoot()
   ],
-  declarations: [BacklogPage]
+  declarations: [BacklogPage, AccordionComponent]
 })
 export class BacklogPageModule {}
