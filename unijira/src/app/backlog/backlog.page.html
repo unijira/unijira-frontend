@@ -40,17 +40,16 @@
         </ion-col>
       </ion-row>
     </ion-list>
-    <!-- </app-accordion> -->
   </div>
-
+  <h1>Backlog</h1>
   <div class="backlog">
     <div *ngIf="(this.backlog.length == 0)">
       <p>Backlog vuoto</p>
     </div>
 
-    <ion-list dragula="bag" [(dragulaModel)]="this.backlog" lines="none">
+    <ion-list dragula="bag" [(dragulaModel)]="this.backlog.tasks" lines="none">
       <ion-row
-        *ngFor="let task of backlog"
+        *ngFor="let task of backlog.tasks"
         class="ion-align-items-end"
         class="task-item"
       >
