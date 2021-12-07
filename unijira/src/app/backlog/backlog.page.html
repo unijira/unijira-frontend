@@ -1,78 +1,104 @@
 <ion-content>
   <div class="page">
-
-  <h1>Sprint</h1>
-  {{ startSpring }} - {{ endSpring }} ({{ (sprint.tasks.length) }} Tasks)
-  <div class="sprint">
-    <div *ngIf="(this.sprint.tasks.length == 0)">
-      <p>Sprint vuoto</p>
-    </div>
-    <ion-list dragula="bag" [(dragulaModel)]="sprint.tasks" lines="none" class="light-gray-bg">
-      <ion-row
-        *ngFor="let task of sprint.tasks"
-        class="ion-align-items-end task-item white-bg"
+    <h1>Sprint</h1>
+    <div class="sprint">
+      <div *ngIf="(sprint$ | async).tasks.length == 0">
+        <p>Sprint vuoto</p>
+      </div>
+      <ion-list
+        dragula="bag"
+        lines="none"
+        class="light-gray-bg"
       >
-        <ion-col size="1"> {{ task.type }} </ion-col>
-        <ion-col> {{ task.name }} </ion-col>
-        <ion-col size="2" class="ion-justify-content-end icon-area">
-          <ion-badge color="medium">{{ task.weight}}</ion-badge>
-          <ion-badge *ngIf="task.status == 'da completare' " color="medium"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-badge *ngIf="task.status == 'completata' " color="success"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-badge *ngIf="task.status == 'in corso' " color="primary"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-icon
-            *ngIf="task.children?.length > 0"
-            name="git-branch"
-          ></ion-icon>
-          <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
-            <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
-          </ion-thumbnail>
-          <ion-icon class="edit-icon" name="create"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-list>
-  </div>
-  <h1>Backlog</h1>
-  <div class="backlog">
-    <div *ngIf="(this.backlog.length == 0)">
-      <p>Backlog vuoto</p>
+        <ion-row
+          *ngFor="let task of (sprint$ | async)?.tasks"
+          class="ion-align-items-end task-item white-bg"
+        >
+          <ion-col size="1"> {{ task.type }} </ion-col>
+          <ion-col> {{ task.name }} </ion-col>
+          <ion-col size="2" class="ion-justify-content-end icon-area">
+            <ion-badge color="medium">{{ task.weight}}</ion-badge>
+            <ion-badge *ngIf="task.status === 'da completare' " color="medium"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-badge *ngIf="task.status === 'completata' " color="success"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-badge *ngIf="task.status === 'in corso' " color="primary"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-icon
+              *ngIf="task.children?.length > 0"
+              name="git-branch"
+            ></ion-icon>
+            <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
+              <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
+            </ion-thumbnail>
+            <ion-icon class="edit-icon" name="create"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-list>
     </div>
+    <h1>Backlog</h1>
+    <div class="backlog">
+      <div *ngIf="(backlog$ | async).tasks.length == 0">
+        <p>Backlog vuoto</p>
+      </div>
 
-    <ion-list dragula="bag" [(dragulaModel)]="this.backlog.tasks" lines="none" class="light-gray-bg">
-      <ion-row
-        *ngFor="let task of backlog.tasks"
-        class="ion-align-items-end white-bg task-item"
+      <ion-list
+        dragula="bag"
+
+        lines="none"
+        class="light-gray-bg"
       >
-        <ion-col size="1"> {{ task.type }} </ion-col>
-        <ion-col> {{ task.name }} </ion-col>
-        <ion-col size="2" class="ion-justify-content-end icon-area">
-          <ion-badge color="medium">{{ task.weight}}</ion-badge>
-          <ion-badge *ngIf="task.status == 'da completare' " color="medium"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-badge *ngIf="task.status == 'completata' " color="success"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-badge *ngIf="task.status == 'in corso' " color="primary"
-            >{{ task.status }}</ion-badge
-          >
-          <ion-icon
-            *ngIf="task.children?.length > 0"
-            name="git-branch"
-          ></ion-icon>
-          <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
-            <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
-          </ion-thumbnail>
-          <ion-icon class="edit-icon" name="create"></ion-icon>
-        </ion-col>
-      </ion-row>
-    </ion-list>
+        <ion-row
+          *ngFor="let task of (backlog$ | async)?.tasks"
+          class="ion-align-items-end white-bg task-item"
+        >
+          <ion-col size="1"> {{ task.type }} </ion-col>
+          <ion-col> {{ task.name }} </ion-col>
+          <ion-col size="2" class="ion-justify-content-end icon-area">
+            <ion-badge color="medium">{{ task.weight}}</ion-badge>
+            <ion-badge *ngIf="task.status === 'da completare' " color="medium"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-badge *ngIf="task.status === 'completata' " color="success"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-badge *ngIf="task.status === 'in corso' " color="primary"
+              >{{ task.status }}</ion-badge
+            >
+            <ion-icon
+              *ngIf="task.children?.length > 0"
+              name="git-branch"
+            ></ion-icon>
+            <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
+              <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
+            </ion-thumbnail>
+            <ion-icon class="edit-icon" name="create"></ion-icon>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </div>
+    <ion-button
+      (click)="populate()"
+      expand="block"
+      color="primary"
+      class="add-task-button"
+    >
+      Populate
+    </ion-button>
+    <ion-button
+      (click)="addTask()"
+      expand="block"
+      color="primary"
+      class="add-task-button"
+    >
+      Add random task
+    </ion-button>
   </div>
-</div>
 
+  this.backlog$ {{ backlog$ | async }} <br /><br /><br />
+  this.sprint$ {{ sprint$ | async }} <br /><br /><br />
+  this.backlog {{ backlog.tasks}} <br /><br /><br />
 </ion-content>
