@@ -7,4 +7,6 @@ export class Task {
   weight: number;
   children: Task[];
   type: string;
+  comments: string[];
+  tags: string[];
 }

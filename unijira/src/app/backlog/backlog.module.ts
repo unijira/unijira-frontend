@@ -18,6 +18,7 @@ import {DragulaModule} from "ng2-dragula";
     BacklogPageRoutingModule,
     DragulaModule.forRoot()
   ],
-  declarations: [BacklogPage]
+  declarations: [BacklogPage],
+  providers:[]
 })
 export class BacklogPageModule {}

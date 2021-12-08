@@ -1,43 +1,49 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from "./classes/auth-guard";
+import { AuthGuard } from './classes/auth-guard';
 
 const routes: Routes = [
   {
     path: 'home',
     // canActivate: [AuthGuard],
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
+    loadChildren: () =>
+      import('./home/home.module').then((m) => m.HomePageModule),
   },
   {
     path: '',
     redirectTo: 'home',
-    pathMatch: 'full'
+    pathMatch: 'full',
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () =>
+      import('./login/login.module').then((m) => m.LoginPageModule),
   },
   {
     path: 'registration',
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
-  },
-  {
-    path: 'landing',
-    loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+    loadChildren: () =>
+      import('./registration/registration.module').then(
+        (m) => m.RegistrationPageModule
+      ),
   },
   {
     path: 'backlog',
-    loadChildren: () => import('./backlog/backlog.module').then( m => m.BacklogPageModule)
+    loadChildren: () =>
+      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
   },
-
+  {
+    path: 'auth/active',
+    loadChildren: () =>
+      import('./activate/activate.module').then(
+        (m) => m.ActivatePageModule
+      ),
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
-export class AppRoutingModule { }
-
-
+export class AppRoutingModule {}

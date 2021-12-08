@@ -1,0 +1,22 @@
+.box {
+  width: 50%;
+  display: block;
+  margin: 100px auto;
+  padding: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+  font-size: 1.2em;
+}
+
+.success {
+  color: #3c763d;
+  background-color: #dff0d8;
+  border-color: darkgreen;
+}
+
+
+.danger {
+  color: #a94442;
+  background-color: #f2dede;
+  border-color: darkred;
+}

@@ -33,3 +33,4 @@ npm-debug.log*
 .history
 .idea
 .angular
+.package-lock
