@@ -13,6 +13,8 @@ import {TranslateLoader, TranslateModule} from "@ngx-translate/core";
 import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthGuard} from "./classes/auth-guard";
+import { EffectsModule } from '@ngrx/effects';
+import {SessionEffects} from "./store/session.effects";
 
 
 export function createTranslateLoader(http: HttpClient) {
@@ -35,7 +37,9 @@ export function createTranslateLoader(http: HttpClient) {
         deps: [HttpClient]
       }
     }),
-    DragulaModule.forRoot()
+    DragulaModule.forRoot(),
+    EffectsModule.forRoot([]),
+    EffectsModule.forFeature([SessionEffects]),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SessionService, AuthGuard],
   bootstrap: [AppComponent],

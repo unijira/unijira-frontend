@@ -11,4 +11,8 @@ export class AccountService {
     console.log(user);
     return this.httpService.sendPost('auth/register/', user)
   }
+
+  logIn(username: string, password: string) {
+    return this.httpService.sendPostTxtResponse('auth/authenticate', {username: username, password: password});
+  }
 }

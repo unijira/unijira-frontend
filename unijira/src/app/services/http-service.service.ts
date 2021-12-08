@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 
@@ -18,6 +18,11 @@ export class HttpService {
   sendPost(url, body) {
     let urlFull = `${this.baseurl}${url}`;
     return this.http.post(urlFull, body, this.opt);
+  }
+
+  sendPostTxtResponse(url, body) {
+    let urlFull = `${this.baseurl}${url}`;
+    return this.http.post(urlFull, body, {responseType: 'text' });
   }
 
 }

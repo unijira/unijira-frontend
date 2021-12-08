@@ -3,5 +3,6 @@
   "login.email": "Email",
   "login.password": "Password",
   "loading": "Caricamento...",
-  "welcome": "Benvenuto in UniJira"
+  "welcome": "Benvenuto in UniJira",
+  "login.wrongCredential": "email e/o password errati"
 }
