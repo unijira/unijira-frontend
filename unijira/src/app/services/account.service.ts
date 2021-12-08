@@ -13,6 +13,6 @@ export class AccountService {
   }
 
   activate(token: string) {
-    return this.httpService.sendGet('auth/active/' + token)
+    return this.httpService.sendGetWithParams('auth/active', {token: token})
   }
 }
