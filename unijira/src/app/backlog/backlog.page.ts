@@ -10,6 +10,7 @@ import { ToastController } from '@ionic/angular';
 import { TaskService } from '../store/task.service';
 import * as TaskActions from '../store/task.action';
 import { Store } from '@ngrx/store';
+import * as _ from 'lodash';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -18,9 +19,6 @@ import { Store } from '@ngrx/store';
 export class BacklogPage implements OnInit {
   sprint: Sprint = new Sprint();
   backlog: Sprint = new Sprint();
-
-  backlog$ = this.taskService.getBacklog();
-  sprint$ = this.taskService.getSprint();
 
   startSpring: String;
   endSpring: String;
@@ -32,35 +30,34 @@ export class BacklogPage implements OnInit {
     private taskService: TaskService,
     private store: Store
   ) {
-    this.populate();
-    this.taskService.getBacklog();
-    this.taskService.getSprint();
+    // this.populate();
 
-    this.dragulaService.drag('bag').subscribe(({ name, el, source }) => {});
+    dragulaService.drag('bag').subscribe(({ name, el, source }) => {});
     let that = this;
-    this.dragulaService
-      .drop('bag')
-      .subscribe(({ name, el, source }) => {
-        this.store.dispatch(
-          TaskActions.setBacklogAction({ backlog: this.backlog })
-        );
-        that.store.dispatch(
-          TaskActions.setSprintAction({ sprint: this.sprint })
-        );
-      })
-      .add(() => {});
+    dragulaService.drop('bag').subscribe(({ name, el, source }) => {
+      let clonedItemsB = _.clone(this.backlog);
+      let clonedItemsS = _.clone(this.sprint);
+      this.store.dispatch(
+        TaskActions.setBacklogAction({ backlog: clonedItemsB })
+      );
+      this.store.dispatch(
+        TaskActions.setSprintAction({ sprint: clonedItemsS })
+      );
+    });
 
-    this.dragulaService.dropModel('bag').subscribe(({ item }) => {});
+    dragulaService.dropModel('bag').subscribe(({ item }) => {
+      console.log('this.backlog drop model', this.backlog);
+    });
 
-    this.dragulaService.createGroup('bag', {
+    dragulaService.createGroup('bag', {
       removeOnSpill: false,
     });
 
     this.taskService.getBacklog().subscribe((b) => {
-      console.log(b);
+      this.backlog = _.clone(b);
     });
     this.taskService.getSprint().subscribe((b) => {
-      console.log(b);
+      this.sprint = _.clone(b);
     });
   }
 
@@ -75,9 +72,9 @@ export class BacklogPage implements OnInit {
     task.assignedTo = [];
     task.assignedTo.push(new User());
     task.assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
-    let backlog = Object.assign({}, this.backlog);
-    backlog.tasks.push(task);
-    this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+    let clonedItem = _.clone(this.backlog);
+    clonedItem.tasks.push(task);
+    this.store.dispatch(TaskActions.setBacklogAction({ backlog: clonedItem }));
   }
   populate() {
     console.log('pop ');
@@ -130,9 +127,11 @@ export class BacklogPage implements OnInit {
     sprint.tasks = [];
     sprint.tasks.push(new Task());
     sprint.tasks[0].name = 'Task N';
-    this.backlog = backlog;
-    this.sprint = sprint;
-    this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
-    this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
+    let clonedItemsB = _.clone(backlog);
+    let clonedItemsS = _.clone(sprint);
+    this.store.dispatch(
+      TaskActions.setBacklogAction({ backlog: clonedItemsB })
+    );
+    this.store.dispatch(TaskActions.setSprintAction({ sprint: clonedItemsS }));
   }
 }

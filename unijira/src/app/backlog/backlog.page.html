@@ -2,16 +2,17 @@
   <div class="page">
     <h1>Sprint</h1>
     <div class="sprint">
-      <div *ngIf="(sprint$ | async).tasks.length == 0">
+      <div *ngIf="(sprint).tasks.length == 0">
         <p>Sprint vuoto</p>
       </div>
       <ion-list
+      [(dragulaModel)]="sprint.tasks"
         dragula="bag"
         lines="none"
         class="light-gray-bg"
       >
         <ion-row
-          *ngFor="let task of (sprint$ | async)?.tasks"
+          *ngFor="let task of (sprint)?.tasks"
           class="ion-align-items-end task-item white-bg"
         >
           <ion-col size="1"> {{ task.type }} </ion-col>
@@ -41,18 +42,18 @@
     </div>
     <h1>Backlog</h1>
     <div class="backlog">
-      <div *ngIf="(backlog$ | async).tasks.length == 0">
+      <div *ngIf="(backlog).tasks.length == 0">
         <p>Backlog vuoto</p>
       </div>
 
       <ion-list
         dragula="bag"
-
+        [(dragulaModel)]="backlog.tasks"
         lines="none"
         class="light-gray-bg"
       >
         <ion-row
-          *ngFor="let task of (backlog$ | async)?.tasks"
+          *ngFor="let task of (backlog)?.tasks"
           class="ion-align-items-end white-bg task-item"
         >
           <ion-col size="1"> {{ task.type }} </ion-col>
