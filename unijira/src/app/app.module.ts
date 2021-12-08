@@ -16,18 +16,22 @@ import { HttpClient, HttpClientModule } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AuthGuard } from './classes/auth-guard';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
+import { EffectsModule } from '@ngrx/effects';
+import {SessionEffects} from "./store/session.effects";
+
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
 }
 
+
 @NgModule({
   declarations: [AppComponent, LoadingComponent],
   entryComponents: [],
-  imports: [
-    BrowserModule,
+  imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    StoreModule.forRoot({ sessionReducer, taskReducer }),
+    StoreModule.forRoot({sessionReducer}),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {
@@ -41,6 +45,7 @@ export function createTranslateLoader(http: HttpClient) {
       maxAge: 25,
       logOnly: false,
     }),
+    EffectsModule.forRoot([SessionEffects]),
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
@@ -51,3 +56,4 @@ export function createTranslateLoader(http: HttpClient) {
   bootstrap: [AppComponent],
 })
 export class AppModule {}
+

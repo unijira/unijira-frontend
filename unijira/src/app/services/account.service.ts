@@ -15,4 +15,8 @@ export class AccountService {
   activate(token: string) {
     return this.httpService.sendGetWithParams('auth/active', {token: token})
   }
+
+  logIn(username: string, password: string) {
+    return this.httpService.sendPostTxtResponse('auth/authenticate', {username: username, password: password});
+  }
 }

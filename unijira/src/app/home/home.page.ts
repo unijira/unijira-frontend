@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
-import { SessionService } from '../store/session.service';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, OnInit} from '@angular/core';
+import {SessionService} from "../store/session.service";
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-home',
@@ -14,7 +14,8 @@ export class HomePage implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.sessionService.toggleLoading(true);
-    setTimeout(() => this.sessionService.toggleLoading(false), 0);
+    // this.sessionService.toggleLoading(true);
+    // setTimeout(() => this.sessionService.toggleLoading(false), 5000);
   }
+
 }
