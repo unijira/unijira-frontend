@@ -22,8 +22,16 @@ const routes: Routes = [
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
-    path: 'landing',
-    loadChildren: () => import('./landing/landing.module').then( m => m.LandingPageModule)
+    path: 'backlog',
+    loadChildren: () =>
+      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
+  },
+  {
+    path: 'auth/active',
+    loadChildren: () =>
+      import('./activate/activate.module').then(
+        (m) => m.ActivatePageModule
+      ),
   },
 
 ];

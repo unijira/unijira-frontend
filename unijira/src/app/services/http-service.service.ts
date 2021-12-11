@@ -19,5 +19,18 @@ export class HttpService {
     let urlFull = `${this.baseurl}${url}`;
     return this.http.post(urlFull, body, this.opt);
   }
+  sendGet(url) {
+    let urlFull = `${this.baseurl}${url}`;
+    return this.http.get(urlFull);
+  }
+  sendGetWithParams(url, params) {
+    let urlFull = `${this.baseurl}${url}`;
+    return this.http.get(urlFull, { params: params });
+  }
+
+  sendPostTxtResponse(url, body) {
+    let urlFull = `${this.baseurl}${url}`;
+    return this.http.post(urlFull, body, {responseType: 'text' });
+  }
 
 }

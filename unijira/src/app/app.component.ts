@@ -39,8 +39,8 @@ export class AppComponent implements OnInit, OnDestroy {
     translateService.setDefaultLang('it');
     translateService.use('it');
 
-    this.pages.push({name: "tab 1", url: "/home"});
-    this.pages.push({name: "tab 2", url: "/home"});
+    this.pages.push({name: "home", url: "/home"});
+    this.pages.push({name: "backlog", url: "/backlog"});
   }
 
   ngOnInit() {
