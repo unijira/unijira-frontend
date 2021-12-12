@@ -15,7 +15,6 @@ import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthGuard} from "./classes/auth-guard";
 import { DragulaModule } from 'ng2-dragula';
 import { taskReducer } from './store/task.reducer';
-import { TaskService } from './store/task.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 
@@ -32,7 +31,7 @@ export function createTranslateLoader(http: HttpClient) {
   imports: [BrowserModule,
     IonicModule.forRoot(),
     AppRoutingModule,
-    StoreModule.forRoot({sessionReducer}),
+    StoreModule.forRoot({sessionReducer, taskReducer}),
     HttpClientModule,
     TranslateModule.forRoot({
       loader: {

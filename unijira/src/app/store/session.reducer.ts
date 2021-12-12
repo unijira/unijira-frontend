@@ -10,7 +10,7 @@ export interface SessionState {
 
 export const initialState: SessionState = {
   loading: false,
-  isLoggedIn: false,
+  isLoggedIn: true,
   user: null
 }
 export const sessionReducer = createReducer(

@@ -1,0 +1,100 @@
+.sprint,
+.backlog {
+  padding: 10px;
+  border-color: darkgreen;
+  border-style: dashed;
+  border-width: 5px;
+  border-radius: 15px;
+  margin: 10px 0;
+  background-color: #ececec;
+}
+
+.light-gray-bg {
+  background-color: #ececec;
+}
+
+.white-bg {
+  background-color: white;
+}
+
+.backlog {
+  border-color: gray;
+}
+
+.q1,
+.q2,
+.q3,
+.q4 {
+  border: 4px solid #fff;
+}
+
+.matrix {
+  margin-top: 30px;
+
+  ion-col {
+    --ion-grid-column-padding: 0px;
+    min-height: 150px;
+  }
+
+  .list {
+    padding: 0px;
+    height: 100%;
+  }
+
+  ion-item {
+    margin-bottom: 2px;
+  }
+}
+
+.q-header {
+  background-color: var(--ion-color-light);
+  height: 20px;
+  text-align: center;
+}
+
+.delete-area {
+  border: 2px dashed var(--ion-color-medium);
+  margin: 10px;
+  height: 100px;
+  ion-icon {
+    font-size: 64px;
+  }
+}
+
+.edit-icon:hover {
+  color: #1877f2;
+} /*change to red just to show that the color is actually changing */
+
+.task-item {
+  // background-color: red;
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid gray;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon-area {
+  justify-content: end;
+  display: flex;
+  flex-wrap: nowrap;
+  align-items: center;
+}
+
+.icon-area > * {
+  margin-left: 10px;
+}
+
+.avatar-img {
+  border-radius: 50%;
+  border: 1px solid darkslategrey;
+}
+
+.avatar{
+  width: 30px;
+  height: 30px;
+}
+
+.page {
+  padding: 0 15px;
+}
