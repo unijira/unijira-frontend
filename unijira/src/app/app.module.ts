@@ -14,10 +14,11 @@ import {HttpClient, HttpClientModule} from "@angular/common/http";
 import {TranslateHttpLoader} from "@ngx-translate/http-loader";
 import {AuthGuard} from "./classes/auth-guard";
 import { DragulaModule } from 'ng2-dragula';
-import { taskReducer } from './store/task.reducer';
-import { TaskService } from './store/task.service';
+// import { taskReducer } from './store/task.reducer';
+// import { TaskService } from './store/task.service';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
+import {SessionEffects} from "./store/session.effects";
 
 
 
@@ -46,6 +47,7 @@ export function createTranslateLoader(http: HttpClient) {
       maxAge: 25,
       logOnly: false,
     }),
+    EffectsModule.forRoot([SessionEffects]),
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SessionService, AuthGuard],
   bootstrap: [AppComponent],
