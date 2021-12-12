@@ -22,6 +22,8 @@ export class BacklogPage implements OnInit {
   endSpring: String;
   monthNames = monthsName;
 
+  editValue;
+
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
@@ -50,7 +52,40 @@ export class BacklogPage implements OnInit {
       this.sprint = s;
     });
   }
+  editStatus($event, task) {
 
+      let newTask = _.clone(task);
+      console.log($event, task);
+      newTask.status = $event.detail.value;
+      let backlog = _.clone(this.backlog);
+      backlog.tasks = this.backlog.tasks.map((t) => {
+        if (t.id === task.id) {
+          return newTask;
+        } else {
+          return t;
+        }
+      });
+      console.log(backlog.tasks);
+      this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+
+  }
+  editWeight($event, task) {
+    if ($event.detail.data !== undefined) {
+      let newTask = _.clone(task);
+      console.log($event, task);
+      newTask.weight = parseInt($event.detail.data);
+      let backlog = _.clone(this.backlog);
+      backlog.tasks = this.backlog.tasks.map((t) => {
+        if (t.id === task.id) {
+          return newTask;
+        } else {
+          return t;
+        }
+      });
+      console.log(backlog.tasks);
+      this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+    }
+  }
   ngOnInit() {}
   addTask() {
     let task = new Task();
@@ -62,7 +97,7 @@ export class BacklogPage implements OnInit {
     task.assignedTo = [];
     task.assignedTo.push(new User());
     task.assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
-    let backlog = _.cloneDeep(this.backlog);
+    let backlog = _.clone(this.backlog);
     backlog.tasks.push(task);
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
   }
@@ -84,6 +119,10 @@ export class BacklogPage implements OnInit {
     backlog.tasks[0].name = 'Task 0';
     backlog.tasks[1].name = 'Task 1';
     backlog.tasks[2].name = 'Task 2';
+
+    backlog.tasks[0].id = 0;
+    backlog.tasks[1].id = 1;
+    backlog.tasks[2].id = 2;
 
     backlog.tasks[0].type = 'task';
     backlog.tasks[1].type = 'task';

@@ -27,4 +27,5 @@ export class TaskService {
     );
     return this.store.select(selector);
   }
+
 }
