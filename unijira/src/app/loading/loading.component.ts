@@ -20,7 +20,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
       spinner: 'bubbles',
       cssClass: 'loading-class',
       message: loadingMesage,
-      duration: 0
+      duration: 120000
     });
     await this.loading.present();
 

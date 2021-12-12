@@ -1,9 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+
 @Injectable({
   providedIn: 'root',
 })
+
 export class HttpService {
   private baseurl = 'http://localhost:7080/';
   private opt = {
@@ -25,4 +27,10 @@ export class HttpService {
     let urlFull = `${this.baseurl}${url}`;
     return this.http.get(urlFull, { params: params });
   }
+
+  sendPostTxtResponse(url, body) {
+    let urlFull = `${this.baseurl}${url}`;
+    return this.http.post(urlFull, body, {responseType: 'text' });
+  }
+
 }

@@ -9,10 +9,9 @@ export class AccountService {
 
   register(user: object) {
     console.log(user);
-    return this.httpService.sendPost('auth/register', user)
+    return this.httpService.sendPost('auth/register', user);
   }
-
   activate(token: string) {
-    return this.httpService.sendGetWithParams('auth/active', {token: token})
+    return this.httpService.sendGetWithParams('auth/active', { token: token });
   }
 }
