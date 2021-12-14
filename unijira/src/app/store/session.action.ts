@@ -20,14 +20,15 @@ export const setUserAction = createAction(
 export const errorAction = createAction(
   '[Session] Error',
   props<{ error: Error }>()
-)
+);
 
 export const logInAction = createAction(
   '[Session] logIn',
   props<{ token: string }>()
-)
+);
 
 export const wrongCredentialAction = createAction(
   '[Session] wrong credential',
   props<{ wrongCredential: boolean }>()
-)
+);
+

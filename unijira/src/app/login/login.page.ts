@@ -12,8 +12,12 @@ import {unsubscribeAll} from "../util";
 })
 export class LoginPage implements OnInit, OnDestroy {
 
-  emailFC: FormControl = new FormControl('', Validators.required);
-  passwordFC: FormControl = new FormControl('', Validators.required);
+  emailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFC: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}')]
+  );
 
   loginSubscription: Subscription;
 

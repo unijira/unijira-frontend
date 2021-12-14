@@ -6,6 +6,7 @@ import {SessionService} from './session.service';
 import {Injectable} from '@angular/core';
 import {AlertController} from '@ionic/angular';
 import {Router} from '@angular/router';
+import {presentAlertConfirm} from "../util";
 
 @Injectable()
 export class SessionEffects {
@@ -19,24 +20,6 @@ export class SessionEffects {
 
   }
 
-  async presentAlertConfirm(message: string) {
-    const alert = await this.alertController.create({
-      cssClass: 'my-custom-class',
-      header: 'Error',
-      message: message,
-      buttons: [
-        {
-          text: 'Okay',
-          handler: () => {
-            console.log('Confirm Okay');
-          },
-        },
-      ],
-    });
-
-    await alert.present();
-  }
-
 
   errorEffect = createEffect(() => this.actions.pipe(
     ofType(errorAction),
@@ -47,7 +30,7 @@ export class SessionEffects {
       } else if (action.error.status === 418) {
         this.sessionService.refreshToken(this.sessionService.token);
       } else {
-        this.presentAlertConfirm(action.error.message);
+        presentAlertConfirm(this.alertController, 'Error!', action.error.message);
       }
 
     })), { dispatch: false });
