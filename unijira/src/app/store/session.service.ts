@@ -24,7 +24,7 @@ export class SessionService {
     private store: Store,
     private accountService: AccountService
   ) {
-    const tok = localStorage.getItem('token');
+    const tok = sessionStorage.getItem('token');
     if (tok) {
       this.saveToken(tok);
       this.userLogged(true);
@@ -73,9 +73,9 @@ export class SessionService {
         return of(null);
 
       })).subscribe(res => {
-        this.saveToken(res);
-        this.userLogged(res != null);
-      });
+      this.saveToken(res);
+      this.userLogged(res != null);
+    });
   }
 
   logout() {
@@ -96,8 +96,12 @@ export class SessionService {
   }
 
   saveToken(token: string) {
-    this.store.dispatch(logInAction({ token }));
-    localStorage.setItem('token', token);
+    this.store.dispatch(logInAction({ token: token }));
+    if (token) {
+      sessionStorage.setItem('token', token);
+    } else {
+      sessionStorage.removeItem('token');
+    }
   }
 
   getToken(): Observable<string>{
