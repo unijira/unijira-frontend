@@ -4,5 +4,7 @@
   "login.password": "Password",
   "loading": "Loading...",
   "welcome": "Welcome to UniJira",
-  "login.wrongCredential": "Wrong username or password"
+  "login.wrongCredential": "Wrong username or password",
+  "wizard.project.name": "Name",
+  "wizard.project.key": "Key"
 }

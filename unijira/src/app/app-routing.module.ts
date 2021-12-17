@@ -33,6 +33,18 @@ const routes: Routes = [
         (m) => m.ActivatePageModule
       ),
   },
+  {
+    path: 'project-wizard',
+    loadChildren: () => import('./project-wizard/project-wizard.module').then( m => m.ProjectWizardPageModule)
+  },
+  {
+    path: 'project-wizard-info',
+    loadChildren: () => import('./project-wizard/project-wizard-info/project-wizard-info.module').then( m => m.ProjectWizardPageModule)
+  },
+  {
+    path: 'project-wizard-invite',
+    loadChildren: () => import('./project-wizard/project-wizard-invite/project-wizard-invite.module').then( m => m.ProjectWizardPageModule)
+  },
 
 ];
 
