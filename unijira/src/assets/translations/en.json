@@ -1,9 +1,15 @@
 {
-  "login.signIn": "SIGN IN",
+  "login.signIn": "Sign in",
   "login.Email": "Email",
   "login.password": "Password",
   "loading": "Loading...",
   "welcome": "Welcome to UniJira",
   "login.wrongCredential": "Wrong username or password",
-  "error.auth.unexpected": "There was an unexpected error while trying to access to the system"
+  "error.auth.unexpected": "There was an unexpected error while trying to access to the system",
+  "register.error.emptyEmail": "Email field cannot be empty",
+  "register.error.emptyPassword": "Password field cannot be empty",
+  "register.error.wrongPassword": "Password must be at least 8 characters long, contain at least one number and one uppercase letter",
+  "register.error.differentPasswords": "Password fields must be the same",
+  "register.registrationDone": "Registration done, now you can sign in",
+  "user.home.title": "My work"
 }

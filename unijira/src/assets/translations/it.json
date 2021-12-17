@@ -1,5 +1,5 @@
 {
-  "login.signIn": "SIGN IN",
+  "login.signIn": "Accedi",
   "login.email": "Email",
   "login.password": "Password",
   "loading": "Caricamento...",
@@ -10,5 +10,15 @@
   "register.error.emptyPassword": "Il campo password non può essere vuoto",
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
   "register.error.differentPasswords": "I campi password devono essere uguali",
-  "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login"
+  "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login",
+  "user.home.title": "Il mio lavoro",
+  "user.home.recentProjects": "Progetti recenti",
+  "user.home.seeAll": "Vedi tutti",
+  "user.home.noProjects": "Non hai ancora creato nessun progetto",
+  "user.home.noRecentProjects": "Non hai ancora creato nessun progetto recente",
+  "user.home.createProject": "Crea un progetto",
+  "user.home.myTicketsOpen": "I miei ticket aperti",
+  "user.home.myTicketsDone": "I miei ticket completati",
+  "user.home.segments.open": "Aperti",
+  "user.home.segments.done": "Completati"
 }

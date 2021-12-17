@@ -1,6 +1,11 @@
 import {Injectable} from '@angular/core';
 import {SessionState} from './session.reducer';
 import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
+import {catchError, Observable, of} from 'rxjs';
+import {User} from '../models/User';
+import {Error} from '../classes/error';
+import {AccountService} from '../services/account.service';
+
 import {
   errorAction,
   isLoggedAction,
@@ -9,12 +14,11 @@ import {
   setUserAction,
   wrongCredentialAction
 } from './session.action';
-import {catchError, Observable, of} from 'rxjs';
-import {User} from '../models/User';
-import {Error} from '../classes/error';
-import {AccountService} from '../services/account.service';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SessionService {
 
   public token: string;
@@ -31,6 +35,7 @@ export class SessionService {
     }
     this.getToken().subscribe(res => this.token = res);
   }
+
 
   toggleLoading(toggle: boolean) {
     this.store.dispatch(loadingAction({loading: toggle}));
@@ -73,9 +78,11 @@ export class SessionService {
         return of(null);
 
       })).subscribe(res => {
-      this.saveToken(res);
-      this.userLogged(res != null);
-    });
+
+        this.saveToken(res);
+        this.userLogged(res != null);
+
+      });
   }
 
   logout() {
@@ -96,7 +103,7 @@ export class SessionService {
   }
 
   saveToken(token: string) {
-    this.store.dispatch(logInAction({ token: token }));
+    this.store.dispatch(logInAction({ token }));
     if (token) {
       sessionStorage.setItem('token', token);
     } else {

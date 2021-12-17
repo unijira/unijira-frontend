@@ -22,6 +22,7 @@ export const initialState: SessionState = {
   token: null,
   wrongCredential: false,
 };
+
 export const sessionReducer = createReducer(
   initialState,
   on(loadingAction, (state, {loading}) => ({ ...state, loading})),

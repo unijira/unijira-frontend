@@ -1,0 +1,149 @@
+<ion-content>
+
+  <ion-title class="ion-margin-top">
+    <h1 [translate]="'user.home.title'"></h1>
+  </ion-title>
+
+
+  <!-- Project Retriver -->
+  <div class="ion-margin">
+
+    <ion-grid>
+      <ion-row class="ion-align-items-baseline">
+        <ion-col>
+          <h3 [translate]="'user.home.recentProjects'"></h3>
+        </ion-col>
+        <ion-col>
+          <ion-row class="ion-justify-content-end">
+            <a routerLink="/home/projects">
+              <span [translate]="'user.home.seeAll'"></span>
+              <ion-icon name="arrow-forward"></ion-icon>
+            </a>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row class="infinte-width">
+        <ion-col size="9" size-lg="auto" class="ion-no-margin" *ngFor="let project of recentProjects">
+          <ion-card [routerLink]="'/home/projects/' + project.id">
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12" size-lg="2">
+                    <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card-title class="ion-margin-horizontal ion-margin-top">
+                      <h2>{{ project.name }}</h2>
+                      <p>{{ project.key }}</p>
+                    </ion-card-title>
+                    <ion-item-divider></ion-item-divider>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col>
+                          <p [translate]="'user.home.myTicketsOpen'"></p>
+                        </ion-col>
+                        <ion-col size="auto">
+                          <ion-badge color="secondary">{{ myTicketsOpenCount }}</ion-badge>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col>
+                          <p [translate]="'user.home.myTicketsDone'"></p>
+                        </ion-col>
+                        <ion-col size="auto">
+                          <ion-badge color="secondary">{{ myTicketsDoneCount }}</ion-badge>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="recentProjects === null">
+        <ion-col size="12" size-lg="4" class="ion-no-margin" *ngFor="let i of [1, 2, 3]">
+          <ion-card>
+            <ion-card-content>
+              <ion-grid>
+                <ion-row>
+                  <ion-col size="12" size-lg="3">
+                    <ion-skeleton-text animated></ion-skeleton-text>
+                  </ion-col>
+                  <ion-col>
+                    <ion-card-title class="ion-margin">
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                      <ion-skeleton-text animated></ion-skeleton-text>
+                    </ion-card-title>
+                    <ion-item-divider></ion-item-divider>
+                    <ion-grid>
+                      <ion-row>
+                        <ion-col>
+                          <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                      </ion-row>
+                      <ion-row>
+                        <ion-col>
+                          <ion-skeleton-text animated></ion-skeleton-text>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+
+      <div *ngIf="recentProjects?.length === 0">
+        <ion-text class="ion-text-center ion-margin">
+          <p class="ion-color-tertiary"><i [translate]="'user.home.noProjects'"></i></p>
+        </ion-text>
+      </div>
+
+    </ion-grid>
+
+  </div>
+
+  <!-- Create project -->
+  <div class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="12" size-lg="auto">
+          <ion-button [routerLink]="'/home/projects/create'" expand="block" color="primary">
+            <ion-icon name="add" class="ion-margin-end"></ion-icon>
+            <span [translate]="'user.home.createProject'"></span>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- Tickets Segment -->
+  <div class="ion-margin">
+    <ion-segment value="open" (ionChange)="onSegmentChanged($event)" class="ion-justify-content-start">
+      <ion-segment-button value="open">
+        <ion-label [translate]="'user.home.segments.open'"></ion-label>
+      </ion-segment-button>
+      <ion-segment-button value="done">
+        <ion-label [translate]="'user.home.segments.done'"></ion-label>
+      </ion-segment-button>
+    </ion-segment>
+  </div>
+
+  <div class="ion-margin">
+    <div *ngIf="currentSegment === 'open'">
+      Open Tickets <!--TODO-->
+    </div>
+    <div *ngIf="currentSegment === 'done'">
+      Done Tickets <!--TODO-->
+    </div>
+  </div>
+
+
+
+</ion-content>
