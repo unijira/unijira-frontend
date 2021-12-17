@@ -4,5 +4,6 @@
   "login.password": "Password",
   "loading": "Caricamento...",
   "welcome": "Benvenuto in UniJira",
-  "login.wrongCredential": "Username e/o password errate"
+  "login.wrongCredential": "Username e/o password errate",
+  "error.auth.unexpected": "Si è verificato un errore imprevisto, impossibile accedere al sistema"
 }

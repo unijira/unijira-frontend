@@ -4,5 +4,6 @@
   "login.password": "Password",
   "loading": "Loading...",
   "welcome": "Welcome to UniJira",
-  "login.wrongCredential": "Wrong username or password"
+  "login.wrongCredential": "Wrong username or password",
+  "error.auth.unexpected": "There was an unexpected error while trying to access to the system"
 }

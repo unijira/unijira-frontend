@@ -1,36 +1,37 @@
-import { HttpClient } from '@angular/common/http';
-import { Injectable } from '@angular/core';
+import {HttpClient, HttpParams} from '@angular/common/http';
+import {Injectable} from '@angular/core';
+import {environment} from 'src/environments/environment';
+import {Observable} from 'rxjs';
 
 
 @Injectable({
   providedIn: 'root',
 })
-
 export class HttpService {
-  private baseurl = 'http://localhost:7080/';
+
   private opt = {
     headers: {
+      // eslint-disable-next-line @typescript-eslint/naming-convention
       'Content-Type': 'application/json',
     },
   };
-  constructor(private http: HttpClient) {}
 
-  sendPost(url, body) {
-    let urlFull = `${this.baseurl}${url}`;
-    return this.http.post(urlFull, body, this.opt);
-  }
-  sendGet(url) {
-    let urlFull = `${this.baseurl}${url}`;
-    return this.http.get(urlFull);
-  }
-  sendGetWithParams(url, params) {
-    let urlFull = `${this.baseurl}${url}`;
-    return this.http.get(urlFull, { params: params });
+  constructor(private http: HttpClient) { }
+
+  sendPost<T>(url: string, body: any): Observable<T> {
+    return this.http.post<T>(`${environment.baseURL}${url}`, body, this.opt);
   }
 
-  sendPostTxtResponse(url, body) {
-    let urlFull = `${this.baseurl}${url}`;
-    return this.http.post(urlFull, body, {responseType: 'text' });
+  sendGet<T>(url: string): Observable<T> {
+    return this.http.get<T>(`${environment.baseURL}${url}`);
+  }
+
+  sendGetWithParams<T>(url: string, params: HttpParams): Observable<T> {
+    return this.http.get<T>(`${environment.baseURL}${url}`, { params });
+  }
+
+  sendPostTxtResponse(url: string, body: object): Observable<string> {
+    return this.http.post(`${environment.baseURL}${url}`, body, { responseType: 'text' });
   }
 
 }
