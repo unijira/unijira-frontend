@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from "./classes/auth-guard";
+import {AuthGuard} from './classes/auth-guard';
 
 const routes: Routes = [
   {
@@ -35,15 +35,18 @@ const routes: Routes = [
   },
   {
     path: 'project-wizard',
-    loadChildren: () => import('./project-wizard/project-wizard.module').then( m => m.ProjectWizardPageModule)
+    loadChildren: () => import('./project-wizard/project-wizard.module')
+      .then( m => m.ProjectWizardPageModule)
   },
   {
     path: 'project-wizard-info',
-    loadChildren: () => import('./project-wizard/project-wizard-info/project-wizard-info.module').then( m => m.ProjectWizardPageModule)
+    loadChildren: () => import('./project-wizard/project-wizard-info/project-wizard-info.module')
+      .then( m => m.ProjectWizardInfoPageModule)
   },
   {
     path: 'project-wizard-invite',
-    loadChildren: () => import('./project-wizard/project-wizard-invite/project-wizard-invite.module').then( m => m.ProjectWizardPageModule)
+    loadChildren: () => import('./project-wizard/project-wizard-invite/project-wizard-invite.module')
+      .then( m => m.ProjectWizardInvitePageModule)
   },
 
 ];
