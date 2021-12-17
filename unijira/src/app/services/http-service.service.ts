@@ -1,9 +1,10 @@
-import {HttpClient, HttpParams, HttpResponse} from '@angular/common/http';
+import {HttpClient, HttpHeaders, HttpParams, HttpResponse} from '@angular/common/http';
 import {Injectable} from '@angular/core';
 import {environment} from 'src/environments/environment';
-import {catchError, map, Observable, of} from 'rxjs';
-import {Store} from '@ngrx/store';
+import {catchError, map, Observable} from 'rxjs';
+import {State, Store} from '@ngrx/store';
 import {errorAction} from '../store/session.action';
+import {SessionState} from '../store/session.reducer';
 
 
 @Injectable({
@@ -12,41 +13,49 @@ import {errorAction} from '../store/session.action';
 export class HttpService {
 
   private opt = {
-    headers: {
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      'Content-Type': 'application/json',
-      // eslint-disable-next-line @typescript-eslint/naming-convention
-      Authorization: sessionStorage.getItem('token') ?? 'Bearer ' + sessionStorage.getItem('token')
-    },
+    headers: new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json')
   };
 
   constructor(
     private http: HttpClient,
     private store: Store,
-  ) { }
+    private state: State<SessionState>
+  ) {
+
+    this.state.subscribe(s => {
+
+      if (s.sessionReducer.token) {
+        this.opt.headers = this.opt.headers.set('Authorization', 'Bearer ' + s.sessionReducer.token);
+      }
+
+    });
+
+  }
 
 
-  public get<T>(api: string, params?: HttpParams): Observable<T> {
+  public get<T>(api: string, params?: HttpParams, options?: object): Observable<T> {
     return this.handleResponse<T>(this.http.get<T>(`${environment.baseURL}${api}`, {
-      ...this.opt, observe: 'response', params
+      ...this.opt, ...options, observe: 'response', params
     }));
   }
 
-  public put<T>(api: string, body?: object, params?: HttpParams): Observable<T> {
+  public put<T>(api: string, body?: object, params?: HttpParams, options?: object): Observable<T> {
     return this.handleResponse<T>(this.http.put<T>(`${environment.baseURL}${api}`, body ?? {},{
-      ...this.opt, observe: 'response', params
+      ...this.opt, ...options, observe: 'response', params
     }));
   }
 
-  public post<T>(api: string, body?: object, params?: HttpParams): Observable<T> {
+  public post<T>(api: string, body?: object, params?: HttpParams, options?: object): Observable<T> {
     return this.handleResponse<T>(this.http.post<T>(`${environment.baseURL}${api}`, body ?? {},{
-      ...this.opt, observe: 'response', params
+      ...this.opt, ...options, observe: 'response', params
     }));
   }
 
-  public delete<T>(api: string, params?: HttpParams): Observable<T> {
+  public delete<T>(api: string, params?: HttpParams, options?: object): Observable<T> {
     return this.handleResponse<T>(this.http.delete<T>(`${environment.baseURL}${api}`,{
-      ...this.opt, observe: 'response', params
+      ...this.opt, ...options, observe: 'response', params
     }));
   }
 
@@ -78,6 +87,8 @@ export class HttpService {
     return response
       .pipe(catchError((error) => {
 
+        console.error('HttpService.handleResponse', error);
+
         this.store.dispatch(errorAction({
           error: {
             status: error.status,
@@ -85,7 +96,7 @@ export class HttpService {
           }
         }));
 
-        return of(error);
+        throw error;
 
       })).pipe(map((res: HttpResponse<T>) => res.body));
   }

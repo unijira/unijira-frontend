@@ -1,11 +1,16 @@
 {
+  "error.title": "Errore",
+  "error.auth.unexpected": "Si è verificato un errore imprevisto, impossibile accedere al sistema",
+  "error.auth.invalid": "Username o password non validi",
+  "error.auth.missing": "Username o password mancanti",
+  "error.auth.expired": "Sessione scaduta",
+  "error.api.default": "Si è verificato un errore. Per favore riprova più tardi",
   "login.signIn": "Accedi",
   "login.email": "Email",
   "login.password": "Password",
   "loading": "Caricamento...",
   "welcome": "Benvenuto in UniJira",
   "login.wrongCredential": "Username e/o password errate",
-  "error.auth.unexpected": "Si è verificato un errore imprevisto, impossibile accedere al sistema",
   "register.error.emptyEmail": "Il campo email non può essere vuoto",
   "register.error.emptyPassword": "Il campo password non può essere vuoto",
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
@@ -19,6 +24,8 @@
   "user.home.createProject": "Crea un progetto",
   "user.home.myTicketsOpen": "I miei ticket aperti",
   "user.home.myTicketsDone": "I miei ticket completati",
+  "user.home.noTicketsOpen": "Non hai ancora aperto nessun ticket",
+  "user.home.noTicketsDone": "Non hai ancora completato nessun ticket",
   "user.home.segments.open": "Aperti",
   "user.home.segments.done": "Completati"
 }

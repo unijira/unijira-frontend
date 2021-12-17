@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http-service.service';
 import {HttpParams} from '@angular/common/http';
-import {Observable} from "rxjs";
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -11,15 +11,15 @@ export class AccountService {
 
   register(user: object) {
     console.log(user);
-    return this.httpService.sendPost('auth/register', user);
+    return this.httpService.sendPost('/auth/register', user);
   }
   activate(token: string) {
-    return this.httpService.sendGetWithParams('auth/active', new HttpParams().set('token', token));
+    return this.httpService.sendGetWithParams('/auth/active', new HttpParams().set('token', token));
   }
   logIn(username: string, password: string): Observable<string> {
-    return this.httpService.sendPostTxtResponse('auth/authenticate', {username, password});
+    return this.httpService.post<string>('/auth/authenticate', {username, password}, null, { responseType: 'text' });
   }
   refreshToken(token: string): Observable<string> {
-    return this.httpService.sendPostTxtResponse('auth/refresh', {token});
+    return this.httpService.sendPostTxtResponse('/auth/refresh', {token});
   }
 }

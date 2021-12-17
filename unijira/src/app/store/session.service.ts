@@ -22,18 +22,17 @@ import {
 export class SessionService {
 
   public token: string;
-  public credential: Credential;
 
   constructor(
     private store: Store,
     private accountService: AccountService
   ) {
-    const tok = sessionStorage.getItem('token');
-    if (tok) {
-      this.saveToken(tok);
+
+    if(localStorage.getItem('token')){
+      this.saveToken(localStorage.getItem('token'));
       this.userLogged(true);
     }
-    this.getToken().subscribe(res => this.token = res);
+
   }
 
 
@@ -62,9 +61,9 @@ export class SessionService {
 
   logIn(username: string, password: string) {
     this.accountService.logIn(username, password)
-      .pipe(catchError(err => {
+      .pipe(catchError(error => {
 
-        const error = Error.toError(err);
+        console.error('SessionService.logIn', error);
 
         switch(error.status) {
           case 401:
@@ -102,13 +101,16 @@ export class SessionService {
 
   }
 
-  saveToken(token: string) {
-    this.store.dispatch(logInAction({ token }));
-    if (token) {
-      sessionStorage.setItem('token', token);
+  saveToken(token?: string) {
+
+    if(token) {
+      localStorage.setItem('token', token);
     } else {
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('token');
     }
+
+    this.store.dispatch(logInAction({ token }));
+
   }
 
   getToken(): Observable<string>{

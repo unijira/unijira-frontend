@@ -8,8 +8,40 @@ import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {presentAlertConfirm} from '../util';
 
-@Injectable()
+@Injectable(
+  {providedIn: 'root'}
+)
 export class SessionEffects {
+
+  public errorEffect = createEffect(
+
+    () => this.actions.pipe(ofType(errorAction), tap(action => {
+
+      switch(action.error.status) {
+
+        case 401:
+        case 403:
+          this.sessionService.logout();
+          this.router.navigate(['/login']).then();
+          break;
+
+        case 404:
+          break;
+
+        default:
+
+          console.error('SessionEffects.errorEffect', action.error);
+
+          this.translateService.get([ 'error.title', 'error.api.default' ])
+            .subscribe(t => presentAlertConfirm(this.alertController, t['error.title'], t['error.api.default']));
+          break;
+
+      }
+
+    })), {
+      dispatch: false
+  });
+
 
   constructor(
     private actions: Actions,
@@ -17,27 +49,6 @@ export class SessionEffects {
     private alertController: AlertController,
     private translateService: TranslateService,
     private router: Router
-  ) {
-
-  }
-
-
-
-  // eslint-disable-next-line @typescript-eslint/member-ordering
-  errorEffect = createEffect(() => this.actions.pipe(
-    ofType(errorAction),
-    tap((action) => {
-      if (action.error.status === 401) {
-        this.router.navigate(['/login']).then();
-      } else if (action.error.status === 418) {
-        this.sessionService.refreshToken(this.sessionService.token);
-      } else {
-        this.translateService.get('error.title')
-          .subscribe(msg => presentAlertConfirm(this.alertController, msg, action.error.message).then());
-      }
-
-    })), { dispatch: false });
-
-
+  ) { }
 
 }

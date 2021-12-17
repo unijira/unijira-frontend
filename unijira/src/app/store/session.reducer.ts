@@ -1,11 +1,6 @@
-import {Action, createReducer, on} from '@ngrx/store';
-import {
-  isLoggedAction,
-  loadingAction,
-  logInAction,
-  wrongCredentialAction
-} from './session.action';
-import { User } from '../models/User';
+import {createReducer, on} from '@ngrx/store';
+import {isLoggedAction, loadingAction, logInAction, wrongCredentialAction} from './session.action';
+import {User} from '../models/User';
 
 export interface SessionState {
   loading: boolean;
