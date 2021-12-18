@@ -19,22 +19,25 @@ export class SessionEffects {
 
       switch(action.error.status) {
 
-        case 401:
         case 403:
         case 418:
           this.sessionService.logout();
           this.router.navigate(['/login']).then();
           break;
 
-        case 404:
-          break;
-
-        default:
+        case 500:
+        case 501:
+        case 502:
+        case 503:
+        case 504:
 
           console.error('SessionEffects.errorEffect', action.error);
 
           this.translateService.get([ 'error.title', 'error.api.default' ])
             .subscribe(t => presentAlertConfirm(this.alertController, t['error.title'], t['error.api.default']));
+          break;
+
+        default:
           break;
 
       }

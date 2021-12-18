@@ -29,8 +29,10 @@ export class SessionService {
   ) {
 
     if(localStorage.getItem('token')){
+
       this.saveToken(localStorage.getItem('token'));
       this.userLogged(true);
+
     }
 
   }
@@ -55,6 +57,7 @@ export class SessionService {
       (state) => state.isLoggedIn);
     return this.store.select(selectIsLoggedIn);
   }
+
   setUser(user: User) {
     this.store.dispatch(setUserAction({ user }));
   }
