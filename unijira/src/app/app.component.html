@@ -16,7 +16,7 @@
       <ion-title class="titleicon" style="display:inline-block">UniJira</ion-title>
     </ion-toolbar>
   </ion-header>
-  <ion-split-pane content-id="content" when="md" class="content-h" *ngIf="isLogged">
+  <ion-split-pane content-id="content" when="md" class="content-h" *ngIf="isLogged && !(router.url.includes('/home'))">
     <ion-menu>
       <ion-content>
         <ion-list>
@@ -34,5 +34,7 @@
       <ion-router-outlet id="content" main></ion-router-outlet>
     </ion-content>
   </ion-split-pane>
-  <ion-router-outlet *ngIf="!isLogged"></ion-router-outlet>
+  <ion-content [ngClass]="{'content-h': router.url.includes('/home')}" *ngIf="!isLogged || (router.url.includes('/home'))">
+    <ion-router-outlet></ion-router-outlet>
+  </ion-content>
 </ion-app>
