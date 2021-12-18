@@ -38,5 +38,11 @@
   "wizard.invite.description" : "Fornisci una lista di utenti. Ogni utente riceverà un invito di partecipazione al progetto.",
   "wizard.invite.mail" : "E-mail",
   "wizard.invite.add" : "Invita",
-  "wizard.invite.all" : "Tutti gli inviti"
+  "wizard.invite.all" : "Tutti gli inviti",
+  "wizard.back" : "Indietro",
+  "wizard.alert.title" : "Crea progetto",
+  "wizard.alert.message.sure" : "Sei sicuro di voler continuare?",
+  "wizard.alert.message.invite" : "Non hai ancora invitato nessuno ad unirsi al progetto. Sei sicuro di voler continuare?",
+  "wizard.alert.message.button.confirm" : "Conferma",
+  "wizard.alert.message.button.cancel" : "Cancella"
 }
