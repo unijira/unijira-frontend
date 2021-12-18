@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
 import {AuthGuard} from './classes/auth-guard';
 
+// @ts-ignore
 const routes: Routes = [
   {
     path: 'home',
@@ -21,11 +22,6 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
-  // {
-  //   path: 'backlog',
-  //   loadChildren: () =>
-  //     import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
-  // },
   {
     path: 'auth/active',
     loadChildren: () =>
@@ -34,19 +30,16 @@ const routes: Routes = [
       ),
   },
   {
-    path: 'project-wizard',
-    loadChildren: () => import('./project-wizard/project-wizard.module')
-      .then( m => m.ProjectWizardPageModule)
+    path: 'user/home/wizard',
+    loadChildren: () => import('./components/project/wizard/wizard.module').then( m => m.WizardPageModule)
   },
   {
-    path: 'project-wizard-info',
-    loadChildren: () => import('./project-wizard/project-wizard-info/project-wizard-info.module')
-      .then( m => m.ProjectWizardInfoPageModule)
+    path: 'user/home/wizard/info',
+    loadChildren: () => import('./components/project/wizard/info/info.module').then( m => m.InfoPageModule)
   },
   {
-    path: 'project-wizard-invite',
-    loadChildren: () => import('./project-wizard/project-wizard-invite/project-wizard-invite.module')
-      .then( m => m.ProjectWizardInvitePageModule)
+    path: 'user/home/wizard/invite',
+    loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
   },
 
 ];

@@ -9,5 +9,19 @@
   "register.error.emptyPassword": "Il campo password non può essere vuoto",
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
   "register.error.differentPasswords": "I campi password devono essere uguali",
-  "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login"
+  "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login",
+  "wizard.project.name" : "Nome",
+  "wizard.project.key" : "Chiave",
+  "wizard.continue" : "Avanti",
+  "wizard.complete" : "Conferma",
+  "user.home.createProject" : "Crea Progetto",
+  "wizard.info.icon" : "Modifica icona",
+  "wizard.info.name" : "Nome",
+  "wizard.info.key" : "Chiave",
+  "wizard.info.title" : "Crea un progetto",
+  "wizard.invite.title" : "Invita Membri",
+  "wizard.invite.description" : "Fornisci una lista di utenti. Ogni utente riceverà un invito di partecipazione al progetto.",
+  "wizard.invite.mail" : "E-mail",
+  "wizard.invite.add" : "Invita",
+  "wizard.invite.all" : "Tutti gli inviti"
 }
