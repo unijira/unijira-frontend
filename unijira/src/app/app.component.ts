@@ -1,11 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {SessionState} from "./store/session.reducer";
-import {Subscription} from "rxjs";
-import {SessionService} from "./store/session.service";
-import {unsubscribeAll} from "./util";
-import {Router} from "@angular/router";
-import {TranslateService} from "@ngx-translate/core";
-
+import {Subscription} from 'rxjs';
+import {SessionService} from './store/session.service';
+import {unsubscribeAll} from './util';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import * as moment from 'moment';
+import 'moment/locale/it';
+import 'moment/locale/en-gb';
 
 @Component({
   selector: 'app-root',
@@ -21,6 +22,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isLoggedSubscription: Subscription;
   isLogged = false;
+
   constructor(
     public sessionService: SessionService,
     public router: Router,
@@ -32,9 +34,14 @@ export class AppComponent implements OnInit, OnDestroy {
 
     translateService.setDefaultLang('it');
     translateService.use('it');
+    translateService.onLangChange.subscribe(() => {
+      moment.locale(translateService.currentLang);
+    });
 
-    this.pages.push({name: "home", url: "/home"});
-    this.pages.push({name: "backlog", url: "/backlog"});
+    moment.locale('it');
+
+    this.pages.push({name: 'home', url: '/home'});
+    this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
   ngOnInit() {
@@ -48,9 +55,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
   onToggleColorTheme(event) {
     if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark')
+      document.body.setAttribute('color-theme', 'dark');
     } else {
-      document.body.setAttribute('color-theme', 'light')
+      document.body.setAttribute('color-theme', 'light');
     }
   }
 
@@ -60,7 +67,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
   switchLanguage() {
     if (this.translateService.currentLang === 'it') {
-      this.translateService.use('en')
+      this.translateService.use('en');
     } else {
       this.translateService.use('it');
     }

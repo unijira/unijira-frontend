@@ -144,7 +144,7 @@
           </ion-avatar>
           <ion-label>
             <h2>{{ ticket.title }}</h2>
-            <p>{{ ticket.updatedAt | time }}</p>
+            <p>{{ ticket.updatedAt | time | async }}</p>
           </ion-label>
           <ion-badge color="secondary">{{ ticket.status }}</ion-badge>
         </ion-item>
@@ -172,7 +172,7 @@
           </ion-avatar>
           <ion-label>
             <h2>{{ ticket.title }}</h2>
-            <p>{{ ticket.updatedAt | time }}</p>
+            <p>{{ ticket.updatedAt | time | async }}</p>
           </ion-label>
           <ion-badge color="secondary">{{ ticket.status }}</ion-badge>
         </ion-item>

@@ -21,6 +21,7 @@ export class SessionEffects {
 
         case 401:
         case 403:
+        case 418:
           this.sessionService.logout();
           this.router.navigate(['/login']).then();
           break;
