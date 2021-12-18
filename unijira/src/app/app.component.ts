@@ -7,12 +7,16 @@ import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
 import 'moment/locale/it';
 import 'moment/locale/en-gb';
+import {UserInfo} from './models/users/UserInfo';
+import {PopoverController} from '@ionic/angular';
+import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent implements OnInit, OnDestroy {
 
   pages: any[] = [];
@@ -23,14 +27,20 @@ export class AppComponent implements OnInit, OnDestroy {
   isLoggedSubscription: Subscription;
   isLogged = false;
 
+  userInfoSubscription: Subscription;
+  userInfo: UserInfo;
+
   constructor(
     public sessionService: SessionService,
     public router: Router,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    private popCtrl: PopoverController
   ) {
     this.loadingSubscription = sessionService.getLoading().subscribe(load => {
       this.loading = load;
     });
+
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
     translateService.setDefaultLang('it');
     translateService.use('it');
@@ -49,6 +59,8 @@ export class AppComponent implements OnInit, OnDestroy {
       this.isLogged = log;
       if (!log){
         this.router.navigate(['/login']);
+      } else {
+        this.sessionService.loadUserInfo();
       }
     });
   }
@@ -74,7 +86,20 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    unsubscribeAll(this.loadingSubscription);
+    unsubscribeAll(this.loadingSubscription, this.isLoggedSubscription, this.userInfoSubscription);
   }
+
+  async _userPopOver(ev: any) {
+    const popOver = await this.popCtrl.create({
+      component: UserActionPopoverComponent,
+      cssClass: 'my-popover-class',
+      event: ev,
+    })
+
+    popOver.onDidDismiss().then(data=> console.log(data))
+
+    return await popOver.present()
+  }
+
 
 }

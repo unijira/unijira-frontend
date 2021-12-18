@@ -10,10 +10,11 @@ import {
   errorAction,
   isLoggedAction,
   loadingAction,
-  logInAction,
-  setUserAction,
+  logInAction, logOutAction,
+  setUserAction, userInfoAction,
   wrongCredentialAction
 } from './session.action';
+import {UserInfo} from "../models/users/UserInfo";
 
 
 @Injectable({
@@ -90,6 +91,7 @@ export class SessionService {
   logout() {
     this.saveToken(null);
     this.userLogged(false);
+    this.store.dispatch(logOutAction());
   }
 
   refreshToken(token: string) {
@@ -131,4 +133,21 @@ export class SessionService {
       (state) => state.wrongCredential);
     return this.store.select(selectWrongCred);
   }
+
+  setUserInfo(userInfo: UserInfo) {
+    this.store.dispatch(userInfoAction({userInfo}));
+  }
+
+  loadUserInfo() {
+    this.accountService.me().subscribe(
+      (info: any) => this.setUserInfo(UserInfo.toUserInfo(info)),
+      (err) => this.store.dispatch(errorAction({error : Error.toError(err)})));
+  }
+
+  getUserInfo(): Observable<UserInfo> {
+    const selectUserInfo = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
+      (state) => state.userInfo);
+    return this.store.select(selectUserInfo);
+  }
+
 }

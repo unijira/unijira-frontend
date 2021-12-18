@@ -1,6 +1,7 @@
 import {createAction, props} from '@ngrx/store';
 import {User} from '../models/User';
 import {Error} from '../classes/error';
+import {UserInfo} from '../models/users/UserInfo';
 
 export const loadingAction = createAction(
   '[Session] loading',
@@ -27,7 +28,16 @@ export const logInAction = createAction(
   props<{ token: string }>()
 );
 
+export const logOutAction = createAction(
+  '[Session] logOut'
+);
+
 export const wrongCredentialAction = createAction(
   '[Session] wrong credential',
   props<{ wrongCredential: boolean }>()
+);
+
+export const userInfoAction = createAction(
+  '[Session] User info',
+  props<{ userInfo: UserInfo}>()
 );

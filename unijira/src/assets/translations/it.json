@@ -7,6 +7,8 @@
   "error.api.default": "Si è verificato un errore. Per favore riprova più tardi",
   "login.signIn": "Accedi",
   "login.email": "Email",
+  "logOut": "Esci",
+  "settings": "Impostazioni",
   "login.password": "Password",
   "loading": "Caricamento...",
   "welcome": "Benvenuto in UniJira",

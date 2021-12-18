@@ -2,18 +2,14 @@
   <app-loading *ngIf="loading"></app-loading>
   <ion-header *ngIf="isLogged">
     <ion-toolbar>
-      <ion-buttons slot="secondary">
+      <ion-buttons slot="primary">
         <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end"></ion-toggle>
-        <ion-button (click)="sessionService.logout()">
-          <ion-icon slot="icon-only" name="person-circle"></ion-icon>
+        <ion-button (click)="_userPopOver($event)">
+          <ion-icon name="person-circle"></ion-icon>
+          <span>{{userInfo?.username}}</span>
         </ion-button>
         <ion-button (click)="switchLanguage()">
           <span>{{translateService.currentLang}}</span>
-        </ion-button>
-      </ion-buttons>
-      <ion-buttons slot="primary">
-        <ion-button color="secondary">
-          <ion-icon slot="icon-only" ios="ellipsis-horizontal" md="ellipsis-vertical"></ion-icon>
         </ion-button>
       </ion-buttons>
       <img src="/assets/logo1.png" width="45" class="main-icon" height="40"/>

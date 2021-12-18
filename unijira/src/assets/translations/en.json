@@ -8,6 +8,8 @@
   "login.signIn": "Sign in",
   "login.email": "Email",
   "login.password": "Password",
+  "logOut": "Log out",
+  "settings": "Settings",
   "loading": "Loading...",
   "welcome": "Welcome on Unijira",
   "login.wrongCredential": "Username or password is invalid",
