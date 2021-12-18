@@ -21,11 +21,11 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
-  // {
-  //   path: 'backlog',
-  //   loadChildren: () =>
-  //     import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
-  // },
+  {
+    path: 'backlog',
+    loadChildren: () =>
+      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
+  },
   {
     path: 'auth/active',
     loadChildren: () =>

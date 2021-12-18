@@ -44,6 +44,10 @@ export class BacklogPage implements OnInit {
       removeOnSpill: false,
     });
 
+    this.dragulaService.createGroup('bag1', {
+      removeOnSpill: false,
+    });
+
     this.taskService.getBacklog().subscribe((b) => {
       this.backlog = b;
     });
@@ -52,8 +56,8 @@ export class BacklogPage implements OnInit {
       this.sprint = s;
     });
   }
-  editStatus($event, task) {
-
+  editStatus($event, task, type) {
+    if (type === 'backlog') {
       let newTask = _.clone(task);
       console.log($event, task);
       newTask.status = $event.detail.value;
@@ -67,23 +71,63 @@ export class BacklogPage implements OnInit {
       });
       console.log(backlog.tasks);
       this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
-
-  }
-  editWeight($event, task) {
-    if ($event.detail.data !== undefined) {
+    } else if (type === 'sprint') {
       let newTask = _.clone(task);
       console.log($event, task);
-      newTask.weight = parseInt($event.detail.data);
-      let backlog = _.clone(this.backlog);
-      backlog.tasks = this.backlog.tasks.map((t) => {
+      newTask.status = $event.detail.value;
+      let sprint = _.clone(this.sprint);
+      sprint.tasks = this.sprint.tasks.map((t) => {
         if (t.id === task.id) {
           return newTask;
         } else {
           return t;
         }
       });
-      console.log(backlog.tasks);
-      this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+      console.log(sprint.tasks);
+      this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
+    }
+  }
+  editWeight($event, task, type) {
+    if (
+      $event.detail.value === '' ||
+      $event.detail.value === null ||
+      $event.detail.value === undefined ||
+      _.isNaN($event.detail.value)
+    ) {
+      return;
+    }
+    if (type === 'backlog') {
+      if ($event.detail.data !== undefined) {
+        let newTask = _.clone(task);
+        console.log($event, task);
+        newTask.weight = parseInt($event.detail.data);
+        let backlog = _.clone(this.backlog);
+        backlog.tasks = this.backlog.tasks.map((t) => {
+          if (t.id === task.id) {
+            return newTask;
+          } else {
+            return t;
+          }
+        });
+        console.log(backlog.tasks);
+        this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+      }
+    } else if (type === 'sprint') {
+      if ($event.detail.data !== undefined) {
+        let newTask = _.clone(task);
+        console.log($event, task);
+        newTask.weight = parseInt($event.detail.data);
+        let sprint = _.clone(this.sprint);
+        sprint.tasks = this.sprint.tasks.map((t) => {
+          if (t.id === task.id) {
+            return newTask;
+          } else {
+            return t;
+          }
+        });
+        console.log(sprint.tasks);
+        this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
+      }
     }
   }
   ngOnInit() {}

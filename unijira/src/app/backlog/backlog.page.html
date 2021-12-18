@@ -16,20 +16,32 @@
                 <ion-col size="1"> {{ task.type }} </ion-col>
                 <ion-col> {{ task.name }} </ion-col>
                 <ion-col size="2" class="ion-justify-content-end icon-area">
-                  <ion-badge color="medium">{{ task.weight}}</ion-badge>
-                  <ion-badge
-                    *ngIf="task.status === 'da completare' "
-                    color="medium"
-                    >{{ task.status }}</ion-badge
-                  >
-                  <ion-badge
-                    *ngIf="task.status === 'completata' "
-                    color="success"
-                    >{{ task.status }}</ion-badge
-                  >
-                  <ion-badge *ngIf="task.status === 'in corso' " color="primary"
-                    >{{ task.status }}</ion-badge
-                  >
+                  <!-- <ion-badge color="medium"  >{{ task.weight}}</ion-badge> -->
+
+                  <ion-item class="weitght-field">
+                    <ion-input
+                      inputmode="numeric"
+                      (ionInput)="editWeight($event, task, 'sprint')"
+                      placeholder="{{task.weight}}"
+                    ></ion-input>
+                  </ion-item>
+                  <ion-item>
+                    <ion-label class="success">{{task.status}}</ion-label>
+                    <ion-select
+                      (ionChange)="editStatus($event, task, 'sprint')"
+                    >
+                      <ion-select-option value="da_completare"
+                        >Da Completare</ion-select-option
+                      >
+                      <ion-select-option value="completata"
+                        >Completata</ion-select-option
+                      >
+                      <ion-select-option value="in_corso"
+                        >In Corso</ion-select-option
+                      >
+                    </ion-select>
+                  </ion-item>
+
                   <ion-icon
                     *ngIf="task.children?.length > 0"
                     name="git-branch"
@@ -56,38 +68,27 @@
             <ion-list dragula="bag" lines="none" class="light-gray-bg">
               <ion-row
                 *ngFor="let task of backlog.tasks"
-                class="ion-align-items-end white-bg task-item"
+                class="task-item ion-align-items-end white-bg"
               >
                 <ion-col size="1"> {{ task.type }} </ion-col>
                 <ion-col> {{ task.name }} </ion-col>
                 <ion-col size="2" class="ion-justify-content-end icon-area">
                   <!-- <ion-badge color="medium"  >{{ task.weight}}</ion-badge> -->
 
-                  <ion-item>
+                  <ion-item class="weitght-field">
                     <ion-input
                       inputmode="numeric"
-                      (ionInput)="editWeight($event, task)"
+                      type="numeric"
+                      (ionInput)="editWeight($event, task, 'backlog')"
                       placeholder="{{task.weight}}"
                     ></ion-input>
                   </ion-item>
-
-                  <!-- <ion-badge
-                    *ngIf="task.status === 'da_completare' "
-                    color="medium"
-                    >{{ task.status }}</ion-badge
-                  >
-                  <ion-badge
-                    *ngIf="task.status === 'completata' "
-                    color="success"
-                    >{{ task.status }}</ion-badge
-                  >
-                  <ion-badge *ngIf="task.status === 'in_corso' " color="primary"
-                    >{{ task.status }}</ion-badge
-                  > -->
-
-                  <ion-item>
+                  <ion-item class="status-item">
                     <ion-label class="success">{{task.status}}</ion-label>
-                    <ion-select (ionChange)="editStatus($event, task)">
+                    <ion-select
+                      (ionChange)="editStatus($event, task, 'backlog')"
+                      class="status-select"
+                    >
                       <ion-select-option value="da_completare"
                         >Da Completare</ion-select-option
                       >

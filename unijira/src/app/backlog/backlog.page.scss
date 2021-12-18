@@ -90,11 +90,55 @@
   border: 1px solid darkslategrey;
 }
 
-.avatar{
+.avatar {
   width: 30px;
   height: 30px;
+  min-height: 30px;
+  min-width: 30px;
+}
+.task-item,
+.task-item *{
+  height: 30px !important;
 }
 
+ion-icon {
+  font-size: 2rem;
+}
 .page {
   padding: 0 15px;
+}
+
+.weitght-field {
+  width: 50px;
+  font-size: 10px;
+}
+
+.status-item {
+  width: 200px;
+  color: darkred;
+  font-weight: bold;
+  max-height: unset;
+  font-size: 12px;
+  padding: 0;
+  background-color: red;
+}
+
+.status-item > * {
+  padding: 0;
+}
+
+.status-select {
+  padding: 0;
+}
+
+.status-select:host {
+}
+.item-inner {
+  padding: 0 !important;
+}
+.select-icon {
+  display: none !important;
+}
+.item-native {
+  padding: 0 !important;
 }
