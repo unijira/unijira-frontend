@@ -1,29 +1,53 @@
-import {Component, HostListener, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from "@angular/forms";
 import {Router} from "@angular/router";
 import {SessionService} from "../store/session.service";
+import {combineLatest, Subscription} from "rxjs";
+import {unsubscribeAll} from "../util";
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.page.html',
   styleUrls: ['./login.page.scss'],
 })
-export class LoginPage implements OnInit {
+export class LoginPage implements OnInit, OnDestroy {
 
-  emailFC: FormControl = new FormControl('', Validators.required);
-  passwordFC: FormControl = new FormControl('', Validators.required);
+  emailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  passwordFC: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.minLength(8),
+    Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}')]
+  );
+
+  loginSubscription: Subscription;
+
+  wrongCredentialSubscription: Subscription;
+  areWrongCredential = false;
 
   loginFG: FormGroup = new FormGroup({
     email: this.emailFC,
     password: this.passwordFC
   });
+  formControlSubscription: Subscription;
 
   constructor(
     private router: Router,
     private sessionService: SessionService
-    ) {
-    this.sessionService.userLogged(false);
+  ) {
+    this.sessionService.logout();
+
+    this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
+      if (logged === true) {
+        this.router.navigate(['/home']);
+      }
+    });
+
+    this.wrongCredentialSubscription = this.sessionService.getWrongCredential()
+      .subscribe(wrong => this.areWrongCredential = wrong);
+
+    this.formControlSubscription = this.loginFG.statusChanges.subscribe(() => this.sessionService.setWrongCredential(false));
   }
+
 
   ngOnInit() {
   }
@@ -31,9 +55,8 @@ export class LoginPage implements OnInit {
   logIn() {
     this.loginFG.markAllAsTouched();
     this.loginFG.updateValueAndValidity();
-    if (this.loginFG.valid && this.emailFC.value === 'admin' && this.passwordFC.value === 'admin') {
-      this.sessionService.userLogged(true);
-      this.router.navigate(['/home']);
+    if (this.loginFG.valid) {
+      this.sessionService.logIn(this.emailFC.value, this.passwordFC.value);
     }
   }
 
@@ -41,5 +64,10 @@ export class LoginPage implements OnInit {
   handleKeyDown(event: KeyboardEvent) {
     this.logIn();
   }
+
+  ngOnDestroy(): void {
+    unsubscribeAll(this.formControlSubscription, this.loginSubscription, this.wrongCredentialSubscription);
+  }
+
 
 }

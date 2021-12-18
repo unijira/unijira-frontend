@@ -12,8 +12,8 @@ export class HomePage implements OnInit{
   constructor(private sessionService: SessionService, private translate: TranslateService) {}
 
   ngOnInit() {
-    this.sessionService.toggleLoading(true);
-    setTimeout(() => this.sessionService.toggleLoading(false), 5000);
+    // this.sessionService.toggleLoading(true);
+    // setTimeout(() => this.sessionService.toggleLoading(false), 5000);
   }
 
 }

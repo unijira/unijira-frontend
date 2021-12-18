@@ -3,5 +3,11 @@
   "login.email": "Email",
   "login.password": "Password",
   "loading": "Caricamento...",
-  "welcome": "Benvenuto in UniJira"
+  "welcome": "Benvenuto in UniJira!",
+  "login.wrongCredential": "Username e/o password errate",
+  "register.error.emptyEmail": "Il campo email non può essere vuoto",
+  "register.error.emptyPassword": "Il campo password non può essere vuoto",
+  "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
+  "register.error.differentPasswords": "I campi password devono essere uguali",
+  "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login"
 }
