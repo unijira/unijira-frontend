@@ -1,4 +1,4 @@
-import {createReducer, on} from '@ngrx/store';
+import {ActionReducer, ActionReducerMap, createReducer, on} from '@ngrx/store';
 import {isLoggedAction, loadingAction, logInAction, wrongCredentialAction} from './session.action';
 import {User} from '../models/User';
 
@@ -17,6 +17,7 @@ export const initialState: SessionState = {
   token: null,
   wrongCredential: false,
 };
+
 
 export const sessionReducer = createReducer(
   initialState,
