@@ -33,6 +33,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
+  {
+    path: 'user/home/wizard',
+    loadChildren: () => import('./components/project/wizard/wizard.module').then( m => m.WizardPageModule)
+  },
+  {
+    path: 'user/home/wizard/info',
+    loadChildren: () => import('./components/project/wizard/info/info.module').then( m => m.InfoPageModule)
+  },
+  {
+    path: 'user/home/wizard/invite',
+    loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
+  },
 
 ];
 

@@ -27,5 +27,16 @@
   "user.home.noTicketsOpen": "Non hai ancora aperto nessun ticket",
   "user.home.noTicketsDone": "Non hai ancora completato nessun ticket",
   "user.home.segments.open": "Aperti",
-  "user.home.segments.done": "Completati"
+  "user.home.segments.done": "Completati",
+  "wizard.continue" : "Avanti",
+  "wizard.complete" : "Conferma",
+  "wizard.info.icon" : "Modifica icona",
+  "wizard.info.name" : "Nome",
+  "wizard.info.key" : "Chiave",
+  "wizard.info.title" : "Crea un progetto",
+  "wizard.invite.title" : "Invita Membri",
+  "wizard.invite.description" : "Fornisci una lista di utenti. Ogni utente riceverà un invito di partecipazione al progetto.",
+  "wizard.invite.mail" : "E-mail",
+  "wizard.invite.add" : "Invita",
+  "wizard.invite.all" : "Tutti gli inviti"
 }
