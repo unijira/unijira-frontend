@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {delay, Observable, of} from 'rxjs';
+import {catchError, delay, Observable, of} from 'rxjs';
 import {Project} from '../../models/projects/Project';
 import {HttpService} from '../http-service.service';
 
@@ -24,6 +24,13 @@ export class ProjectService {
       new Project(4, 'Project 4', 'PRJ-4', null, 1),
       new Project(5, 'Project 5', 'PRJ-5', null, 1),
     ]).pipe(delay(1000));
+
+  }
+
+  createProject(name: string, key: string, icon: URL): Observable<Project> {
+
+    return this.http.post<Project>('/projects', { name, key, icon })
+      .pipe(catchError(() => of(null)));
 
   }
 
