@@ -10,8 +10,6 @@
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
   "register.error.differentPasswords": "I campi password devono essere uguali",
   "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login",
-  "wizard.project.name" : "Nome",
-  "wizard.project.key" : "Chiave",
   "wizard.continue" : "Avanti",
   "wizard.complete" : "Conferma",
   "user.home.createProject" : "Crea Progetto",

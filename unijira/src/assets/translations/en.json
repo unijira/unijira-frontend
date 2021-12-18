@@ -5,6 +5,16 @@
   "loading": "Loading...",
   "welcome": "Welcome to UniJira",
   "login.wrongCredential": "Wrong username or password",
-  "wizard.project.name": "Name",
-  "wizard.project.key": "Key"
+  "wizard.continue" : "Continue",
+  "wizard.complete" : "Complete",
+  "user.home.createProject" : "Create Project",
+  "wizard.info.icon" : "Set Icon",
+  "wizard.info.name" : "Name",
+  "wizard.info.key" : "Key",
+  "wizard.info.title" : "Create Project",
+  "wizard.invite.title" : "Invite Member",
+  "wizard.invite.description" : "Provide a list of users. Each user will receive an invitation to participate in the project.",
+  "wizard.invite.mail" : "E-mail",
+  "wizard.invite.add" : "Invite",
+  "wizard.invite.all" : "All invitations"
 }
