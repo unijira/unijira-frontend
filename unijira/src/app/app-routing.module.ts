@@ -35,18 +35,7 @@ const routes: Routes = [
   },
   {
     path: 'home/projects/wizard',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/wizard.module').then( m => m.WizardPageModule)
-  },
-  {
-    path: 'home/projects/wizard/info',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/info/info.module').then( m => m.InfoPageModule)
-  },
-  {
-    path: 'home/projects/wizard/invite',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
+    loadChildren: () => import('./pages/project/wizard/wizard.module').then( m => m.WizardPageModule)
   },
   {
     path: 'home/projects',
