@@ -1,7 +1,11 @@
-import {Injectable} from "@angular/core";
-import {SessionState} from "./session.reducer";
-import {createFeatureSelector, createReducer, createSelector} from "@ngrx/store";
-import { Store } from '@ngrx/store';
+import {Injectable} from '@angular/core';
+import {SessionState} from './session.reducer';
+import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
+import {catchError, Observable, of} from 'rxjs';
+import {User} from '../models/User';
+import {Error} from '../classes/error';
+import {AccountService} from '../services/account.service';
+
 import {
   errorAction,
   isLoggedAction,
@@ -9,94 +13,112 @@ import {
   logInAction,
   setUserAction,
   wrongCredentialAction
-} from "./session.action";
-import {Observable} from "rxjs";
-import { User } from '../models/User'
-import {Error} from "../classes/error";
-import {AccountService} from "../services/account.service";
+} from './session.action';
 
-@Injectable()
+
+@Injectable({
+  providedIn: 'root'
+})
 export class SessionService {
 
   public token: string;
-  public credential: Credential;
 
   constructor(
     private store: Store,
     private accountService: AccountService
   ) {
-    const tok = sessionStorage.getItem('token');
-    if (tok) {
-      this.saveToken(tok);
+
+    if(localStorage.getItem('token')){
+
+      this.saveToken(localStorage.getItem('token'));
       this.userLogged(true);
+
     }
-    this.getToken().subscribe(tok => this.token = tok);
+
   }
+
 
   toggleLoading(toggle: boolean) {
     this.store.dispatch(loadingAction({loading: toggle}));
   }
 
   userLogged(isLoggedIn: boolean) {
-    this.store.dispatch(isLoggedAction({isLoggedIn: isLoggedIn}));
+    this.store.dispatch(isLoggedAction({isLoggedIn}));
   }
 
   getLoading(): Observable<boolean> {
     const selectLoading = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
-      (state) => {return state.loading});
+      (state) => state.loading);
     return this.store.select(selectLoading);
   }
 
   getIsUserLogged(): Observable<boolean> {
     const selectIsLoggedIn = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
-      (state) => {return state.isLoggedIn});
+      (state) => state.isLoggedIn);
     return this.store.select(selectIsLoggedIn);
   }
+
   setUser(user: User) {
-    this.store.dispatch(setUserAction({ user: user }));
+    this.store.dispatch(setUserAction({ user }));
   }
 
   logIn(username: string, password: string) {
-    this.accountService.logIn(username, password).subscribe(
-      (res: string) => {
-        this.saveToken(res);
-        this.userLogged(true);
-      },
-      err => {
-        const error = Error.toError(err);
-        if (error.status === 401) {
-          this.store.dispatch(wrongCredentialAction({wrongCredential: true}));
-        } else {
-          this.store.dispatch(errorAction({error: error}));
+    this.accountService.logIn(username, password)
+      .pipe(catchError(error => {
+
+        console.error('SessionService.logIn', error);
+
+        switch(error.status) {
+          case 401:
+          case 403:
+            this.store.dispatch(wrongCredentialAction({wrongCredential: true}));
+            break;
+          default:
+            this.store.dispatch(errorAction({error}));
         }
+
+        return of(null);
+
+      })).subscribe(res => {
+
+        this.saveToken(res);
+        this.userLogged(res != null);
+
       });
   }
 
   logout() {
     this.saveToken(null);
     this.userLogged(false);
-
   }
 
   refreshToken(token: string) {
-    this.accountService.refreshToken(token).subscribe(
-      (res: string) => this.saveToken(res),
-      err => this.store.dispatch(errorAction({error: Error.toError(err)}))
-    );
+
+    this.accountService.refreshToken(token)
+      .pipe(catchError(err => {
+
+        this.store.dispatch(errorAction({error: Error.toError(err)}));
+        return of(null);
+
+      })).subscribe(res => this.saveToken(res));
+
   }
 
-  saveToken(token: string) {
-    this.store.dispatch(logInAction({ token: token }));
-    if (token) {
-      sessionStorage.setItem('token', token);
+  saveToken(token?: string) {
+
+    if(token) {
+      localStorage.setItem('token', token);
     } else {
-      sessionStorage.removeItem('token');
+      localStorage.removeItem('token');
     }
+
+    this.store.dispatch(logInAction({ token }));
+
   }
 
   getToken(): Observable<string>{
     const selectToken = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
-      (state) => {return state.token});
+      (state) => state.token);
     return this.store.select(selectToken);
   }
 
@@ -106,7 +128,7 @@ export class SessionService {
 
   getWrongCredential(): Observable<boolean> {
     const selectWrongCred = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
-      (state) => {return state.wrongCredential});
+      (state) => state.wrongCredential);
     return this.store.select(selectWrongCred);
   }
 }

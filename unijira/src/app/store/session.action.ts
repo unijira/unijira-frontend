@@ -1,6 +1,6 @@
-import { createAction, props } from '@ngrx/store';
-import { User } from '../models/User';
-import {Error} from "../classes/error";
+import {createAction, props} from '@ngrx/store';
+import {User} from '../models/User';
+import {Error} from '../classes/error';
 
 export const loadingAction = createAction(
   '[Session] loading',
@@ -31,4 +31,3 @@ export const wrongCredentialAction = createAction(
   '[Session] wrong credential',
   props<{ wrongCredential: boolean }>()
 );
-

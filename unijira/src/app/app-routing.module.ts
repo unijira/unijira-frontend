@@ -1,13 +1,8 @@
-import { NgModule } from '@angular/core';
-import { PreloadAllModules, RouterModule, Routes } from '@angular/router';
-import {AuthGuard} from "./classes/auth-guard";
+import {NgModule} from '@angular/core';
+import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {AuthGuard} from './classes/auth-guard';
 
 const routes: Routes = [
-  {
-    path: 'home',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./home/home.module').then( m => m.HomePageModule)
-  },
   {
     path: '',
     redirectTo: 'home',
@@ -32,6 +27,26 @@ const routes: Routes = [
       import('./activate/activate.module').then(
         (m) => m.ActivatePageModule
       ),
+  },
+  {
+    path: 'home',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
+  },
+  {
+    path: 'home/projects/wizard',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./components/project/wizard/wizard.module').then( m => m.WizardPageModule)
+  },
+  {
+    path: 'home/projects/wizard/info',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./components/project/wizard/info/info.module').then( m => m.InfoPageModule)
+  },
+  {
+    path: 'home/projects/wizard/invite',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
   },
 
 ];
