@@ -18,10 +18,11 @@
                 *ngFor="let task of sprint.tasks"
                 class="ion-align-items-end task-item white-bg"
               >
-                <ion-col size="1">
-                  {{ task.type }} <fa-icon icon="home"></fa-icon>
-                </ion-col>
                 <ion-col (click)="presentModal(task)">
+                  <fa-icon
+                    [icon]="['fas', 'bookmark']"
+                    class="taskicon"
+                  ></fa-icon>
                   {{ task.name }}
                 </ion-col>
                 <ion-col size="2" class="ion-justify-content-end icon-area">

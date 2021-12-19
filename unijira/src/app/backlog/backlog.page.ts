@@ -24,8 +24,6 @@ export class BacklogPage implements OnInit {
   endSpring: String;
   monthNames = monthsName;
 
-  editValue;
-
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
