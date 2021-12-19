@@ -18,6 +18,8 @@ import {EffectsModule} from '@ngrx/effects';
 import {SessionEffects} from './store/session.effects';
 import {sessionReducer} from './store/session.reducer';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
+import {NotifiesComponent} from './components/notifies/notifies.component';
+import {PipeModule} from "./pipe.module";
 
 
 export const createTranslateLoader =
@@ -25,10 +27,11 @@ export const createTranslateLoader =
 
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent],
+  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent, NotifiesComponent ],
   entryComponents: [],
   imports: [
     BrowserModule,
+    PipeModule,
     IonicModule.forRoot(),
     AppRoutingModule,
     StoreModule.forRoot({

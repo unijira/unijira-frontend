@@ -1,0 +1,49 @@
+<ion-content>
+
+  <ion-grid class="ion-margin">
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-text>
+          <h2>{{ 'user.notifies.title' | translate }}</h2>
+        </ion-text>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-chip outline [disabled]="unreadNotifiesCount === 0" (click)="markAll()">
+          <small>{{'user.notifies.markAllAsRead' | translate}}</small>
+        </ion-chip>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <div class="ion-margin" *ngIf="notifies?.length > 0 || true">
+    <ion-list>
+      <ion-item *ngFor="let notify of sortedNotifies" button (click)="mark(notify)">
+        <ion-label>
+          <h3 *ngIf="notify.read === true">{{notify.title | truncate:32}}</h3>
+          <h3 *ngIf="notify.read === false"><b>{{notify.title | truncate:128}}</b></h3>
+          <p>{{notify.message}}</p>
+        </ion-label>
+        <ion-note slot="end">{{notify.createdAt | time | async}}</ion-note>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="notifies === null">
+      <ion-item *ngFor="let notify of [1, 2, 3, 4, 5]">
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-item>
+    </ion-list>
+  </div>
+
+  <div class="ion-margin" *ngIf="notifies?.length === 0">
+    <ion-text color="medium" class="ion-text-center">
+      <p><i>{{'user.notifies.noNotifies' | translate}}</i></p>
+    </ion-text>
+  </div>
+
+  <br>
+
+</ion-content>

@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
 import {unsubscribeAll} from './util';
@@ -10,6 +10,7 @@ import 'moment/locale/en-gb';
 import {UserInfo} from './models/users/UserInfo';
 import {PopoverController} from '@ionic/angular';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
+import {NotifiesComponent} from './components/notifies/notifies.component';
 
 @Component({
   selector: 'app-root',
@@ -18,6 +19,8 @@ import {UserActionPopoverComponent} from './popovers/user-action-popover/user-ac
 })
 
 export class AppComponent implements OnInit, OnDestroy {
+
+  @ViewChild('notifies') notifiesComponent: NotifiesComponent;
 
   pages: any[] = [];
 
@@ -54,6 +57,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
+
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
+
+
+
   ngOnInit() {
     this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
@@ -89,16 +99,21 @@ export class AppComponent implements OnInit, OnDestroy {
     unsubscribeAll(this.loadingSubscription, this.isLoggedSubscription, this.userInfoSubscription);
   }
 
+
+  showNotifies(e?: Event) {
+    this.notifiesComponent.show(e).then();
+  }
+
   async _userPopOver(ev: any) {
     const popOver = await this.popCtrl.create({
       component: UserActionPopoverComponent,
       cssClass: 'my-popover-class',
       event: ev,
-    })
+    });
 
-    popOver.onDidDismiss().then(data=> console.log(data))
+    popOver.onDidDismiss().then(data=> console.log(data));
 
-    return await popOver.present()
+    return await popOver.present();
   }
 
 

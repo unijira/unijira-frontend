@@ -1,4 +1,5 @@
 {
+  "app.title": "Unijira",
   "error.title": "Error",
   "error.auth.unexpected": "There was an unexpected error while trying to authenticate you",
   "error.auth.invalid": "Username or password is invalid",
@@ -34,6 +35,10 @@
   "user.projects.search": "Search projects",
   "user.projects.noProjects": "No projects yet",
   "user.projects.createProject": "Create a new project",
+  "user.notifies.title": "Notifications",
+  "user.notifies.loading": "Loading notifications...",
+  "user.notifies.noNotifies": "No notifications yet",
+  "user.notifies.markAllAsRead": "Mark all as read",
   "wizard.continue" : "Continue",
   "wizard.complete" : "Complete",
   "wizard.info.icon" : "Set Icon",

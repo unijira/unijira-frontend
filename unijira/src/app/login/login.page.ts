@@ -1,6 +1,6 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../store/session.service';
 import {Subscription} from 'rxjs';
 import {unsubscribeAll} from '../util';
@@ -32,12 +32,13 @@ export class LoginPage implements OnInit, OnDestroy {
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private sessionService: SessionService
   ) {
 
     this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
       if (logged === true) {
-        this.router.navigate(['/home']);
+        this.redirect();
       }
     });
 
@@ -68,5 +69,12 @@ export class LoginPage implements OnInit, OnDestroy {
     unsubscribeAll(this.formControlSubscription, this.loginSubscription, this.wrongCredentialSubscription);
   }
 
+  private redirect() {
+    if(this.route.snapshot.paramMap.has('returnUrl')) {
+      this.router.navigate([this.route.snapshot.paramMap.get('returnUrl')]).then();
+    } else {
+      this.router.navigate(['/home']).then();
+    }
+  }
 
 }
