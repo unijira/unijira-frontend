@@ -34,7 +34,6 @@ export class LoginPage implements OnInit, OnDestroy {
     private router: Router,
     private sessionService: SessionService
   ) {
-    this.sessionService.logout();
 
     this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
       if (logged === true) {

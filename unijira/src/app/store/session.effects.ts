@@ -1,6 +1,6 @@
 import {Actions, createEffect, ofType} from '@ngrx/effects';
 import {tap} from 'rxjs';
-import {errorAction} from './session.action';
+import {errorAction, logOutAction} from './session.action';
 import {SessionService} from './session.service';
 import {Injectable} from '@angular/core';
 import {AlertController} from '@ionic/angular';
@@ -13,16 +13,21 @@ import {presentAlertConfirm} from '../util';
 )
 export class SessionEffects {
 
-  public errorEffect = createEffect(
+  public logOutEffect = createEffect(() => this.actions.pipe(
+    ofType(logOutAction), tap(() => {
+      this.router.navigate(['/login']).then();
+    })
+  ), {dispatch: false});
 
-    () => this.actions.pipe(ofType(errorAction), tap(action => {
+
+  public errorEffect = createEffect(() => this.actions.pipe(
+    ofType(errorAction), tap(action => {
 
       switch(action.error.status) {
 
         case 403:
         case 418:
           this.sessionService.logout();
-          this.router.navigate(['/login']).then();
           break;
 
         case 500:

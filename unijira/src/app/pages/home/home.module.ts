@@ -8,7 +8,7 @@ import {HomePageRoutingModule} from './home-routing.module';
 
 import {HomePage} from './home.page';
 import {TranslateModule} from '@ngx-translate/core';
-import {TimePipe} from '../../pipes/time.pipe';
+import {PipeModule} from '../../pipe.module';
 
 @NgModule({
   imports: [
@@ -17,7 +17,8 @@ import {TimePipe} from '../../pipes/time.pipe';
     IonicModule,
     HomePageRoutingModule,
     TranslateModule,
+    PipeModule
   ],
-  declarations: [HomePage, TimePipe]
+  declarations: [HomePage]
 })
 export class HomePageModule {}

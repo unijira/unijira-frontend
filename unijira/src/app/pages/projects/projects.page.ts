@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
+import {TimePipe} from '../../pipes/time.pipe';
+import {FilteredPipe} from '../../pipes/filtered.pipe';
 
 @Component({
   selector: 'app-projects',
