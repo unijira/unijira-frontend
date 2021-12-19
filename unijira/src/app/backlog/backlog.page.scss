@@ -1,5 +1,45 @@
 @import url("https://cdnjs.cloudflare.com/ajax/libs/angular-dragula/1.2.8/dragula.css");
 
+ion-input {
+  // border-radius: 10px !important;
+  // padding-right: 30px;
+  font-size: 0.9em;
+  border: 1px solid #f1f1f1 !important;
+  // --background: rgb(219, 219, 219) !important;
+  height: 10%;
+  width: 41%;
+  max-width: 50vw; // this is applying perfectly
+  max-height: 10px;
+}
+
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
+}
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
 .sprint,
 .backlog {
   padding: 10px;
@@ -65,10 +105,9 @@
 
 .edit-icon:hover {
   color: #1877f2;
-} /*change to red just to show that the color is actually changing */
+}
 
 .task-item {
-  // background-color: red;
   padding: 5px;
   margin: 5px;
   border-radius: 5px;
@@ -100,7 +139,7 @@
 }
 .task-item,
 .task-item > * {
-  height: 50px !important;
+  height: 65px !important;
 }
 
 ion-icon {
@@ -115,101 +154,16 @@ ion-icon {
   font-size: 16px;
 }
 
-// .status-item {
-//   width: 200px;
-//   color: darkred;
-//   font-weight: bold;
-//   max-height: unset;
-//   font-size: 12px;
-//   padding: 0;
-//   background-color: red;
-// }
-
-// .status-item > * {
-//   padding: 0;
-// }
-
-// .status-select {
-//   padding: 0;
-// }
-
-// .status-select:host {
-// }
-// .item-inner {
-//   padding: 0 !important;
-// }
-// .select-icon {
-//   display: none !important;
-// }
-
-// .item-native {
-//   padding: 0;
-// }
-
-// .taskicon {
-//   font-size: 1rem;
-// }
-
-// item-input {
-//   height: 20px;
-//   color: red;
-// }
-
-// .item-native {
-//   padding-inline-start: 0 !important;
-//   padding-inline-end: 0 !important;
-// }
-
-// .no-inline-padding {
-//   padding-inline-start: 0 !important;
-//   padding-inline-end: 0 !important;
-// }
-
-// .native-input.sc-ion-input-md {
-//   padding-left: unset;
-//   padding-right: unset;
-//   -webkit-padding-start: 0;
-//   padding-inline-start: 0;
-//   -webkit-padding-end: 0;
-//   padding-inline-end: 0;
-// }
-
-ion-input {
-  border-radius: 10px !important;
-  padding-right: 30px;
-  font-size: 0.9em;
-  border: 1px solid #f1f1f1 !important;
-  --background: rgb(219, 219, 219) !important;
-  /* height: 10%; */
-  /* width: 41%; */
-  max-width: 50vw; // this is applying perfectly
-  max-height: 10px;
+label {
+    --background: rgb(240, 65, 65) !important;
 }
 
-/* in-flight clone */
-.gu-mirror {
-  position: fixed !important;
-  margin: 0 !important;
-  z-index: 9999 !important;
-  opacity: 0.8;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
-  filter: alpha(opacity=80);
-  pointer-events: none;
+.backlog-edit-weight-popover {
+  color: red;
 }
-/* high-performance display:none; helper */
-.gu-hide {
-  left: -9999px !important;
-}
-/* added to mirrorContainer (default = body) while dragging */
-.gu-unselectable {
-  -webkit-user-select: none !important;
-  -moz-user-select: none !important;
-  -ms-user-select: none !important;
-  user-select: none !important;
-}
-/* added to the source element while its mirror is dragged */
-.gu-transit {
-  opacity: 0.2;
-  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
-  filter: alpha(opacity=20);
+
+
+.taskicon {
+  font-size: 1.4rem;
+  color: green
 }

@@ -6,13 +6,14 @@ import { Sprint } from '../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../store/task.service';
 import * as TaskActions from '../store/task.action';
-import { Store } from '@ngrx/store';
+import { Store, props } from '@ngrx/store';
 import * as _ from 'lodash';
 import { BlDetailComponent } from '../bl-detail/bl-detail.component';
 import { ModalController, SpinnerTypes } from '@ionic/angular';
-
 import { BacklogAPIService } from '../services/backlog-api.service';
-
+import { PopoverController } from '@ionic/angular';
+import { BacklogEditWeightPopoversComponent } from '../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from '../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -31,7 +32,8 @@ export class BacklogPage implements OnInit {
     private taskService: TaskService,
     private store: Store,
     public modalController: ModalController,
-    private backlogAPIService: BacklogAPIService
+    private backlogAPIService: BacklogAPIService,
+    private popOverCtrl: PopoverController
   ) {
     let that = this;
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
@@ -55,7 +57,9 @@ export class BacklogPage implements OnInit {
     });
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getFromApi();
+  }
 
   /* MODAL */
   async presentModal(task) {
@@ -109,6 +113,7 @@ export class BacklogPage implements OnInit {
   }
 
   editWeight($event, task, type) {
+    console.log("Edit Weight", $event, task, type);
     if (
       $event.detail.value === '' ||
       $event.detail.value === null ||
@@ -178,4 +183,41 @@ export class BacklogPage implements OnInit {
       console.log(response);
     });
   }
+
+  async editPesoPopover(ev: any, peso) {
+    const popOver = await this.popOverCtrl.create({
+      component: BacklogEditWeightPopoversComponent,
+      cssClass: 'backlog-edit-weight-popover',
+      event: ev,
+      translucent: true,
+      componentProps: {
+        pesoOriginal: peso,
+      },
+    });
+
+    popOver.onDidDismiss().then((data) => console.log(data));
+
+    return await popOver.present();
+  }
+
+
+
+  async editStatusPopover(ev: any, status) {
+    const popOver = await this.popOverCtrl.create({
+      component: BacklogEditStatusPopoversComponent,
+      cssClass: 'backlog-edit-weight-popover',
+      event: ev,
+      translucent: true,
+      componentProps: {
+        statusOriginal: status,
+      },
+    });
+
+    popOver.onDidDismiss().then((data) => console.log(data));
+
+    return await popOver.present();
+  }
+
+
+
 }

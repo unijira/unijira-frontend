@@ -1,0 +1,20 @@
+$popover-md-width: 10px;
+$popover-ios-width: 10px;
+$popover-wp-width: 10px;
+
+ion-popover {
+  ion-backdrop {
+    opacity: 0.5 !important;
+  }
+  .popover-wrapper {
+    .popover-content {
+      width: 80vw;
+      max-width: 10px;
+    }
+  }
+}
+
+
+ion-popover {
+	--width: 20px;
+}

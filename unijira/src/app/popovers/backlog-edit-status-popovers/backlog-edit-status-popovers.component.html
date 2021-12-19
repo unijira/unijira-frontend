@@ -1,0 +1,19 @@
+<ion-row>
+  <ion-item class="status-item">
+    <ion-label class="success">{{ statusOriginale }}</ion-label>
+    <ion-select class="status-select">
+      <ion-select-option value="da_completare">Da Completare</ion-select-option>
+      <ion-select-option value="completato">Completata</ion-select-option>
+      <ion-select-option value="in_corso">In Corso</ion-select-option>
+    </ion-select>
+  </ion-item>
+</ion-row>
+
+<ion-row>
+  <ion-button (click)="save()" size="small" color="success">
+    <fa-icon [icon]="['fas', 'check']" class="okicon"></fa-icon>
+  </ion-button>
+  <ion-button (click)="dismiss()" size="small" color="danger">
+    <fa-icon [icon]="['fas', 'times']" class="noicon"></fa-icon>
+  </ion-button>
+</ion-row>

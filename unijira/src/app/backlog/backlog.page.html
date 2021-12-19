@@ -2,7 +2,7 @@
   <div class="page">
     <ion-row>
       <ion-col>
-        <h1>Sprint</h1>
+        <h1 (click)="editPesoPopover($event)">Sprint</h1>
         <div class="sprint">
           <div *ngIf="!sprint || !sprint.tasks">
             <p>Sprint vuoto</p>
@@ -18,47 +18,58 @@
                 *ngFor="let task of sprint.tasks"
                 class="ion-align-items-end task-item white-bg"
               >
-                <ion-col (click)="presentModal(task)">
+                <ion-col size="1">
                   <fa-icon
                     [icon]="['fas', 'bookmark']"
                     class="taskicon"
                   ></fa-icon>
+                </ion-col>
+
+                <ion-col (click)="presentModal(task)">
                   {{ task.name }}
                 </ion-col>
-                <ion-col size="2" class="ion-justify-content-end icon-area">
-                  <!-- <ion-badge color="medium"  >{{ task.weight}}</ion-badge> -->
 
-                  <ion-item class="weitght-field">
-                    <ion-input
-                      inputmode="numeric"
-                      (ionInput)="editWeight($event, task, 'sprint')"
-                      placeholder="{{task.weight}}"
-                    ></ion-input>
-                  </ion-item>
-                  <ion-item>
-                    <ion-label class="success">{{task.status}}</ion-label>
-                    <ion-select
-                      (ionChange)="editStatus($event, task, 'sprint')"
+                <ion-col size="1" class="ion-justify-content-center">
+                  <div (click)="editPesoPopover($event, task.weight)">
+                    <ion-badge
+                      class="weight-badge"
+                      color="primary"
+                      (save)="editWeight($event, task, 'backlog')"
                     >
-                      <ion-select-option value="da_completare"
-                        >Da Completare</ion-select-option
-                      >
-                      <ion-select-option value="completata"
-                        >Completata</ion-select-option
-                      >
-                      <ion-select-option value="in_corso"
-                        >In Corso</ion-select-option
-                      >
-                    </ion-select>
-                  </ion-item>
-
+                      {{ task.weight }}
+                    </ion-badge>
+                  </div> </ion-col
+                ><ion-col
+                  size="1"
+                  class="ion-justify-content-center"
+                  (click)="editStatusPopover($event, task.status)"
+                >
+                  <ion-badge
+                    *ngIf="task.status === 'da_completare' "
+                    color="medium"
+                    >{{ task.status }}</ion-badge
+                  >
+                  <ion-badge
+                    *ngIf="task.status === 'completata' "
+                    color="success"
+                    >{{ task.status }}</ion-badge
+                  >
+                  <ion-badge *ngIf="task.status === 'in_corso' " color="primary"
+                    >{{ task.status }}</ion-badge
+                  >
+                </ion-col>
+                <ion-col size="1" class="ion-justify-content-center">
                   <ion-icon
                     *ngIf="task.children?.length > 0"
                     name="git-branch"
                   ></ion-icon>
+                </ion-col>
+                <ion-col size="1" class="ion-justify-content-center">
                   <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
                     <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
                   </ion-thumbnail>
+                </ion-col>
+                <ion-col size="1" class="ion-justify-content-center">
                   <ion-icon class="edit-icon" name="create"></ion-icon>
                 </ion-col>
               </ion-row>

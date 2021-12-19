@@ -1,3 +1,5 @@
+import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -19,7 +21,6 @@ import { EffectsModule } from '@ngrx/effects';
 import { SessionEffects } from './store/session.effects';
 import { sessionReducer } from './store/session.reducer';
 import { UserActionPopoverComponent } from './popovers/user-action-popover/user-action-popover.component';
-
 import {
   FontAwesomeModule,
   FaIconLibrary,
@@ -27,12 +28,12 @@ import {
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-
+import { FormsModule } from '@angular/forms';
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent],
+  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent, BacklogEditWeightPopoversComponent, BacklogEditStatusPopoversComponent],
   entryComponents: [],
   imports: [
     BrowserModule,
@@ -54,6 +55,7 @@ export const createTranslateLoader = (http: HttpClient) =>
       logOnly: false,
     }),
     EffectsModule.forRoot([SessionEffects]),
+    FormsModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
