@@ -19,8 +19,8 @@ import { BacklogAPIService } from '../services/backlog-api.service';
   styleUrls: ['./backlog.page.scss'],
 })
 export class BacklogPage implements OnInit {
-  sprint: Sprint = new Sprint();
-  backlog: Sprint = new Sprint();
+  sprint: Sprint = new Sprint([], new Date(), new Date());
+  backlog: Sprint = new Sprint([], new Date(), new Date());
 
   startSpring: String;
   endSpring: String;
@@ -130,15 +130,7 @@ export class BacklogPage implements OnInit {
   }
   ngOnInit() {}
   addTask() {
-    let task = new Task();
-    task.name = 'Task random';
-    task.type = 'task';
-    task.status = 'da completare';
-    task.weight = 1;
-    task.children = [];
-    task.assignedTo = [];
-    task.assignedTo.push(new User());
-    task.assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
+    let task = new Task(0, "Task random", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]);
     let backlog = _.clone(this.backlog);
     backlog.tasks.push(task);
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
@@ -164,67 +156,31 @@ export class BacklogPage implements OnInit {
   }
 
   populate() {
-    let sprint = new Sprint();
-    let backlog = new Sprint();
+    let sprint = new Sprint([], new Date(), new Date());
+    let backlog = new Sprint([], new Date(), new Date());
     sprint.start = new Date('2021-11-18');
     sprint.end = new Date('2021-12-18');
 
-    // startSpring = `${sprint.start.getDay()} ${
-    //   monthNames[sprint.start.getMonth()]
-    // }`;
-    // endSpring = `${sprint.end.getDay()} ${monthNames[sprint.end.getMonth()]}`;
 
-    backlog.tasks = [];
-    backlog.tasks.push(new Task());
-    backlog.tasks.push(new Task());
-    backlog.tasks.push(new Task());
-    backlog.tasks[0].name = 'Task 0';
-    backlog.tasks[1].name = 'Task 1';
-    backlog.tasks[2].name = 'Task 2';
+    backlog.tasks.push(new Task(1, "Task 1", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
+    backlog.tasks.push(new Task(2, "Task 2", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
+    backlog.tasks.push(new Task(3, "Task 3", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
 
-    backlog.tasks[0].id = 0;
-    backlog.tasks[1].id = 1;
-    backlog.tasks[2].id = 2;
-
-    backlog.tasks[0].type = 'task';
-    backlog.tasks[1].type = 'task';
-    backlog.tasks[2].type = 'task';
-
-    backlog.tasks[0].status = 'da completare';
-    backlog.tasks[1].status = 'completata';
-    backlog.tasks[2].status = 'in corso';
-
-    backlog.tasks[0].weight = 1;
-    backlog.tasks[1].weight = 2;
-    backlog.tasks[2].weight = 3;
-
-    backlog.tasks[0].children = [];
-    backlog.tasks[0].children.push(new Task());
-    backlog.tasks[0].children.push(new Task());
-    backlog.tasks[0].children.push(new Task());
-
-    backlog.tasks[0].children[0].name = 'Task 0.0';
-    backlog.tasks[0].children[1].name = 'Task 0.0';
-    backlog.tasks[0].children[2].name = 'Task 0.0';
+    backlog.tasks[0].children.push(new Task(4, "Task 4", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
+    backlog.tasks[0].children.push(new Task(5, "Task 5", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
+    backlog.tasks[0].children.push(new Task(6, "Task 6", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
 
     backlog.tasks[0].assignedTo = [];
-    backlog.tasks[0].assignedTo.push(new User());
+    backlog.tasks[0].assignedTo.push(new User(1, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
     backlog.tasks[1].assignedTo = [];
-    backlog.tasks[1].assignedTo.push(new User());
+    backlog.tasks[1].assignedTo.push(new User(2, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
     backlog.tasks[2].assignedTo = [];
-    backlog.tasks[2].assignedTo.push(new User());
+    backlog.tasks[2].assignedTo.push(new User(3, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
 
     backlog.tasks[0].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
     backlog.tasks[1].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Paola+Guarasci`;
     backlog.tasks[2].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Ciccio+Pasticcio`;
 
-    backlog.tasks[0].assignedTo[0].username = `Paola`;
-    backlog.tasks[1].assignedTo[0].username = `Daniele`;
-    backlog.tasks[2].assignedTo[0].username = `Pietro`;
-
-    sprint.tasks = [];
-    sprint.tasks.push(new Task());
-    sprint.tasks[0].name = 'Task N';
     this.backlog = backlog;
     this.sprint = sprint;
     let tmpS = _.clone(sprint);
@@ -234,13 +190,14 @@ export class BacklogPage implements OnInit {
   }
 
   getFromApi() {
+    let that = this;
     console.log('GET FROM API');
-    this.backlogAPIService.getB().subscribe((response) => {
-      console.log(response);
+    this.backlogAPIService.getBacklog().subscribe((response) => {
+      that.backlog = _.clone(response);
     });
 
-    this.backlogAPIService.getS().subscribe((response) => {
-      console.log(response);
+    this.backlogAPIService.getSprint().subscribe((response) => {
+      this.sprint = _.clone(response);
     });
   }
 
@@ -251,11 +208,11 @@ export class BacklogPage implements OnInit {
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
-    this.backlogAPIService.setB(this.backlog).subscribe((response) => {
+    this.backlogAPIService.setBacklog(this.backlog).subscribe((response) => {
       console.log(response);
     });
 
-    this.backlogAPIService.setS(this.sprint).subscribe((response) => {
+    this.backlogAPIService.setSprint(this.sprint).subscribe((response) => {
       console.log(response);
     });
   }

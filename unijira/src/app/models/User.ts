@@ -1,9 +1,26 @@
 export class User {
-  id: string;
+  id: number;
   username: string;
   password: string;
   firstName: string;
   lastName: string;
   token: string;
   avatar: string;
+  constructor(
+    id: number,
+    username: string,
+    password: string,
+    firstName: string,
+    lastName: string,
+    token: string,
+    avatar: string
+  ) {
+    this.id = id ?? -1;
+    this.username = username ?? '';
+    this.password = password ?? '';
+    this.firstName = firstName ?? '';
+    this.lastName = lastName ?? '';
+    this.token = token ?? '';
+    this.avatar = avatar ?? '';
+  }
 }

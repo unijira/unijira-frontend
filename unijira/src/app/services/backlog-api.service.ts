@@ -2,6 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpService } from './http-service.service';
 import { SessionService } from './../store/session.service';
 import { Sprint } from '../models/Sprint';
+import { Task } from '../models/Task';
+import { User } from '../models/User';
+import { map } from 'rxjs/operators';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -10,27 +14,24 @@ export class BacklogAPIService {
     private httpService: HttpService,
     private sessionService: SessionService
   ) {}
-  getB() {
-    let token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MzM3NzUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTMwMTc1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.e3SKsl2PgBpD3ciqZ4pFAnEIfcJUHaVgeiBGj7j9p3c';
-    return this.httpService.sendGetWithAuth('backlog/', token);
+
+  getBacklog() {
+    return this.httpService.get<Sprint>(`backlog/`);
   }
 
-  getS() {
-    let token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MzM3NzUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTMwMTc1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.e3SKsl2PgBpD3ciqZ4pFAnEIfcJUHaVgeiBGj7j9p3c';
-    return this.httpService.sendGetWithAuth('sprint/', token);
+  getSprint() {
+    return this.httpService.get<Sprint>(`sprint/`);
   }
 
-  setB(backlog: Sprint) {
-    let token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MzM3NzUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTMwMTc1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.e3SKsl2PgBpD3ciqZ4pFAnEIfcJUHaVgeiBGj7j9p3c';
-    return this.httpService.sendPostWithAuthJson('backlog/', token, backlog);
+  setBacklog(backlog: Sprint) {
+    return this.httpService.post<Sprint>(`backlog/`, backlog);
   }
 
-  setS(sprint: Sprint) {
-    let token =
-      'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MzM3NzUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTMwMTc1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.e3SKsl2PgBpD3ciqZ4pFAnEIfcJUHaVgeiBGj7j9p3c';
-    return this.httpService.sendPostWithAuthJson('sprint/', token, sprint);
+  setSprint(sprint: Sprint) {
+    return this.httpService.post<Sprint>(`sprint/`, sprint);
   }
+
+
+
+
 }

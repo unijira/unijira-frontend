@@ -11,8 +11,8 @@ export interface TaskState {
   sprint: Sprint;
 }
 export const initialState: TaskState = {
-  backlog: new Sprint(),
-  sprint: new Sprint(),
+  backlog: new Sprint([], new Date(), new Date()),
+  sprint: new Sprint([], new Date(), new Date()),
 };
 
 export const taskReducer = createReducer(

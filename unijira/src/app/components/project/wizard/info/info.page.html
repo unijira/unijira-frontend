@@ -1,0 +1,62 @@
+<!-- Project Wizard Info -->
+<div id="wizard-info">
+
+  <!-- Info Description -->
+  <ion-row class="ion-padding-start">
+    <h1 [translate]="'wizard.info.title'"></h1>
+  </ion-row>
+
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+  <ion-grid>
+
+    <!-- Project Icon -->
+    <ion-row class="ion-justify-content-center">
+      <div class="project-image">
+        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRkyjFt2NbHXd2NSms5s25HxbSjXQ54qjy19w&usqp=CAU"/>
+      </div>
+    </ion-row>
+
+    <br>
+
+    <!-- Project Icon Selection -->
+    <ion-row class="ion-justify-content-center">
+      <ion-button color="light" [translate]="'wizard.info.icon'"></ion-button>
+    </ion-row>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- Project Name -->
+    <ion-row class="ion-justify-content-center">
+      <ion-item lines="full">
+        <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
+        <ion-input type="text" [(ngModel)]="name"></ion-input>
+      </ion-item>
+    </ion-row>
+
+    <br>
+    <br>
+
+    <!-- Project Key -->
+    <ion-row class="ion-justify-content-center">
+      <ion-item lines="full">
+        <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
+        <ion-input type="text" [(ngModel)]="key"></ion-input>
+      </ion-item>
+    </ion-row>
+
+  </ion-grid>
+
+  <br>
+  <br>
+  <br>
+  <br>
+
+</div>

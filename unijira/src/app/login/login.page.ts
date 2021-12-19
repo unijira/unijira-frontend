@@ -1,9 +1,9 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
-import {FormControl, FormGroup, Validators} from "@angular/forms";
-import {Router} from "@angular/router";
-import {SessionService} from "../store/session.service";
-import {combineLatest, Subscription} from "rxjs";
-import {unsubscribeAll} from "../util";
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {SessionService} from '../store/session.service';
+import {Subscription} from 'rxjs';
+import {unsubscribeAll} from '../util';
 
 @Component({
   selector: 'app-login',
@@ -34,7 +34,6 @@ export class LoginPage implements OnInit, OnDestroy {
     private router: Router,
     private sessionService: SessionService
   ) {
-    this.sessionService.logout();
 
     this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
       if (logged === true) {

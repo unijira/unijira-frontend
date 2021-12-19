@@ -1,0 +1,61 @@
+<!-- Project Invite Page -->
+<div id="wizard-invite">
+
+  <!-- Invite Header -->
+  <ion-grid>
+    <ion-row class="ion-padding-start">
+      <h1 [translate]="'wizard.invite.title'"></h1>
+    </ion-row>
+  </ion-grid>
+
+  <br>
+  <br>
+  <br>
+
+  <ion-grid>
+
+    <!-- Invite Image -->
+    <ion-row class="ion-justify-content-center">
+      <img src="/assets/img/mail.webp" class="wizard-invite-header-image" alt="">
+    </ion-row>
+
+    <br>
+    <br>
+
+    <!-- Invite Member -->
+    <ion-row class="ion-justify-content-center">
+
+        <ion-item lines="full">
+          <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
+          <ion-input type="text" [formControl]="mailForm"></ion-input>
+        </ion-item>
+
+        <div class="ion-align-self-center ion-padding-start">
+          <ion-button [translate]="'wizard.invite.add'" (click)="invite()"></ion-button>
+        </div>
+
+    </ion-row>
+
+    <br>
+    <br>
+
+    <!-- All invitations -->
+
+    <ion-row class="ion-justify-content-center">
+
+      <ion-chip *ngFor="let invite of invites">
+        <ion-icon name="mail-outline"></ion-icon>
+        <ion-label>{{invite}}</ion-label>
+        <ion-icon name="close-circle-outline" (click)="delete(invite)"></ion-icon>
+      </ion-chip>
+
+    </ion-row>
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+  </ion-grid>
+
+</div>

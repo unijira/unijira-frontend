@@ -1,11 +1,15 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { SessionState } from './store/session.reducer';
-import { Subscription } from 'rxjs';
-import { SessionService } from './store/session.service';
-import { unsubscribeAll } from './util';
-import { Router } from '@angular/router';
-import { TranslateService } from '@ngx-translate/core';
-
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import {SessionService} from './store/session.service';
+import {unsubscribeAll} from './util';
+import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import * as moment from 'moment';
+import 'moment/locale/it';
+import 'moment/locale/en-gb';
+import {UserInfo} from './models/users/UserInfo';
+import {PopoverController} from '@ionic/angular';
+import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
 import {
   FontAwesomeModule,
   FaIconLibrary,
@@ -13,12 +17,12 @@ import {
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
-
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
 })
+
 export class AppComponent implements OnInit, OnDestroy {
   pages: any[] = [];
 
@@ -27,34 +31,45 @@ export class AppComponent implements OnInit, OnDestroy {
 
   isLoggedSubscription: Subscription;
   isLogged = false;
+
+  userInfoSubscription: Subscription;
+  userInfo: UserInfo;
+
   constructor(
     public sessionService: SessionService,
     public router: Router,
     public translateService: TranslateService,
     library: FaIconLibrary,
+    private popCtrl: PopoverController
   ) {
     library.addIconPacks(fas, fab, far);
     this.loadingSubscription = sessionService.getLoading().subscribe((load) => {
       this.loading = load;
     });
 
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
+
     translateService.setDefaultLang('it');
     translateService.use('it');
+    translateService.onLangChange.subscribe(() => {
+      moment.locale(translateService.currentLang);
+    });
 
-    // this.pages.push({name: "home", url: "/home"});
-    this.pages.push({ name: 'backlog', url: '/backlog' });
-    this.pages.push({ name: 'test', url: '/test' });
+    moment.locale('it');
+
+    this.pages.push({name: 'home', url: '/home'});
+    this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
   ngOnInit() {
-    this.isLoggedSubscription = this.sessionService
-      .getIsUserLogged()
-      .subscribe((log) => {
-        this.isLogged = log;
-        if (!log) {
-          this.router.navigate(['/login']);
-        }
-      });
+    this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
+      this.isLogged = log;
+      if (!log){
+        //this.router.navigate(['/login']);
+      } else {
+        this.sessionService.loadUserInfo();
+      }
+    });
   }
 
   onToggleColorTheme(event) {
@@ -78,6 +93,20 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    unsubscribeAll(this.loadingSubscription);
+    unsubscribeAll(this.loadingSubscription, this.isLoggedSubscription, this.userInfoSubscription);
   }
+
+  async _userPopOver(ev: any) {
+    const popOver = await this.popCtrl.create({
+      component: UserActionPopoverComponent,
+      cssClass: 'my-popover-class',
+      event: ev,
+    })
+
+    popOver.onDidDismiss().then(data=> console.log(data))
+
+    return await popOver.present()
+  }
+
+
 }

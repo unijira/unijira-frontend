@@ -136,6 +136,19 @@
       </ion-col>
     </ion-row>
     <ion-row>
+
+
+      <ion-col>
+        <ion-button
+          (click)="populate()"
+          expand="block"
+          color="primary"
+          class="add-task-button"
+        >
+          Init RAW
+        </ion-button>
+      </ion-col>
+
       <ion-col>
         <ion-button
           (click)="getFromApi()"
@@ -158,26 +171,7 @@
       >
 
 
-      <ion-col>
-        <ion-button
-          (click)="populate()"
-          expand="block"
-          color="primary"
-          class="add-task-button"
-        >
-          Init RAW
-        </ion-button>
-      </ion-col>
-      <ion-col>
-        <ion-button
-          (click)="addTask()"
-          expand="block"
-          color="primary"
-          class="add-task-button"
-        >
-          Add random task
-        </ion-button>
-      </ion-col>
+
     </ion-row>
   </div>
 </ion-content>
