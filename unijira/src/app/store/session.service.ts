@@ -14,7 +14,7 @@ import {
   setUserAction, userInfoAction,
   wrongCredentialAction
 } from './session.action';
-import {UserInfo} from "../models/users/UserInfo";
+import {UserInfo} from '../models/users/UserInfo';
 
 
 @Injectable({
@@ -139,9 +139,8 @@ export class SessionService {
   }
 
   loadUserInfo() {
-    this.accountService.me().subscribe(
-      (info: any) => this.setUserInfo(UserInfo.toUserInfo(info)),
-      (err) => this.store.dispatch(errorAction({error : Error.toError(err)})));
+    this.accountService.me()
+      .subscribe(user => this.setUserInfo(user));
   }
 
   getUserInfo(): Observable<UserInfo> {

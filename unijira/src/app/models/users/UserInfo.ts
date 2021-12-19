@@ -10,6 +10,9 @@ export class UserInfo {
   ) {
   }
 
+  // NOTE: HttpService converte in automatico da json a UserInfo
+  // NOTE: Se non serve per altro, si puà anche eliminare
+  /** @deprecated **/
   static toUserInfo(json: any): UserInfo {
 
     return new UserInfo(
@@ -19,6 +22,6 @@ export class UserInfo {
       json.disabled,
       json.createdAt,
       json.updatedAt
-    )
+    );
   }
 }
