@@ -1,18 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import { AccountService } from '../services/account.service';
-import { HostListener } from '@angular/core';
-import {AbstractControl, FormControl, FormGroup, Validators} from '@angular/forms';
-import { Router } from '@angular/router';
-import { SessionService } from '../store/session.service';
-import {TranslateModule, TranslateService} from "@ngx-translate/core";
-import {Subscription} from "rxjs";
-import {
-  getTranslation,
-  presentAlertConfirm,
-  unsubscribeAll,
-  validateConfirmPassword
-} from "../util";
-import {AlertController} from "@ionic/angular";
+import {AccountService} from '../services/account.service';
+import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
+import {SessionService} from '../store/session.service';
+import {TranslateService} from '@ngx-translate/core';
+import {Subscription} from 'rxjs';
+import {getTranslation, presentAlertConfirm, unsubscribeAll, validateConfirmPassword} from '../util';
+import {AlertController} from '@ionic/angular';
 
 @Component({
   selector: 'app-registration',
@@ -35,8 +29,8 @@ export class RegistrationPage implements OnInit, OnDestroy {
     Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'),
   ]);
 
-  serverResponseOk: String = null;
-  serverResponseErr: String = null;
+  serverResponseOk: string = null;
+  serverResponseErr: string = null;
   error = '';
 
   registrationFG: FormGroup = new FormGroup({
@@ -65,7 +59,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
       this.registrationFG.valid &&
       this.passwordFC1.value === this.passwordFC2.value
     ) {
-      let user = {
+      const user = {
         username: this.emailFC.value,
         password: this.passwordFC1.value,
       };
@@ -75,7 +69,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
           this.router.navigate(['/login']);
           presentAlertConfirm(this.alertController,
             getTranslation(this.translateService, 'welcome'),
-            getTranslation(this.translateService, 'register.registrationDone'));
+            getTranslation(this.translateService, 'register.registrationDone')).then();
           // this.serverResponseOk = 'OK';
           // this.serverResponseErr = '';
           // this.registrationFG.reset();

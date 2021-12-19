@@ -7,17 +7,18 @@ import {IonicModule} from '@ionic/angular';
 import {ProjectsPageRoutingModule} from './projects-routing.module';
 
 import {ProjectsPage} from './projects.page';
-import {TranslatePipe} from '@ngx-translate/core';
-import {TimePipe} from '../../pipes/time.pipe';
-import {FilteredPipe} from '../../pipes/filtered.pipe';
+import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../pipe.module';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ProjectsPageRoutingModule
+    ProjectsPageRoutingModule,
+    TranslateModule,
+    PipeModule
   ],
-  declarations: [ProjectsPage, TranslatePipe, TimePipe, FilteredPipe]
+  declarations: [ProjectsPage]
 })
 export class ProjectsPageModule {}

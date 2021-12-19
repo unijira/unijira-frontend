@@ -3,11 +3,13 @@ import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
 import {Ticket} from '../../models/projects/Ticket';
 import {TicketService} from '../../services/common/ticket.service';
+import {TimePipe} from '../../pipes/time.pipe';
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
+  providers: [TimePipe]
 })
 export class HomePage implements OnInit {
 

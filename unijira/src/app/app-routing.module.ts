@@ -50,6 +50,7 @@ const routes: Routes = [
   },
   {
     path: 'home/projects',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
   },
 
@@ -59,6 +60,7 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
   ],
+  providers: [AuthGuard],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

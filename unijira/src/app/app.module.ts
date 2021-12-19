@@ -50,7 +50,7 @@ export const createTranslateLoader =
     EffectsModule.forRoot([SessionEffects]),
   ],
   providers: [{provide: RouteReuseStrategy, useClass: IonicRouteStrategy}, SessionService, AuthGuard],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
 

@@ -58,7 +58,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
       if (!log){
-        this.router.navigate(['/login']);
+        //this.router.navigate(['/login']);
       } else {
         this.sessionService.loadUserInfo();
       }

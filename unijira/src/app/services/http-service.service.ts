@@ -24,6 +24,10 @@ export class HttpService {
     private state: State<SessionState>
   ) {
 
+    if(localStorage.getItem('token')) {
+      this.opt.headers = this.opt.headers.set('Authorization', 'Bearer ' + localStorage.getItem('token'));
+    }
+
     this.state.subscribe(s => {
 
       if (s.sessionReducer.token) {
@@ -86,8 +90,6 @@ export class HttpService {
   private handleResponse<T>(response: Observable<HttpResponse<T>>): Observable<T> {
     return response
       .pipe(catchError((error) => {
-
-        console.error('HttpService.handleResponse', error);
 
         this.store.dispatch(errorAction({
           error: {
