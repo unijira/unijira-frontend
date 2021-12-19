@@ -20,7 +20,10 @@ import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { EffectsModule } from '@ngrx/effects';
 import {SessionEffects} from "./store/session.effects";
 
-
+import { FontAwesomeModule, FaIconLibrary } from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons'
+import { far } from '@fortawesome/free-regular-svg-icons'
+import { fab } from '@fortawesome/free-brands-svg-icons'
 
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -32,6 +35,7 @@ export function createTranslateLoader(http: HttpClient) {
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),
+    FontAwesomeModule,
     AppRoutingModule,
     StoreModule.forRoot({sessionReducer, taskReducer}),
     HttpClientModule,
@@ -47,7 +51,7 @@ export function createTranslateLoader(http: HttpClient) {
       maxAge: 25,
       logOnly: false,
     }),
-    EffectsModule.forRoot([SessionEffects]),
+    EffectsModule.forRoot([SessionEffects])
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }, SessionService, AuthGuard],
   bootstrap: [AppComponent],

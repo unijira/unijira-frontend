@@ -6,6 +6,14 @@ import { unsubscribeAll } from './util';
 import { Router } from '@angular/router';
 import { TranslateService } from '@ngx-translate/core';
 
+import {
+  FontAwesomeModule,
+  FaIconLibrary,
+} from '@fortawesome/angular-fontawesome';
+import { fas } from '@fortawesome/free-solid-svg-icons';
+import { far } from '@fortawesome/free-regular-svg-icons';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -22,8 +30,10 @@ export class AppComponent implements OnInit, OnDestroy {
   constructor(
     public sessionService: SessionService,
     public router: Router,
-    public translateService: TranslateService
+    public translateService: TranslateService,
+    library: FaIconLibrary,
   ) {
+    library.addIconPacks(fas, fab, far);
     this.loadingSubscription = sessionService.getLoading().subscribe((load) => {
       this.loading = load;
     });
