@@ -4,7 +4,7 @@ Content-Type: application/json
 
 {
   "username": "paolaguarasci@gmail.com",
-  "password": "newworld-9999999.X"
+  "password": "Paoletta.85"
 }
 
 ### 
@@ -14,7 +14,7 @@ Content-Type: application/json
 
 {
   "username": "paolaguarasci@gmail.com",
-  "password": "newworld-9999999.X"
+  "password": "Paoletta.85"
 }
 
 ###

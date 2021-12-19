@@ -1,13 +1,11 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-
 @Injectable({
   providedIn: 'root',
 })
-
 export class HttpService {
-  private baseurl = 'http://localhost:7080/';
+  private baseurl = 'http://localhost:7090/';
   private opt = {
     headers: {
       'Content-Type': 'application/json',
@@ -23,6 +21,13 @@ export class HttpService {
     let urlFull = `${this.baseurl}${url}`;
     return this.http.get(urlFull);
   }
+
+  sendGetWithAuth(url, token) {
+    return this.http.get(`${this.baseurl}${url}`, {
+      headers: { Authorization: `Bearer ` + token },
+    });
+  }
+
   sendGetWithParams(url, params) {
     let urlFull = `${this.baseurl}${url}`;
     return this.http.get(urlFull, { params: params });
@@ -30,7 +35,13 @@ export class HttpService {
 
   sendPostTxtResponse(url, body) {
     let urlFull = `${this.baseurl}${url}`;
-    return this.http.post(urlFull, body, {responseType: 'text' });
+    return this.http.post(urlFull, body, { responseType: 'text' });
   }
 
+  sendPostWithAuthJson(url, token, payload) {
+    console.log(payload);
+    return this.http.post(`${this.baseurl}${url}`, payload, {
+      headers: { Authorization: `Bearer ` + token },
+    });
+  }
 }

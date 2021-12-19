@@ -11,6 +11,8 @@ import * as _ from 'lodash';
 import { BlDetailComponent } from '../bl-detail/bl-detail.component';
 import { ModalController, SpinnerTypes } from '@ionic/angular';
 
+import { BacklogAPIService } from '../services/backlog-api.service';
+
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -28,7 +30,8 @@ export class BacklogPage implements OnInit {
     private dragulaService: DragulaService,
     private taskService: TaskService,
     private store: Store,
-    public modalController: ModalController
+    public modalController: ModalController,
+    private backlogAPIService: BacklogAPIService
   ) {
     let that = this;
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
@@ -228,5 +231,32 @@ export class BacklogPage implements OnInit {
     let tmpB = _.clone(backlog);
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+  }
+
+  getFromApi() {
+    console.log('GET FROM API');
+    this.backlogAPIService.getB().subscribe((response) => {
+      console.log(response);
+    });
+
+    this.backlogAPIService.getS().subscribe((response) => {
+      console.log(response);
+    });
+  }
+
+  save() {
+    let tmpS = _.clone(this.sprint);
+    let tmpB = _.clone(this.backlog);
+
+    this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
+    this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+
+    this.backlogAPIService.setB(this.backlog).subscribe((response) => {
+      console.log(response);
+    });
+
+    this.backlogAPIService.setS(this.sprint).subscribe((response) => {
+      console.log(response);
+    });
   }
 }

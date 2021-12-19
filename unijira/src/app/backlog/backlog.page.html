@@ -138,12 +138,34 @@
     <ion-row>
       <ion-col>
         <ion-button
+          (click)="getFromApi()"
+          expand="block"
+          color="primary"
+          class="add-task-button"
+        >
+          Get from server
+        </ion-button> </ion-col
+      >
+      <ion-col>
+        <ion-button
+          (click)="save()"
+          expand="block"
+          color="primary"
+          class="add-task-button"
+        >
+          Save on server
+        </ion-button> </ion-col
+      >
+
+
+      <ion-col>
+        <ion-button
           (click)="populate()"
           expand="block"
           color="primary"
           class="add-task-button"
         >
-          Init
+          Init RAW
         </ion-button>
       </ion-col>
       <ion-col>
