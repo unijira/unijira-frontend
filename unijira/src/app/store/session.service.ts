@@ -10,8 +10,10 @@ import {
   errorAction,
   isLoggedAction,
   loadingAction,
-  logInAction, logOutAction,
-  setUserAction, userInfoAction,
+  logInAction,
+  logOutAction,
+  setUserAction,
+  userInfoAction,
   wrongCredentialAction
 } from './session.action';
 import {UserInfo} from '../models/users/UserInfo';
@@ -35,8 +37,6 @@ export class SessionService {
       this.userLogged(true);
 
     }
-
-
 
   }
 
@@ -68,8 +68,6 @@ export class SessionService {
   logIn(username: string, password: string) {
     this.accountService.logIn(username, password)
       .pipe(catchError(error => {
-
-        console.error('SessionService.logIn', error);
 
         switch(error.status) {
           case 401:
