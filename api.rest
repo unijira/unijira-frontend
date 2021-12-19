@@ -1,0 +1,125 @@
+### 
+POST http://localhost:7080/auth/register HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "paolaguarasci@gmail.com",
+  "password": "Paoletta.85"
+}
+
+### 
+# @name login
+POST http://localhost:7080/auth/authenticate HTTP/1.1
+Content-Type: application/json
+
+{
+  "username": "paolaguarasci@gmail.com",
+  "password": "Paoletta.85"
+}
+
+###
+GET http://localhost:7080/auth/me
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+POST http://localhost:7080/auth/register
+Content-Type: application/json
+
+{
+  "username": "testazzo",
+  "password": "testazzo"
+}
+
+###
+POST http://localhost:7080/auth/authenticate
+
+###
+GET http://localhost:7080/auth/active
+
+###
+POST http://localhost:7080/auth/authenticate
+
+###
+GET http://localhost:7080/auth/me
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+POST http://localhost:7080/auth/refresh
+
+###
+POST http://localhost:7080/auth/register
+
+###
+GET http://localhost:7080/backlog/items/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+GET http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+GET http://localhost:7080/projects?page=0&size=10
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+POST http://localhost:7080/projects/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+Content-Type: application/json
+
+{
+    "name": "Test-3",
+    "key": "TS1"
+}
+
+###
+GET http://localhost:7080/projects/3/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+GET http://localhost:7080/projects/1/items?page=1&size=10
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+PUT http://localhost:7080/projects/1/items?page=1&size=10
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+DELETE http://localhost:7080/projects/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+
+###
+GET http://localhost:7080/projects/1/memberships
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+GET http://localhost:7080/backlog/items/by_father/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
+
+###
+GET http://localhost:7080/backlog/items/by_user/1/
+Authorization: Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlBhb2xldHRhLjg1IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2Mzk5MDg3OTMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjM5OTA1MTkzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.5fUANc77TQNQiwg-ViXktPIhsDFkSPSxAouO6rerj4U
