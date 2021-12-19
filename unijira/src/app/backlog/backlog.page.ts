@@ -8,6 +8,8 @@ import { TaskService } from '../store/task.service';
 import * as TaskActions from '../store/task.action';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
+import { BlDetailComponent } from '../bl-detail/bl-detail.component';
+import { ModalController } from '@ionic/angular';
 
 @Component({
   selector: 'app-backlog',
@@ -27,7 +29,8 @@ export class BacklogPage implements OnInit {
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
-    private store: Store
+    private store: Store,
+    public modalController: ModalController
   ) {
     let that = this;
     this.dragulaService
@@ -41,10 +44,6 @@ export class BacklogPage implements OnInit {
       .add(() => {});
 
     this.dragulaService.createGroup('bag', {
-      removeOnSpill: false,
-    });
-
-    this.dragulaService.createGroup('bag1', {
       removeOnSpill: false,
     });
 
@@ -145,6 +144,27 @@ export class BacklogPage implements OnInit {
     backlog.tasks.push(task);
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
   }
+
+  async presentModal(task) {
+    const modal = await this.modalController.create({
+      component: BlDetailComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        task: task,
+      },
+    });
+    return await modal.present();
+  }
+
+  dismiss() {
+    // using the injected ModalController this page
+    // can "dismiss" itself and optionally pass back data
+    this.modalController.dismiss({
+      dismissed: true,
+    });
+  }
+
+
   populate() {
     let sprint = new Sprint();
     let backlog = new Sprint();
@@ -185,6 +205,10 @@ export class BacklogPage implements OnInit {
     backlog.tasks[0].children.push(new Task());
     backlog.tasks[0].children.push(new Task());
 
+    backlog.tasks[0].children[0].name = 'Task 0.0';
+    backlog.tasks[0].children[1].name = 'Task 0.0';
+    backlog.tasks[0].children[2].name = 'Task 0.0';
+
     backlog.tasks[0].assignedTo = [];
     backlog.tasks[0].assignedTo.push(new User());
     backlog.tasks[1].assignedTo = [];
@@ -195,6 +219,10 @@ export class BacklogPage implements OnInit {
     backlog.tasks[0].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
     backlog.tasks[1].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Paola+Guarasci`;
     backlog.tasks[2].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Ciccio+Pasticcio`;
+
+    backlog.tasks[0].assignedTo[0].username = `Paola`;
+    backlog.tasks[1].assignedTo[0].username = `Daniele`;
+    backlog.tasks[2].assignedTo[0].username = `Pietro`;
 
     sprint.tasks = [];
     sprint.tasks.push(new Task());

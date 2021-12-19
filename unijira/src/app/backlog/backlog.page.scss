@@ -97,8 +97,8 @@
   min-width: 30px;
 }
 .task-item,
-.task-item *{
-  height: 30px !important;
+.task-item > * {
+  height: 50px !important;
 }
 
 ion-icon {
@@ -110,7 +110,7 @@ ion-icon {
 
 .weitght-field {
   width: 50px;
-  font-size: 10px;
+  font-size: 16px;
 }
 
 .status-item {
@@ -139,6 +139,35 @@ ion-icon {
 .select-icon {
   display: none !important;
 }
+
 .item-native {
-  padding: 0 !important;
+  padding: 0;
+}
+
+.taskicon {
+  font-size: 1rem;
+}
+
+item-input {
+  height: 20px;
+  color: red;
+}
+
+.item-native {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+}
+
+.no-inline-padding {
+  padding-inline-start: 0 !important;
+  padding-inline-end: 0 !important;
+}
+
+.native-input.sc-ion-input-md {
+  padding-left: unset;
+  padding-right: unset;
+  -webkit-padding-start: 0;
+  padding-inline-start: 0;
+  -webkit-padding-end: 0;
+  padding-inline-end: 0;
 }

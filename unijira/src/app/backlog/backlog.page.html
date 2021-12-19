@@ -13,7 +13,9 @@
                 *ngFor="let task of sprint.tasks"
                 class="ion-align-items-end task-item white-bg"
               >
-                <ion-col size="1"> {{ task.type }} </ion-col>
+                <ion-col size="1">
+                  {{ task.type }} <fa-icon icon="home"></fa-icon>
+                </ion-col>
                 <ion-col> {{ task.name }} </ion-col>
                 <ion-col size="2" class="ion-justify-content-end icon-area">
                   <!-- <ion-badge color="medium"  >{{ task.weight}}</ion-badge> -->
@@ -70,20 +72,20 @@
                 *ngFor="let task of backlog.tasks"
                 class="task-item ion-align-items-end white-bg"
               >
-                <ion-col size="1"> {{ task.type }} </ion-col>
-                <ion-col> {{ task.name }} </ion-col>
+                <ion-col (click)="presentModal(task)">
+                  <fa-icon [icon]="['fas', 'bookmark']" class="taskicon"></fa-icon>
+              {{ task.name }}
+                </ion-col>
                 <ion-col size="2" class="ion-justify-content-end icon-area">
-                  <!-- <ion-badge color="medium"  >{{ task.weight}}</ion-badge> -->
-
                   <ion-item class="weitght-field">
-                    <ion-input
+                    <ion-input class="no-inline-padding"
                       inputmode="numeric"
                       type="numeric"
                       (ionInput)="editWeight($event, task, 'backlog')"
                       placeholder="{{task.weight}}"
                     ></ion-input>
                   </ion-item>
-                  <ion-item class="status-item">
+                  <ion-item class="status-item" >
                     <ion-label class="success">{{task.status}}</ion-label>
                     <ion-select
                       (ionChange)="editStatus($event, task, 'backlog')"

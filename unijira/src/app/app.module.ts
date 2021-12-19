@@ -25,13 +25,15 @@ import { fas } from '@fortawesome/free-solid-svg-icons'
 import { far } from '@fortawesome/free-regular-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 
+import { BlDetailComponent } from './bl-detail/bl-detail.component';
+
 export function createTranslateLoader(http: HttpClient) {
   return new TranslateHttpLoader(http, './assets/translations/', '.json');
 }
 
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent],
+  declarations: [AppComponent, LoadingComponent, BlDetailComponent],
   entryComponents: [],
   imports: [BrowserModule,
     IonicModule.forRoot(),

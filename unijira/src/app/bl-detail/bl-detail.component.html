@@ -1,0 +1,30 @@
+<div class="mymodal">
+  <div>
+    <h3>Name:</h3>
+    {{ task.name }}
+  </div>
+  <div>
+    <h3>Status:</h3>
+    {{ task.status }}
+  </div>
+  <div>
+    <h3>Peso:</h3>
+    {{ task.weight }}
+  </div>
+
+  <div *ngIf="task.assignedTo">
+    <h3>Assegnatari</h3>
+    <div>
+      <div *ngFor="let user of task.assignedTo">
+        <b>Username</b> {{ user.username }}
+      </div>
+    </div>
+  </div>
+
+  <div *ngIf="task.children">
+    <h3>Task Figli</h3>
+    <div>
+      <div *ngFor="let child of task.children"><b>Nome</b>{{ child.name }}</div>
+    </div>
+  </div>
+</div>
