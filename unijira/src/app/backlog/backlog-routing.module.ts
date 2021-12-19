@@ -6,8 +6,8 @@ import { BacklogPage } from './backlog.page';
 const routes: Routes = [
   {
     path: '',
-    component: BacklogPage
-  }
+    component: BacklogPage,
+  },
 ];
 
 @NgModule({

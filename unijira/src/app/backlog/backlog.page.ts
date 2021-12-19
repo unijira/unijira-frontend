@@ -54,6 +54,28 @@ export class BacklogPage implements OnInit {
       this.sprint = _.clone(s);
     });
   }
+
+  ngOnInit() {}
+
+  /* MODAL */
+  async presentModal(task) {
+    const modal = await this.modalController.create({
+      component: BlDetailComponent,
+      cssClass: 'my-custom-class',
+      componentProps: {
+        task: task,
+      },
+    });
+    return await modal.present();
+  }
+
+  dismiss() {
+    this.modalController.dismiss({
+      dismissed: true,
+    });
+  }
+
+  /* EDIT */
   editStatus($event, task, type) {
     if (type === 'backlog') {
       let newTask = _.clone(task);
@@ -85,6 +107,7 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
     }
   }
+
   editWeight($event, task, type) {
     if (
       $event.detail.value === '' ||
@@ -128,70 +151,9 @@ export class BacklogPage implements OnInit {
       }
     }
   }
-  ngOnInit() {}
-  addTask() {
-    let task = new Task(0, "Task random", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]);
-    let backlog = _.clone(this.backlog);
-    backlog.tasks.push(task);
-    this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
-  }
-
-  async presentModal(task) {
-    const modal = await this.modalController.create({
-      component: BlDetailComponent,
-      cssClass: 'my-custom-class',
-      componentProps: {
-        task: task,
-      },
-    });
-    return await modal.present();
-  }
-
-  dismiss() {
-    // using the injected ModalController this page
-    // can "dismiss" itself and optionally pass back data
-    this.modalController.dismiss({
-      dismissed: true,
-    });
-  }
-
-  populate() {
-    let sprint = new Sprint([], new Date(), new Date());
-    let backlog = new Sprint([], new Date(), new Date());
-    sprint.start = new Date('2021-11-18');
-    sprint.end = new Date('2021-12-18');
-
-
-    backlog.tasks.push(new Task(1, "Task 1", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-    backlog.tasks.push(new Task(2, "Task 2", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-    backlog.tasks.push(new Task(3, "Task 3", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-
-    backlog.tasks[0].children.push(new Task(4, "Task 4", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-    backlog.tasks[0].children.push(new Task(5, "Task 5", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-    backlog.tasks[0].children.push(new Task(6, "Task 6", "da completate", [], 1, [], "ssss", ["sss", "sss"], ["ssaasasas"]));
-
-    backlog.tasks[0].assignedTo = [];
-    backlog.tasks[0].assignedTo.push(new User(1, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
-    backlog.tasks[1].assignedTo = [];
-    backlog.tasks[1].assignedTo.push(new User(2, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
-    backlog.tasks[2].assignedTo = [];
-    backlog.tasks[2].assignedTo.push(new User(3, "USERNAME", "FIRSTNAME", "LASTNAME", "EMAIL", "PASSWORD", "ROLE"));
-
-    backlog.tasks[0].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=John+Doe`;
-    backlog.tasks[1].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Paola+Guarasci`;
-    backlog.tasks[2].assignedTo[0].avatar = `https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=Ciccio+Pasticcio`;
-
-    this.backlog = backlog;
-    this.sprint = sprint;
-    let tmpS = _.clone(sprint);
-    let tmpB = _.clone(backlog);
-    this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
-    this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
-  }
 
   getFromApi() {
     let that = this;
-    console.log('GET FROM API');
     this.backlogAPIService.getBacklog().subscribe((response) => {
       that.backlog = _.clone(response);
     });
@@ -201,7 +163,7 @@ export class BacklogPage implements OnInit {
     });
   }
 
-  save() {
+  saveToAPI() {
     let tmpS = _.clone(this.sprint);
     let tmpB = _.clone(this.backlog);
 

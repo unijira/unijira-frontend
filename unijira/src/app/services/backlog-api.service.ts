@@ -30,8 +30,4 @@ export class BacklogAPIService {
   setSprint(sprint: Sprint) {
     return this.httpService.post<Sprint>(`sprint/`, sprint);
   }
-
-
-
-
 }
