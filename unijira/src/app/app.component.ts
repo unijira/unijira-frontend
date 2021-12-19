@@ -10,7 +10,7 @@ import 'moment/locale/en-gb';
 import {UserInfo} from './models/users/UserInfo';
 import {PopoverController} from '@ionic/angular';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
-import {NotifiesComponent} from './components/notifies/notifies.component';
+import {NotificationsComponent} from './components/notifications/notifications.component';
 
 @Component({
   selector: 'app-root',
@@ -20,8 +20,9 @@ import {NotifiesComponent} from './components/notifies/notifies.component';
 
 export class AppComponent implements OnInit, OnDestroy {
 
-  @ViewChild('notifies') notifiesComponent: NotifiesComponent;
+  @ViewChild('notifications') notificationsComponent: NotificationsComponent;
 
+  unreadNotificationsCount = 0;
   pages: any[] = [];
 
   loadingSubscription: Subscription;
@@ -100,8 +101,8 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
-  showNotifies(e?: Event) {
-    this.notifiesComponent.show(e).then();
+  showNotifications(e?: Event) {
+    this.notificationsComponent.show(e).then();
   }
 
   async _userPopOver(ev: any) {

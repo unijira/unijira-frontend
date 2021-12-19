@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {UserActionPopoverComponent} from './user-action-popover.component';
+import {NotificationsComponent} from './notifications.component';
 
-describe('UserActionPopoverComponent', () => {
-  let component: UserActionPopoverComponent;
-  let fixture: ComponentFixture<UserActionPopoverComponent>;
+describe('NotificationsComponent', () => {
+  let component: NotificationsComponent;
+  let fixture: ComponentFixture<NotificationsComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ UserActionPopoverComponent ],
+      declarations: [ NotificationsComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(UserActionPopoverComponent);
+    fixture = TestBed.createComponent(NotificationsComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

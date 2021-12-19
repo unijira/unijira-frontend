@@ -7,9 +7,10 @@
         <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
         <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
 
-        <ion-button (click)="showNotifies($event)">
+        <ion-button (click)="showNotifications($event)">
           <ion-icon name="notifications"></ion-icon>
-          <app-notifies #notifies></app-notifies>
+          <ion-badge color="danger" *ngIf="unreadNotificationsCount > 0">{{unreadNotificationsCount}}</ion-badge>
+          <app-notifications #notifications (updateNotificationsCount)="unreadNotificationsCount = $event"></app-notifications>
         </ion-button>
 
         <ion-button (click)="_userPopOver($event)">
