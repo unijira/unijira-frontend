@@ -48,6 +48,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
   },
+  {
+    path: 'home/projects',
+    loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
+  },
 
 ];
 

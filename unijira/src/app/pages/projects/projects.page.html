@@ -1,0 +1,53 @@
+<ion-content>
+
+  <ion-grid>
+    <ion-row class="ion-align-items-baseline">
+      <ion-col>
+        <ion-title class="ion-margin-top">
+          <h1>{{'user.projects.title' | translate}}</h1>
+        </ion-title>
+      </ion-col>
+      <ion-col size="auto">
+        <ion-button [routerLink]="'/home/projects/wizard'" color="primary">
+          <ion-icon name="add" class="ion-margin-end"></ion-icon>
+          <span>{{'user.projects.createProject' | translate}}</span>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+
+  <div class="ion-margin">
+    <ion-searchbar [(ngModel)]="searchTerm" placeholder="{{'user.projects.search' | translate}}"></ion-searchbar>
+  </div>
+
+  <div class="ion-margin">
+    <ion-list>
+      <ion-item *ngFor="let project of filteredProjects" [routerLink]="'/home/projects/' + project.id">
+        <ion-avatar slot="start">
+          <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+        </ion-avatar>
+        <ion-label>
+          <h2 [innerHTML]="project.name | filtered:searchTerm"></h2>
+          <p>{{ project.updatedAt | time | async }}</p>
+        </ion-label>
+        <ion-badge color="secondary">{{ project.key }}</ion-badge>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="projects === null">
+      <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
+        <ion-label>
+          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated></ion-skeleton-text>
+        </ion-label>
+        <ion-skeleton-text animated></ion-skeleton-text>
+      </ion-item>
+    </ion-list>
+    <ion-grid *ngIf="projects?.length === 0">
+      <ion-row class="ion-justify-content-center ion-margin">
+        <span><i class="ion-color-medium">{{'user.projects.noProjects' | translate}}</i></span>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+</ion-content>
