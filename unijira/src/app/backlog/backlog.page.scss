@@ -1,3 +1,5 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/angular-dragula/1.2.8/dragula.css");
+
 .sprint,
 .backlog {
   padding: 10px;
@@ -113,61 +115,102 @@ ion-icon {
   font-size: 16px;
 }
 
-.status-item {
-  width: 200px;
-  color: darkred;
-  font-weight: bold;
-  max-height: unset;
-  font-size: 12px;
-  padding: 0;
-  background-color: red;
+// .status-item {
+//   width: 200px;
+//   color: darkred;
+//   font-weight: bold;
+//   max-height: unset;
+//   font-size: 12px;
+//   padding: 0;
+//   background-color: red;
+// }
+
+// .status-item > * {
+//   padding: 0;
+// }
+
+// .status-select {
+//   padding: 0;
+// }
+
+// .status-select:host {
+// }
+// .item-inner {
+//   padding: 0 !important;
+// }
+// .select-icon {
+//   display: none !important;
+// }
+
+// .item-native {
+//   padding: 0;
+// }
+
+// .taskicon {
+//   font-size: 1rem;
+// }
+
+// item-input {
+//   height: 20px;
+//   color: red;
+// }
+
+// .item-native {
+//   padding-inline-start: 0 !important;
+//   padding-inline-end: 0 !important;
+// }
+
+// .no-inline-padding {
+//   padding-inline-start: 0 !important;
+//   padding-inline-end: 0 !important;
+// }
+
+// .native-input.sc-ion-input-md {
+//   padding-left: unset;
+//   padding-right: unset;
+//   -webkit-padding-start: 0;
+//   padding-inline-start: 0;
+//   -webkit-padding-end: 0;
+//   padding-inline-end: 0;
+// }
+
+
+ion-input{
+  border-radius: 10px !important;
+  padding-right: 30px;
+  font-size: 0.9em;
+  border: 1px solid #f1f1f1 !important;
+  --background: rgb(219,219,219) !important;
+  /* height: 10%; */
+  /* width: 41%; */
+  max-width: 50vw; // this is applying perfectly
+  max-height: 10px
 }
 
-.status-item > * {
-  padding: 0;
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
 }
-
-.status-select {
-  padding: 0;
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
 }
-
-.status-select:host {
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
 }
-.item-inner {
-  padding: 0 !important;
-}
-.select-icon {
-  display: none !important;
-}
-
-.item-native {
-  padding: 0;
-}
-
-.taskicon {
-  font-size: 1rem;
-}
-
-item-input {
-  height: 20px;
-  color: red;
-}
-
-.item-native {
-  padding-inline-start: 0 !important;
-  padding-inline-end: 0 !important;
-}
-
-.no-inline-padding {
-  padding-inline-start: 0 !important;
-  padding-inline-end: 0 !important;
-}
-
-.native-input.sc-ion-input-md {
-  padding-left: unset;
-  padding-right: unset;
-  -webkit-padding-start: 0;
-  padding-inline-start: 0;
-  -webkit-padding-end: 0;
-  padding-inline-end: 0;
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
 }
