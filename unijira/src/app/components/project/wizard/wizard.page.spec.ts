@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { WizardPage } from './wizard.page';
+import {WizardPage} from './wizard.page';
 
 describe('WizardPage', () => {
   let component: WizardPage;

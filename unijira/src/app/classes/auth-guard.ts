@@ -1,8 +1,6 @@
-import { Injectable } from '@angular/core';
-import { Router, CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot } from '@angular/router';
-import {SessionService} from '../store/session.service';
+import {Injectable} from '@angular/core';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {catchError, map, Observable, of} from 'rxjs';
-import {HttpService} from '../services/http-service.service';
 import {AccountService} from '../services/account.service';
 
 

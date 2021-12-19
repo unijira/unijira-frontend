@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
-import {catchError, delay, Observable, of} from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import {Notify} from '../../models/Notify';
 import {HttpParams} from "@angular/common/http";
 
@@ -13,9 +13,9 @@ export class NotifyService {
 
   }
 
-  getNotifies(page: number, limit: number): Observable<Notify[]> {
+  getNotifications(page: number, limit: number): Observable<Notify[]> {
 
-    return this.httpService.get<Notify[]>('/notifies', new HttpParams()
+    return this.httpService.get<Notify[]>('/notifications', new HttpParams()
         .set('page', page)
         .set('size', limit))
       .pipe(catchError(() => of([])));
@@ -24,13 +24,13 @@ export class NotifyService {
 
 
   public markAsRead(id: number): void {
-    this.httpService.put<Notify>('/notifies/' + id, {
+    this.httpService.put<Notify>('/notifications/' + id, {
       read: true
     }).subscribe();
   }
 
   public markAllAsRead(): void {
-    this.httpService.put('/notifies/mark', {}).subscribe();
+    this.httpService.put('/notifications/mark', {}).subscribe();
   }
 
 }

@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { LoadingComponent } from './loading.component';
+import {LoadingComponent} from './loading.component';
 
 describe('LoadingComponent', () => {
   let component: LoadingComponent;

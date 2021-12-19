@@ -18,7 +18,7 @@ import {EffectsModule} from '@ngrx/effects';
 import {SessionEffects} from './store/session.effects';
 import {sessionReducer} from './store/session.reducer';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
-import {NotifiesComponent} from './components/notifies/notifies.component';
+import {NotificationsComponent} from './components/notifications/notifications.component';
 import {PipeModule} from "./pipe.module";
 
 
@@ -27,7 +27,7 @@ export const createTranslateLoader =
 
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent, NotifiesComponent ],
+  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent, NotificationsComponent ],
   entryComponents: [],
   imports: [
     BrowserModule,

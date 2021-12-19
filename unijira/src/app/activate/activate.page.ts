@@ -1,6 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { AccountService } from '../services/account.service';
+import {Component, OnInit} from '@angular/core';
+import {ActivatedRoute} from '@angular/router';
+import {AccountService} from '../services/account.service';
+
 @Component({
   selector: 'app-activate',
   templateUrl: './activate.page.html',

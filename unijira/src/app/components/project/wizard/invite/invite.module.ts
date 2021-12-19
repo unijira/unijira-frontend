@@ -1,13 +1,13 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { InvitePageRoutingModule } from './invite-routing.module';
-import { TranslateModule } from '@ngx-translate/core';
+import {InvitePageRoutingModule} from './invite-routing.module';
+import {TranslateModule} from '@ngx-translate/core';
 
-import { InvitePage } from './invite.page';
+import {InvitePage} from './invite.page';
 
 @NgModule({
   imports: [
