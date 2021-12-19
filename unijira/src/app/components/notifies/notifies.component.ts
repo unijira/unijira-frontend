@@ -17,17 +17,19 @@ export class NotifiesComponent implements OnInit {
     private notifyService: NotifyService
   ) { }
 
-  ngOnInit() {
-    this.moreNotifies(null);
+
+  get sortedNotifies(): Array<Notify> {
+    return this.notifies?.sort((a, b) => (a.read ? 1 : 0) - (b.read ? 1 : 0));
   }
 
-  moreNotifies(e?: CustomEvent) {
-    console.log(e);
-    this.notifyService.getNotifies(this.notifies?.length || 0, 25).subscribe(
-      (notifies: Array<Notify>) => {
-        this.notifies = notifies;
-      }
-    );
+  get unreadNotifiesCount(): number {
+    return this.notifies?.filter(notify => !notify.read).length || 0;
+  }
+
+
+
+  ngOnInit() {
+    this.moreNotifies(null);
   }
 
   public async show(e?: Event) {
@@ -39,14 +41,35 @@ export class NotifiesComponent implements OnInit {
     return await popover.present();
   }
 
-  private mark(notify: Notify) {
-    // this.notifyService.mark(notify).subscribe(
-    //   (notify: Notify) => {
-    //     this.notifies = this.notifies.map(
-    //       (n: Notify) => n.id === notify.id ? notify : n
-    //     );
-    //   }
-    // );
+
+  mark(notify: Notify) {
+
+    if(!notify.read) {
+
+      notify.read = true;
+      this.notifyService.markAsRead(notify.id);
+
+    }
+
+  }
+
+  markAll() {
+
+    if(this.unreadNotifiesCount > 0) {
+
+      this.notifies.forEach(notify => notify.read = true);
+      this.notifyService.markAllAsRead();
+
+    }
+
+  }
+
+  moreNotifies(e?: CustomEvent) {
+    this.notifyService.getNotifies(this.notifies?.length || 0, 25).subscribe(
+      (notifies: Array<Notify>) => {
+        this.notifies = notifies;
+      }
+    );
   }
 
 }
