@@ -9,7 +9,7 @@ import * as TaskActions from '../store/task.action';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
 import { BlDetailComponent } from '../bl-detail/bl-detail.component';
-import { ModalController } from '@ionic/angular';
+import { ModalController, SpinnerTypes } from '@ionic/angular';
 
 @Component({
   selector: 'app-backlog',
@@ -33,26 +33,24 @@ export class BacklogPage implements OnInit {
     public modalController: ModalController
   ) {
     let that = this;
-    this.dragulaService
-      .drop('bag')
-      .subscribe(({ name, el, source }) => {
-        let tmpS = _.clone(that.sprint);
-        let tmpB = _.clone(that.backlog);
-        that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
-        that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
-      })
-      .add(() => {});
+    this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
+      let tmpS = _.clone(that.sprint);
+      let tmpB = _.clone(that.backlog);
+
+      that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
+      that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+    });
 
     this.dragulaService.createGroup('bag', {
       removeOnSpill: false,
     });
 
     this.taskService.getBacklog().subscribe((b) => {
-      this.backlog = b;
+      this.backlog = _.clone(b);
     });
 
     this.taskService.getSprint().subscribe((s) => {
-      this.sprint = s;
+      this.sprint = _.clone(s);
     });
   }
   editStatus($event, task, type) {
@@ -163,7 +161,6 @@ export class BacklogPage implements OnInit {
       dismissed: true,
     });
   }
-
 
   populate() {
     let sprint = new Sprint();

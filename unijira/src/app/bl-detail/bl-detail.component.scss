@@ -1,4 +1,6 @@
 /* Works - pass "my-custom-class" in cssClass to increase specificity */
-.mymodal .modal-wrapper {
+.mymodal .modal-wrapper.sc-ion-modal-md {
   background: #222;
+  padding: 10px;
+  color: red;
 }
