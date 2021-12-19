@@ -17,7 +17,6 @@ import {StoreDevtoolsModule} from '@ngrx/store-devtools';
 import {EffectsModule} from '@ngrx/effects';
 import {SessionEffects} from './store/session.effects';
 import {sessionReducer} from './store/session.reducer';
-import { TimePipe } from './pipes/time.pipe';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
 
 

@@ -10,12 +10,12 @@ import {UserInfo} from '../models/users/UserInfo';
 export class AccountService {
   constructor(private httpService: HttpService) {}
 
-  register(user: object) {
-    return this.httpService.sendPost('/auth/register', user);
+  register(user: object): Observable<UserInfo> {
+    return this.httpService.post<UserInfo>('/auth/register', { ...user });
   }
 
-  activate(token: string) {
-    return this.httpService.sendGetWithParams('/auth/active', new HttpParams().set('token', token));
+  activate(token: string): Observable<boolean> {
+    return this.httpService.get<boolean>('/auth/active', new HttpParams().set('token', token));
   }
 
   logIn(username: string, password: string): Observable<string> {
@@ -23,7 +23,7 @@ export class AccountService {
   }
 
   refreshToken(token: string): Observable<string> {
-    return this.httpService.sendPostTxtResponse('/auth/refresh', {token});
+    return this.httpService.post<string>('/auth/refresh', { token }, null, { responseType: 'text' });
   }
 
   me(): Observable<UserInfo> {
