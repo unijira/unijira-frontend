@@ -2,7 +2,7 @@
   <ion-item class="status-item">
     <ul class="status-list">
       <li *ngFor="let type of statusType" (click)="setStatus(type)">
-        <ion-badge class="status-badge" [color]="type.className">{{ type.name }}</ion-badge>
+        <ion-badge  (click)="selectOptions($event)" class="status-badge" [color]="type.className">{{ type.name }}</ion-badge>
       </li>
     </ul>
   </ion-item>
