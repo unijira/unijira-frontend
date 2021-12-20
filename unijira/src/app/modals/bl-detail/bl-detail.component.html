@@ -16,17 +16,17 @@
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="allega()">
             <fa-icon [icon]="['fas', 'paperclip']"> </fa-icon>
             <span class="buttontxt">Allega</span>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="addChildren()">
             <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
-            <span class="buttontxt">Aggiungi un <br/>ticket figlio</span>
+            <span class="buttontxt">Aggiungi un <br />ticket figlio</span>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="addLink()">
             <fa-icon [icon]="['fas', 'link']"> </fa-icon>
-            <span class="buttontxt">Collega<br/>ticket</span>
+            <span class="buttontxt">Collega<br />ticket</span>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -39,8 +39,12 @@
 
       <ion-row *ngIf="task.children.length">
         <ion-col size="12">
-          <h5>Ticket figli</h5>
-          <p *ngFor="let t; in: task.children">{{ t.name }}</p>
+          <h5>Ticket figli ({{ task.children.length }})</h5>
+          <ul class="lista-children">
+            <li *ngFor="let t of task.children">
+              <b>{{ t.name }}</b> | {{ t.description }} | {{ task.weight }}
+            </li>
+          </ul>
         </ion-col>
       </ion-row>
 
@@ -66,22 +70,22 @@
     <ion-col size="4">
       <ion-row>
         <ion-col>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="lock()">
             <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="visibility()">
             <fa-icon [icon]="['fas', 'eye']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="like()">
             <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="share()">
             <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="edit()">
             <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light">
+          <ion-button size="small" color="light" (click)="close()">
             <fa-icon [icon]="['fas', 'times']"></fa-icon>
           </ion-button>
         </ion-col>
@@ -107,24 +111,21 @@
           </div>
           <ion-row>
             <ion-col size="12">
-              <div>
+              <div (click)="editAssegnatario()">
                 <h5>Assegnatario</h5>
-
-                <ion-thumbnail>
+                <ion-thumbnail class="icon-avatar">
                   <img [src]="task.assignedTo[0].avatar" />
                 </ion-thumbnail>
               </div>
               <div>
                 <h5>Tags</h5>
-                <ion-badge
-                  color="lightsuccess"
-                  *ngFor="let tag; in: task.tags"
-                  >{{ tag }}</ion-badge
-                >
+                <ion-badge color="light" *ngFor="let tag of task.tags">{{
+                  tag
+                }}</ion-badge>
               </div>
               <div>
                 <h5>Sprint</h5>
-                <!-- {{ task.sprint }} -->
+                {{ task.sprint }}
               </div>
               <div>
                 <h5>Story point</h5>
@@ -132,7 +133,10 @@
               </div>
               <div>
                 <h5>Reporter</h5>
-                <!-- {{ task.owner.avatar }} -->
+
+                <ion-thumbnail class="icon-avatar">
+                  <img [src]="task.owner.avatar" />
+                </ion-thumbnail>
               </div>
             </ion-col>
           </ion-row>

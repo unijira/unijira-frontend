@@ -14,6 +14,8 @@ export class Task {
   note: string;
   epic: string;
   story: string;
+  sprint: string;
+  owner: User;
   constructor(
     id: number,
     name: string,
@@ -27,7 +29,9 @@ export class Task {
     description: string,
     note: string,
     epic: string,
-    story: string
+    story: string,
+    sprint: string,
+    owner: User
   ) {
     this.id = id;
     this.name = name;
@@ -42,5 +46,7 @@ export class Task {
     this.note = note ?? '';
     this.epic = epic ?? '';
     this.story = story ?? '';
+    this.sprint = sprint ?? '';
+    this.owner = owner ?? new User(0, '', '', '', '', '', '');
   }
 }

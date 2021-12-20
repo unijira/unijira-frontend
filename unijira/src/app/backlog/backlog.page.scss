@@ -108,7 +108,7 @@ ion-input {
 }
 
 .task-item {
-  padding: 5px;
+  // padding: 5px;
   margin: 5px;
   border-radius: 5px;
   border: 1px solid gray;
@@ -118,7 +118,6 @@ ion-input {
 .icon-area {
   justify-content: end;
   display: flex;
-  flex-wrap: nowrap;
   align-items: center;
 }
 
@@ -132,14 +131,14 @@ ion-input {
 }
 
 .avatar {
-  width: 30px;
-  height: 30px;
-  min-height: 30px;
-  min-width: 30px;
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  min-width: 20px;
 }
 .task-item,
 .task-item > * {
-  height: 65px !important;
+  height: 30px !important;
 }
 
 ion-icon {
@@ -155,15 +154,30 @@ ion-icon {
 }
 
 label {
-    --background: rgb(240, 65, 65) !important;
+  --background: rgb(240, 65, 65) !important;
 }
 
 .backlog-edit-weight-popover {
   color: red;
 }
-
+.childicon,
+.taskicon {
+  font-size: 0.6rem;
+}
 
 .taskicon {
-  font-size: 1.4rem;
-  color: green
+  color: green;
+  margin-right: 5px;
+}
+
+.task-name {
+  font-size: 10px;
+}
+
+ion-badge {
+  font-size: 8px;
+}
+
+ion-button {
+  height: 15px;
 }
