@@ -51,8 +51,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     BrowserModule,
     PipeModule,
     IonicModule.forRoot(),
-    FontAwesomeModule,
     AppRoutingModule,
+    FontAwesomeModule,
     StoreModule.forRoot({ sessionReducer, taskReducer }),
     HttpClientModule,
     TranslateModule.forRoot({

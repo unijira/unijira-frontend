@@ -48,7 +48,9 @@ export class AppComponent implements OnInit, OnDestroy {
     library: FaIconLibrary,
     private popCtrl: PopoverController
   ) {
+
     library.addIconPacks(fas, fab, far);
+
     this.loadingSubscription = sessionService.getLoading().subscribe((load) => {
       this.loading = load;
     });

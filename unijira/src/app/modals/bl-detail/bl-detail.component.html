@@ -2,8 +2,11 @@
   <ion-row>
     <ion-col size="8">
       <ion-row>
-        <ion-col size="1"><ion-badge color="light">Epic</ion-badge></ion-col>
-        <ion-col size="1"><ion-badge color="light">Story</ion-badge></ion-col>
+        <ion-col
+          ><ion-badge color="light">{{ task.epic }}</ion-badge> /
+
+          <ion-badge color="light">{{ task.story }}</ion-badge></ion-col
+        >
       </ion-row>
 
       <ion-row>
@@ -11,19 +14,22 @@
           ><h1>{{ task.name }}</h1></ion-col
         >
       </ion-row>
-
       <ion-row>
-        <ion-col size="1"><ion-badge color="light">Allega</ion-badge></ion-col>
-        <ion-col size="2"
-          ><ion-badge color="light"
-            >Aggiungi<br />ticket figlio</ion-badge
-          ></ion-col
-        >
-        <ion-col size="2"
-          ><ion-badge color="light">Collega<br />ticket</ion-badge></ion-col
-        >
+        <ion-col size="12">
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'paperclip']"> </fa-icon>
+            <span class="buttontxt">Allega</span>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
+            <span class="buttontxt">Aggiungi un ticket figlio</span>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'link']"> </fa-icon>
+            <span class="buttontxt">Collega ticket</span>
+          </ion-button>
+        </ion-col>
       </ion-row>
-
       <ion-row>
         <ion-col size="12">
           <h5>Descrizione</h5>
@@ -31,19 +37,19 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="task.children.length > 0">
+      <ion-row *ngIf="task.children.length">
         <ion-col size="12">
           <h5>Ticket figli</h5>
-          <div *ngFor="let t; in: task.children">{{ t.name }}</div>
+          <p *ngFor="let t; in: task.children">{{ t.name }}</p>
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="task.link.length > 0">
+      <!-- <ion-row *ngIf="task.link.length > 0">
         <ion-col size="12">
           <h5>Ticket collegati</h5>
-          <div *ngFor="let t; in: task.children">{{ t.name }}</div>
+          <div *ngFor="let t; in: task.link">sds{{ t.name }}</div>
         </ion-col>
-      </ion-row>
+      </ion-row> -->
 
       <ion-row>
         <ion-col size="12">
@@ -54,20 +60,51 @@
         </ion-col>
       </ion-row>
     </ion-col>
+
+    <i class="fas fa-ellipsis-h"></i>
+
     <ion-col size="4">
       <ion-row>
-        <ion-col
-          ><ion-badge color="light">Restrizioni</ion-badge>
-          <ion-badge color="light">Monitoraggio</ion-badge>
-          <ion-badge color="light">Voto</ion-badge>
-          <ion-badge color="light">Monitoraggio</ion-badge>
-          <ion-badge color="light">Azioni</ion-badge>
-          <ion-badge color="light">Chiudi</ion-badge></ion-col
-        >
+        <ion-col>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light">
+            <fa-icon [icon]="['fas', 'times']"></fa-icon>
+          </ion-button>
+        </ion-col>
       </ion-row>
       <ion-row>
-        <ion-col>
-          <h5>Dettagli</h5>
+        <ion-col size="8">
+          <select name="status" id="status">
+            <option value="volvo">Da completare</option>
+            <option value="saab" selected>Completata</option>
+            <option value="mercedes">In corso</option>
+          </select>
+        </ion-col>
+
+        <ion-col size="4" *ng-if="task.status === 'completata'">
+          <fa-icon [icon]="['fas', 'check']"></fa-icon> Completato
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="dettagli-colonna">
+          <div class="dettagli-colonna-titolo">
+            <h5 class="dettagli-colonna-titolo-element">Dettagli</h5>
+          </div>
           <ion-row>
             <ion-col size="12">
               <div>
@@ -87,7 +124,7 @@
               </div>
               <div>
                 <h5>Sprint</h5>
-                {{ task.sprint }}
+                <!-- {{ task.sprint }} -->
               </div>
               <div>
                 <h5>Story point</h5>
@@ -95,7 +132,7 @@
               </div>
               <div>
                 <h5>Reporter</h5>
-                {{ task.owner.avatar }}
+                <!-- {{ task.owner.avatar }} -->
               </div>
             </ion-col>
           </ion-row>
@@ -105,39 +142,9 @@
       <ion-row>
         <ion-col size="12">
           <h5>Note</h5>
+          {{ task.note }}
         </ion-col>
       </ion-row>
     </ion-col>
   </ion-row>
 </ion-content>
-<!--
-<div class="ion-page">
-  <div>
-    <h5>Name:</h5>
-    {{ task.name }}
-  </div>
-  <div>
-    <h5>Status:</h5>
-    {{ task.status }}
-  </div>
-  <div>
-    <h5>Peso:</h5>
-    {{ task.weight }}
-  </div>
-
-  <div *ngIf="task.assignedTo">
-    <h5>Assegnatari</h5>
-    <div>
-      <div *ngFor="let user of task.assignedTo">
-        <b>Username</b> {{ user.username }}
-      </div>
-    </div>
-  </div>
-
-  <div *ngIf="task.children">
-    <h5>Task Figli</h5>
-    <div>
-      <div *ngFor="let child of task.children"><b>Nome</b>{{ child.name }}</div>
-    </div>
-  </div>
-</div> -->

@@ -1,4 +1,4 @@
-import {User} from './User';
+import { User } from './User';
 
 export class Task {
   id: number;
@@ -10,6 +10,10 @@ export class Task {
   type: string;
   comments: string[];
   tags: string[];
+  description: string;
+  note: string;
+  epic: string;
+  story: string;
   constructor(
     id: number,
     name: string,
@@ -19,7 +23,11 @@ export class Task {
     children: Task[],
     type: string,
     comments: string[],
-    tags: string[]
+    tags: string[],
+    description: string,
+    note: string,
+    epic: string,
+    story: string
   ) {
     this.id = id;
     this.name = name;
@@ -30,5 +38,9 @@ export class Task {
     this.type = type;
     this.comments = comments ?? [];
     this.tags = tags ?? [];
+    this.description = description ?? '';
+    this.note = note ?? '';
+    this.epic = epic ?? '';
+    this.story = story ?? '';
   }
 }
