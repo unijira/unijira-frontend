@@ -38,10 +38,10 @@
                   <div (click)="editPesoPopover($event, task.weight)">
                     <ion-badge
                       class="weight-badge"
-                      color="primary"
+                      color="light"
                       (save)="editWeight($event, task, 'backlog')"
                     >
-                      {{ task.weight }}
+                      <span>{{ task.weight }}</span>
                     </ion-badge>
                   </div>
 
@@ -49,24 +49,28 @@
                     <ion-badge
                       *ngIf="task.status === 'da_completare' "
                       color="medium"
-                      >{{ task.status }}</ion-badge
+                      >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                     <ion-badge
-                      *ngIf="task.status === 'completata' "
+                      *ngIf="task.status === 'completato' "
                       color="success"
-                      >{{ task.status }}</ion-badge
+                      >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                     <ion-badge
                       *ngIf="task.status === 'in_corso' "
                       color="primary"
-                      >{{ task.status }}</ion-badge
+                      >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                   </div>
 
                   <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
                     <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
                   </ion-thumbnail>
-                  <ion-button size="small" color="light" (click)="presentModal(task)">
+                  <ion-button
+                    size="small"
+                    color="light"
+                    (click)="presentModal(task)"
+                  >
                     <fa-icon
                       [icon]="['fas', 'ellipsis-h']"
                       class="childicon"
