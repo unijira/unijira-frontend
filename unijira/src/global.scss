@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -34,7 +34,6 @@
   color: #fff;
 }
 
-
 mark {
   background-color: rgba(252, 248, 227, 1);
 }
@@ -42,3 +41,36 @@ mark {
 .notifications-popover {
   --min-width: 480px;
 }
+
+/*  Questi devono stare qui... altrimenti non se li piglia! No... non piace nemmeno a me */
+.backlog-edit-like-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-link-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-lock-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-share-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-status-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 130px;
+}
+
+.backlog-edit-submenu-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+.backlog-edit-visibility-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-weight-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+/* end porcheria */

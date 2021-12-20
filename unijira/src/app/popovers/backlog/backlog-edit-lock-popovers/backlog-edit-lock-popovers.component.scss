@@ -1,40 +1,4 @@
 .backlog-edit-lock-popover .popover-wrapper.sc-ion-popover-md {
   width: 20px !important;
-  color: red;
-}
-
-.backlog-edit-lock-popover .popover-content {
   color: green;
-}
-
-.backlog-edit-lock-popover {
-  color: orange;
-}
-
-backlog-edit-lock-popover {
-  color: orange;
-}
-
-.sc-ion-popover-md-h {
-  color: violet;
-}
-
-$popover-md-width: 20px; $popover-ios-width: 20px; $popover-wp-width: 20px;
-
-
-ion-popover-view.fit {
-  height: auto;
-}
-
-ion-popover-view.fit ion-content {
-  position: relative;
-}
-
-.platform-android ion-popover-view.fit {
-  margin-top: 10px;
-}
-
-.platform-ios ion-popover-view.fit {
-  padding-top: 10px;
-  padding-bottom: 10px;
 }

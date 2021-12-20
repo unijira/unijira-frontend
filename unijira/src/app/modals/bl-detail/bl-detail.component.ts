@@ -138,6 +138,7 @@ export class BlDetailComponent implements OnInit {
   async editVisibilityPopover(ev: any) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditVisibilityPopoversComponent,
+      cssClass: 'backlog-edit-visibility-popover',
       event: ev,
       componentProps: {
         task: this.task,
@@ -156,6 +157,7 @@ export class BlDetailComponent implements OnInit {
   async editLikePopover(ev: any) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditLikePopoversComponent,
+      cssClass: 'backlog-edit-like-popover',
       event: ev,
       componentProps: {
         task: this.task,
@@ -174,6 +176,7 @@ export class BlDetailComponent implements OnInit {
   async editSharePopover(ev: any) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditSharePopoversComponent,
+      cssClass: 'backlog-edit-share-popover',
       event: ev,
       componentProps: {
         task: this.task,
