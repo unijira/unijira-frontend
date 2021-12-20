@@ -1,9 +1,10 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
 import { Task } from '../../models/Task';
 import { BrowserModule } from '@angular/platform-browser';
-import { PopoverController } from '@ionic/angular';
+import { PopoverController, ModalController } from '@ionic/angular';
 import { BacklogEditWeightPopoversComponent } from '../../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
 import { BacklogEditStatusPopoversComponent } from '../../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+
 @Component({
   selector: 'app-bl-detail',
   templateUrl: './bl-detail.component.html',
@@ -15,7 +16,7 @@ export class BlDetailComponent implements OnInit {
   @Output() outputData = new EventEmitter<Task>();
   @Output() closeModal = new EventEmitter<boolean>();
 
-  constructor(private popOverCtrl: PopoverController) {}
+  constructor(private popOverCtrl: PopoverController, private modalCtrl: ModalController) {}
 
   ngOnInit() {
     console.log(this.task);
@@ -49,8 +50,7 @@ export class BlDetailComponent implements OnInit {
   }
 
   close() {
-    alert('Close');
-    this.closeModal.emit(true);
+    this.modalCtrl.dismiss({}).then()
   }
 
   like() {
