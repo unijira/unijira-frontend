@@ -113,32 +113,30 @@ export class BacklogPage implements OnInit {
   }
 
   editWeight(task, data, type) {
-    // console.log('Edit Weight', $event, task, type);
-    // if (
-    //   $event.detail.value === '' ||
-    //   $event.detail.value === null ||
-    //   $event.detail.value === undefined ||
-    //   _.isNaN($event.detail.value)
-    // ) {
-    //   return;
-    // }
-    // if (type === 'backlog') {
-    //   if ($event.detail.data !== undefined) {
-    //     let newTask = _.clone(task);
-    //     console.log($event, task);
-    //     newTask.weight = parseInt($event.detail.data);
-    //     let backlog = _.clone(this.backlog);
-    //     backlog.tasks = this.backlog.tasks.map((t) => {
-    //       if (t.id === task.id) {
-    //         return newTask;
-    //       } else {
-    //         return t;
-    //       }
-    //     });
-    //     console.log(backlog.tasks);
-    //     this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
-    //   }
-    // } else if (type === 'sprint') {
+    if (
+      data.data.value === '' ||
+      data.data.value === null ||
+      data.data.value === undefined ||
+      _.isNaN(data.data.value)
+    ) {
+      return;
+    }
+    if (type === 'backlog') {
+      if (data.data.value !== undefined) {
+        let newTask = _.clone(task);
+        newTask.weight = parseInt(data.data.value);
+        let backlog = _.clone(this.backlog);
+        backlog.tasks = this.backlog.tasks.map((t) => {
+          if (t.id === task.id) {
+            return newTask;
+          } else {
+            return t;
+          }
+        });
+        console.log(backlog.tasks);
+        this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+      }
+    } else if (type === 'sprint') {
       console.log(data.data.value, task);
       if (data.data.value !== undefined) {
         let newTask = _.clone(task);
@@ -155,7 +153,7 @@ export class BacklogPage implements OnInit {
         console.log(sprint.tasks);
         this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
       }
-    // }
+    }
   }
 
   getFromApi() {
