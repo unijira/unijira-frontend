@@ -139,6 +139,8 @@ ion-input {
 .task-item,
 .task-item > * {
   height: 30px !important;
+  padding-top: 0;
+  padding-bottom: 0;
 }
 
 ion-icon {
@@ -180,4 +182,8 @@ ion-badge {
 
 ion-button {
   height: 15px;
+}
+
+.popover-content.sc-ion-popover-md {
+  width: 77px;
 }

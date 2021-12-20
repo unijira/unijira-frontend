@@ -203,7 +203,7 @@ export class BacklogPage implements OnInit {
   async editStatusPopover(ev: any, status) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
-      cssClass: 'backlog-edit-weight-popover',
+      cssClass: 'backlog-edit-status-popover',
       event: ev,
       translucent: true,
       componentProps: {
