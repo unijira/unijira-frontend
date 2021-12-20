@@ -1,19 +1,132 @@
+<ion-content>
+  <ion-row>
+    <ion-col size="8">
+      <ion-row>
+        <ion-col size="1"><ion-badge color="light">Epic</ion-badge></ion-col>
+        <ion-col size="1"><ion-badge color="light">Story</ion-badge></ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12"
+          ><h1>{{ task.name }}</h1></ion-col
+        >
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="1"><ion-badge color="light">Allega</ion-badge></ion-col>
+        <ion-col size="2"
+          ><ion-badge color="light"
+            >Aggiungi<br />ticket figlio</ion-badge
+          ></ion-col
+        >
+        <ion-col size="2"
+          ><ion-badge color="light">Collega<br />ticket</ion-badge></ion-col
+        >
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <h5>Descrizione</h5>
+          <p>{{ task.description }}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="task.children.length > 0">
+        <ion-col size="12">
+          <h5>Ticket figli</h5>
+          <div *ngFor="let t; in: task.children">{{ t.name }}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="task.link.length > 0">
+        <ion-col size="12">
+          <h5>Ticket collegati</h5>
+          <div *ngFor="let t; in: task.children">{{ t.name }}</div>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <h5>Attivita'</h5>
+          <div>Filtri</div>
+          <div>add activiti input</div>
+          <div>last comment/activity</div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+    <ion-col size="4">
+      <ion-row>
+        <ion-col
+          ><ion-badge color="light">Restrizioni</ion-badge>
+          <ion-badge color="light">Monitoraggio</ion-badge>
+          <ion-badge color="light">Voto</ion-badge>
+          <ion-badge color="light">Monitoraggio</ion-badge>
+          <ion-badge color="light">Azioni</ion-badge>
+          <ion-badge color="light">Chiudi</ion-badge></ion-col
+        >
+      </ion-row>
+      <ion-row>
+        <ion-col>
+          <h5>Dettagli</h5>
+          <ion-row>
+            <ion-col size="12">
+              <div>
+                <h5>Assegnatario</h5>
+
+                <ion-thumbnail>
+                  <img [src]="task.assignedTo[0].avatar" />
+                </ion-thumbnail>
+              </div>
+              <div>
+                <h5>Tags</h5>
+                <ion-badge
+                  color="lightsuccess"
+                  *ngFor="let tag; in: task.tags"
+                  >{{ tag }}</ion-badge
+                >
+              </div>
+              <div>
+                <h5>Sprint</h5>
+                {{ task.sprint }}
+              </div>
+              <div>
+                <h5>Story point</h5>
+                <ion-badge color="light"> {{ task.weight }} </ion-badge>
+              </div>
+              <div>
+                <h5>Reporter</h5>
+                {{ task.owner.avatar }}
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <h5>Note</h5>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>
+<!--
 <div class="ion-page">
   <div>
-    <h3>Name:</h3>
+    <h5>Name:</h5>
     {{ task.name }}
   </div>
   <div>
-    <h3>Status:</h3>
+    <h5>Status:</h5>
     {{ task.status }}
   </div>
   <div>
-    <h3>Peso:</h3>
+    <h5>Peso:</h5>
     {{ task.weight }}
   </div>
 
   <div *ngIf="task.assignedTo">
-    <h3>Assegnatari</h3>
+    <h5>Assegnatari</h5>
     <div>
       <div *ngFor="let user of task.assignedTo">
         <b>Username</b> {{ user.username }}
@@ -22,9 +135,9 @@
   </div>
 
   <div *ngIf="task.children">
-    <h3>Task Figli</h3>
+    <h5>Task Figli</h5>
     <div>
       <div *ngFor="let child of task.children"><b>Nome</b>{{ child.name }}</div>
     </div>
   </div>
-</div>
+</div> -->

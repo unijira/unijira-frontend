@@ -31,6 +31,7 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FormsModule } from '@angular/forms';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PipeModule } from './pipe.module';
+import { BlDetailComponent } from './modals/bl-detail/bl-detail.component';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -43,6 +44,7 @@ export const createTranslateLoader = (http: HttpClient) =>
     BacklogEditWeightPopoversComponent,
     BacklogEditStatusPopoversComponent,
     NotificationsComponent,
+    BlDetailComponent,
   ],
   entryComponents: [],
   imports: [
