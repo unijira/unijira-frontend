@@ -18,6 +18,7 @@ const routes: Routes = [
   },
   {
     path: 'backlog',
+    // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
   },
