@@ -8,7 +8,7 @@ import { TaskService } from '../store/task.service';
 import * as TaskActions from '../store/task.action';
 import { Store, props } from '@ngrx/store';
 import * as _ from 'lodash';
-import { BlDetailComponent } from '../bl-detail/bl-detail.component';
+import { BlDetailComponent } from '../modals/bl-detail/bl-detail.component';
 import { ModalController, SpinnerTypes } from '@ionic/angular';
 import { BacklogAPIService } from '../services/backlog-api.service';
 import { PopoverController } from '@ionic/angular';
@@ -113,7 +113,7 @@ export class BacklogPage implements OnInit {
   }
 
   editWeight($event, task, type) {
-    console.log("Edit Weight", $event, task, type);
+    console.log('Edit Weight', $event, task, type);
     if (
       $event.detail.value === '' ||
       $event.detail.value === null ||
@@ -200,8 +200,6 @@ export class BacklogPage implements OnInit {
     return await popOver.present();
   }
 
-
-
   async editStatusPopover(ev: any, status) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
@@ -217,7 +215,4 @@ export class BacklogPage implements OnInit {
 
     return await popOver.present();
   }
-
-
-
 }

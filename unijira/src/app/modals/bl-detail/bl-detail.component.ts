@@ -1,5 +1,5 @@
 import { Component, Input, Output, OnInit, EventEmitter } from '@angular/core';
-import { Task } from '../models/Task';
+import { Task } from '../../models/Task';
 import { BrowserModule } from '@angular/platform-browser';
 @Component({
   selector: 'app-bl-detail',
