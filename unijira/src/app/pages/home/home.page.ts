@@ -27,7 +27,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
 
-    this.projectService.getRecentProjects(5).subscribe(
+    this.projectService.getProjects(0, 5).subscribe(
       (projects: Array<Project>) => {
         this.recentProjects = projects;
       }

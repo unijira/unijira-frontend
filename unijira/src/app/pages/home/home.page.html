@@ -15,10 +15,10 @@
         </ion-col>
         <ion-col>
           <ion-row class="ion-justify-content-end">
-            <a routerLink="/home/projects">
+            <ion-chip [disabled]="recentProjects?.length === 0" outline routerLink="/home/projects">
               <span [translate]="'user.home.seeAll'"></span>
               <ion-icon name="arrow-forward"></ion-icon>
-            </a>
+            </ion-chip>
           </ion-row>
         </ion-col>
       </ion-row>
