@@ -1,0 +1,61 @@
+.wizard-info {
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 100%;
+  background-color: lightgray;
+  height: 1px;
+}
+
+
+.project-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  background-color: lightgray;
+  vertical-align: middle;
+}
+
+.project-image ion-img {
+  width: 100%;
+}
+
+.wizard-invite {
+}
+
+.wizard-invite-header-image {
+  height: 220px;
+}
+
+.wizard-invite-header-image img {
+  width: 100%;
+}
+
+.wizard-invite-mail {
+  margin-left: auto;
+  margin-right: auto;
+  max-width: 600px;
+}
+
+.info-icon {
+  color: #3880ff;
+  cursor: pointer;
+}
+
+ion-input {
+  width: 240px;
+}
+
+h1 {
+  font-size: 36px;
+}
+
+h3 {
+  color: #5f6368;
+}
+

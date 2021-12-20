@@ -1,0 +1,55 @@
+<ion-content>
+
+  <div class="project-invite">
+
+    <br>
+    <br>
+    <br>
+    <br>
+
+    <!-- Project Invite Header -->
+    <ion-grid class="ion-padding">
+
+      <!-- Invite Image -->
+      <ion-row class="ion-justify-content-center">
+        <img src="/assets/img/mail.webp" class="project-invite-header-image" alt="">
+      </ion-row>
+
+      <br>
+      <br>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-text>
+          <h1 [translate]="'project.invite.title'"></h1>
+        </ion-text>
+      </ion-row>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-col size="6">
+          <ion-text>
+            <h3 [translate]="'project.invite.description'"></h3>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+
+    </ion-grid>
+
+    <br>
+    <br>
+
+    <!-- Project Invite Content -->
+    <ion-grid>
+
+      <ion-row class="ion-justify-content-center">
+        <ion-button expand="block" color="success" (click)="accept()">
+          <span [translate]="'project.invite.accept'"></span>
+          <ion-icon slot="end" name="checkmark-outline" ></ion-icon>
+        </ion-button>
+      </ion-row>
+
+    </ion-grid>
+
+
+  </div>
+
+</ion-content>
