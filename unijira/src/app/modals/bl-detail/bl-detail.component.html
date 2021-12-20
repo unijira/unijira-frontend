@@ -92,11 +92,26 @@
       </ion-row>
       <ion-row>
         <ion-col size="8">
-          <select name="status" id="status">
-            <option value="volvo">Da completare</option>
-            <option value="saab" selected>Completata</option>
-            <option value="mercedes">In corso</option>
-          </select>
+          <div (click)="editStatusPopover($event, task, 'sprint')">
+            <ion-badge
+              *ngIf="task.status === 'da_completare'"
+              color="medium"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+            <ion-badge
+              *ngIf="task.status === 'completato'"
+              color="success"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+            <ion-badge
+              *ngIf="task.status === 'in_corso'"
+              color="primary"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+          </div>
         </ion-col>
 
         <ion-col size="4" *ng-if="task.status === 'completata'">
@@ -129,7 +144,17 @@
               </div>
               <div>
                 <h5>Story point</h5>
-                <ion-badge color="light"> {{ task.weight }} </ion-badge>
+                <!-- <ion-badge color="light"> {{ task.weight }} </ion-badge> -->
+                <div (click)="editPesoPopover($event, task, 'sprint')">
+                  <ion-badge
+                    class="weight-badge"
+                    color="light"
+                    (save)="editWeight($event, task, 'backlog')"
+                  >
+                    <span>{{ task.weight }}</span>
+                  </ion-badge>
+                </div>
+
               </div>
               <div>
                 <h5>Reporter</h5>
