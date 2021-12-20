@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
 import {unsubscribeAll} from './util';
@@ -17,6 +17,8 @@ import {
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
+import {NotificationsComponent} from './components/notifications/notifications.component';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -24,6 +26,10 @@ import { fab } from '@fortawesome/free-brands-svg-icons';
 })
 
 export class AppComponent implements OnInit, OnDestroy {
+
+  @ViewChild('notifications') notificationsComponent: NotificationsComponent;
+
+  unreadNotificationsCount = 0;
   pages: any[] = [];
 
   loadingSubscription: Subscription;
@@ -61,6 +67,13 @@ export class AppComponent implements OnInit, OnDestroy {
     this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
+
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
+
+
+
   ngOnInit() {
     this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
@@ -96,16 +109,21 @@ export class AppComponent implements OnInit, OnDestroy {
     unsubscribeAll(this.loadingSubscription, this.isLoggedSubscription, this.userInfoSubscription);
   }
 
+
+  showNotifications(e?: Event) {
+    this.notificationsComponent.show(e).then();
+  }
+
   async _userPopOver(ev: any) {
     const popOver = await this.popCtrl.create({
       component: UserActionPopoverComponent,
       cssClass: 'my-popover-class',
       event: ev,
-    })
+    });
 
-    popOver.onDidDismiss().then(data=> console.log(data))
+    popOver.onDidDismiss().then(data=> console.log(data));
 
-    return await popOver.present()
+    return await popOver.present();
   }
 
 

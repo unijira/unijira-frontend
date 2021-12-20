@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PopoverController} from '@ionic/angular';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';

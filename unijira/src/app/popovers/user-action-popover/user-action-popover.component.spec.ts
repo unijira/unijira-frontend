@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { UserActionPopoverComponent } from './user-action-popover.component';
+import {UserActionPopoverComponent} from './user-action-popover.component';
 
 describe('UserActionPopoverComponent', () => {
   let component: UserActionPopoverComponent;

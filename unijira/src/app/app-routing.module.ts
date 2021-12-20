@@ -34,24 +34,18 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'home/projects/wizard',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/wizard.module').then( m => m.WizardPageModule)
-  },
-  {
-    path: 'home/projects/wizard/info',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/info/info.module').then( m => m.InfoPageModule)
-  },
-  {
-    path: 'home/projects/wizard/invite',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./components/project/wizard/invite/invite.module').then( m => m.InvitePageModule)
-  },
-  {
     path: 'home/projects',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
+  },
+  {
+    path: 'home/projects/wizard',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/wizard/wizard.module').then(m => m.WizardPageModule)
+  },
+  {
+    path: 'projects/:id/invite',
+    loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
 
 

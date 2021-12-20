@@ -29,14 +29,25 @@ import { fas } from '@fortawesome/free-solid-svg-icons';
 import { far } from '@fortawesome/free-regular-svg-icons';
 import { fab } from '@fortawesome/free-brands-svg-icons';
 import { FormsModule } from '@angular/forms';
+import { NotificationsComponent } from './components/notifications/notifications.component';
+import { PipeModule } from './pipe.module';
+
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
 
 @NgModule({
-  declarations: [AppComponent, LoadingComponent, UserActionPopoverComponent, BacklogEditWeightPopoversComponent, BacklogEditStatusPopoversComponent],
+  declarations: [
+    AppComponent,
+    LoadingComponent,
+    UserActionPopoverComponent,
+    BacklogEditWeightPopoversComponent,
+    BacklogEditStatusPopoversComponent,
+    NotificationsComponent,
+  ],
   entryComponents: [],
   imports: [
     BrowserModule,
+    PipeModule,
     IonicModule.forRoot(),
     FontAwesomeModule,
     AppRoutingModule,
@@ -55,7 +66,7 @@ export const createTranslateLoader = (http: HttpClient) =>
       logOnly: false,
     }),
     EffectsModule.forRoot([SessionEffects]),
-    FormsModule
+    FormsModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

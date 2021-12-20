@@ -3,17 +3,39 @@
   <ion-header *ngIf="isLogged">
     <ion-toolbar>
       <ion-buttons slot="primary">
-        <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end"></ion-toggle>
-        <ion-button (click)="_userPopOver($event)">
-          <ion-icon name="person-circle"></ion-icon>
-          <span>{{userInfo?.username}}</span>
+
+        <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+        <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+
+        <ion-button (click)="showNotifications($event)">
+          <ion-icon name="notifications"></ion-icon>
+          <ion-badge color="danger" *ngIf="unreadNotificationsCount > 0">{{unreadNotificationsCount}}</ion-badge>
+          <app-notifications #notifications (updateNotificationsCount)="unreadNotificationsCount = $event"></app-notifications>
         </ion-button>
-        <ion-button (click)="switchLanguage()">
+
+        <ion-button (click)="_userPopOver($event)">
+          <ion-icon name="person-circle" class="ion-margin-end"></ion-icon>
+          <ion-text class="ion-text-lowercase">{{userInfo?.username || '' }}</ion-text>
+        </ion-button>
+
+        <ion-button class="ion-padding-horizontal" (click)="switchLanguage()">
           <span>{{translateService.currentLang}}</span>
         </ion-button>
+
       </ion-buttons>
-      <img src="/assets/logo1.png" width="45" class="main-icon" height="40"/>
-      <ion-title class="titleicon" style="display:inline-block">UniJira</ion-title>
+
+      <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="auto">
+            <a routerLink="/">
+              <ion-img src="/assets/logo-navbar.png" class="main-icon ion-margin-start"></ion-img>
+            </a>
+          </ion-col>
+          <ion-col>
+            <ion-title><b>{{'app.title' | translate | titlecase}}</b></ion-title>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
     </ion-toolbar>
   </ion-header>
   <ion-split-pane content-id="content" when="md" class="content-h" *ngIf="isLogged && !(router.url.includes('/home'))">
@@ -21,9 +43,7 @@
       <ion-content>
         <ion-list>
           <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-            <ion-item style="padding: 10px;"
-                      [routerLink]="page.url"
-                      routerDirection="root">
+            <ion-item class="ion-padding" [routerLink]="page.url" routerDirection="root">
               {{page.name}}
             </ion-item>
           </ion-menu-toggle>

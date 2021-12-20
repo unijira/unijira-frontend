@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ActivatePage } from './activate.page';
+import {ActivatePage} from './activate.page';
 
 describe('ActivatePage', () => {
   let component: ActivatePage;
