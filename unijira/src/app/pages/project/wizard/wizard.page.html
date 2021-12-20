@@ -123,23 +123,26 @@
           <br>
           <br>
 
+
           <!-- Invite Member -->
-          <ion-row class="ion-justify-content-center">
+          <form (ngSubmit)="invite()">
+            <ion-row class="ion-justify-content-center">
 
-            <ion-item lines="full">
-              <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
-              <ion-input id="mailForm" type="text" [formControl]="mailForm" (keyup.enter)="invite()"></ion-input>
-            </ion-item>
+              <ion-item lines="full">
+                <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
+                <ion-input id="mailForm" type="text" [formControl]="mailForm"></ion-input>
+              </ion-item>
 
-            <div class="ion-align-self-center ion-padding-start">
-              <ion-button [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
-            </div>
+              <div class="ion-align-self-center ion-padding-start">
+                <ion-button type="submit" [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
+              </div>
 
-            <div class="ion-align-self-center ion-padding-start">
-              <ion-button *ngIf="invites.length > 0" color="warning" [translate]="'wizard.invite.removeAll'" (click)="invites = []" ></ion-button>
-            </div>
+              <div class="ion-align-self-center ion-padding-start">
+                <ion-button type="reset" *ngIf="invites.length > 0" color="warning" [translate]="'wizard.invite.removeAll'" (click)="invites = []" ></ion-button>
+              </div>
 
-          </ion-row>
+            </ion-row>
+          </form>
 
           <br>
           <br>
