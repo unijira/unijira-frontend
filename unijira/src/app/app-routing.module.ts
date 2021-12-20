@@ -42,6 +42,10 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
   },
+  {
+    path: 'projects/:id/invite',
+    loadChildren: () => import('./pages/project/invite/invite.module').then( m => m.InvitePageModule)
+  }
 
 ];
 

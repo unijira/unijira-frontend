@@ -1,4 +1,8 @@
 <ion-content>
+
+  <br>
+  <br>
+
   <ion-slides pager="false" class="swiper-no-swiping" #wizardSlider>
 
     <ion-slide>
@@ -6,23 +10,33 @@
       <!-- Project Wizard Info -->
       <div id="wizard-info">
 
-        <!-- Info Description -->
-        <ion-row class="ion-justify-content-center">
-          <h1 [translate]="'wizard.info.title'"></h1>
-        </ion-row>
-
-
-        <br>
-        <br>
-        <br>
-        <br>
-
+        <!-- Info Header -->
         <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h1 [translate]="'wizard.info.title'"></h1>
+            </ion-text>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h3 [translate]="'wizard.info.description'"></h3>
+            </ion-text>
+          </ion-row>
+        </ion-grid>
+
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+        <ion-grid >
 
           <!-- Project Icon -->
           <ion-row class="ion-justify-content-center">
             <div class="project-image">
-              <ion-img [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              <ion-img *ngIf="image === ''" [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
             </div>
           </ion-row>
 
@@ -30,7 +44,11 @@
 
           <!-- Project Icon Selection -->
           <ion-row class="ion-justify-content-center">
-            <ion-button color="light" [translate]="'wizard.info.icon'"></ion-button>
+            <input
+              style="display: none"
+              type="file" (change)="onFileChanged($event)"
+              #fileInput>
+            <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
           </ion-row>
 
           <br>
@@ -44,6 +62,7 @@
               <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
               <ion-input type="text" (ionChange)='onChangeTime($event.target.value)' [formControl]="nameForm"></ion-input>
             </ion-item>
+            <ion-icon class="info-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
           </ion-row>
 
           <br>
@@ -55,6 +74,7 @@
               <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
               <ion-input type="text" [formControl]="keyForm"></ion-input>
             </ion-item>
+            <ion-icon class="info-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
           </ion-row>
 
         </ion-grid>
@@ -76,11 +96,20 @@
         <!-- Invite Header -->
         <ion-grid>
           <ion-row class="ion-justify-content-center">
-            <h1 [translate]="'wizard.invite.title'"></h1>
+            <ion-text>
+              <h1 [translate]="'wizard.invite.title'"></h1>
+            </ion-text>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h3 [translate]="'wizard.invite.description'"></h3>
+            </ion-text>
           </ion-row>
         </ion-grid>
 
         <br>
+        <br>
+        <hr>
         <br>
         <br>
 
@@ -99,11 +128,15 @@
 
             <ion-item lines="full">
               <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
-              <ion-input type="text" [formControl]="mailForm"></ion-input>
+              <ion-input id="mailForm" type="text" [formControl]="mailForm" (keyup.enter)="invite()"></ion-input>
             </ion-item>
 
             <div class="ion-align-self-center ion-padding-start">
-              <ion-button [translate]="'wizard.invite.add'" (click)="invite()"></ion-button>
+              <ion-button [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
+            </div>
+
+            <div class="ion-align-self-center ion-padding-start">
+              <ion-button *ngIf="invites.length > 0" color="warning" [translate]="'wizard.invite.removeAll'" (click)="invites = []" ></ion-button>
             </div>
 
           </ion-row>
@@ -148,13 +181,7 @@
       <span [translate]="'wizard.back'"></span>
     </ion-button>
 
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
-    &nbsp;
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 
     <ion-button *ngIf="index === 0" [disabled]="!validation()" color="light" (click)="updateProject()">
       <span [translate]="'wizard.continue'"></span>
