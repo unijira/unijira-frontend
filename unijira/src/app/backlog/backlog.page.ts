@@ -213,7 +213,7 @@ export class BacklogPage implements OnInit {
 
     popOver.onDidDismiss().then((data) => {
       console.log(data);
-      if (data.data !== undefined) {
+      if (data.data.value !== undefined) {
         this.editStatus(task, data, type);
       }
     });
