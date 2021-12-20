@@ -3,12 +3,13 @@ import {
   isLoggedAction,
   loadingAction,
   logInAction,
-  logOutAction,
+  logOutAction, projectAction,
   userInfoAction,
   wrongCredentialAction
 } from './session.action';
 import {User} from '../models/User';
 import {UserInfo} from '../models/users/UserInfo';
+import {Project} from '../models/projects/Project';
 
 export interface SessionState {
   loading: boolean;
@@ -16,7 +17,8 @@ export interface SessionState {
   user: User;
   token: string;
   wrongCredential: boolean;
-  userInfo: UserInfo
+  userInfo: UserInfo,
+  project: Project
 }
 
 export const initialState: SessionState = {
@@ -25,7 +27,8 @@ export const initialState: SessionState = {
   user: null,
   token: null,
   wrongCredential: false,
-  userInfo: null
+  userInfo: null,
+  project: null
 };
 
 
@@ -37,4 +40,5 @@ export const sessionReducer = createReducer(
   on(wrongCredentialAction, (state, {wrongCredential}) => ({...state, wrongCredential})),
   on(userInfoAction, (state, {userInfo}) => ({...state, userInfo})),
   on(logOutAction, () => initialState),
+  on(projectAction, (state, {project}) => ({...state, project})),
 );

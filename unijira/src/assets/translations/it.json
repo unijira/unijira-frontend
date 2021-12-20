@@ -67,5 +67,7 @@
   "project.invite.alert.success.confirm" : "Ok",
   "project.invite.alert.failed.title" : "Non puoi accedere a questo progetto",
   "project.invite.alert.failed.message" : "Il tuo invito è scaduto, riprova!",
-  "project.invite.alert.failed.confirm" : "Ok"
+  "project.invite.alert.failed.confirm" : "Ok",
+  "project.members": "Membri",
+  "project.noMembersAvailables": "Non ci sono membri da mostrare al momento"
 }

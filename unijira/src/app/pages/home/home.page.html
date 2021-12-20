@@ -25,7 +25,7 @@
 
       <ion-row class="infinte-width">
         <ion-col size="9" size-lg="auto" class="ion-no-margin" *ngFor="let project of recentProjects">
-          <ion-card [routerLink]="'/home/projects/' + project.id">
+          <ion-card (click)="navigateToProjectHome(project.id)" )>
             <ion-card-content>
               <ion-grid>
                 <ion-row>

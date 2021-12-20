@@ -1,6 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
+import {SessionService} from '../../store/session.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-projects',
@@ -14,6 +16,8 @@ export class ProjectsPage implements OnInit {
 
   constructor(
     private projectService: ProjectService,
+    private sessionService: SessionService,
+    private router: Router
   ) { }
 
 
@@ -35,6 +39,11 @@ export class ProjectsPage implements OnInit {
         this.projects = this.projects ? this.projects.concat(projects) : projects;
       }
     );
+  }
+
+  navigateToProjectHome(id: number) {
+    this.sessionService.loadProject(id);
+    this.router.navigate(['/project-home']);
   }
 
 }
