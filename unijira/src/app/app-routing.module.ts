@@ -37,6 +37,10 @@ const routes: Routes = [
     path: 'home/projects/wizard',
     loadChildren: () => import('./pages/project/wizard/wizard.module').then( m => m.WizardPageModule)
   },
+  {
+    path: 'projects/:id/invite',
+    loadChildren: () => import('./pages/project/invite/invite.module').then( m => m.InvitePageModule)
+  },
 
 ];
 

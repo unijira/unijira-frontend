@@ -1,10 +1,9 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
-import {IonSlides} from '@ionic/angular';
-import { AlertController } from '@ionic/angular';
-import { TranslateService } from '@ngx-translate/core';
+import {AlertController, IonSlides} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
-import {Project} from '../../../models/projects/Project';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-wizard',
@@ -13,7 +12,8 @@ import {Project} from '../../../models/projects/Project';
 })
 export class WizardPage implements OnInit {
 
-  @Input() url: string;
+  @Input() url: URL;
+  @Input() image: string;
 
   @Input() invites: string[] = [];
 
@@ -27,11 +27,12 @@ export class WizardPage implements OnInit {
 
   constructor(public alertController: AlertController,
               private translateService: TranslateService,
-              private projectService: ProjectService) {}
+              private projectService: ProjectService,
+              private router: Router) {}
 
   ngOnInit() {
     this.index = 0;
-    this.url = '';
+    this.image = '';
   }
 
   invite() {
@@ -42,6 +43,8 @@ export class WizardPage implements OnInit {
     if (this.mailForm.valid && !this.invites.includes(this.mailForm.value)) {
       this.invites.push(this.mailForm.value);
     }
+
+    this.mailForm.setValue('');
 
   }
 
@@ -75,9 +78,12 @@ export class WizardPage implements OnInit {
             this.projectService.createProject(this.nameForm.value, this.keyForm.value, null)
               .subscribe(project => {
 
-                if(project !== undefined) {
+                if(project !== null) {
+
+                    this.projectService.sendInvitations(project.id, this.invites).subscribe();
 
                     // TODO.. Move to project home
+                    // this.router.navigate([['home/projects/', project.id].join('')]);
 
                 }
 
@@ -91,7 +97,7 @@ export class WizardPage implements OnInit {
 
   }
 
-  async showAlert(header: any, message: any, cancel: any, confirm: any): Promise<any> {
+  async showAlert(header: string, message: string, cancel: string, confirm: string): Promise<any> {
 
     return new Promise(async (resolve) => {
 
@@ -120,7 +126,7 @@ export class WizardPage implements OnInit {
     });
   }
 
-  onChangeTime(value: any) {
+  onChangeTime(value: string) {
 
       if(this.nameForm.value.length >= 3) {
 
@@ -136,6 +142,19 @@ export class WizardPage implements OnInit {
       } else {
         this.keyForm.setValue('');
       }
+
+  }
+
+  onFileChanged(event) {
+
+    const reader = new FileReader();
+
+    this.url = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
+
+    reader.onload = (e) => {
+      this.image = e.target.result as string;
+    };
 
   }
 

@@ -10,14 +10,14 @@ import { WizardPageRoutingModule } from './wizard-routing.module';
 import { WizardPage } from './wizard.page';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        WizardPageRoutingModule,
-        ReactiveFormsModule,
-        TranslateModule
-    ],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    WizardPageRoutingModule,
+    ReactiveFormsModule,
+    TranslateModule
+  ],
   declarations: [WizardPage]
 })
 export class WizardPageModule {}
