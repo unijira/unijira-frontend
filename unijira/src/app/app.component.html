@@ -27,10 +27,12 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="auto">
-            <ion-img src="/assets/logo1.png" class="main-icon ion-margin-start"></ion-img>
+            <a routerLink="/">
+              <ion-img src="/assets/logo-navbar.png" class="main-icon ion-margin-start"></ion-img>
+            </a>
           </ion-col>
           <ion-col>
-            <ion-title>{{'app.title' | translate | uppercase}}</ion-title>
+            <ion-title><b>{{'app.title' | translate | titlecase}}</b></ion-title>
           </ion-col>
         </ion-row>
       </ion-grid>

@@ -174,12 +174,12 @@
 
   <ion-row class="ion-justify-content-center">
 
-    <ion-button *ngIf="index === 0" color="light"  [routerLink]="'/home/'">
+    <ion-button *ngIf="index === 0" color="light"  [routerLink]="'/home'">
       <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
       <span [translate]="'wizard.back'"></span>
     </ion-button>
 
-    <ion-button *ngIf="index === 1" color="light" (click)="this.wizardSlider.slideTo(0); index = 0;">
+    <ion-button *ngIf="index === 1" color="light" (click)="this.wizardSlider.slideTo(0); index = 0">
       <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
       <span [translate]="'wizard.back'"></span>
     </ion-button>

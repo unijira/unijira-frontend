@@ -50,6 +50,7 @@ export class NotificationsComponent implements OnInit {
 
       notify.read = true;
       this.notifyService.markAsRead(notify.id);
+      this.updateNotificationsCount.emit(this.unreadNotificationsCount);
 
     }
 
@@ -61,6 +62,7 @@ export class NotificationsComponent implements OnInit {
 
       this.notifications.forEach(notify => notify.read = true);
       this.notifyService.markAllAsRead();
+      this.updateNotificationsCount.emit(this.unreadNotificationsCount);
 
     }
 
