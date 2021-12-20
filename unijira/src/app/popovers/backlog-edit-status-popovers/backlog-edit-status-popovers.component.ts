@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
 
 @Component({
   selector: 'app-backlog-edit-status-popovers',
@@ -10,7 +11,7 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
   @Output() editStatus: EventEmitter<number> = new EventEmitter<number>();
   statusModificato: number;
 
-  constructor() { }
+  constructor(private popoverCtrl: PopoverController) {}
 
   ngOnInit() {}
 
@@ -21,7 +22,6 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
 
   dismiss() {
     console.log('dismiss');
+    this.popoverCtrl.dismiss({newStatus: this.statusModificato}).then();
   }
 }
-
-

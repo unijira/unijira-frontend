@@ -112,37 +112,38 @@ export class BacklogPage implements OnInit {
     }
   }
 
-  editWeight($event, task, type) {
-    console.log('Edit Weight', $event, task, type);
-    if (
-      $event.detail.value === '' ||
-      $event.detail.value === null ||
-      $event.detail.value === undefined ||
-      _.isNaN($event.detail.value)
-    ) {
-      return;
-    }
-    if (type === 'backlog') {
-      if ($event.detail.data !== undefined) {
+  editWeight(task, data, type) {
+    // console.log('Edit Weight', $event, task, type);
+    // if (
+    //   $event.detail.value === '' ||
+    //   $event.detail.value === null ||
+    //   $event.detail.value === undefined ||
+    //   _.isNaN($event.detail.value)
+    // ) {
+    //   return;
+    // }
+    // if (type === 'backlog') {
+    //   if ($event.detail.data !== undefined) {
+    //     let newTask = _.clone(task);
+    //     console.log($event, task);
+    //     newTask.weight = parseInt($event.detail.data);
+    //     let backlog = _.clone(this.backlog);
+    //     backlog.tasks = this.backlog.tasks.map((t) => {
+    //       if (t.id === task.id) {
+    //         return newTask;
+    //       } else {
+    //         return t;
+    //       }
+    //     });
+    //     console.log(backlog.tasks);
+    //     this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+    //   }
+    // } else if (type === 'sprint') {
+      console.log(data.data.value, task);
+      if (data.data.value !== undefined) {
         let newTask = _.clone(task);
-        console.log($event, task);
-        newTask.weight = parseInt($event.detail.data);
-        let backlog = _.clone(this.backlog);
-        backlog.tasks = this.backlog.tasks.map((t) => {
-          if (t.id === task.id) {
-            return newTask;
-          } else {
-            return t;
-          }
-        });
-        console.log(backlog.tasks);
-        this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
-      }
-    } else if (type === 'sprint') {
-      if ($event.detail.data !== undefined) {
-        let newTask = _.clone(task);
-        console.log($event, task);
-        newTask.weight = parseInt($event.detail.data);
+        console.log(data.data.value, task);
+        newTask.weight = parseInt(data.data.value);
         let sprint = _.clone(this.sprint);
         sprint.tasks = this.sprint.tasks.map((t) => {
           if (t.id === task.id) {
@@ -154,7 +155,7 @@ export class BacklogPage implements OnInit {
         console.log(sprint.tasks);
         this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
       }
-    }
+    // }
   }
 
   getFromApi() {
@@ -184,18 +185,23 @@ export class BacklogPage implements OnInit {
     });
   }
 
-  async editPesoPopover(ev: any, peso) {
+  async editPesoPopover(ev: any, task, type) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditWeightPopoversComponent,
       cssClass: 'backlog-edit-weight-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        pesoOriginal: peso,
+        pesoOriginal: task.weight,
       },
     });
 
-    popOver.onDidDismiss().then((data) => console.log(data));
+    popOver.onDidDismiss().then((data) => {
+      console.log(data);
+      if (data.data !== undefined) {
+        this.editWeight(task, data, type);
+      }
+    });
 
     return await popOver.present();
   }
@@ -211,7 +217,9 @@ export class BacklogPage implements OnInit {
       },
     });
 
-    popOver.onDidDismiss().then((data) => console.log(data));
+    popOver.onDidDismiss().then((data) => {
+      console.log(data);
+    });
 
     return await popOver.present();
   }

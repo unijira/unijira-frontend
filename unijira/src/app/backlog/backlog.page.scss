@@ -187,9 +187,18 @@ ion-button {
 .popover-content.sc-ion-popover-md {
   width: 77px;
 }
-
+.status-badge {
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: initial;
+}
 .weight-badge > span {
   font-weight: bold;
   font-size: 10px;
-  color: blue
+  color: #555;
+}
+.weight-badge {
+  border-radius: 50%;
+  width: 18px;
+  background-color: #ccc;
 }

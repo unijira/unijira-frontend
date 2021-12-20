@@ -35,7 +35,7 @@
                     </fa-icon>
                   </div>
 
-                  <div (click)="editPesoPopover($event, task.weight)">
+                  <div (click)="editPesoPopover($event, task, 'sprint')">
                     <ion-badge
                       class="weight-badge"
                       color="light"
@@ -49,16 +49,19 @@
                     <ion-badge
                       *ngIf="task.status === 'da_completare' "
                       color="medium"
+                      class="status-badge"
                       >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                     <ion-badge
                       *ngIf="task.status === 'completato' "
                       color="success"
+                      class="status-badge"
                       >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                     <ion-badge
                       *ngIf="task.status === 'in_corso' "
                       color="primary"
+                      class="status-badge"
                       >{{ task.status.replace("_", " ") }}</ion-badge
                     >
                   </div>
