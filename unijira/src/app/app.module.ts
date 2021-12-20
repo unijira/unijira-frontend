@@ -1,5 +1,5 @@
-import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import { BacklogEditWeightPopoversComponent } from './popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from './popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouteReuseStrategy } from '@angular/router';
@@ -32,7 +32,6 @@ import { FormsModule } from '@angular/forms';
 import { NotificationsComponent } from './components/notifications/notifications.component';
 import { PipeModule } from './pipe.module';
 import { BlDetailComponent } from './modals/bl-detail/bl-detail.component';
-
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
 

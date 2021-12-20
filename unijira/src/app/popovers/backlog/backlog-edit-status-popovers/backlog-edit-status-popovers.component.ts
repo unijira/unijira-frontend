@@ -12,9 +12,9 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
   statusModificato: number;
 
   statusType = [
-    { name: 'In Corso', value: "in_corso" },
-    { name: 'Completato', value: "completato" },
-    { name: 'Da Completare', value: "da_completare" },
+    { name: 'In Corso', value: "in_corso", className: "primary" },
+    { name: 'Completato', value: "completato", className: "success" },
+    { name: 'Da Completare', value: "da_completare", className: "light" },
   ];
 
   constructor(private popoverCtrl: PopoverController) {}

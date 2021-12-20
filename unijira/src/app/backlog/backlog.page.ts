@@ -12,8 +12,8 @@ import { BlDetailComponent } from '../modals/bl-detail/bl-detail.component';
 import { ModalController, SpinnerTypes } from '@ionic/angular';
 import { BacklogAPIService } from '../services/backlog-api.service';
 import { PopoverController } from '@ionic/angular';
-import { BacklogEditWeightPopoversComponent } from '../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from '../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import { BacklogEditWeightPopoversComponent } from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',

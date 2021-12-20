@@ -18,15 +18,12 @@
         <ion-col size="12">
           <ion-button size="small" color="light" (click)="allega()">
             <fa-icon [icon]="['fas', 'paperclip']"> </fa-icon>
-            <span class="buttontxt">Allega</span>
           </ion-button>
           <ion-button size="small" color="light" (click)="addChildren()">
             <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
-            <span class="buttontxt">Aggiungi un <br />ticket figlio</span>
           </ion-button>
-          <ion-button size="small" color="light" (click)="addLink()">
+          <ion-button size="small" color="light" (click)="editLinkPopover($event)">
             <fa-icon [icon]="['fas', 'link']"> </fa-icon>
-            <span class="buttontxt">Collega<br />ticket</span>
           </ion-button>
         </ion-col>
       </ion-row>
@@ -70,19 +67,19 @@
     <ion-col size="4">
       <ion-row>
         <ion-col>
-          <ion-button size="small" color="light" (click)="lock()">
+          <ion-button size="small" color="light" (click)="editLockPopover($event)">
             <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="visibility()">
+          <ion-button size="small" color="light" (click)="editVisibilityPopover($event)">
             <fa-icon [icon]="['fas', 'eye']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="like()">
+          <ion-button size="small" color="light" (click)="editLikePopover($event)">
             <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="share()">
+          <ion-button size="small" color="light" (click)="editSharePopover($event)">
             <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="edit()">
+          <ion-button size="small" color="light" (click)="actionsPopover($event)">
             <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
           </ion-button>
           <ion-button size="small" color="light" (click)="close()">

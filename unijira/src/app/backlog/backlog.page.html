@@ -45,7 +45,7 @@
                     </ion-badge>
                   </div>
 
-                  <div (click)="editStatusPopover($event, task, 'sprint')">
+                  <div (click)="editStatusPopover($event, task, 'sprint')" class="status-badge-div">
                     <ion-badge
                       *ngIf="task.status === 'da_completare' "
                       color="medium"
