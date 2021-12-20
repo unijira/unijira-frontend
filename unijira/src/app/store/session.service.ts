@@ -11,12 +11,14 @@ import {
   isLoggedAction,
   loadingAction,
   logInAction,
-  logOutAction,
+  logOutAction, projectAction,
   setUserAction,
   userInfoAction,
   wrongCredentialAction
 } from './session.action';
 import {UserInfo} from '../models/users/UserInfo';
+import {ProjectService} from '../services/common/project.service';
+import {Project} from "../models/projects/Project";
 
 
 @Injectable({
@@ -28,7 +30,8 @@ export class SessionService {
 
   constructor(
     private store: Store,
-    private accountService: AccountService
+    private accountService: AccountService,
+    private projectService: ProjectService
   ) {
 
     if(localStorage.getItem('token')){
@@ -38,6 +41,10 @@ export class SessionService {
 
     }
 
+  }
+
+  dispatchError(error: any) {
+    this.store.dispatch(errorAction({error: Error.toError(error)}));
   }
 
 
@@ -99,7 +106,7 @@ export class SessionService {
     this.accountService.refreshToken(token)
       .pipe(catchError(err => {
 
-        this.store.dispatch(errorAction({error: Error.toError(err)}));
+        this.dispatchError(err);
         return of(null);
 
       })).subscribe(res => this.saveToken(res));
@@ -140,7 +147,8 @@ export class SessionService {
 
   loadUserInfo() {
     this.accountService.me()
-      .subscribe(user => this.setUserInfo(user));
+      .subscribe(user => this.setUserInfo(user),
+          err => this.dispatchError(err));
   }
 
   getUserInfo(): Observable<UserInfo> {
@@ -149,4 +157,16 @@ export class SessionService {
     return this.store.select(selectUserInfo);
   }
 
+  loadProject(id: number){
+    this.projectService.getProject(id).subscribe(
+      (project) => this.store.dispatch(projectAction({project})),
+      (err) => this.dispatchError(err)
+    );
+  }
+
+  getProject(): Observable<Project> {
+    const selectProject = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
+      (state) => state.project);
+    return this.store.select(selectProject);
+  }
 }

@@ -23,6 +23,13 @@ export class ProjectService {
 
   }
 
+  getProject(id: number): Observable<Project> {
+
+    return this.http.get<Project>('/projects/' + id)
+      .pipe(catchError(() => of(null)));
+
+  }
+
   createProject(name: string, key: string, icon: URL): Observable<Project> {
 
     return this.http.post<Project>('/projects', { name, key, icon })
@@ -42,6 +49,11 @@ export class ProjectService {
     return this.http.get<boolean>('/projects/accept', new HttpParams().set('token', token))
       .pipe(catchError(() => of(null)));
 
+  }
+
+  getMemberships(idProject: number): Observable<Membership[]> {
+
+    return this.http.get<Membership[]>('/projects/' + idProject + '/memberships');
   }
 
 }

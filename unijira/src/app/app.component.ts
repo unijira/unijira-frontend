@@ -54,7 +54,7 @@ export class AppComponent implements OnInit, OnDestroy {
 
     moment.locale('it');
 
-    this.pages.push({name: 'home', url: '/home'});
+    this.pages.push({name: 'Home', url: '/project-home'});
     this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
