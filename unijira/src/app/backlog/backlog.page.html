@@ -69,7 +69,7 @@
                   <ion-thumbnail class="avatar" *ngIf="task.assignedTo">
                     <img class="avatar-img" [src]="task.assignedTo[0].avatar" />
                   </ion-thumbnail>
-                  <ion-button
+                  <ion-button class="action-btn"
                     size="small"
                     color="light"
                     (click)="presentModal(task)"
