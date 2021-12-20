@@ -80,11 +80,10 @@ export class BacklogPage implements OnInit {
   }
 
   /* EDIT */
-  editStatus($event, task, type) {
+  editStatus(task, data, type) {
     if (type === 'backlog') {
       let newTask = _.clone(task);
-      console.log($event, task);
-      newTask.status = $event.detail.value;
+      newTask.status = data.data.value;
       let backlog = _.clone(this.backlog);
       backlog.tasks = this.backlog.tasks.map((t) => {
         if (t.id === task.id) {
@@ -93,12 +92,10 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
-      console.log(backlog.tasks);
       this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
     } else if (type === 'sprint') {
       let newTask = _.clone(task);
-      console.log($event, task);
-      newTask.status = $event.detail.value;
+      newTask.status = data.data.value;
       let sprint = _.clone(this.sprint);
       sprint.tasks = this.sprint.tasks.map((t) => {
         if (t.id === task.id) {
@@ -107,7 +104,6 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
-      console.log(sprint.tasks);
       this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
     }
   }
@@ -204,19 +200,22 @@ export class BacklogPage implements OnInit {
     return await popOver.present();
   }
 
-  async editStatusPopover(ev: any, status) {
+  async editStatusPopover(ev: any, task, type) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
       cssClass: 'backlog-edit-status-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        statusOriginal: status,
+        statusOriginal: task.status,
       },
     });
 
     popOver.onDidDismiss().then((data) => {
       console.log(data);
+      if (data.data !== undefined) {
+        this.editStatus(task, data, type);
+      }
     });
 
     return await popOver.present();

@@ -11,17 +11,27 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
   @Output() editStatus: EventEmitter<number> = new EventEmitter<number>();
   statusModificato: number;
 
+  statusType = [
+    { name: 'In Corso', value: "in_corso" },
+    { name: 'Completato', value: "completato" },
+    { name: 'Da Completare', value: "da_completare" },
+  ];
+
   constructor(private popoverCtrl: PopoverController) {}
 
   ngOnInit() {}
 
+  setStatus(status) {
+    this.statusModificato = status.value;
+  }
+
   save() {
     console.log(this.statusModificato);
-    this.editStatus.emit(this.statusModificato);
+    this.popoverCtrl.dismiss({ value: this.statusModificato }).then();
   }
 
   dismiss() {
     console.log('dismiss');
-    this.popoverCtrl.dismiss({newStatus: this.statusModificato}).then();
+    this.popoverCtrl.dismiss({ value: undefined }).then();
   }
 }
