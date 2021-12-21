@@ -15,12 +15,12 @@ import { SessionState } from '../store/session.reducer';
   providedIn: 'root',
 })
 export class HttpService {
-  private baseurl = 'http://localhost:7090/';
+  private baseurl = 'http://localhost:7080/';
 
   private opt = {
     headers: new HttpHeaders()
       .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json'),
+      .set('Accept', 'application/json')
   };
 
   constructor(
@@ -67,6 +67,7 @@ export class HttpService {
     params?: HttpParams,
     options?: object
   ): Observable<T> {
+    console.log(api, body, params, options);
     return this.handleResponse<T>(
       this.http.put<T>(`${environment.baseURL}${api}`, body ?? {}, {
         ...this.opt,

@@ -27,6 +27,11 @@ export class BacklogPage implements OnInit {
   endSpring: String;
   monthNames = monthsName;
 
+  // TODO Scablare
+  projectId: number = 2;
+  backlogId: number = 1;
+  sprintId: number = 1;
+
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
@@ -154,13 +159,19 @@ export class BacklogPage implements OnInit {
 
   getFromApi() {
     let that = this;
-    this.backlogAPIService.getBacklog().subscribe((response) => {
-      that.backlog = _.clone(response);
-    });
+    this.backlogAPIService
+      .getBacklog(this.projectId, this.backlogId)
+      .subscribe((response) => {
+        console.log(response);
+        that.backlog = _.clone(response);
+      });
 
-    this.backlogAPIService.getSprint().subscribe((response) => {
-      this.sprint = _.clone(response);
-    });
+    this.backlogAPIService
+      .getSprint(this.projectId, this.backlogId, this.sprintId)
+      .subscribe((response) => {
+        this.sprint = _.clone(response);
+        console.log(response);
+      });
   }
 
   saveToAPI() {
@@ -170,12 +181,23 @@ export class BacklogPage implements OnInit {
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
-    this.backlogAPIService.setBacklog(this.backlog).subscribe((response) => {
-      console.log(response);
-    });
+    // this.backlogAPIService
+    //   .setBacklog(this.projectId, this.backlogId, this.backlog)
+    //   .subscribe((response) => {
+    //     console.log(response);
+    //   });
 
-    this.backlogAPIService.setSprint(this.sprint).subscribe((response) => {
-      console.log(response);
+    // this.backlogAPIService
+    //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+    //   .subscribe((response) => {
+    //     console.log(response);
+    //   });
+
+    this.backlog.tasks.forEach((element, index) => {
+      console.log(element);
+      this.backlogAPIService.setItems(element).subscribe((response) => {
+        console.log(response);
+      });
     });
   }
 

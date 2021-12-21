@@ -1,5 +1,5 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwNjg5MjcsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDY1MzI3LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.BdT3PKszIBfquvGHEEmbZXHMUXgrq22VGT9i9BlbBK0
-
+# @token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwNzMyMDMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDY5NjAzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.lWODKqD91ltiHMXSCVGrVNxwv0Zx7fBPPOLkXjXJPhw
+@token = {{login.response.body.token}}
 ############## AUTH #############
 
 
@@ -17,6 +17,7 @@ Content-Type: application/json
 # @name login
 POST http://localhost:7080/auth/authenticate
 Content-Type: application/json
+Accept: application/json
 
 {
   "username": "paolaguarasci@gmail.com",
@@ -192,6 +193,10 @@ Content-Type: application/json
 }
 
 ###
+GET http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+Authorization: Bearer {{token}}
+
+###
 GET http://localhost:7080/projects/2/backlogs/1/items
 Authorization: Bearer {{token}}
 
@@ -209,6 +214,55 @@ Content-Type: application/json
 ###
 GET http://localhost:7080/items
 Authorization: Bearer {{token}}
+
+### 
+
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 0",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "10",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+POST http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 9,
+    "summary": "HELLO I'M AN EPIC 0",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 10,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+
 ###
 POST http://localhost:7080/items
 Authorization: Bearer {{token}}
@@ -228,6 +282,27 @@ Content-Type: application/json
 }
 
 ###
+
+PUT http://localhost:7080/items/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 1",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "100000",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+
+###
+
 
 POST http://localhost:7080/projects/2/backlogs/1/items
 Authorization: Bearer {{token}}
