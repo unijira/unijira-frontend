@@ -1,0 +1,52 @@
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+.mymodal .modal-wrapper.sc-ion-modal-md {
+  background: #222;
+  padding: 10px;
+  color: red;
+}
+
+h5 {
+  font-size: 14px;
+}
+
+h1 {
+  margin-top: 10px;
+  font-size: 26px;
+}
+
+.dettagli-colonna {
+  border: 1px solid #333;
+}
+
+.dettagli-colonna-titolo {
+  border-bottom: 1px solid #333;
+  width: 102.5%;
+  margin-left: -5px;
+}
+
+.dettagli-colonna-titolo-element {
+  margin-left: 10px;
+  margin-top: 5px;
+}
+
+.buttontxt {
+  font-size: 10px;
+  margin-left: 5px;
+  text-transform: initial;
+  line-height: 1.1;
+}
+
+.icon-avatar,
+.icon-avatar > img {
+  border: 1px solid #333;
+  border-radius: 50%;
+  height: 20px;
+  width: 20px;
+}
+
+.lista-children {
+  list-style: none;
+  margin-left: 0;
+  padding-left: 0px;
+  font-size: 12px;
+}

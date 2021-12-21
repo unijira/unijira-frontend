@@ -1,0 +1,30 @@
+.popover-content.sc-ion-popover-md {
+  width: 100px !important;
+}
+
+// .noicon{
+// background-color: red;
+// }
+
+// .okicon{
+// background-color: green;
+// }
+
+/* Works - pass "my-custom-class" in cssClass to increase specificity */
+
+.popover-content.sc-ion-popover-md {
+  width: 77px;
+  --width: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.sc-ion-popover-md-h {
+  --width: 70px;
+  width: 70px !important;
+}
+
+.backlog-edit-weight-popover .popover-content {
+  --background: #222 !important;
+}

@@ -16,11 +16,12 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
-  // {
-  //   path: 'backlog',
-  //   loadChildren: () =>
-  //     import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
-  // },
+  {
+    path: 'backlog',
+    // canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
+  },
   {
     path: 'auth/active',
     loadChildren: () =>
@@ -53,6 +54,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
   },
+
 
 
 ];

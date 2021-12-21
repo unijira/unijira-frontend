@@ -1,0 +1,213 @@
+@import url("https://cdnjs.cloudflare.com/ajax/libs/angular-dragula/1.2.8/dragula.css");
+
+ion-input {
+  // border-radius: 10px !important;
+  // padding-right: 30px;
+  font-size: 0.9em;
+  border: 1px solid #f1f1f1 !important;
+  // --background: rgb(219, 219, 219) !important;
+  height: 10%;
+  width: 41%;
+  max-width: 50vw; // this is applying perfectly
+  max-height: 10px;
+}
+
+/* in-flight clone */
+.gu-mirror {
+  position: fixed !important;
+  margin: 0 !important;
+  z-index: 9999 !important;
+  opacity: 0.8;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=80)";
+  filter: alpha(opacity=80);
+  pointer-events: none;
+}
+/* high-performance display:none; helper */
+.gu-hide {
+  left: -9999px !important;
+}
+/* added to mirrorContainer (default = body) while dragging */
+.gu-unselectable {
+  -webkit-user-select: none !important;
+  -moz-user-select: none !important;
+  -ms-user-select: none !important;
+  user-select: none !important;
+}
+/* added to the source element while its mirror is dragged */
+.gu-transit {
+  opacity: 0.2;
+  -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=20)";
+  filter: alpha(opacity=20);
+}
+
+.sprint,
+.backlog {
+  padding: 3px;
+  border: 1px solid #666;
+  border-radius: 5px;
+  margin: 10px 0;
+  background-color: #ececec;
+}
+
+.light-gray-bg {
+  // background-color: #ececec;
+  // TODO integrare i colori del temi
+  background-color: var(--ion-color-primary-contrast);
+}
+
+.white-bg {
+  background-color: white;
+}
+
+.backlog {
+  border: 1px solid #666;
+}
+
+.q1,
+.q2,
+.q3,
+.q4 {
+  border: 4px solid #fff;
+}
+
+.matrix {
+  margin-top: 30px;
+
+  ion-col {
+    --ion-grid-column-padding: 0px;
+    min-height: 150px;
+  }
+
+  .list {
+    padding: 0px;
+    height: 100%;
+  }
+
+  ion-item {
+    margin-bottom: 2px;
+  }
+}
+
+.q-header {
+  background-color: var(--ion-color-light);
+  height: 20px;
+  text-align: center;
+}
+
+.delete-area {
+  border: 2px dashed var(--ion-color-medium);
+  margin: 10px;
+  height: 100px;
+  ion-icon {
+    font-size: 64px;
+  }
+}
+
+.edit-icon:hover {
+  color: #1877f2;
+}
+
+.task-item {
+  // padding: 5px;
+  margin: 5px;
+  border-radius: 3px;
+  border: 1px solid #666;
+  // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.icon-area {
+  justify-content: end;
+  display: flex;
+  align-items: center;
+}
+
+.icon-area > * {
+  margin-left: 10px;
+
+}
+
+.avatar-img {
+  border-radius: 50%;
+  border: 1px solid darkslategrey;
+}
+
+.avatar {
+  width: 20px;
+  height: 20px;
+  min-height: 20px;
+  min-width: 20px;
+}
+.task-item,
+.task-item > * {
+  height: 30px !important;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+ion-icon {
+  font-size: 2rem;
+}
+.page {
+  padding: 0 15px;
+}
+
+.weitght-field {
+  width: 50px;
+  font-size: 16px;
+}
+
+label {
+  --background: rgb(240, 65, 65) !important;
+}
+
+.backlog-edit-weight-popover {
+  color: red;
+}
+.childicon,
+.taskicon {
+  font-size: 0.8rem;
+}
+
+.taskicon {
+  color: green;
+  margin-right: 5px;
+}
+
+.task-name {
+  font-size: 14px;
+}
+
+ion-badge {
+  font-size: 8px;
+}
+
+// ion-button {
+//   height: 15px;
+// }
+
+ion-button.action-btn {
+  height: 15px;
+}
+
+.popover-content.sc-ion-popover-md {
+  width: 77px;
+}
+.status-badge {
+  font-size: 10px;
+  font-weight: 400;
+  text-transform: initial;
+}
+.weight-badge > span {
+  font-weight: bold;
+  font-size: 10px;
+  color: #555;
+}
+.weight-badge {
+  border-radius: 50%;
+  width: 18px;
+  background-color: #ccc;
+}
+
+.status-badge-div {
+  width: 75px;
+}

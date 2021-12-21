@@ -1,0 +1,39 @@
+// $popover-md-width: 10px;
+// $popover-ios-width: 10px;
+// $popover-wp-width: 10px;
+
+// ion-popover {
+//   ion-backdrop {
+//     opacity: 0.5 !important;
+//   }
+//   .popover-wrapper {
+//     .popover-content {
+//       width: 80vw;
+//       max-width: 10px;
+//     }
+//   }
+// }
+
+
+// ion-popover {
+// 	--width: 20px;
+// }
+.status-badge {
+  width: 100px;
+  height: 25px;
+  padding: 5px;
+  text-align: left;
+  text-transform:initial;
+}
+.selected,
+.status-badge:hover {
+  border: 3px solid darkgreen;
+  cursor: pointer;
+  padding: 2px;
+}
+
+.status-list {
+  list-style: none;
+  padding: 0;
+  margin: 5px 0;
+}

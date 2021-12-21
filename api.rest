@@ -1,0 +1,656 @@
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwODE3NTIsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDc4MTUyLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.QB6FIjATI-6AD_xQs6eXMLONJNpDsjfcOc2kmIrt7Y4
+# @token = {{login.response.body.token}}
+############## AUTH #############
+
+
+### 
+POST http://localhost:7080/auth/register
+Content-Type: application/json
+
+{
+  "username": "paolaguarasci@gmail.com",
+  "password": "Testazzo.99"
+}
+
+###
+
+# @name login
+POST http://localhost:7080/auth/authenticate
+Content-Type: application/json
+Accept: application/json
+
+{
+  "username": "paolaguarasci@gmail.com",
+  "password": "Testazzo.99"
+}
+
+###
+GET http://localhost:7080/auth/me
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/auth/register
+Content-Type: application/json
+
+{
+  "username": "testazzo",
+  "password": "testazzo"
+}
+
+###
+POST http://localhost:7080/auth/authenticate
+
+###
+GET http://localhost:7080/auth/active
+
+###
+POST http://localhost:7080/auth/authenticate
+
+###
+GET http://localhost:7080/auth/me
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/auth/refresh
+
+###
+POST http://localhost:7080/auth/register
+
+###
+
+
+############## BACKLOG ##############
+
+
+GET http://localhost:7080/backlog/items/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:7080/backlog/items/1/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/projects
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "name": "Test-1",
+    "key": "TS1"
+}
+
+###
+GET http://localhost:7080/projects/3/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/1/items?page=1&size=10
+Authorization: Bearer {{token}}
+
+###
+PUT http://localhost:7080/projects/1/items?page=1&size=10
+Authorization: Bearer {{token}}
+
+###
+DELETE http://localhost:7080/projects/1/
+Authorization: Bearer {{token}}
+
+
+###
+GET http://localhost:7080/projects/1/memberships
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/backlog/items/by_father/1/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/backlog/items/by_user/1/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/sprints?page=0&size=10
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/sprints/1/
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+Authorization: Bearer {{token}}
+
+
+###
+POST  http://localhost:7080/projects/2/backlogs/1/sprints
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Sprint 1",
+  "startDate": "2022-01-01",
+  "endingDate": "2022-01-15"
+}
+
+
+###
+DELETE http://localhost:7080/projects/2/backlogs/2/
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/projects/2/backlogs
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "project": {
+    "id": 2,
+    "name": "Test-1",
+    "key": "TS1",
+    "icon": null,
+    "ownerId": 1
+  }
+}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+
+  },
+  "priority": "1"
+}
+###
+GET http://localhost:7080/items
+Authorization: Bearer {{token}}
+
+### 
+
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 0",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "10",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+POST http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 9,
+    "summary": "HELLO I'M AN EPIC 0",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 10,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 1",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "100000",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+PUT http://localhost:7080/items/1
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 1",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "100000",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+
+###
+
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 1,
+    "summary": "HELLO I'M AN EPIC 1",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 100000,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 2",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "100000",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 2,
+    "summary": "HELLO I'M AN EPIC 2",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 100000,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 1",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 3,
+    "summary": "HELLO I'M AN Ticket 1",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": 2
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 2",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 4,
+    "summary": "HELLO I'M AN Ticket 2",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 3",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 5,
+    "summary": "HELLO I'M AN Ticket 3",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 4",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 6,
+    "summary": "HELLO I'M AN Ticket 4",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 5",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 7,
+    "summary": "HELLO I'M AN Ticket 5",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 6",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 8,
+    "summary": "HELLO I'M AN Ticket 6",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}

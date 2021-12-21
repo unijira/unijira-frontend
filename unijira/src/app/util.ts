@@ -7,6 +7,10 @@ export function unsubscribeAll(...subs: Subscription[]) {
   (subs || []).forEach(s => s.unsubscribe());
 }
 
+export const monthsName = ["January", "February", "March", "April", "May", "June",
+  "July", "August", "September", "October", "November", "December"
+];
+
 export function getTranslation(translateService: TranslateService, key: string): string {
   let translation = '';
   translateService.get(key, {value: 'world'}).subscribe((res: string) => translation = res);
