@@ -25,7 +25,7 @@
 
       <ion-row class="infinte-width">
         <ion-col size="9" size-lg="auto" class="ion-no-margin" *ngFor="let project of recentProjects">
-          <ion-card [routerLink]="'/home/projects/' + project.id">
+          <ion-card (click)="navigateToProjectHome(project.id)" )>
             <ion-card-content>
               <ion-grid>
                 <ion-row>
@@ -100,8 +100,8 @@
       </ion-row>
 
       <div *ngIf="recentProjects?.length === 0">
-        <ion-text class="ion-text-center ion-margin">
-          <p class="ion-color-tertiary"><i [translate]="'user.home.noProjects'"></i></p>
+        <ion-text class="ion-text-center ion-margin" color="medium">
+          <p><i [translate]="'user.home.noProjects'"></i></p>
         </ion-text>
       </div>
 
@@ -140,13 +140,13 @@
       <ion-list>
         <ion-item *ngFor="let ticket of myTicketsOpen" [routerLink]="'/home/tickets/' + ticket.id">
           <ion-avatar slot="start">
-            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
+            <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
           </ion-avatar>
           <ion-label>
-            <h2>{{ ticket.title }}</h2>
+            <h2>{{ ticket.summary }}</h2>
             <p>{{ ticket.updatedAt | time | async }}</p>
           </ion-label>
-          <ion-badge color="secondary">{{ ticket.status }}</ion-badge>
+          <ion-badge color="secondary">{{ ticket.type | uppercase }}</ion-badge>
         </ion-item>
       </ion-list>
       <ion-list *ngIf="myTicketsOpen === null">
@@ -159,8 +159,8 @@
         </ion-item>
       </ion-list>
       <ion-row *ngIf="myTicketsOpen?.length === 0" class="ion-justify-content-center">
-        <ion-text class="ion-margin">
-          <p class="ion-color-tertiary"><i [translate]="'user.home.noTicketsOpen'"></i></p>
+        <ion-text class="ion-margin" color="medium">
+          <p><i [translate]="'user.home.noTicketsOpen'"></i></p>
         </ion-text>
       </ion-row>
     </div>
@@ -168,16 +168,16 @@
       <ion-list>
         <ion-item *ngFor="let ticket of myTicketsDone" [routerLink]="'/home/tickets/' + ticket.id">
           <ion-avatar slot="start">
-            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
+            <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
           </ion-avatar>
           <ion-label>
-            <h2>{{ ticket.title }}</h2>
+            <h2>{{ ticket.summary }}</h2>
             <p>{{ ticket.updatedAt | time | async }}</p>
           </ion-label>
-          <ion-badge color="secondary">{{ ticket.status }}</ion-badge>
+          <ion-badge color="secondary">{{ ticket.type | uppercase }}</ion-badge>
         </ion-item>
       </ion-list>
-      <ion-list *nfIf="myTicketsDone === null">
+      <ion-list *ngIf="myTicketsDone === null">
         <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
           <ion-label>
             <ion-skeleton-text animated></ion-skeleton-text>
@@ -187,8 +187,8 @@
         </ion-item>
       </ion-list>
       <ion-row *ngIf="myTicketsDone?.length === 0" class="ion-justify-content-center">
-        <ion-text class="ion-margin">
-          <p class="ion-color-tertiary"><i [translate]="'user.home.noTicketsDone'"></i></p>
+        <ion-text class="ion-margin" color="medium">
+          <p><i [translate]="'user.home.noTicketsDone'"></i></p>
         </ion-text>
       </ion-row>
     </div>

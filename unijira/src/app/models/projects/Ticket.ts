@@ -1,28 +1,35 @@
+import {UserInfo} from '../users/UserInfo';
+
+
 export class Ticket {
 
   public id: number;
-  public title: string;
+  public summary: string;
   public description: string;
+  public measureUnit: string;
+  public evaluation: number;
+  public tags: string;
   public type: string;
   public status: string;
-  public priority: string;
-  public projectId: number;
-  public userId: number;
+  public owner: UserInfo;
+  public father: Ticket;
   public createdAt: number;
   public updatedAt: number;
 
 
-  constructor(id: number, title: string, description: string, type: string, status: string, priority: string, projectId: number, userId: number) {
+  constructor(id: number, summary: string, description: string, measureUnit: string, evaluation: number, tags: string, type: string, status: string, owner: UserInfo, father: Ticket) {
     this.id = id;
-    this.title = title;
+    this.summary = summary;
     this.description = description;
+    this.measureUnit = measureUnit;
+    this.evaluation = evaluation;
+    this.tags = tags;
     this.type = type;
     this.status = status;
-    this.priority = priority;
-    this.projectId = projectId;
-    this.userId = userId;
+    this.owner = owner;
+    this.father = father;
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
   }
 
-};
+}

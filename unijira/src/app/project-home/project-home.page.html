@@ -1,0 +1,45 @@
+<ion-content>
+  <ion-title class="ion-margin-top">
+    <h1>{{project?.name}}</h1>
+    <h5>{{project?.key}}</h5>
+  </ion-title>
+  <br>
+  <ion-title class="ion-margin-top">
+    <h4 translate>project.members</h4>
+  </ion-title>
+  <ion-row *ngIf="membership && membership.length>0 && !(membership.length===1&&!membership[0].userId); else noMembers">
+    <ion-col size="6">
+      <ion-card *ngFor="let member of getHalfList(false);" style="padding: 5px;">
+        <ion-row>
+          <ion-icon style="padding: 5px; color: cornflowerblue" name="person" *ngIf="member.role === membershipRole.member"></ion-icon>
+          <ion-icon style="padding: 5px; color: darkorange" name="person" *ngIf="member.role === membershipRole.scrumMaster"></ion-icon>
+          <ion-icon style="padding: 5px; color:#ffc409;" name="star" *ngIf="member.role === membershipRole.productOwner"></ion-icon>
+          <ion-card-title>{{member.userInfo?.username}}</ion-card-title>
+        </ion-row>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster">Scrum master</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner">Product owner</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.member">member</ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+    <ion-col size="6">
+      <ion-card *ngFor="let member of getHalfList(true);" style="padding: 5px;">
+        <ion-row>
+          <ion-icon style="padding: 5px; color: cornflowerblue" name="person" *ngIf="member.role === membershipRole.member"></ion-icon>
+          <ion-icon style="padding: 5px; color: darkorange" name="person" *ngIf="member.role === membershipRole.scrumMaster"></ion-icon>
+          <ion-icon style="padding: 5px; color:#ffc409;" name="star" *ngIf="member.role === membershipRole.productOwner"></ion-icon>
+          <ion-card-title>{{member.userInfo?.username}}</ion-card-title>
+        </ion-row>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster">Scrum master</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner">Product owner</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.member">member</ion-card-subtitle>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+  <ng-template #noMembers>
+    <ion-row>
+      <ion-title>
+        <h6 translate>project.noMembersAvailables</h6>
+      </ion-title>
+    </ion-row>
+  </ng-template>
+</ion-content>

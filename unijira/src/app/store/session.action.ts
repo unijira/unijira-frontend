@@ -2,6 +2,7 @@ import {createAction, props} from '@ngrx/store';
 import {User} from '../models/User';
 import {Error} from '../classes/error';
 import {UserInfo} from '../models/users/UserInfo';
+import {Project} from '../models/projects/Project';
 
 export const loadingAction = createAction(
   '[Session] loading',
@@ -40,4 +41,9 @@ export const wrongCredentialAction = createAction(
 export const userInfoAction = createAction(
   '[Session] User info',
   props<{ userInfo: UserInfo}>()
+);
+
+export const projectAction = createAction(
+  '[Session] project',
+  props<{project: Project}>()
 );

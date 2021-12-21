@@ -46,8 +46,15 @@ const routes: Routes = [
   },
   {
     path: 'projects/:id/invite',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
+  {
+    path: 'project-home',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
+  },
+
 
 
 ];

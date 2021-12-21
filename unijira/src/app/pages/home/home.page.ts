@@ -4,6 +4,8 @@ import {ProjectService} from '../../services/common/project.service';
 import {Ticket} from '../../models/projects/Ticket';
 import {TicketService} from '../../services/common/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
+import {SessionService} from '../../store/session.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -22,7 +24,9 @@ export class HomePage implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private ticketService: TicketService
+    private ticketService: TicketService,
+    private sessionService: SessionService,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -50,4 +54,10 @@ export class HomePage implements OnInit {
   onSegmentChanged(e: CustomEvent) {
     this.currentSegment = e.detail?.value;
   }
+
+  navigateToProjectHome(id: number) {
+    this.sessionService.loadProject(id);
+    this.router.navigate(['/project-home']);
+  }
+
 }

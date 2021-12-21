@@ -4,6 +4,7 @@ import {AlertController, IonSlides} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
+import {SessionService} from '../../../store/session.service';
 
 @Component({
   selector: 'app-wizard',
@@ -28,7 +29,8 @@ export class WizardPage implements OnInit {
   constructor(public alertController: AlertController,
               private translateService: TranslateService,
               private projectService: ProjectService,
-              private router: Router) {}
+              private router: Router,
+              private sessionService: SessionService) {}
 
   ngOnInit() {
     this.index = 0;
@@ -82,8 +84,8 @@ export class WizardPage implements OnInit {
 
                     this.projectService.sendInvitations(project.id, this.invites).subscribe();
 
-                    // TODO.. Move to project home
-                    // this.router.navigate([['home/projects/', project.id].join('')]);
+                    this.sessionService.loadProject(project.id);
+                    this.router.navigate(['/project-home']);
 
                 }
 

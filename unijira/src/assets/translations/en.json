@@ -66,5 +66,7 @@
   "project.invite.alert.success.confirm" : "Ok",
   "project.invite.alert.failed.title" : "You cannot access this project",
   "project.invite.alert.failed.message" : "Your invitation has expired, please try again!",
-  "project.invite.alert.failed.confirm" : "Ok"
+  "project.invite.alert.failed.confirm" : "Ok",
+  "project.members": "Members",
+  "project.noMembersAvailables": "No members available"
 }
