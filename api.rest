@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwMjQ4OTQsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDIxMjk0LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.-iGQkMXlQTtSyJYhPMTeT6LpLbPlqwgzB81USh5xK3Y
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwNjg5MjcsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDY1MzI3LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.BdT3PKszIBfquvGHEEmbZXHMUXgrq22VGT9i9BlbBK0
 
 ############## AUTH #############
 
@@ -202,22 +202,7 @@ Content-Type: application/json
 
 {
   "item": {
-    "id": 1,
-    "summary": "HELLO I'M AN EPIC",
-    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
-    "measureUnit": "story points",
-    "evaluation": 100000,
-    "tags": "#BACKEND#;#FRONTEND#",
-    "type": "epic",
-    "notes": [],
-    "owner": {
-      "id": 1,
-      "username": "paolaguarasci@gmail.com",
-      "activated": false,
-      "disabled": false
-    },
-    "assignees": [],
-    "father": null
+
   },
   "priority": "1"
 }
@@ -236,7 +221,361 @@ Content-Type: application/json
     "evaluation": "100000",
     "tags" : "#BACKEND#;#FRONTEND#",
     "type" : "epic",
-    "owner" : { "id": 1, "username" : "paolaguarasci@gmail.com"}
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
 }
 
 ###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 1,
+    "summary": "HELLO I'M AN EPIC 1",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 100000,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN EPIC 2",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": "100000",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "epic",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 2,
+    "summary": "HELLO I'M AN EPIC 2",
+    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+    "measureUnit": "story points",
+    "evaluation": 100000,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "epic",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 1",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 3,
+    "summary": "HELLO I'M AN Ticket 1",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": 2
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 2",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 4,
+    "summary": "HELLO I'M AN Ticket 2",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 3",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 5,
+    "summary": "HELLO I'M AN Ticket 3",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 4",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 6,
+    "summary": "HELLO I'M AN Ticket 4",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 5",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 7,
+    "summary": "HELLO I'M AN Ticket 5",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
+
+###
+POST http://localhost:7080/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "summary": "HELLO I'M AN Ticket 6",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": "1",
+    "tags" : "#BACKEND#;#FRONTEND#",
+    "type" : "task",
+    "owner" : { 
+      "id": 1, 
+      "username" : "paolaguarasci@gmail.com"
+    }
+}
+
+###
+
+POST http://localhost:7080/projects/2/backlogs/1/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "item": {
+    "id": 8,
+    "summary": "HELLO I'M AN Ticket 6",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "notes": [],
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false
+    },
+    "assignees": [],
+    "father": null
+  },
+  "priority": "1"
+}
