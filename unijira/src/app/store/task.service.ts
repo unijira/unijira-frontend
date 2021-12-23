@@ -15,7 +15,7 @@ export class TaskService {
   getBacklog(): Observable<Sprint> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
-      (state) => { return state.backlog}
+      (state) => state.backlog
     );
     return this.store.select(selector);
   }
@@ -23,7 +23,7 @@ export class TaskService {
   getSprint(): Observable<Sprint> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
-      (state) => { return state.sprint}
+      (state) => state.sprint
     );
     return this.store.select(selector);
   }

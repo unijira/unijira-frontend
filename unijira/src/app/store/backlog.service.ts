@@ -17,9 +17,7 @@ export class BacklogService {
   public getBacklog(): Observable<Sprint> {
     const tmp = createSelector(
       createFeatureSelector<BacklogState>('backlogReducer'),
-      (state) => {
-        return state.backlog;
-      }
+      (state) => state.backlog
     );
     return this.store.select(tmp);
   }
@@ -31,9 +29,7 @@ export class BacklogService {
   public getSprint(): Observable<Sprint> {
     const tmp = createSelector(
       createFeatureSelector<BacklogState>('backlogReducer'),
-      (state) => {
-        return state.sprint;
-      }
+      (state) => state.sprint
     );
     return this.store.select(tmp);
   }

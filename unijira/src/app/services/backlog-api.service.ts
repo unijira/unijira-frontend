@@ -17,13 +17,13 @@ export class BacklogAPIService {
 
   // TODO questo diventa getBacklogItems. Creare getBacklog per prendere i dati del backlog senza gli items
   getBacklog(projectId: number, backlogId: number) {
-    let url = `/projects/${projectId}/backlogs/${backlogId}/items`;
+    const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
     return this.httpService.get<any>(url).pipe(
       map((res) => {
-        let newBacklog = new Sprint([], new Date(), new Date());
-        let randInt = Math.floor(Math.random() * (110 - 100) + 100);
+        const newBacklog = new Sprint([], new Date(), new Date());
+        const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          let task = new Task(
+          const task = new Task(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',
@@ -67,16 +67,16 @@ export class BacklogAPIService {
 
   // TODO questo diventa getSprintItems. Creare getSprint per prendere i dati del sprint senza gli items
   getSprint(projectId: number, backlogId: number, sprintId: number) {
-    let url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
     return this.httpService.get<any>(url).pipe(
       map((res) => {
-        if (res.length == 0) {
+        if (res.length === 0) {
           return new Sprint([], new Date(), new Date());
         }
-        let newSprint = new Sprint([], new Date(), new Date());
-        let randInt = Math.floor(Math.random() * (110 - 100) + 100);
+        const newSprint = new Sprint([], new Date(), new Date());
+        const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          let task = new Task(
+          const task = new Task(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',
@@ -119,8 +119,8 @@ export class BacklogAPIService {
   }
 
   setItems(task) {
-    let url = `/items/${task.id}`;
-    let item = {
+    const url = `/items/${task.id}`;
+    const item = {
       id: task.id,
       summary: task.name,
       description: task.description,
@@ -137,8 +137,8 @@ export class BacklogAPIService {
   }
 
   setBacklog(projectId: number, backlogId: number, backlog: Sprint) {
-    let url = `/projects/${projectId}/backlogs/${backlogId}/items`;
-    let items = [];
+    const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
+    const items = [];
     backlog.tasks.forEach((element, index) => {
       items.push({
         item: {
@@ -175,7 +175,7 @@ export class BacklogAPIService {
     sprintId: number,
     sprint: Sprint
   ) {
-    let url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
     return this.httpService.post<any>(url, sprint);
   }
 }

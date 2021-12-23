@@ -11,10 +11,15 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "prepare": "echo '#!/bin/sh\ncd unijira && ng lint --fix' > ../.git/hooks/pre-commit && chmod +x ../.git/hooks/pre-commit"
+    "prepare": "echo '#!/bin/sh\ncd unijira && node node_modules/npx/index.js lint-staged' > ../.git/hooks/pre-commit && chmod +x ../.git/hooks/pre-commit"
   },
   "engines": {
     "node": "^16.11.0"
+  },
+  "lint-staged": {
+    "src/**/*.ts": [
+      "node node_modules/npx/index.js eslint --fix --quiet"
+    ]
   },
   "private": true,
   "dependencies": {
@@ -71,7 +76,7 @@
     "@types/node": "^12.20.37",
     "@typescript-eslint/eslint-plugin": "5.6.0",
     "@typescript-eslint/parser": "5.6.0",
-    "eslint": "^8.4.0",
+    "eslint": "^8.5.0",
     "eslint-plugin-import": "2.25.3",
     "eslint-plugin-jsdoc": "37.1.0",
     "eslint-plugin-ngrx": "^2.0.1",
@@ -84,6 +89,8 @@
     "karma-coverage-istanbul-reporter": "~3.0.3",
     "karma-jasmine": "~4.0.0",
     "karma-jasmine-html-reporter": "~1.7.0",
+    "lint-staged": "^12.1.3",
+    "npx": "^10.2.2",
     "protractor": "~7.0.0",
     "ts-node": "~10.4.0",
     "typescript": "~4.4.3"

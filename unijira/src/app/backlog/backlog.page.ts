@@ -23,14 +23,14 @@ export class BacklogPage implements OnInit {
   sprint: Sprint = new Sprint([], new Date(), new Date());
   backlog: Sprint = new Sprint([], new Date(), new Date());
 
-  startSpring: String;
-  endSpring: String;
+  startSpring: string;
+  endSpring: string;
   monthNames = monthsName;
 
   // TODO Scablare
-  projectId: number = 2;
-  backlogId: number = 1;
-  sprintId: number = 1;
+  projectId = 2;
+  backlogId = 1;
+  sprintId = 1;
 
   constructor(
     private dragulaService: DragulaService,
@@ -40,10 +40,10 @@ export class BacklogPage implements OnInit {
     private backlogAPIService: BacklogAPIService,
     private popOverCtrl: PopoverController
   ) {
-    let that = this;
+    const that = this;
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
-      let tmpS = _.clone(that.sprint);
-      let tmpB = _.clone(that.backlog);
+      const tmpS = _.clone(that.sprint);
+      const tmpB = _.clone(that.backlog);
 
       that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
       that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
@@ -72,7 +72,7 @@ export class BacklogPage implements OnInit {
       component: BlDetailComponent,
       cssClass: 'my-custom-class',
       componentProps: {
-        task: task,
+        task,
       },
     });
     return await modal.present();
@@ -87,9 +87,9 @@ export class BacklogPage implements OnInit {
   /* EDIT */
   editStatus(task, data, type) {
     if (type === 'backlog') {
-      let newTask = _.clone(task);
+      const newTask = _.clone(task);
       newTask.status = data.data.value;
-      let backlog = _.clone(this.backlog);
+      const backlog = _.clone(this.backlog);
       backlog.tasks = this.backlog.tasks.map((t) => {
         if (t.id === task.id) {
           return newTask;
@@ -97,11 +97,11 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
-      this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+      this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
-      let newTask = _.clone(task);
+      const newTask = _.clone(task);
       newTask.status = data.data.value;
-      let sprint = _.clone(this.sprint);
+      const sprint = _.clone(this.sprint);
       sprint.tasks = this.sprint.tasks.map((t) => {
         if (t.id === task.id) {
           return newTask;
@@ -109,7 +109,7 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
-      this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
+      this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
 
@@ -124,9 +124,9 @@ export class BacklogPage implements OnInit {
     }
     if (type === 'backlog') {
       if (data.data.value !== undefined) {
-        let newTask = _.clone(task);
-        newTask.weight = parseInt(data.data.value);
-        let backlog = _.clone(this.backlog);
+        const newTask = _.clone(task);
+        newTask.weight = parseInt(data.data.value, 10);
+        const backlog = _.clone(this.backlog);
         backlog.tasks = this.backlog.tasks.map((t) => {
           if (t.id === task.id) {
             return newTask;
@@ -135,15 +135,15 @@ export class BacklogPage implements OnInit {
           }
         });
         console.log(backlog.tasks);
-        this.store.dispatch(TaskActions.setBacklogAction({ backlog: backlog }));
+        this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
       }
     } else if (type === 'sprint') {
       console.log(data.data.value, task);
       if (data.data.value !== undefined) {
-        let newTask = _.clone(task);
+        const newTask = _.clone(task);
         console.log(data.data.value, task);
-        newTask.weight = parseInt(data.data.value);
-        let sprint = _.clone(this.sprint);
+        newTask.weight = parseInt(data.data.value, 10);
+        const sprint = _.clone(this.sprint);
         sprint.tasks = this.sprint.tasks.map((t) => {
           if (t.id === task.id) {
             return newTask;
@@ -152,13 +152,13 @@ export class BacklogPage implements OnInit {
           }
         });
         console.log(sprint.tasks);
-        this.store.dispatch(TaskActions.setSprintAction({ sprint: sprint }));
+        this.store.dispatch(TaskActions.setSprintAction({ sprint }));
       }
     }
   }
 
   getFromApi() {
-    let that = this;
+    const that = this;
     this.backlogAPIService
       .getBacklog(this.projectId, this.backlogId)
       .subscribe((response) => {
@@ -175,8 +175,8 @@ export class BacklogPage implements OnInit {
   }
 
   saveToAPI() {
-    let tmpS = _.clone(this.sprint);
-    let tmpB = _.clone(this.backlog);
+    const tmpS = _.clone(this.sprint);
+    const tmpB = _.clone(this.backlog);
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));

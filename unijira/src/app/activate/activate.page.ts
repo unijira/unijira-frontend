@@ -19,7 +19,7 @@ export class ActivatePage implements OnInit {
 
   ngOnInit() {
     this.route.queryParams.subscribe((params) => {
-      this.token = params['q'];
+      this.token = params.q;
     });
     this.accountService.activate(this.token).subscribe(
       (res) => {

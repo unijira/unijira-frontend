@@ -18,7 +18,7 @@ import {
 } from './session.action';
 import {UserInfo} from '../models/users/UserInfo';
 import {ProjectService} from '../services/common/project.service';
-import {Project} from "../models/projects/Project";
+import {Project} from '../models/projects/Project';
 
 
 @Injectable({

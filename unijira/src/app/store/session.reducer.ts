@@ -17,8 +17,8 @@ export interface SessionState {
   user: User;
   token: string;
   wrongCredential: boolean;
-  userInfo: UserInfo,
-  project: Project
+  userInfo: UserInfo;
+  project: Project;
 }
 
 export const initialState: SessionState = {
