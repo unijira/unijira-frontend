@@ -10,7 +10,8 @@
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "prepare": "echo '#!/bin/sh\ncd unijira && ng lint --fix' > ../.git/hooks/pre-commit && chmod +x ../.git/hooks/pre-commit"
   },
   "engines": {
     "node": "^16.11.0"
