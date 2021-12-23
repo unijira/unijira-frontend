@@ -1,5 +1,5 @@
-import { createAction, props } from '@ngrx/store';
-import { Sprint } from '../models/Sprint';
+import {createAction, props} from '@ngrx/store';
+import {Sprint} from '../models/Sprint';
 
 export const setSprintAction = createAction(
   '[Task] set sprint',

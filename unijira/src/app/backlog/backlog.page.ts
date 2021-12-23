@@ -1,19 +1,21 @@
-import { monthsName } from './../util';
-import { Component, OnInit } from '@angular/core';
-import { User } from '../models/User';
-import { Task } from '../models/Task';
-import { Sprint } from '../models/Sprint';
-import { DragulaService } from 'ng2-dragula';
-import { TaskService } from '../store/task.service';
+import {monthsName} from './../util';
+import {Component, OnInit} from '@angular/core';
+import {Sprint} from '../models/Sprint';
+import {DragulaService} from 'ng2-dragula';
+import {TaskService} from '../store/task.service';
 import * as TaskActions from '../store/task.action';
-import { Store, props } from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
-import { BlDetailComponent } from '../modals/bl-detail/bl-detail.component';
-import { ModalController, SpinnerTypes } from '@ionic/angular';
-import { BacklogAPIService } from '../services/backlog-api.service';
-import { PopoverController } from '@ionic/angular';
-import { BacklogEditWeightPopoversComponent } from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import {BlDetailComponent} from '../modals/bl-detail/bl-detail.component';
+import {ModalController, PopoverController} from '@ionic/angular';
+import {BacklogAPIService} from '../services/backlog-api.service';
+import {
+  BacklogEditWeightPopoversComponent
+} from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import {
+  BacklogEditStatusPopoversComponent
+} from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',

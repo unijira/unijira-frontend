@@ -2,8 +2,6 @@ import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Project} from '../models/projects/Project';
 import {Membership} from '../models/projects/Membership';
 import {MembershipRoles} from '../models/projects/MembershipRoles';
-import {MembershipStatus} from '../models/projects/MembershipStatus';
-import {UserInfo} from '../models/users/UserInfo';
 import {Subscription} from 'rxjs';
 import {unsubscribeAll} from '../util';
 import {SessionService} from '../store/session.service';

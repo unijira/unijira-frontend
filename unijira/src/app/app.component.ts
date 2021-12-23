@@ -10,13 +10,10 @@ import 'moment/locale/en-gb';
 import {UserInfo} from './models/users/UserInfo';
 import {PopoverController} from '@ionic/angular';
 import {UserActionPopoverComponent} from './popovers/user-action-popover/user-action-popover.component';
-import {
-  FontAwesomeModule,
-  FaIconLibrary,
-} from '@fortawesome/angular-fontawesome';
-import { fas } from '@fortawesome/free-solid-svg-icons';
-import { far } from '@fortawesome/free-regular-svg-icons';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import {FaIconLibrary,} from '@fortawesome/angular-fontawesome';
+import {fas} from '@fortawesome/free-solid-svg-icons';
+import {far} from '@fortawesome/free-regular-svg-icons';
+import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 
 @Component({

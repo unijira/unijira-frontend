@@ -11,7 +11,8 @@ import {
   isLoggedAction,
   loadingAction,
   logInAction,
-  logOutAction, projectAction,
+  logOutAction,
+  projectAction,
   setUserAction,
   userInfoAction,
   wrongCredentialAction

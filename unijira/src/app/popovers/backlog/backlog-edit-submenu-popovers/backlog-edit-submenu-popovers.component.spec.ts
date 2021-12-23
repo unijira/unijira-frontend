@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { BacklogEditSubmenuPopoversComponent } from './backlog-edit-submenu-popovers.component';
+import {BacklogEditSubmenuPopoversComponent} from './backlog-edit-submenu-popovers.component';
 
 describe('BacklogEditSubmenuPopoversComponent', () => {
   let component: BacklogEditSubmenuPopoversComponent;

@@ -1,5 +1,5 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PopoverController} from '@ionic/angular';
 
 @Component({
   selector: 'app-backlog-edit-status-popovers',

@@ -3,7 +3,8 @@ import {
   isLoggedAction,
   loadingAction,
   logInAction,
-  logOutAction, projectAction,
+  logOutAction,
+  projectAction,
   userInfoAction,
   wrongCredentialAction
 } from './session.action';

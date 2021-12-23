@@ -1,8 +1,5 @@
-import { Action, createReducer, on } from '@ngrx/store';
-
-import { Task } from '../models/Task';
-import { Sprint } from '../models/Sprint';
-import { User } from '../models/User';
+import {createReducer, on} from '@ngrx/store';
+import {Sprint} from '../models/Sprint';
 
 import * as TaskActions from './task.action';
 

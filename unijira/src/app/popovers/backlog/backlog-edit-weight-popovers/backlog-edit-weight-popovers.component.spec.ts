@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { BacklogEditWeightPopoversComponent } from './backlog-edit-weight-popovers.component';
+import {BacklogEditWeightPopoversComponent} from './backlog-edit-weight-popovers.component';
 
 describe('BacklogEditWeightPopoversComponent', () => {
   let component: BacklogEditWeightPopoversComponent;

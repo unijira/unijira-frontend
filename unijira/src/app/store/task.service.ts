@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
-import { TaskState } from './task.reducer';
-import {
-  createFeatureSelector,
-  createSelector,
-} from '@ngrx/store';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Sprint } from '../models/Sprint';
+import {Injectable} from '@angular/core';
+import {TaskState} from './task.reducer';
+import {createFeatureSelector, createSelector, Store,} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {Sprint} from '../models/Sprint';
 
 @Injectable()
 export class TaskService {
