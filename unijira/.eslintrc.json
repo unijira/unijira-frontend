@@ -46,6 +46,12 @@
             "prefix": "app",
             "style": "camelCase"
           }
+        ],
+        "max-len": [
+          "warn",
+          {
+            "code": 140
+          }
         ]
       },
       "plugins": [

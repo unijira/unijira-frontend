@@ -1,14 +1,12 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Project} from "../models/projects/Project";
-import {Membership} from "../models/projects/Membership";
-import {MembershipRoles} from "../models/projects/MembershipRoles";
-import {MembershipStatus} from "../models/projects/MembershipStatus";
-import {UserInfo} from "../models/users/UserInfo";
-import {Subscription} from "rxjs";
-import {unsubscribeAll} from "../util";
-import {SessionService} from "../store/session.service";
-import {ProjectService} from "../services/common/project.service";
-import {UsersService} from "../services/common/users.service";
+import {Project} from '../models/projects/Project';
+import {Membership} from '../models/projects/Membership';
+import {MembershipRoles} from '../models/projects/MembershipRoles';
+import {Subscription} from 'rxjs';
+import {unsubscribeAll} from '../util';
+import {SessionService} from '../store/session.service';
+import {ProjectService} from '../services/common/project.service';
+import {UsersService} from '../services/common/users.service';
 
 @Component({
   selector: 'app-project-home',
@@ -32,7 +30,7 @@ export class ProjectHomePage implements OnInit, OnDestroy {
             this.membership = memb;
             this.membership.forEach(m => {
               this.userService.getUser(m.userId).subscribe(userInfo => m.userInfo = userInfo);
-            })
+            });
           }
         });
       }

@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
 import {catchError, Observable, of} from 'rxjs';
 import {Notify} from '../../models/Notify';
-import {HttpParams} from "@angular/common/http";
+import {HttpParams} from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'

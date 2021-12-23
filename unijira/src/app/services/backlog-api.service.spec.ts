@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { BacklogAPIService } from './backlog-api.service';
+import {BacklogAPIService} from './backlog-api.service';
 
 describe('BacklogAPIService', () => {
   let service: BacklogAPIService;

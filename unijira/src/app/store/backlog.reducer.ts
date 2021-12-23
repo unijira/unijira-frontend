@@ -1,7 +1,6 @@
-import { Action, createReducer, on } from '@ngrx/store';
-import { saveBacklogAction } from './backlog.action';
-import { User } from '../models/User';
-import { Sprint } from '../models/Sprint';
+import {createReducer, on} from '@ngrx/store';
+import {saveBacklogAction} from './backlog.action';
+import {Sprint} from '../models/Sprint';
 
 export interface BacklogState {
   backlog: Sprint;

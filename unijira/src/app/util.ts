@@ -3,27 +3,27 @@ import {TranslateService} from '@ngx-translate/core';
 import {FormGroup} from '@angular/forms';
 import {AlertController} from '@ionic/angular';
 
-export function unsubscribeAll(...subs: Subscription[]) {
+export const unsubscribeAll = (...subs: Subscription[]) => {
   (subs || []).forEach(s => s.unsubscribe());
-}
+};
 
-export const monthsName = ["January", "February", "March", "April", "May", "June",
-  "July", "August", "September", "October", "November", "December"
+export const monthsName = ['January', 'February', 'March', 'April', 'May', 'June',
+  'July', 'August', 'September', 'October', 'November', 'December'
 ];
 
-export function getTranslation(translateService: TranslateService, key: string): string {
+export const getTranslation = (translateService: TranslateService, key: string): string => {
   let translation = '';
   translateService.get(key, {value: 'world'}).subscribe((res: string) => translation = res);
   return translation;
-}
+};
 
-export function validateConfirmPassword(g: FormGroup): any {
+export const validateConfirmPassword = (g: FormGroup): any => {
   if (g.get('password1').value !== g.get('password2').value) {
     g.get('password2').setErrors({invalidConfirm : true});
   }
-}
+};
 
-export async function presentAlertConfirm(alertController: AlertController, header: string, message: string) {
+export const presentAlertConfirm = async (alertController: AlertController, header: string, message: string) => {
   const alert = await alertController.create({
     cssClass: 'my-custom-class',
     header,
@@ -39,4 +39,4 @@ export async function presentAlertConfirm(alertController: AlertController, head
   });
 
   await alert.present();
-}
+};

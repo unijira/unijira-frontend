@@ -1,12 +1,8 @@
-import { Injectable } from '@angular/core';
-import { TaskState } from './task.reducer';
-import {
-  createFeatureSelector,
-  createSelector,
-} from '@ngrx/store';
-import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Sprint } from '../models/Sprint';
+import {Injectable} from '@angular/core';
+import {TaskState} from './task.reducer';
+import {createFeatureSelector, createSelector, Store,} from '@ngrx/store';
+import {Observable} from 'rxjs';
+import {Sprint} from '../models/Sprint';
 
 @Injectable()
 export class TaskService {
@@ -15,7 +11,7 @@ export class TaskService {
   getBacklog(): Observable<Sprint> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
-      (state) => { return state.backlog}
+      (state) => state.backlog
     );
     return this.store.select(selector);
   }
@@ -23,7 +19,7 @@ export class TaskService {
   getSprint(): Observable<Sprint> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
-      (state) => { return state.sprint}
+      (state) => state.sprint
     );
     return this.store.select(selector);
   }

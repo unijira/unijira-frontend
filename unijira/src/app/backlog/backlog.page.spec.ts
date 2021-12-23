@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { BacklogPage } from './backlog.page';
+import {BacklogPage} from './backlog.page';
 
 describe('BacklogPage', () => {
   let component: BacklogPage;

@@ -3,7 +3,8 @@ import {
   isLoggedAction,
   loadingAction,
   logInAction,
-  logOutAction, projectAction,
+  logOutAction,
+  projectAction,
   userInfoAction,
   wrongCredentialAction
 } from './session.action';
@@ -17,8 +18,8 @@ export interface SessionState {
   user: User;
   token: string;
   wrongCredential: boolean;
-  userInfo: UserInfo,
-  project: Project
+  userInfo: UserInfo;
+  project: Project;
 }
 
 export const initialState: SessionState = {

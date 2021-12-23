@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, delay, Observable, of} from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import {Project} from '../../models/projects/Project';
 import {HttpService} from '../http-service.service';
 import {Membership} from '../../models/projects/Membership';

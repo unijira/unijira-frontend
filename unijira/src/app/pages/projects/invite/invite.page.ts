@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
