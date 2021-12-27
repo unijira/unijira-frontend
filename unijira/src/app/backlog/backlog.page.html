@@ -2,7 +2,17 @@
   <div class="page">
     <ion-row>
       <ion-col>
-        <h1>Sprint</h1>
+        Progetto #{{projectId}} <a href="/home">change project</a>
+      </ion-col>
+      <ion-col>
+        <ion-button (click)="startSprint()">
+          <ion-icon name="play"></ion-icon>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <h1>Sprint #{{sprintId}}</h1>
         <div class="sprint">
           <div *ngIf="!sprint || !sprint.tasks">
             <p>Sprint vuoto</p>
@@ -92,7 +102,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1>Backlog</h1>
+        <h1>Backlog #{{backlogId}}</h1>
         <div class="backlog">
           <div *ngIf="!backlog || !backlog.tasks">
             <p>Backlog vuoto</p>

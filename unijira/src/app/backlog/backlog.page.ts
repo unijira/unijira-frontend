@@ -1,20 +1,20 @@
-import {monthsName} from './../util';
-import {Component, OnInit} from '@angular/core';
-import {Sprint} from '../models/Sprint';
-import {DragulaService} from 'ng2-dragula';
-import {TaskService} from '../store/task.service';
+import { monthsName } from './../util';
+import { Component, OnInit } from '@angular/core';
+import { Sprint } from '../models/Sprint';
+import { DragulaService } from 'ng2-dragula';
+import { TaskService } from '../store/task.service';
 import * as TaskActions from '../store/task.action';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import {BlDetailComponent} from '../modals/bl-detail/bl-detail.component';
-import {ModalController, PopoverController} from '@ionic/angular';
-import {BacklogAPIService} from '../services/backlog-api.service';
-import {
-  BacklogEditWeightPopoversComponent
-} from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import {
-  BacklogEditStatusPopoversComponent
-} from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import { BlDetailComponent } from '../modals/bl-detail/bl-detail.component';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { BacklogAPIService } from '../services/backlog-api.service';
+import { BacklogEditWeightPopoversComponent } from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+
+import { ActivatedRoute, ParamMap } from '@angular/router';
+import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-backlog',
@@ -25,14 +25,20 @@ export class BacklogPage implements OnInit {
   sprint: Sprint = new Sprint([], new Date(), new Date());
   backlog: Sprint = new Sprint([], new Date(), new Date());
 
+  filterP$: number;
+  filterB$: number;
+  filterS$: number;
+
+  // filter$: Observable<string>;
+
   startSpring: string;
   endSpring: string;
   monthNames = monthsName;
 
   // TODO Scablare
-  projectId = 2;
-  backlogId = 1;
-  sprintId = 1;
+  projectId = 0;
+  backlogId = 0;
+  sprintId = 0;
 
   constructor(
     private dragulaService: DragulaService,
@@ -40,9 +46,13 @@ export class BacklogPage implements OnInit {
     private store: Store,
     public modalController: ModalController,
     private backlogAPIService: BacklogAPIService,
-    private popOverCtrl: PopoverController
+    private popOverCtrl: PopoverController,
+    private route: ActivatedRoute
   ) {
     const that = this;
+
+    this.dragulaService.destroy('bag');
+
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
       const tmpS = _.clone(that.sprint);
       const tmpB = _.clone(that.backlog);
@@ -53,6 +63,7 @@ export class BacklogPage implements OnInit {
 
     this.dragulaService.createGroup('bag', {
       removeOnSpill: false,
+
     });
 
     this.taskService.getBacklog().subscribe((b) => {
@@ -65,7 +76,21 @@ export class BacklogPage implements OnInit {
   }
 
   ngOnInit() {
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.filterP$ = parseInt(params.get('pid'));
+      this.filterB$ = parseInt(params.get('bid'));
+      this.filterS$ = parseInt(params.get('sid'));
+    });
+
+    this.projectId = this.filterP$;
+    this.backlogId = this.filterB$;
+    this.sprintId = this.filterS$;
+
     this.getFromApi();
+  }
+
+  startSprint() {
+    alert("Start sprint");
   }
 
   /* MODAL */

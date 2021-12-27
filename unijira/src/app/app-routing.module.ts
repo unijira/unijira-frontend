@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
-    path: 'backlog',
+    path: 'home/projects/:pid/backlogs/:bid/sprints/:sid',
     // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
