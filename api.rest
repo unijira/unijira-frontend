@@ -1,5 +1,10 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDAwODE3NTIsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwMDc4MTUyLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.QB6FIjATI-6AD_xQs6eXMLONJNpDsjfcOc2kmIrt7Y4
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDA2MDUxODksInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwNjAxNTg5LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.n7GvbWpO-e09BhT2kN54EmJWXhGIR8YCDUstDhyvsak
+
 # @token = {{login.response.body.token}}
+
+@projectid = 2
+@backlogid = 3
+@sprintid = 1
 ############## AUTH #############
 
 
@@ -28,70 +33,7 @@ Accept: application/json
 GET http://localhost:7080/auth/me
 Authorization: Bearer {{token}}
 
-###
-POST http://localhost:7080/auth/register
-Content-Type: application/json
-
-{
-  "username": "testazzo",
-  "password": "testazzo"
-}
-
-###
-POST http://localhost:7080/auth/authenticate
-
-###
-GET http://localhost:7080/auth/active
-
-###
-POST http://localhost:7080/auth/authenticate
-
-###
-GET http://localhost:7080/auth/me
-Authorization: Bearer {{token}}
-
-###
-POST http://localhost:7080/auth/refresh
-
-###
-POST http://localhost:7080/auth/register
-
-###
-
-
-############## BACKLOG ##############
-
-
-GET http://localhost:7080/backlog/items/
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-PUT http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-PUT http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-PUT http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-DELETE http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-DELETE http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
-
-###
-DELETE http://localhost:7080/backlog/items/1/
-Authorization: Bearer {{token}}
+##### Project #####################################
 
 ###
 GET http://localhost:7080/projects
@@ -107,78 +49,20 @@ Content-Type: application/json
     "key": "TS1"
 }
 
+
+
+##### Backlog #####################################
+
 ###
-GET http://localhost:7080/projects/3/
+GET http://localhost:7080/projects/{{projectid}}/backlogs
 Authorization: Bearer {{token}}
 
 ###
-GET http://localhost:7080/projects/1/items?page=1&size=10
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}
 Authorization: Bearer {{token}}
 
 ###
-PUT http://localhost:7080/projects/1/items?page=1&size=10
-Authorization: Bearer {{token}}
-
-###
-DELETE http://localhost:7080/projects/1/
-Authorization: Bearer {{token}}
-
-
-###
-GET http://localhost:7080/projects/1/memberships
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/backlog/items/by_father/1/
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/backlog/items/by_user/1/
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/2/backlogs/1
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/2/backlogs/1/items
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/2/backlogs/1/sprints?page=0&size=10
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/2/backlogs/1/sprints/1/
-Authorization: Bearer {{token}}
-
-###
-GET http://localhost:7080/projects/2/backlogs/1/sprints/1/items
-Authorization: Bearer {{token}}
-
-
-###
-POST  http://localhost:7080/projects/2/backlogs/1/sprints
-Authorization: Bearer {{token}}
-Content-Type: application/json
-
-{
-  "name": "Sprint 1",
-  "startDate": "2022-01-01",
-  "endingDate": "2022-01-15"
-}
-
-
-###
-DELETE http://localhost:7080/projects/2/backlogs/2/
-Authorization: Bearer {{token}}
-
-###
-POST http://localhost:7080/projects/2/backlogs
+POST http://localhost:7080/projects/{{projectid}}/backlogs
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -192,25 +76,148 @@ Content-Type: application/json
   }
 }
 
+
 ###
-GET http://localhost:7080/projects/2/backlogs/1/sprints/1/items
+DELETE http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/
+Authorization: Bearer {{token}}
+
+
+#### Item (Backlog) #####################################
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 
 ###
-GET http://localhost:7080/projects/2/backlogs/1/items
-Authorization: Bearer {{token}}
-
-###
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
   "item": {
-
+  
+    "createdAt": "2021-12-27T11:28:16.006408",
+    "updatedAt": "2021-12-27T11:28:16.006412",
+    "id": 22,
+    "summary": "HELLO I'M AN Ticket 6",
+    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+    "measureUnit": "story points",
+    "evaluation": 1,
+    "tags": "#BACKEND#;#FRONTEND#",
+    "type": "task",
+    "status": null,
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "activated": false,
+      "disabled": false,
+      "createdAt": "2021-12-27T10:41:09.714479",
+      "updatedAt": "2021-12-27T10:41:09.714497"
+    },
+    "father": null,
+    "notes": [],
+    "assignees": []
+  
   },
   "priority": "1"
 }
+
+
+
+
+
+
+
+#### Sprint #####################################
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/
+Authorization: Bearer {{token}}
+
+
+###
+POST  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Sprint 1",
+  "startDate": "2022-01-01",
+  "endingDate": "2022-01-15"
+}
+
+
+#### Item (Sprint) #####################################
+
+
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/items
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/items
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 26,
+    "item": {
+      "createdAt": "2021-12-27T11:28:16.006408",
+      "updatedAt": "2021-12-27T11:28:16.006412",
+      "id": 22,
+      "summary": "HELLO I'M AN Ticket 6",
+      "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+      "measureUnit": "story points",
+      "evaluation": 1,
+      "tags": "#BACKEND#;#FRONTEND#",
+      "type": "task",
+      "status": null,
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "activated": false,
+        "disabled": false,
+        "createdAt": "2021-12-27T10:41:09.714479",
+        "updatedAt": "2021-12-27T10:41:09.714497"
+      },
+      "father": null,
+      "notes": [],
+      "assignees": []
+    },
+    "backlog": {
+      "id": 3,
+      "project": {
+        "id": 2,
+        "name": "Test-1",
+        "key": "TS1",
+        "icon": null,
+        "ownerId": 1,
+        "createdAt": "2021-12-27T11:12:37.152143",
+        "updatedAt": "2021-12-27T11:12:37.152144"
+      },
+      "sprints": [
+        {
+          "id": 6,
+          "startingDate": null,
+          "endingDate": "2022-01-15",
+          "insertions": [],
+          "backlogId": 3
+        }
+      ],
+      "insertions": null
+    },
+    "priority": 1
+}
+
+
+### Item (generici) #####################################
+
+
 ###
 GET http://localhost:7080/items
 Authorization: Bearer {{token}}
@@ -234,32 +241,7 @@ Content-Type: application/json
     }
 }
 
-###
-POST http://localhost:7080/projects/2/backlogs/1/sprints/1/items
-Authorization: Bearer {{token}}
-Content-Type: application/json
 
-{
-  "item": {
-    "id": 9,
-    "summary": "HELLO I'M AN EPIC 0",
-    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
-    "measureUnit": "story points",
-    "evaluation": 10,
-    "tags": "#BACKEND#;#FRONTEND#",
-    "type": "epic",
-    "notes": [],
-    "owner": {
-      "id": 1,
-      "username": "paolaguarasci@gmail.com",
-      "activated": false,
-      "disabled": false
-    },
-    "assignees": [],
-    "father": null
-  },
-  "priority": "1"
-}
 
 
 
@@ -304,7 +286,7 @@ Content-Type: application/json
 ###
 
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -352,7 +334,7 @@ Content-Type: application/json
 ###
 
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -399,7 +381,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -445,7 +427,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -491,7 +473,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -537,7 +519,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -583,7 +565,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
@@ -629,7 +611,7 @@ Content-Type: application/json
 
 ###
 
-POST http://localhost:7080/projects/2/backlogs/1/items
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
