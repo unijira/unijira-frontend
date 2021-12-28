@@ -6,7 +6,8 @@
 }
 
 h5 {
-  font-size: 14px;
+  font-size: 12px;
+  font-weight: 700;
 }
 
 h1 {
@@ -60,4 +61,12 @@ h1 {
 .grupposuggestion ion-input {
   font-size: 12px;
   width: 80%;
+}
+
+.dettRow {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  justify-content: space-between;
+align-items: center;
 }

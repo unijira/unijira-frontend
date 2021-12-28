@@ -22,7 +22,11 @@
           <ion-button size="small" color="light" (click)="addChildren()">
             <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="editLinkPopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="editLinkPopover($event)"
+          >
             <fa-icon [icon]="['fas', 'link']"> </fa-icon>
           </ion-button>
         </ion-col>
@@ -67,19 +71,39 @@
     <ion-col size="4">
       <ion-row>
         <ion-col>
-          <ion-button size="small" color="light" (click)="editLockPopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="editLockPopover($event)"
+          >
             <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="editVisibilityPopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="editVisibilityPopover($event)"
+          >
             <fa-icon [icon]="['fas', 'eye']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="editLikePopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="editLikePopover($event)"
+          >
             <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="editSharePopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="editSharePopover($event)"
+          >
             <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
           </ion-button>
-          <ion-button size="small" color="light" (click)="actionsPopover($event)">
+          <ion-button
+            size="small"
+            color="light"
+            (click)="actionsPopover($event)"
+          >
             <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
           </ion-button>
           <ion-button size="small" color="light" (click)="close()">
@@ -123,23 +147,23 @@
           </div>
           <ion-row>
             <ion-col size="12">
-              <div (click)="editAssegnatario()">
+              <div class="dettRow" (click)="editAssegnatario()">
                 <h5>Assegnatario</h5>
                 <ion-thumbnail class="icon-avatar">
                   <img [src]="task.assignedTo[0].avatar" />
                 </ion-thumbnail>
               </div>
-              <div>
+              <div class="dettRow">
                 <h5>Tags</h5>
                 <ion-badge color="light" *ngFor="let tag of task.tags">{{
                   tag
                 }}</ion-badge>
               </div>
-              <div>
+              <div class="dettRow">
                 <h5>Sprint</h5>
                 {{ task.sprint }}
               </div>
-              <div>
+              <div class="dettRow">
                 <h5>Story point</h5>
                 <div (click)="editPesoPopover($event, task, 'sprint')">
                   <ion-badge
@@ -151,18 +175,20 @@
                   </ion-badge>
                 </div>
               </div>
-              <div>
-                <h5>
-                  Sviluppo
-                </h5>
+              <div class="dettRow">
+                <h5>Sviluppo</h5>
                 <div class="grupposuggestion">
                   <ion-input [value]="gitSuggestion" readonly></ion-input>
-                  <ion-button size="small" color="light" (click)="copyToClipboard($event)">
+                  <ion-button
+                    size="small"
+                    color="light"
+                    (click)="copyToClipboard($event)"
+                  >
                     <fa-icon [icon]="['fas', 'clipboard-list']"></fa-icon>
                   </ion-button>
                 </div>
               </div>
-              <div>
+              <div class="dettRow">
                 <h5>Reporter</h5>
 
                 <ion-thumbnail class="icon-avatar">

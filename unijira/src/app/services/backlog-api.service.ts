@@ -47,8 +47,8 @@ export class BacklogAPIService {
             element.item.note,
             element.item.epic,
             element.item.story,
-            element.item.sprint,
-            new User(
+            element.backlog.sprints ? "#"+element.backlog.sprints[0].id : "--",
+                new User(
               element.item.owner.id,
               element.item.owner.username,
               '',
@@ -100,7 +100,7 @@ export class BacklogAPIService {
             element.item.note,
             element.item.epic,
             element.item.story,
-            element.item.sprint,
+            element.backlog.sprints ? "#"+element.backlog.sprints[0].id : "--",
             new User(
               element.item.owner.id,
               element.item.owner.username,
