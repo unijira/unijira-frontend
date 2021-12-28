@@ -208,11 +208,7 @@ export class BacklogPage implements OnInit {
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
-    // this.backlogAPIService
-    //   .setBacklog(this.projectId, this.backlogId, this.backlog)
-    //   .subscribe((response) => {
-    //     console.log(response);
-    //   });
+
 
     // this.backlogAPIService
     //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
@@ -222,10 +218,15 @@ export class BacklogPage implements OnInit {
 
     this.backlog.tasks.forEach((element, index) => {
       console.log(element);
-      this.backlogAPIService.setItems(element).subscribe((response) => {
-        console.log(response);
-      });
+      this.backlogAPIService.setItems(element).subscribe((response) => {});
     });
+
+
+    // this.backlogAPIService
+    // .setBacklog(this.projectId, this.backlogId, this.backlog)
+    // .subscribe((response) => {
+    //   console.log(response);
+    // });
   }
 
   async editPesoPopover(ev: any, task, type) {

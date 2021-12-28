@@ -137,10 +137,12 @@ export class BacklogAPIService {
   }
 
   setBacklog(projectId: number, backlogId: number, backlog: Sprint) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
+
     const items = [];
+    console.log("[MAP setBacklog] #items ", backlog.tasks.length)
     backlog.tasks.forEach((element, index) => {
       items.push({
+        id: element.id,
         item: {
           id: element.id,
           summary: element.name,
@@ -162,11 +164,18 @@ export class BacklogAPIService {
           ],
           father: null,
         },
-        priority: '1',
+        priority: ""+index,
       });
     });
 
-    // return this.httpService.post<any>(url, backlog);
+
+    items.forEach((element) => {
+      const url = `/projects/${projectId}/backlogs/${backlogId}/items/${element.id}`;
+      console.log("[MAP setBacklog] #items ", element)
+      this.httpService.put<any>(url, element);
+    });
+
+    // return this.httpService.put<any>(url, backlog);
   }
 
   setSprint(

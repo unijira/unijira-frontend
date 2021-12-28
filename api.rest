@@ -1,10 +1,10 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDA2MDUxODksInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwNjAxNTg5LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.n7GvbWpO-e09BhT2kN54EmJWXhGIR8YCDUstDhyvsak
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDA2ODkzMjMsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwNjg1NzIzLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.jnrNiaE3rkl98sRtpLxnRc9uIRc8UWHnFcMPofrVAF4
 
 # @token = {{login.response.body.token}}
 
 @projectid = 2
 @backlogid = 3
-@sprintid = 6
+@sprintid = 4
 ############## AUTH #############
 
 
@@ -96,33 +96,65 @@ Content-Type: application/json
 {
   "item": {
   
-    "createdAt": "2021-12-27T11:28:16.006408",
-    "updatedAt": "2021-12-27T11:28:16.006412",
-    "id": 22,
-    "summary": "HELLO I'M AN Ticket 6",
-    "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
-    "measureUnit": "story points",
-    "evaluation": 1,
-    "tags": "#BACKEND#;#FRONTEND#",
-    "type": "task",
-    "status": null,
-    "owner": {
-      "id": 1,
-      "username": "paolaguarasci@gmail.com",
-      "activated": false,
-      "disabled": false,
-      "createdAt": "2021-12-27T10:41:09.714479",
-      "updatedAt": "2021-12-27T10:41:09.714497"
-    },
-    "father": null,
-    "notes": [],
-    "assignees": []
+  "createdAt": "2021-12-28T09:27:11.912868579",
+  "updatedAt": "2021-12-28T09:27:11.912872259",
+  "id": 13,
+  "summary": "HELLO I'M AN Ticket 2",
+  "description": "Ciao! I'M AN Ticket AND I WANTO TO BE A GOOD Ticket",
+  "measureUnit": "story points",
+  "evaluation": 1,
+  "tags": "#BACKEND#;#FRONTEND#",
+  "type": "task",
+  "status": null,
+  "owner": {
+    "id": 1,
+    "username": "paolaguarasci@gmail.com",
+    "activated": false,
+    "disabled": false,
+    "createdAt": "2021-12-28T09:27:11.912982507",
+    "updatedAt": "2021-12-28T09:27:11.912983189"
+  },
+  "father": null,
+  "notes": [],
+  "assignees": []
   
   },
   "priority": "1"
 }
 
+###
+PUT http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items/6
+Authorization: Bearer {{token}}
+Content-Type: application/json
 
+{
+
+    "id": 6,
+    "item": {
+      "createdAt": "2021-12-28T09:24:33.638628",
+      "updatedAt": "2021-12-28T09:24:33.638639",
+      "id": 5,
+      "summary": "HELLO I'M AN EPIC 0",
+      "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
+      "measureUnit": "story points",
+      "evaluation": 15,
+      "tags": "#BACKEND#;#FRONTEND#",
+      "type": "epic",
+      "status": null,
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "activated": false,
+        "disabled": false,
+        "createdAt": "2021-12-28T09:19:12.40948",
+        "updatedAt": "2021-12-28T09:19:12.409526"
+      },
+      "father": null,
+      "notes": [],
+      "assignees": []
+    },
+   "priority": "2"
+}
 
 
 

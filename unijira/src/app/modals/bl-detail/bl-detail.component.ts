@@ -25,7 +25,7 @@ import {
 import {
   BacklogEditLockPopoversComponent
 } from 'src/app/popovers/backlog/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
-
+import { Clipboard } from '@angular/cdk/clipboard';
 @Component({
   selector: 'app-bl-detail',
   templateUrl: './bl-detail.component.html',
@@ -36,17 +36,23 @@ export class BlDetailComponent implements OnInit {
   task: Task;
   @Output() outputData = new EventEmitter<Task>();
   @Output() closeModal = new EventEmitter<boolean>();
-
+  gitSuggestion: String = "git checkout -b ";
   constructor(
     private popOverCtrl: PopoverController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    private clipboard: Clipboard
+
   ) {}
 
   ngOnInit() {
-    console.log(this.task);
+    this.gitSuggestion += this.namePrepare(this.task.name);
   }
   emitData(data) {
     this.outputData.emit(data);
+  }
+
+  namePrepare(name) {
+    return name.replace(/\s/g, '-').toLowerCase().trim().replace(/[^a-z0-9-]/g, '');
   }
 
   editAssegnatario() {
@@ -91,6 +97,10 @@ export class BlDetailComponent implements OnInit {
 
   edit() {
     alert('Edit');
+  }
+
+  copyToClipboard(ev) {
+    this.clipboard.copy(this.gitSuggestion.toString());
   }
 
   async editLockPopover(ev: any) {

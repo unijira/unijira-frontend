@@ -152,6 +152,17 @@
                 </div>
               </div>
               <div>
+                <h5>
+                  Sviluppo
+                </h5>
+                <div class="grupposuggestion">
+                  <ion-input [value]="gitSuggestion" readonly></ion-input>
+                  <ion-button size="small" color="light" (click)="copyToClipboard($event)">
+                    <fa-icon [icon]="['fas', 'clipboard-list']"></fa-icon>
+                  </ion-button>
+                </div>
+              </div>
+              <div>
                 <h5>Reporter</h5>
 
                 <ion-thumbnail class="icon-avatar">

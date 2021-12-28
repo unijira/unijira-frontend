@@ -50,3 +50,14 @@ h1 {
   padding-left: 0px;
   font-size: 12px;
 }
+
+.grupposuggestion {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.grupposuggestion ion-input {
+  font-size: 12px;
+  width: 80%;
+}
