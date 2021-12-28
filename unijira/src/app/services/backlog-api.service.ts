@@ -178,4 +178,25 @@ export class BacklogAPIService {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
     return this.httpService.post<any>(url, sprint);
   }
+
+
+  getBacklogList(projectId: number) {
+    const url = `/projects/${projectId}/backlogs`;
+    return this.httpService.get<any>(url).pipe(
+      map((res) => {
+        console.log("[MAP getbackloglist]", res)
+        return res;
+      }
+
+    ));
+  }
+  getSprintList(projectId: number, backlogId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
+    return this.httpService.get<any>(url).pipe(
+      map((res) => {
+        console.log("[MAP getSrintList]", res)
+        return res;
+      }
+    ));
+  }
 }

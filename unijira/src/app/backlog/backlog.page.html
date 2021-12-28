@@ -9,6 +9,12 @@
           <ion-icon name="play"></ion-icon>
         </ion-button>
       </ion-col>
+      <ion-col>
+      <app-backloglist [projectId]="projectId"></app-backloglist>
+      </ion-col>
+      <ion-col>
+        <app-sprintlist [projectId]="projectId" [backlogId]="backlogId"></app-sprintlist>
+        </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
