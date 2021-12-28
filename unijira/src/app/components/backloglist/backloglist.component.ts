@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BacklogAPIService } from '../../services/backlog-api.service';
 import { map } from 'rxjs';
@@ -9,7 +9,9 @@ import { map } from 'rxjs';
 })
 export class BackloglistComponent implements OnInit {
   @Input() projectId: number;
+  @Output() backlogSelected = new EventEmitter();
   backlogList: any;
+
 
   constructor(private backlogService: BacklogAPIService) {
     this.backlogList = [];
@@ -21,4 +23,15 @@ export class BackloglistComponent implements OnInit {
       console.log(res);
     });
   }
+
+  handleSelection(ev) {
+    alert(ev.target.value);
+    this.backlogSelected.emit(ev.target.value);
+  }
+
+  customPopoverOptions: any = {
+    // header: 'Hair Color',
+    // subHeader: 'Select your hair color',
+    // message: 'Only select your dominant hair color'
+  };
 }

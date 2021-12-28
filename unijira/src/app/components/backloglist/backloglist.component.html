@@ -1,1 +1,8 @@
 Backlog Disponibili per p{{projectId}} ---> {{backlogList.length}}
+<ion-item>
+  <ion-label>Backlog</ion-label>
+  <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange) = "handleSelection($event)">
+    <ion-select-option *ngFor="let backlog of backlogList" value="{{ backlog.id }}">{{ backlog.id }}</ion-select-option>
+    <ion-select-option value="42">42</ion-select-option>
+  </ion-select>
+</ion-item>

@@ -15,6 +15,8 @@ import { BacklogEditStatusPopoversComponent } from '../popovers/backlog/backlog-
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { Location } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-backlog',
@@ -47,7 +49,9 @@ export class BacklogPage implements OnInit {
     public modalController: ModalController,
     private backlogAPIService: BacklogAPIService,
     private popOverCtrl: PopoverController,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private location: Location,
+    private router: Router
   ) {
     const that = this;
 
@@ -63,7 +67,6 @@ export class BacklogPage implements OnInit {
 
     this.dragulaService.createGroup('bag', {
       removeOnSpill: false,
-
     });
 
     this.taskService.getBacklog().subscribe((b) => {
@@ -90,7 +93,7 @@ export class BacklogPage implements OnInit {
   }
 
   startSprint() {
-    alert("Start sprint");
+    alert('Start sprint');
   }
 
   /* MODAL */
@@ -200,6 +203,18 @@ export class BacklogPage implements OnInit {
         console.log(response);
       });
   }
+  changeBacklog(ev) {
+    this.backlogId = ev;
+    this.changeRoute();
+  }
+  changeRoute() {
+    let url = `/home/projects/${this.projectId}/backlogs/${this.backlogId}/sprints/${this.sprintId}`;
+    this.router.navigate([url]);
+  }
+  changeSprint(ev) {
+    this.sprintId = ev;
+    this.changeRoute();
+  }
 
   saveToAPI() {
     const tmpS = _.clone(this.sprint);
@@ -207,8 +222,6 @@ export class BacklogPage implements OnInit {
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
-
-
 
     // this.backlogAPIService
     //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
@@ -220,7 +233,6 @@ export class BacklogPage implements OnInit {
       console.log(element);
       this.backlogAPIService.setItems(element).subscribe((response) => {});
     });
-
 
     // this.backlogAPIService
     // .setBacklog(this.projectId, this.backlogId, this.backlog)

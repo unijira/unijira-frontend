@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { Sprint } from '../../models/Sprint';
 import { Task } from '../../models/Task';
 import { User } from '../../models/User';
@@ -12,6 +12,8 @@ export class SprintlistComponent implements OnInit {
 
   @Input() projectId: number;
   @Input() backlogId: number;
+
+  @Output() sprintSelected = new EventEmitter();
   sprintList: any;
 
   constructor(private backlogService: BacklogAPIService) {
@@ -27,6 +29,16 @@ export class SprintlistComponent implements OnInit {
   }
 
 
+  handleSelection(ev) {
+    this.sprintSelected.emit(ev.target.value);
+  }
+
+
+  customPopoverOptions: any = {
+    // header: 'Hair Color',
+    // subHeader: 'Select your hair color',
+    // message: 'Only select your dominant hair color'
+  };
 
 
 }
