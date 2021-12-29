@@ -5,18 +5,49 @@
         Progetto #{{projectId}} <a href="/home">change project</a>
       </ion-col>
       <ion-col>
-        <ion-button (click)="startSprint()">
+        <ion-item>
+          <ion-label position="floating">DD/MM/YYYY</ion-label>
+          <ion-datetime
+            (ionChange)="onDateChangeStart($event)"
+            displayFormat="DD/MM/YYYY"
+            [min]="minDate"
+            max="2022-12-31"
+            [(ngModel)]="startSprintDate"
+          ></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label position="floating">DD/MM/YYYY</ion-label>
+          <ion-datetime
+            (ionChange)="onDateChangeEnd($event)"
+            displayFormat="DD/MM/YYYY"
+            [min]="minDate"
+            max="2022-12-31"
+            [(ngModel)]="endSprintDate"
+          ></ion-datetime>
+        </ion-item>
+      </ion-col>
+      <ion-col *ngIf="sprintIsStarted">
+        <ion-button (click)="editSprint()">
           <ion-icon name="play"></ion-icon>
         </ion-button>
       </ion-col>
       <ion-col>
-      <app-backloglist [projectId]="projectId"  (backlogSelected)="changeBacklog($event)"></app-backloglist>
-        <app-sprintlist [projectId]="projectId" [backlogId]="backlogId"  (sprintSelected)="changeSprint($event)"></app-sprintlist>
-        </ion-col>
+        <app-backloglist
+          [projectId]="projectId"
+          (backlogSelected)="changeBacklog($event)"
+        ></app-backloglist>
+        <app-sprintlist
+          [projectId]="projectId"
+          [backlogId]="backlogId"
+          (sprintSelected)="changeSprint($event)"
+        ></app-sprintlist>
+      </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1>Sprint #{{sprintId}}</h1>
+        <h1>Sprint #{{sprintId}}</h1> <h5></h5>
         <div class="sprint">
           <div *ngIf="!sprint || !sprint.tasks">
             <p>Sprint vuoto</p>

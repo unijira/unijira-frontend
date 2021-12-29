@@ -1,10 +1,10 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from './http-service.service';
-import {SessionService} from './../store/session.service';
-import {Sprint} from '../models/Sprint';
-import {Task} from '../models/Task';
-import {User} from '../models/User';
-import {map} from 'rxjs/operators';
+import { Injectable } from '@angular/core';
+import { HttpService } from './http-service.service';
+import { SessionService } from './../store/session.service';
+import { Sprint } from '../models/Sprint';
+import { Task } from '../models/Task';
+import { User } from '../models/User';
+import { map } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -47,8 +47,10 @@ export class BacklogAPIService {
             element.item.note,
             element.item.epic,
             element.item.story,
-            element.backlog.sprints ? "#"+element.backlog.sprints[0].id : "--",
-                new User(
+            element.backlog.sprints
+              ? '#' + element.backlog.sprints[0].id
+              : '--',
+            new User(
               element.item.owner.id,
               element.item.owner.username,
               '',
@@ -100,7 +102,9 @@ export class BacklogAPIService {
             element.item.note,
             element.item.epic,
             element.item.story,
-            element.backlog.sprints ? "#"+element.backlog.sprints[0].id : "--",
+            element.backlog.sprints
+              ? '#' + element.backlog.sprints[0].id
+              : '--',
             new User(
               element.item.owner.id,
               element.item.owner.username,
@@ -131,15 +135,14 @@ export class BacklogAPIService {
       owner: {
         id: 1,
         username: 'paolaguarasci@gmail.com',
-      }
+      },
     };
     return this.httpService.put<any>(url, item);
   }
 
   setBacklog(projectId: number, backlogId: number, backlog: Sprint) {
-
     const items = [];
-    console.log("[MAP setBacklog] #items ", backlog.tasks.length)
+    console.log('[MAP setBacklog] #items ', backlog.tasks.length);
     backlog.tasks.forEach((element, index) => {
       items.push({
         id: element.id,
@@ -164,14 +167,13 @@ export class BacklogAPIService {
           ],
           father: null,
         },
-        priority: ""+index,
+        priority: '' + index,
       });
     });
 
-
     items.forEach((element) => {
       const url = `/projects/${projectId}/backlogs/${backlogId}/items/${element.id}`;
-      console.log("[MAP setBacklog] #items ", element)
+      console.log('[MAP setBacklog] #items ', element);
       this.httpService.put<any>(url, element);
     });
 
@@ -188,24 +190,40 @@ export class BacklogAPIService {
     return this.httpService.post<any>(url, sprint);
   }
 
+  editSprint(
+    projectId: number,
+    backlogId: number,
+    sprintId: number,
+    start: string,
+    end: string
+  ) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    let itemToSend = {
+      id: sprintId,
+      startingDate: start,
+      endingDate: end,
+      insertions: [],
+      backlogId: backlogId,
+    };
+    return this.httpService.put<any>(url, itemToSend);
+  }
 
   getBacklogList(projectId: number) {
     const url = `/projects/${projectId}/backlogs`;
     return this.httpService.get<any>(url).pipe(
       map((res) => {
-        console.log("[MAP getbackloglist]", res)
+        console.log('[MAP getbackloglist]', res);
         return res;
-      }
-
-    ));
+      })
+    );
   }
   getSprintList(projectId: number, backlogId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
     return this.httpService.get<any>(url).pipe(
       map((res) => {
-        console.log("[MAP getSrintList]", res)
+        console.log('[MAP getSrintList]', res);
         return res;
-      }
-    ));
+      })
+    );
   }
 }

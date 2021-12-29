@@ -37,10 +37,17 @@ export class BacklogPage implements OnInit {
   endSpring: string;
   monthNames = monthsName;
 
+  startSprintDate: Date;
+  endSprintDate: Date;
+
+  minDate: string;
+
   // TODO Scablare
   projectId = 0;
   backlogId = 0;
   sprintId = 0;
+
+  sprintIsStarted = false;
 
   constructor(
     private dragulaService: DragulaService,
@@ -55,6 +62,13 @@ export class BacklogPage implements OnInit {
   ) {
     const that = this;
 
+    this.minDate = new Date().toISOString().split('T')[0];
+    this.startSpring = this.minDate;
+    this.endSpring = this.minDate;
+
+    if (this.sprint.start) {
+      this.sprintIsStarted = true;
+    }
     this.dragulaService.destroy('bag');
 
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
@@ -92,10 +106,21 @@ export class BacklogPage implements OnInit {
     this.getFromApi();
   }
 
-  startSprint() {
-    alert('Start sprint');
+  editSprint() {
+    debugger
+    let datetoSend1 = new Date(this.startSprintDate).toISOString().split("T")[0]
+    let dateToSend2 = new Date(this.endSprintDate).toISOString().split("T")[0]
+    this.backlogAPIService.editSprint(this.projectId, this.backlogId, this.sprintId, datetoSend1, dateToSend2 ).subscribe((response) => {
+      console.log(response);
+    });
+  }
+  onDateChangeStart(ev) {
+    console.log(this.startSprintDate);
   }
 
+  onDateChangeEnd(ev) {
+    console.log(this.endSprintDate);
+  }
   /* MODAL */
   async presentModal(task) {
     const modal = await this.modalController.create({
