@@ -74,3 +74,34 @@ mark {
   --width: 80px;
 }
 /* end porcheria */
+@import '~@ionic/angular/css/padding.css';
+
+
+@import '../node_modules/@syncfusion/ej2-base/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-buttons/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-calendars/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-dropdowns/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-inputs/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-lists/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-layouts/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-navigations/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-popups/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-grids/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-treegrid/styles/tailwind.css';
+
+@import '../node_modules/@syncfusion/ej2-gantt/styles/tailwind.css';
+.e-altrow, tr.e-chart-row:nth-child(even)  {
+  background-color: #f2f2f2;
+  }

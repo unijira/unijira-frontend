@@ -1,0 +1,24 @@
+
+<ion-content>
+  <ion-header>
+  <ion-toolbar color="primary">
+    <ion-title>
+      Roadmap
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+  <ejs-gantt
+    id="ganttDefault"
+    height="80%"
+    [dataSource]="data"
+    [taskFields]="taskSettings"
+    [editSettings]="editSettings"
+    [toolbar]="toolbar"
+    [allowRowDragAndDrop]=true
+    [enableContextMenu]=true
+    [allowSelection]=true
+    [allowSorting]= true
+    (actionComplete)="onActionComplete($event)">
+
+  ></ejs-gantt>
+  </ion-content>
