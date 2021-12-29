@@ -84,8 +84,7 @@ export class WizardPage implements OnInit {
 
                     this.projectService.sendInvitations(project.id, this.invites).subscribe();
 
-                    this.sessionService.loadProject(project.id);
-                    this.router.navigate(['/project-home']);
+                    this.router.navigate(['/project-home', project.id]);
 
                 }
 

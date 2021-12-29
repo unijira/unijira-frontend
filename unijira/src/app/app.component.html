@@ -2,6 +2,9 @@
   <app-loading *ngIf="loading"></app-loading>
   <ion-header *ngIf="isLogged">
     <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
       <ion-buttons slot="primary">
 
         <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
@@ -27,7 +30,7 @@
       <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="auto">
-            <a routerLink="/home">
+            <a routerLink="/home" (click)="isDisabled = false">
               <ion-img src="/assets/logo-navbar.png" class="main-icon ion-margin-start"></ion-img>
             </a>
           </ion-col>
@@ -38,23 +41,28 @@
       </ion-grid>
     </ion-toolbar>
   </ion-header>
-  <ion-split-pane content-id="content" when="md" class="content-h" *ngIf="isLogged && !(router.url.includes('/home'))">
-    <ion-menu>
+  <ion-split-pane content-id="content" *ngIf="isLogged && !(router.url.includes('/home'))" [disabled]="isDisabled">
+    <ion-menu type="overlay">
       <ion-content>
-        <ion-list>
+        <ion-list id="inbox-list">
+          <ion-list-header>{{project?.name}}</ion-list-header>
+          <ion-note>{{project?.key}}</ion-note>
           <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-            <ion-item class="ion-padding" [routerLink]="page.url" routerDirection="root">
-              {{page.name}}
+            <ion-item routerDirection="root" [routerLink]="[page.url]"
+                      lines="none" detail="false" routerLinkActive="selected">
+              <fa-icon [icon]="['fas', page.icon]" class="fa-fw" slot="start"></fa-icon>
+              <ion-label>{{ page.name }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
+          <ion-button shape="round" class="right-button" size="small" (click)="isDisabled = !isDisabled">
+            <fa-icon [icon]="['fas', 'chevron-left']" *ngIf="!isDisabled"></fa-icon>
+            <fa-icon [icon]="['fas', 'chevron-right']" *ngIf="isDisabled"></fa-icon>
+          </ion-button>
         </ion-list>
+
       </ion-content>
     </ion-menu>
-    <ion-content>
-      <ion-router-outlet id="content" main></ion-router-outlet>
-    </ion-content>
+    <ion-router-outlet id="content" main></ion-router-outlet>
   </ion-split-pane>
-  <ion-content [ngClass]="{'content-h': router.url.includes('/home')}" *ngIf="!isLogged || (router.url.includes('/home'))">
-    <ion-router-outlet></ion-router-outlet>
-  </ion-content>
+  <ion-router-outlet *ngIf="!isLogged || (router.url.includes('/home'))"></ion-router-outlet>
 </ion-app>

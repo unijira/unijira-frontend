@@ -55,9 +55,4 @@ export class HomePage implements OnInit {
     this.currentSegment = e.detail?.value;
   }
 
-  navigateToProjectHome(id: number) {
-    this.sessionService.loadProject(id);
-    this.router.navigate(['/project-home']);
-  }
-
 }

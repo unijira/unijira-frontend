@@ -7,6 +7,7 @@ import {unsubscribeAll} from '../util';
 import {SessionService} from '../store/session.service';
 import {ProjectService} from '../services/common/project.service';
 import {UsersService} from '../services/common/users.service';
+import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-project-home',
@@ -21,20 +22,28 @@ export class ProjectHomePage implements OnInit, OnDestroy {
 
   membershipRole: typeof MembershipRoles = MembershipRoles;
 
-  constructor(private sessionService: SessionService, private projectService: ProjectService, private userService: UsersService) {
-    this.projectSubscription = this.sessionService.getProject().subscribe(proj => {
-      if (proj) {
-        this.project = proj;
-        this.projectService.getMemberships(this.project.id).subscribe(memb => {
-          if (memb) {
-            this.membership = memb;
-            this.membership.forEach(m => {
-              this.userService.getUser(m.userId).subscribe(userInfo => m.userInfo = userInfo);
-            });
-          }
-        });
-      }
-    });
+  constructor(
+    private sessionService: SessionService,
+    private projectService: ProjectService,
+    private userService: UsersService,
+    private activatedRoute: ActivatedRoute) {
+
+    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params['id']));
+
+    // this.projectSubscription = this.sessionService.getProject().subscribe(proj => {
+    //   if (proj) {
+    //     this.project = proj;
+    //     this.projectService.getMemberships(this.project.id).subscribe(memb => {
+    //       if (memb) {
+    //         this.membership = memb;
+    //         this.membership.forEach(m => {
+    //           this.userService.getUser(m.userId).subscribe(userInfo => m.userInfo = userInfo);
+    //         });
+    //       }
+    //     });
+    //   }
+    // });
+
   }
 
   ngOnInit() {
@@ -48,7 +57,7 @@ export class ProjectHomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    unsubscribeAll(this.projectSubscription);
+    // unsubscribeAll(this.projectSubscription);
   }
 
 }

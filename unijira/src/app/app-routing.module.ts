@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
-    path: 'backlog',
+    path: 'backlog/:id',
     // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
@@ -50,7 +50,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
   {
-    path: 'project-home',
+    path: 'project-home/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
   },

@@ -41,9 +41,4 @@ export class ProjectsPage implements OnInit {
     );
   }
 
-  navigateToProjectHome(id: number) {
-    this.sessionService.loadProject(id);
-    this.router.navigate(['/project-home']);
-  }
-
 }

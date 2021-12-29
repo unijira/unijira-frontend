@@ -15,6 +15,7 @@ import {fas} from '@fortawesome/free-solid-svg-icons';
 import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
+import {Project} from './models/projects/Project';
 
 @Component({
   selector: 'app-root',
@@ -27,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('notifications') notificationsComponent: NotificationsComponent;
 
   unreadNotificationsCount = 0;
-  pages: any[] = [];
+  public pages = [];
 
   loadingSubscription: Subscription;
   loading = false;
@@ -37,6 +38,11 @@ export class AppComponent implements OnInit, OnDestroy {
 
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
+
+  isDisabled: boolean = false;
+
+  projectSubscription: Subscription;
+  project: Project;
 
   constructor(
     public sessionService: SessionService,
@@ -60,10 +66,19 @@ export class AppComponent implements OnInit, OnDestroy {
       moment.locale(translateService.currentLang);
     });
 
+    this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
+      this.project = proj;
+      if (proj) {
+        this.pages = [
+          {name: 'Board', url: '/project-home/' + proj.id, icon: 'table'},
+          {name: 'Backlog', url: '/backlog/' + proj.id, icon: 'clipboard-list'},
+          {name: 'Roadmap', url: '/roadmap/' + proj.id, icon: 'road'},
+        ];
+      }
+    });
+
     moment.locale('it');
 
-    this.pages.push({name: 'Home', url: '/project-home'});
-    this.pages.push({name: 'backlog', url: '/backlog'});
   }
 
 
