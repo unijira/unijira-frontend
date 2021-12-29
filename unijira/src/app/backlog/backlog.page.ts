@@ -49,6 +49,8 @@ export class BacklogPage implements OnInit {
 
   sprintIsStarted = false;
 
+  sprintInfo: any;
+
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
@@ -61,6 +63,17 @@ export class BacklogPage implements OnInit {
     private router: Router
   ) {
     const that = this;
+    this.backlogAPIService.getSprintInfo(this.projectId, this.backlogId, this.sprintId).subscribe((response) => {
+      // that.sprintInfo = response;
+      // that.startSprintDate = new Date(response.startingDate);
+      // that.endSprintDate = new Date(response.enddingDate);
+      // that.minDate = new Date(response.startDate).toISOString().split("T")[0];
+      // that.startSpring = new Date(response.startDate).toISOString().split("T")[0];
+      // that.endSpring = new Date(response.endDate).toISOString().split("T")[0];
+      // that.sprintIsStarted = response.isStarted;
+      this.sprintInfo = response;
+      console.log(response)
+    });
 
     this.minDate = new Date().toISOString().split('T')[0];
     this.startSpring = this.minDate;

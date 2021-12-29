@@ -226,4 +226,17 @@ export class BacklogAPIService {
       })
     );
   }
+
+
+
+
+  getSprintInfo(projectId: number, backlogId: number, sprintId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.get<any>(url).pipe(
+      map((res) => {
+        console.log('[MAP getSprintInfo]', res);
+        return res;
+      })
+    );
+  }
 }
