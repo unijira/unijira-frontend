@@ -9,12 +9,13 @@ import {PopoverController} from '@ionic/angular';
 export class BacklogEditStatusPopoversComponent implements OnInit {
   @Input() statusOriginale: number;
   @Output() editStatus: EventEmitter<number> = new EventEmitter<number>();
-  statusModificato: number;
+
+  statusModificato: number;   // Are we sure about it?
 
   statusType = [
-    { name: 'In Corso', value: 'in_corso', className: 'primary' },
-    { name: 'Completato', value: 'completato', className: 'success' },
-    { name: 'Da Completare', value: 'da_completare', className: 'light' },
+    { name: 'backlog.edit.status.progress', value: 'in_corso', className: 'primary' },
+    { name: 'backlog.edit.status.done', value: 'completato', className: 'success' },
+    { name: 'backlog.edit.status.toDo', value: 'da_completare', className: 'light' },
   ];
 
   constructor(private popoverCtrl: PopoverController) {}

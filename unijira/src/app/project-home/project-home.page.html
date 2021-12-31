@@ -1,6 +1,6 @@
 <ion-content>
   <ion-title class="ion-margin-top">
-    <h1>Board</h1>
+    <h1 translate>board</h1>
     <h5>TO DO</h5>
   </ion-title>
   <!--<br>
@@ -16,9 +16,9 @@
           <ion-icon style="padding: 5px; color:#ffc409;" name="star" *ngIf="member.role === membershipRole.productOwner"></ion-icon>
           <ion-card-title>{{member.userInfo?.username}}</ion-card-title>
         </ion-row>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster">Scrum master</ion-card-subtitle>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner">Product owner</ion-card-subtitle>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.member">member</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster" translate>project.role.scrumMaster</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner" translate>project.role.productOwner</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.member" translate>project.role.member</ion-card-subtitle>
       </ion-card>
     </ion-col>
     <ion-col size="6">
@@ -29,9 +29,9 @@
           <ion-icon style="padding: 5px; color:#ffc409;" name="star" *ngIf="member.role === membershipRole.productOwner"></ion-icon>
           <ion-card-title>{{member.userInfo?.username}}</ion-card-title>
         </ion-row>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster">Scrum master</ion-card-subtitle>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner">Product owner</ion-card-subtitle>
-        <ion-card-subtitle *ngIf="member.role === membershipRole.member">member</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.scrumMaster" translate>project.role.scrumMaster</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.productOwner" translate>project.role.productOwner</ion-card-subtitle>
+        <ion-card-subtitle *ngIf="member.role === membershipRole.member" translate>project.role.member</ion-card-subtitle>
       </ion-card>
     </ion-col>
   </ion-row>

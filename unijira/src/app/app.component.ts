@@ -70,9 +70,9 @@ export class AppComponent implements OnInit, OnDestroy {
       this.project = proj;
       if (proj) {
         this.pages = [
-          {name: 'Board', url: '/project-home/' + proj.id, icon: 'table'},
-          {name: 'Backlog', url: '/backlog/' + proj.id, icon: 'clipboard-list'},
-          {name: 'Roadmap', url: '/roadmap/' + proj.id, icon: 'road'},
+          {name: 'board', url: '/project-home/' + proj.id, icon: 'table'},
+          {name: 'backlog', url: '/backlog/' + proj.id, icon: 'clipboard-list'},
+          {name: 'roadmap', url: '/roadmap/' + proj.id, icon: 'road'},
         ];
       }
     });

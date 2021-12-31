@@ -29,14 +29,14 @@
       </ion-row>
       <ion-row>
         <ion-col size="12">
-          <h5>Descrizione</h5>
+          <h5 [translate]="'backlog.detail.description'"></h5>
           <p>{{ task.description }}</p>
         </ion-col>
       </ion-row>
 
       <ion-row *ngIf="task.children.length">
         <ion-col size="12">
-          <h5>Ticket figli ({{ task.children.length }})</h5>
+          <h5>{{'backlog.detail.childTickets' | translate}} ({{ task.children.length }})</h5>
           <ul class="lista-children">
             <li *ngFor="let t of task.children">
               <b>{{ t.name }}</b> | {{ t.description }} | {{ task.weight }}
@@ -54,10 +54,10 @@
 
       <ion-row>
         <ion-col size="12">
-          <h5>Attivita'</h5>
-          <div>Filtri</div>
-          <div>add activiti input</div>
-          <div>last comment/activity</div>
+          <h5 [translate]="'backlog.detail.activity'"></h5>
+          <div [translate]="'backlog.detail.filters'"></div>
+          <div [translate]="'backlog.detail.activity.add'"></div>
+          <div [translate]="'backlog.detail.activity.comment.last'"></div>
         </ion-col>
       </ion-row>
     </ion-col>
@@ -112,35 +112,36 @@
         </ion-col>
 
         <ion-col size="4" *ng-if="task.status === 'completata'">
-          <fa-icon [icon]="['fas', 'check']"></fa-icon> Completato
+          <fa-icon [icon]="['fas', 'check']"></fa-icon>
+          {{'backlog.detail.task.complete' | translate}}
         </ion-col>
       </ion-row>
 
       <ion-row>
         <ion-col class="dettagli-colonna">
           <div class="dettagli-colonna-titolo">
-            <h5 class="dettagli-colonna-titolo-element">Dettagli</h5>
+            <h5 class="dettagli-colonna-titolo-element" [translate]="'backlog.detail.task.details'"></h5>
           </div>
           <ion-row>
             <ion-col size="12">
               <div (click)="editAssegnatario()">
-                <h5>Assegnatario</h5>
+                <h5 [translate]="'backlog.detail.task.assignee'"></h5>
                 <ion-thumbnail class="icon-avatar">
                   <img [src]="task.assignedTo[0].avatar" />
                 </ion-thumbnail>
               </div>
               <div>
-                <h5>Tags</h5>
+                <h5 [translate]="'backlog.detail.task.tags'"></h5>
                 <ion-badge color="light" *ngFor="let tag of task.tags">{{
                   tag
                 }}</ion-badge>
               </div>
               <div>
-                <h5>Sprint</h5>
+                <h5 [translate]="'backlog.sprint'"></h5>
                 {{ task.sprint }}
               </div>
               <div>
-                <h5>Story point</h5>
+                <h5 [translate]="'backlog.detail.task.storyPoints'"></h5>
                 <div (click)="editPesoPopover($event, task, 'sprint')">
                   <ion-badge
                     class="weight-badge"
@@ -152,7 +153,7 @@
                 </div>
               </div>
               <div>
-                <h5>Reporter</h5>
+                <h5 [translate]="'backlog.detail.task.reporter'"></h5>
 
                 <ion-thumbnail class="icon-avatar">
                   <img [src]="task.owner.avatar" />
@@ -165,7 +166,7 @@
 
       <ion-row>
         <ion-col size="12">
-          <h5>Note</h5>
+          <h5 [translate]="'backlog.detail.task.notes'"></h5>
           {{ task.note }}
         </ion-col>
       </ion-row>

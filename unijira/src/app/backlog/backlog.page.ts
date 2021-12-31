@@ -27,6 +27,8 @@ export class BacklogPage implements OnInit {
 
   startSpring: string;
   endSpring: string;
+
+  // TODO This array is not used. By the way, we can now refer to the month names using the entry "months" in the translation JSON files
   monthNames = monthsName;
 
   // TODO Scablare

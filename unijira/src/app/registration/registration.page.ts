@@ -76,7 +76,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
         },
         (error) => {
           this.serverResponseOk = '';
-          this.serverResponseErr = 'Errore';
+          this.serverResponseErr = 'error.title';
         }
       );
     }
@@ -84,13 +84,13 @@ export class RegistrationPage implements OnInit, OnDestroy {
 
   checkError() {
     if (this.emailFC.hasError('required')){
-      this.error = getTranslation(this.translateService, 'register.error.emptyEmail');
+      this.error = 'register.error.emptyEmail';
     } else if (this.passwordFC1.hasError('required')) {
-      this.error = getTranslation(this.translateService, 'register.error.emptyPassword');
+      this.error = 'register.error.emptyPassword';
     } else if (this.passwordFC1.hasError('pattern') || this.passwordFC1.hasError('minLength')) {
-      this.error = getTranslation(this.translateService, 'register.error.wrongPassword');
+      this.error = 'register.error.wrongPassword';
     } else if (this.passwordFC1.value !== this.passwordFC2.value) {
-      this.error = getTranslation(this.translateService, 'register.error.differentPasswords');
+      this.error = 'register.error.differentPasswords';
     }
   }
 
