@@ -5,6 +5,8 @@ import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
 import {SessionService} from '../../../store/session.service';
+import {FileUploadService} from '../../../services/common/file-upload.service';
+import {AngularFireDatabase} from '@angular/fire/database';
 
 @Component({
   selector: 'app-wizard',
@@ -13,7 +15,7 @@ import {SessionService} from '../../../store/session.service';
 })
 export class WizardPage implements OnInit {
 
-  @Input() url: URL;
+  @Input() file: File;
   @Input() image: string;
 
   @Input() invites: string[] = [];
@@ -29,8 +31,9 @@ export class WizardPage implements OnInit {
   constructor(public alertController: AlertController,
               private translateService: TranslateService,
               private projectService: ProjectService,
-              private router: Router,
-              private sessionService: SessionService) {}
+              private uploadService: FileUploadService,
+              private db: AngularFireDatabase,
+              private router: Router) {}
 
   ngOnInit() {
     this.index = 0;
@@ -75,20 +78,36 @@ export class WizardPage implements OnInit {
                      this.translateService.instant('wizard.alert.message.button.confirm'))
         .then(res => {
 
-          if(res) {
+          if (res) {
 
             this.projectService.createProject(this.nameForm.value, this.keyForm.value, null)
               .subscribe(project => {
 
-                if(project !== null) {
+                if (project !== null) {
 
+                  if(this.invites.length > 0) {
                     this.projectService.sendInvitations(project.id, this.invites).subscribe();
+                  }
 
-                    this.router.navigate(['/project-home', project.id]);
+                  if(this.file !== undefined) {
+
+                    this.uploadService.upload(project.id, 'icon', this.file).subscribe(
+                      url => {
+
+                        this.projectService.updateProject(project.id, project.name, project.key, project.ownerId, new URL(url)).subscribe(
+                          () => this.router.navigate(['/project-home', project.id]).then()
+                        );
+
+                      }
+                    );
+
+                  } else {
+                    this.router.navigate(['/project-home', project.id]).then();
+                  }
 
                 }
 
-            });
+              });
 
           }
 
@@ -150,7 +169,7 @@ export class WizardPage implements OnInit {
 
     const reader = new FileReader();
 
-    this.url = event.target.files[0];
+    this.file = event.target.files[0];
     reader.readAsDataURL(event.target.files[0]);
 
     reader.onload = (e) => {
