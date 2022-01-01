@@ -24,11 +24,11 @@ export class ActivatePage implements OnInit {
     this.accountService.activate(this.token).subscribe(
       (res) => {
         this.color = 'success';
-        this.msg = 'Your account has been activated. Please login.';
+        this.msg = 'activation.success';
       },
       (error) => {
         this.color = 'danger';
-        this.msg = 'Activation failed. Please try again.';
+        this.msg = 'activation.failure';
       }
     );
   }

@@ -7,6 +7,10 @@ export const unsubscribeAll = (...subs: Subscription[]) => {
   (subs || []).forEach(s => s.unsubscribe());
 };
 
+/*
+**  TODO This array can be easily removed. The month names are present in the translation JSON files
+**  TODO If you remove this, be careful with backlog.page.ts
+*/
 export const monthsName = ['January', 'February', 'March', 'April', 'May', 'June',
   'July', 'August', 'September', 'October', 'November', 'December'
 ];

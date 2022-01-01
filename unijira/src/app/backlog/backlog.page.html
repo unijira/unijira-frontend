@@ -2,10 +2,10 @@
   <div class="page">
     <ion-row>
       <ion-col>
-        <h1>Sprint</h1>
+        <h1 [translate]="'backlog.sprint'"></h1>
         <div class="sprint">
           <div *ngIf="!sprint || !sprint.tasks">
-            <p>Sprint vuoto</p>
+            <p [translate]="'backlog.sprint.empty'">Sprint vuoto</p>
           </div>
           <div *ngIf="sprint && sprint.tasks">
             <ion-list
@@ -92,10 +92,10 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1>Backlog</h1>
+        <h1 [translate]="'backlog'"></h1>
         <div class="backlog">
           <div *ngIf="!backlog || !backlog.tasks">
-            <p>Backlog vuoto</p>
+            <p [translate]="'backlog.empty'"></p>
           </div>
           <div *ngIf="backlog && backlog.tasks">
             <ion-list
@@ -187,8 +187,8 @@
           expand="block"
           color="primary"
           class="add-task-button"
+          [translate]="'backlog.server.get'"
         >
-          Get from server
         </ion-button>
       </ion-col>
       <ion-col>
@@ -197,8 +197,8 @@
           expand="block"
           color="primary"
           class="add-task-button"
+          [translate]="'backlog.server.save'"
         >
-          Save on server
         </ion-button>
       </ion-col>
     </ion-row>

@@ -51,7 +51,7 @@
             <ion-item routerDirection="root" [routerLink]="[page.url]"
                       lines="none" detail="false" routerLinkActive="selected">
               <fa-icon [icon]="['fas', page.icon]" class="fa-fw" slot="start"></fa-icon>
-              <ion-label>{{ page.name }}</ion-label>
+              <ion-label>{{ page.name | translate }}</ion-label>
             </ion-item>
           </ion-menu-toggle>
           <ion-button shape="round" class="right-button" size="small" (click)="isDisabled = !isDisabled">
