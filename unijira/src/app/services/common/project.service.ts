@@ -37,6 +37,13 @@ export class ProjectService {
 
   }
 
+  updateProject(id: number, name: string, key: string, ownerId: number, icon: URL): Observable<Project> {
+
+    return this.http.put<Project>(`/projects/${id}`, { name, key, icon, ownerId})
+      .pipe(catchError(() => of(null)));
+
+  }
+
   sendInvitations(projectId: number, emails: string[]): Observable<Membership> {
 
     return this.http.post<Membership>('/projects/invitations', { projectId, emails })
