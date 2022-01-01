@@ -29,6 +29,9 @@ import {FormsModule} from '@angular/forms';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {PipeModule} from './pipe.module';
 import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
+import { AngularFireModule } from '@angular/fire';
+import { AngularFireStorageModule } from '@angular/fire/storage';
+import { environment } from '../environments/environment';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -66,6 +69,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     }),
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
