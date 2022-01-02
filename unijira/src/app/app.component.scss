@@ -2,6 +2,7 @@ ion-split-pane {
   --side-min-width: 100px;
   --side-max-width: calc(100% - 300px);
   --side-width:300px;
+  --border: 1px;
 }
 
 .title-icon div {
@@ -15,7 +16,11 @@ ion-split-pane {
   display: inline-block;
 }
 
-ion-menu ion-content {
+ion-menu {
+  --ion-background-color: var(--ion-color-light);
+}
+
+ion-content {
   --background: var(--ion-item-background, var(--ion-background-color, #fff));
 }
 
