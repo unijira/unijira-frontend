@@ -16,12 +16,22 @@ import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {Project} from './models/projects/Project';
+import { trigger,style,transition,animate } from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-})
+  animations:[
+    trigger('fadeAnimation', [
+      transition(':enter', [
+        style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]
+      ),
+      transition(':leave',
+        [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]
+      )
+    ])
+]})
 
 export class AppComponent implements OnInit, OnDestroy {
 
@@ -39,10 +49,12 @@ export class AppComponent implements OnInit, OnDestroy {
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
 
-  isDisabled: boolean = false;
+  isDisabled = false;
 
   projectSubscription: Subscription;
   project: Project;
+
+  public settings = [];
 
   constructor(
     public sessionService: SessionService,
@@ -67,13 +79,26 @@ export class AppComponent implements OnInit, OnDestroy {
     });
 
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
+
       this.project = proj;
+
       if (proj) {
+
         this.pages = [
-          {name: 'board', url: '/project-home/' + proj.id, icon: 'table'},
-          {name: 'backlog', url: '/backlog/' + proj.id, icon: 'clipboard-list'},
-          {name: 'roadmap', url: '/roadmap/' + proj.id, icon: 'road'},
+          {name: 'project.pages.board', url: `home/projects/${proj.id}/project-home`, icon: 'clipboard-outline'},
+          {name: 'project.pages.backlog', url: `home/projects/${proj.id}/backlog`, icon: 'albums-outline'},
+          {name: 'project.pages.roadmap', url: `home/projects/${proj.id}/roadmap` + proj.id, icon: 'map-outline'},
+          {name: 'project.pages.settings', url: `home/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
+
+        this.settings = [
+          {name: 'project.pages.settings.details', url: `home/projects/${proj.id}/settings/details`, icon: 'information-outline'},
+          {name: 'project.pages.settings.notifications', url: `home/projects/${proj.id}/settings/notifications`, icon: 'notifications-outline'},
+          {name: 'project.pages.settings.roles', url: `home/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
+          {name: 'project.pages.settings.invitations', url: `home/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
+          {name: 'project.pages.settings.permissions', url: `home/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
+        ];
+
       }
     });
 
@@ -97,6 +122,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.sessionService.loadUserInfo();
       }
     });
+
   }
 
   onToggleColorTheme(event) {
@@ -140,5 +166,8 @@ export class AppComponent implements OnInit, OnDestroy {
     return await popOver.present();
   }
 
+  checkUrl() {
+    return /home\/projects\/\d/.test(this.router.url);
+  }
 
 }

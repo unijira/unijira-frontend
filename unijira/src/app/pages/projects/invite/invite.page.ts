@@ -50,7 +50,7 @@ export class InvitePage implements OnInit {
             this.translateService.instant('project.invite.alert.failed.confirm')).then(res => {
 
               if(res) {
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/login']).then();
               }
 
           });

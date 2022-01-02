@@ -17,7 +17,7 @@ const routes: Routes = [
     loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
   },
   {
-    path: 'backlog/:id',
+    path: 'home/projects/:id/backlog',
     // canActivate: [AuthGuard],
     loadChildren: () =>
       import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
@@ -50,13 +50,35 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
   {
-    path: 'project-home/:id',
+    path: 'home/projects/:id/project-home',
     canActivate: [AuthGuard],
     loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
   },
-
-
-
+  {
+    path: 'home/projects/:id/settings/details',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/details/details.module').then(m => m.DetailsPageModule)
+  },
+  {
+    path: 'home/projects/:id/settings/notifications',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/notifications/notifications.module').then(m => m.NotificationsPageModule)
+  },
+  {
+    path: 'home/projects/:id/settings/roles',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/roles/roles.module').then(m => m.RolesPageModule)
+  },
+  {
+    path: 'home/projects/:id/settings/invitations',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/invitations/invitations.module').then(m => m.InvitationsPageModule)
+  },
+  {
+    path: 'home/projects/:id/settings/permissions',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
+  },
 ];
 
 @NgModule({
