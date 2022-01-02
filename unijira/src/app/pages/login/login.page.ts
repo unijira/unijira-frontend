@@ -4,6 +4,7 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
 import {unsubscribeAll} from '../../util';
+import {PageService} from '../../services/page.service';
 
 @Component({
   selector: 'app-login',
@@ -33,8 +34,11 @@ export class LoginPage implements OnInit, OnDestroy {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private pageService: PageService
   ) {
+
+    this.pageService.setTitle('login.title');
 
     this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
       if (logged === true) {

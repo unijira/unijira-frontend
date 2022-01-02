@@ -14,9 +14,9 @@ export class PageService {
   public setTitle(key: string, translate: boolean = true): void {
 
     if(translate) {
-      this.translateService.get(key).subscribe(title => this.title.setTitle(['Unijira', title].filter(k => k).join(' &ndash; ')));
+      this.translateService.get(key).subscribe(title => this.title.setTitle(['Unijira', title].filter(k => k).join(' \u{2013} ')));
     } else {
-      this.title.setTitle(['Unijira', key].filter(k => k).join(' &ndash; '));
+      this.title.setTitle(['Unijira', key].filter(k => k).join(' \u{2013} '));
     }
 
   }

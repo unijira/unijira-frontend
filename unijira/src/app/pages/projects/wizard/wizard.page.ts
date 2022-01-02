@@ -6,6 +6,7 @@ import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
 import {FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-wizard',
@@ -32,7 +33,12 @@ export class WizardPage implements OnInit {
               private projectService: ProjectService,
               private uploadService: FileUploadService,
               private db: AngularFireDatabase,
-              private router: Router) {}
+              private router: Router,
+              private pageService: PageService) {
+
+    this.pageService.setTitle('wizard.title');
+
+  }
 
   ngOnInit() {
     this.index = 0;

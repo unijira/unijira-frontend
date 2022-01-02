@@ -4,7 +4,6 @@ import {ProjectService} from '../../services/common/project.service';
 import {Ticket} from '../../models/projects/Ticket';
 import {TicketService} from '../../services/common/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
-import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../services/page.service';
 
 @Component({
@@ -27,7 +26,7 @@ export class HomePage implements OnInit {
     private ticketService: TicketService,
     private pageService: PageService,
   ) {
-    this.pageService.setTitle('home.title');
+    this.pageService.setTitle('user.home.title');
   }
 
   ngOnInit() {
