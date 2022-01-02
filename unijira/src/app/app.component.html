@@ -64,7 +64,7 @@
           <hr>
           </div>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let element of this.router.url.includes('settings') ? settings : pages">
+          <ion-menu-toggle auto-hide="false" *ngFor="let element of (this.router.url.includes('settings') ? settings : pages)">
             <ion-item routerDirection="root" [routerLink]="[element?.url]"
                       lines="none" detail="false" routerLinkActive="selected">
               <ion-icon name="{{element?.icon}}"></ion-icon>

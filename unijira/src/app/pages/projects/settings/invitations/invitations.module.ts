@@ -8,6 +8,7 @@ import {InvitationsPageRoutingModule} from './invitations-routing.module';
 
 import {InvitationsPage} from './invitations.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../../../pipe.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,8 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     InvitationsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    PipeModule
   ],
   declarations: [InvitationsPage]
 })

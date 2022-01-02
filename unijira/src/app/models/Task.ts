@@ -47,6 +47,6 @@ export class Task {
     this.epic = epic ?? '';
     this.story = story ?? '';
     this.sprint = sprint ?? '';
-    this.owner = owner ?? new User(0, '', '', '', '', '', '');
+    this.owner = owner ?? new User(0, '', '', '', '', '', null);
   }
 }
