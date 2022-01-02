@@ -57,10 +57,10 @@ export class AppComponent implements OnInit, OnDestroy {
   public settings = [];
 
   constructor(
-    public sessionService: SessionService,
     public router: Router,
     public translateService: TranslateService,
-    library: FaIconLibrary,
+    private sessionService: SessionService,
+    private library: FaIconLibrary,
     private popCtrl: PopoverController
   ) {
 
