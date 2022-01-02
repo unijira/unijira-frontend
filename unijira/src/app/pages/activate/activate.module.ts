@@ -7,7 +7,7 @@ import {IonicModule} from '@ionic/angular';
 import {ActivatePageRoutingModule} from './activate-routing.module';
 
 import {ActivatePage} from './activate.page';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [

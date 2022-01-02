@@ -1,12 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {Project} from '../models/projects/Project';
-import {Membership} from '../models/projects/Membership';
-import {MembershipRoles} from '../models/projects/MembershipRoles';
+import {Project} from '../../../models/projects/Project';
+import {Membership} from '../../../models/projects/Membership';
+import {MembershipRoles} from '../../../models/projects/MembershipRoles';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../util';
-import {SessionService} from '../store/session.service';
-import {ProjectService} from '../services/common/project.service';
-import {UsersService} from '../services/common/users.service';
+import {SessionService} from '../../../store/session.service';
+import {ProjectService} from '../../../services/common/project.service';
+import {UsersService} from '../../../services/common/users.service';
 import {ActivatedRoute} from '@angular/router';
 
 @Component({
@@ -28,7 +27,7 @@ export class ProjectHomePage implements OnInit, OnDestroy {
     private userService: UsersService,
     private activatedRoute: ActivatedRoute) {
 
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params['id']));
+    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
     // this.projectSubscription = this.sessionService.getProject().subscribe(proj => {
     //   if (proj) {

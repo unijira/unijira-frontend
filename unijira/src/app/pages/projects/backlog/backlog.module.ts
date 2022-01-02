@@ -8,10 +8,10 @@ import {BacklogPageRoutingModule} from './backlog-routing.module';
 
 import {BacklogPage} from './backlog.page';
 import {DragulaModule} from 'ng2-dragula';
-import {TaskService} from '../store/task.service';
+import {TaskService} from '../../../store/task.service';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
   imports: [

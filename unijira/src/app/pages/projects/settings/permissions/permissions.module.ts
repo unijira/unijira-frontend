@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { PermissionsPageRoutingModule } from './permissions-routing.module';
+import {PermissionsPageRoutingModule} from './permissions-routing.module';
 
-import { PermissionsPage } from './permissions.page';
+import {PermissionsPage} from './permissions.page';
 
 @NgModule({
   imports: [

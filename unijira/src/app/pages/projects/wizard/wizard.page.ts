@@ -4,7 +4,6 @@ import {AlertController, IonSlides} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
-import {SessionService} from '../../../store/session.service';
 import {FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 

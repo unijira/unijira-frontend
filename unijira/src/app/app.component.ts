@@ -16,7 +16,7 @@ import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {Project} from './models/projects/Project';
-import { trigger,style,transition,animate } from '@angular/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',

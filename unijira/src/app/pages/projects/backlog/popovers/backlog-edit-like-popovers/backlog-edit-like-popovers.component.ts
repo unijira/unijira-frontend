@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Task} from '../../../models/Task';
+import {Task} from '../../../../../models/Task';
 
 @Component({
   selector: 'app-backlog-edit-like-popovers',

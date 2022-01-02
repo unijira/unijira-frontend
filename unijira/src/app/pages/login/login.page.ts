@@ -1,9 +1,9 @@
 import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
-import {SessionService} from '../store/session.service';
+import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../util';
+import {unsubscribeAll} from '../../util';
 
 @Component({
   selector: 'app-login',
@@ -58,11 +58,6 @@ export class LoginPage implements OnInit, OnDestroy {
     if (this.loginFG.valid) {
       this.sessionService.logIn(this.emailFC.value, this.passwordFC.value);
     }
-  }
-
-  @HostListener('document:keydown.enter', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
-    this.logIn();
   }
 
   ngOnDestroy(): void {

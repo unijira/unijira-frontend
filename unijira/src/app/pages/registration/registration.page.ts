@@ -1,11 +1,11 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AccountService} from '../services/account.service';
+import {AccountService} from '../../services/account.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
-import {SessionService} from '../store/session.service';
+import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
 import {Subscription} from 'rxjs';
-import {getTranslation, presentAlertConfirm, unsubscribeAll, validateConfirmPassword} from '../util';
+import {getTranslation, presentAlertConfirm, unsubscribeAll, validateConfirmPassword} from '../../util';
 import {AlertController} from '@ionic/angular';
 
 @Component({

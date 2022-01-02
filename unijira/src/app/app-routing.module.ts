@@ -10,22 +10,22 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'registration',
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
+    loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule)
   },
   {
     path: 'home/projects/:id/backlog',
     // canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
+      import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
   },
   {
     path: 'auth/active',
     loadChildren: () =>
-      import('./activate/activate.module').then(
+      import('./pages/activate/activate.module').then(
         (m) => m.ActivatePageModule
       ),
   },
@@ -52,7 +52,7 @@ const routes: Routes = [
   {
     path: 'home/projects/:id/project-home',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
+    loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
   },
   {
     path: 'home/projects/:id/settings/details',

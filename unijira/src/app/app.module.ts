@@ -1,9 +1,9 @@
 import {
   BacklogEditWeightPopoversComponent
-} from './popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+} from './pages/projects/backlog/popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
 import {
   BacklogEditStatusPopoversComponent
-} from './popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+} from './pages/projects/backlog/popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import {NgModule} from '@angular/core';
 import {BrowserModule} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
@@ -13,7 +13,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {StoreModule} from '@ngrx/store';
 import {SessionService} from './store/session.service';
-import {LoadingComponent} from './loading/loading.component';
+import {LoadingComponent} from './components/loading/loading.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -28,11 +28,11 @@ import {FontAwesomeModule,} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {PipeModule} from './pipe.module';
-import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
-import { AngularFireModule } from '@angular/fire';
-import { AngularFireStorageModule } from '@angular/fire/storage';
-import { environment } from '../environments/environment';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import {BlDetailComponent} from './pages/projects/backlog/modals/bl-detail/bl-detail.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');

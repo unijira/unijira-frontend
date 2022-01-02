@@ -1,20 +1,19 @@
-import {monthsName} from './../util';
 import {Component, OnInit} from '@angular/core';
-import {Sprint} from '../models/Sprint';
+import {Sprint} from '../../../models/Sprint';
 import {DragulaService} from 'ng2-dragula';
-import {TaskService} from '../store/task.service';
-import * as TaskActions from '../store/task.action';
+import {TaskService} from '../../../store/task.service';
+import * as TaskActions from '../../../store/task.action';
 import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
-import {BlDetailComponent} from '../modals/bl-detail/bl-detail.component';
+import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
 import {ModalController, PopoverController} from '@ionic/angular';
-import {BacklogAPIService} from '../services/backlog-api.service';
+import {BacklogAPIService} from '../../../services/backlog-api.service';
 import {
   BacklogEditWeightPopoversComponent
-} from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+} from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
 import {
   BacklogEditStatusPopoversComponent
-} from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+} from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 
 @Component({
   selector: 'app-backlog',
@@ -27,9 +26,6 @@ export class BacklogPage implements OnInit {
 
   startSpring: string;
   endSpring: string;
-
-  // TODO This array is not used. By the way, we can now refer to the month names using the entry "months" in the translation JSON files
-  monthNames = monthsName;
 
   // TODO Scablare
   projectId = 2;
