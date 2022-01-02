@@ -100,14 +100,14 @@ export class WizardPage implements OnInit {
                       url => {
 
                         this.projectService.updateProject(project.id, project.name, project.key, project.ownerId, new URL(url)).subscribe(
-                          () => this.router.navigate(['/projects/' + project.id + '/project-home']).then()
+                          () => this.router.navigate(['/projects/' + project.id]).then()
                         );
 
                       }
                     );
 
                   } else {
-                    this.router.navigate(['/projects/' + project.id + '/project-home']).then();
+                    this.router.navigate(['/projects/' + project.id]).then();
                   }
 
                 }
