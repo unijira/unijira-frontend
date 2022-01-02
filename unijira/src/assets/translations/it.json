@@ -124,5 +124,13 @@
   "backlog.edit.status.done": "Completato",
   "project.pages.board": "Board",
   "project.pages.backlog": "Backlog",
-  "project.pages.roadmap": "Roadmap"
+  "project.pages.roadmap": "Roadmap",
+  "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
+  "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
+  "project.settings.details.toast.update.success" : "I dettagli del progetto sono stati modificati correttamente.",
+  "project.settings.details.toast.update.failed" : "Si è verificato un errore durante il salvataggio.",
+  "project.settings.details.alert.delete.title" : "Sei sicuro di voler eliminare il progetto?",
+  "project.settings.details.alert.delete.message.sure" : "Il progetto e tutte le relative informazioni verranno eliminate definitivamente.",
+  "project.settings.details.toast.delete.success" : "Il progetto è stato eliminato correttemente.",
+  "project.settings.details.toast.delete.failed" : "Si è verificato un errore durante l'eliminazione."
 }

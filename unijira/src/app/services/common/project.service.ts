@@ -44,6 +44,13 @@ export class ProjectService {
 
   }
 
+  deleteProject(id: number): Observable<Project> {
+
+    return this.http.delete<Project>(`/projects/${id}`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
   sendInvitations(projectId: number, emails: string[]): Observable<Membership> {
 
     return this.http.post<Membership>('/projects/invitations', { projectId, emails })
