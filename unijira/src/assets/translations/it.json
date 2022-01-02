@@ -28,6 +28,7 @@
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
   "register.error.differentPasswords": "I campi password devono essere uguali",
   "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login",
+  "register.alreadyHaveAccount": "Hai già un account?",
   "activation.success": "Il tuo account è stato attivato. Ora puoi effettuare il login",
   "activation.failure": "Attivazione non riuscita. Prova nuovamente.",
   "user.home.title": "Il mio lavoro",

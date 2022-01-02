@@ -28,6 +28,7 @@
   "register.error.wrongPassword": "Password must be at least 8 characters long, contain at least one number and one uppercase letter",
   "register.error.differentPasswords": "Passwords are different",
   "register.registrationDone": "Registration done, now you can sign in",
+  "register.alreadyHaveAccount": "Already have an account?",
   "activation.success": "Your account has been activated. Please login.",
   "activation.failure": "Activation failed. Please try again.",
   "user.home.title": "My Workspace",

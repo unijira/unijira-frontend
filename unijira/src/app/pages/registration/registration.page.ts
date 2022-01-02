@@ -29,6 +29,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
     Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'),
   ]);
 
+
   serverResponseOk: string = null;
   serverResponseErr: string = null;
   error = '';
