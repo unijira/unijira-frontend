@@ -1,3 +1,12 @@
 ion-content {
   --padding-top: 80px !important;
 }
+.e-dialog .e-dlg-header {
+  color: blue;
+  font-size: 20px;
+  font-weight: normal;
+}
+.e-dialog .e-btn .e-btn-icon.e-icon-dlg-close {
+  font-size: 12px;
+  color: red;
+}

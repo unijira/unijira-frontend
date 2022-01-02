@@ -30,6 +30,8 @@ import {NotificationsComponent} from './components/notifications/notifications.c
 import {PipeModule} from './pipe.module';
 import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
 import { GanttModule } from '@syncfusion/ej2-angular-gantt';
+import { DialogModule} from '@syncfusion/ej2-angular-popups';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -67,7 +69,9 @@ export const createTranslateLoader = (http: HttpClient) =>
     }),
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
-    GanttModule
+    GanttModule,
+    DialogModule,
+    TextBoxModule
 
   ],
   providers: [

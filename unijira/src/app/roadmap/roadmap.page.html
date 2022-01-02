@@ -1,12 +1,9 @@
-
 <ion-content>
   <ion-header>
-  <ion-toolbar color="primary">
-    <ion-title>
-      Roadmap
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-toolbar>
+      <ion-title> Roadmap </ion-title>
+    </ion-toolbar>
+  </ion-header>
   <ejs-gantt
     id="ganttDefault"
     height="80%"
@@ -14,11 +11,72 @@
     [taskFields]="taskSettings"
     [editSettings]="editSettings"
     [toolbar]="toolbar"
-    [allowRowDragAndDrop]=true
-    [enableContextMenu]=true
-    [allowSelection]=true
-    [allowSorting]= true
-    (actionComplete)="onActionComplete($event)">
-
-  ></ejs-gantt>
-  </ion-content>
+    [allowRowDragAndDrop]="true"
+    [enableContextMenu]="true"
+    [allowSelection]="true"
+    [allowSorting]="true"
+    [splitterSettings]="splitterSettings"
+    [editDialogFields]="editDialogFields"
+    [columns]="columns"
+    (actionComplete)="onActionComplete($event)"
+    (actionBegin)="actionBegin($event)"
+    (toolbarClick)="toolbarClick($event)"
+    (queryTaskbarInfo)="queryTaskbarInfo($event)"
+    (load)="onLoad($event)"
+  >
+    ></ejs-gantt
+  >
+  <ejs-dialog
+    id="adddialog"
+    #adddialog
+    width="700px"
+    isModal="true"
+    header="Add Custom Dialog"
+    [buttons]="button"
+    [visible]="visible"
+    [animationSettings]="animationSettings"
+  >
+    <ng-template #content>
+      <ion-row>
+        <ejs-textbox
+          id="taskName"
+          #taskname
+          placeholder="Task Name"
+          width="300px"
+          required
+        ></ejs-textbox>
+        <ejs-dropdownlist
+          id="itemType"
+          [dataSource]="dataDropDown"
+          placeholder="Item Type"
+          width="300px"
+          style="margin-inline-start: 20px"
+          (change)="showFathersDropDown($event)"
+        ></ejs-dropdownlist>
+      </ion-row>
+      <h1></h1>
+      <ion-row>
+        <ejs-datepicker
+          id="startDate"
+          #startDate
+          placeholder="Start Date"
+          width="300px"
+          required
+        ></ejs-datepicker>
+        <ejs-datepicker
+          id="endDate"
+          #endDate
+          placeholder="End Date"
+          width="300px"
+          style="margin-inline-start: 20px"
+          required
+        ></ejs-datepicker>
+      </ion-row>
+      <h1></h1>
+      <ion-row >
+        <ejs-dropdownlist  id="father" [dataSource]="fathersDropDown" placeholder="Select father" width="300px"
+         [enabled]="enabled" ></ejs-dropdownlist>
+      </ion-row>
+    </ng-template>
+  </ejs-dialog>
+</ion-content>
