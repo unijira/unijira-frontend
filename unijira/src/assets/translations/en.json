@@ -95,6 +95,7 @@
   "project.role.member": "Member",
   "months": ["January", "February", "March", "April", "May", "June",
     "July", "August", "September", "October", "November", "December"],
+  "backlog": "Backlog",
   "backlog.empty": "Empty backlog",
   "backlog.sprint": "Sprint",
   "backlog.sprint.empty": "Empty sprint",
