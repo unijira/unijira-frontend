@@ -141,6 +141,14 @@ ion-content {
   --padding-top: 70px !important;
 }
 
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 100%;
+  background-color: lightgray;
+  height: 1px;
+}
 
 $popover-md-width: 320px;
 $popover-ios-width: 320px;

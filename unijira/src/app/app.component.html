@@ -41,28 +41,51 @@
       </ion-grid>
     </ion-toolbar>
   </ion-header>
-  <ion-split-pane content-id="content" *ngIf="isLogged && !(router.url.includes('/home'))" [disabled]="isDisabled">
+
+  <ion-split-pane content-id="content" *ngIf="isLogged && checkUrl()" [disabled]="isDisabled">
+
     <ion-menu type="overlay">
       <ion-content>
+
         <ion-list id="inbox-list">
+
           <ion-list-header>{{project?.name}}</ion-list-header>
           <ion-note>{{project?.key}}</ion-note>
-          <ion-menu-toggle auto-hide="false" *ngFor="let page of pages">
-            <ion-item routerDirection="root" [routerLink]="[page.url]"
+
+          <div *ngIf="this.router.url.includes('settings')">
+          <ion-menu-toggle auto-hide="false">
+            <ion-item routerDirection="root" [routerLink]="['/home/projects/' + project?.id + '/project-home']"
+                      lines="none" detail="false" routerLinkActive="selected" >
+              <ion-icon name="arrow-back-circle"></ion-icon>
+              <ion-label class="ion-align-self-center ion-padding-start" [translate]="'project.pages.settings.back'"></ion-label>
+            </ion-item>
+
+          </ion-menu-toggle>
+          <hr>
+          </div>
+
+          <ion-menu-toggle auto-hide="false" *ngFor="let element of this.router.url.includes('settings') ? settings : pages">
+            <ion-item routerDirection="root" [routerLink]="[element?.url]"
                       lines="none" detail="false" routerLinkActive="selected">
-              <fa-icon [icon]="['fas', page.icon]" class="fa-fw" slot="start"></fa-icon>
-              <ion-label>{{ page.name | translate }}</ion-label>
+              <ion-icon name="{{element?.icon}}"></ion-icon>
+              <ion-label class="ion-align-self-center ion-padding-start" [translate]="element?.name"></ion-label>
             </ion-item>
           </ion-menu-toggle>
+
+
           <ion-button shape="round" class="right-button" size="small" (click)="isDisabled = !isDisabled">
             <fa-icon [icon]="['fas', 'chevron-left']" *ngIf="!isDisabled"></fa-icon>
             <fa-icon [icon]="['fas', 'chevron-right']" *ngIf="isDisabled"></fa-icon>
           </ion-button>
+
         </ion-list>
 
       </ion-content>
     </ion-menu>
+
     <ion-router-outlet id="content" main></ion-router-outlet>
+
   </ion-split-pane>
-  <ion-router-outlet *ngIf="!isLogged || (router.url.includes('/home'))"></ion-router-outlet>
+
+  <ion-router-outlet *ngIf="!isLogged || !(checkUrl())" @fadeAnimation></ion-router-outlet >
 </ion-app>

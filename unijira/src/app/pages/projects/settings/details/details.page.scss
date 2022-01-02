@@ -1,0 +1,31 @@
+.project-settings-details {
+  padding-left: 25%;
+  padding-right: 25%;
+}
+
+.project-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  background-color: lightgray;
+  vertical-align: middle;
+}
+
+.project-image ion-img {
+  width: 100%;
+}
+
+.project-settings-details-icon {
+  color: #3880ff;
+  cursor: pointer;
+}
+
+ion-input {
+  width: 240px;
+}
+
+h1 {
+  font-size: 32px;
+}
