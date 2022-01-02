@@ -35,7 +35,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -55,7 +55,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newBacklog.tasks.push(task);
@@ -88,7 +88,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -108,7 +108,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newSprint.tasks.push(task);

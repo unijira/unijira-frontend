@@ -1,12 +1,12 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { RolesPageRoutingModule } from './roles-routing.module';
+import {RolesPageRoutingModule} from './roles-routing.module';
 
-import { RolesPage } from './roles.page';
+import {RolesPage} from './roles.page';
 import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({

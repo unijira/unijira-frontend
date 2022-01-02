@@ -50,7 +50,7 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
   {
-    path: 'home/projects/:id/project-home',
+    path: 'home/projects/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
   },

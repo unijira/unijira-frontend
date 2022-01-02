@@ -35,10 +35,15 @@ export class DetailsPage implements OnInit {
               public toastController: ToastController) {
 
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
+
       this.project = p;
-      this.nameForm.setValue(this.project && this.project.name);
-      this.keyForm.setValue(this.project && this.project.key);
-    });
+
+      if(p) {
+        this.nameForm.setValue(this.project && this.project.name);
+        this.keyForm.setValue(this.project && this.project.key);
+      }
+
+   });
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
@@ -205,8 +210,8 @@ export class DetailsPage implements OnInit {
   }
 
   verifyChanges() {
-    return this.nameForm.value === this.project.name &&
-           this.keyForm.value  === this.project.key  &&
+    return this.nameForm.value === this.project?.name &&
+           this.keyForm.value  === this.project?.key  &&
            this.file           === undefined;
   }
 

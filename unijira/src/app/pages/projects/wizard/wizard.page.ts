@@ -4,7 +4,6 @@ import {AlertController, IonSlides} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
-import {SessionService} from '../../../store/session.service';
 import {FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 
@@ -95,14 +94,14 @@ export class WizardPage implements OnInit {
                       url => {
 
                         this.projectService.updateProject(project.id, project.name, project.key, project.ownerId, new URL(url)).subscribe(
-                          () => this.router.navigate(['home/projects/' + project.id + '/project-home']).then()
+                          () => this.router.navigate(['home/projects/' + project.id]).then()
                         );
 
                       }
                     );
 
                   } else {
-                    this.router.navigate(['home/projects/' + project.id + '/project-home']).then();
+                    this.router.navigate(['home/projects/' + project.id]).then();
                   }
 
                 }

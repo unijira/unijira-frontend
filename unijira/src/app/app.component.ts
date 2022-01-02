@@ -16,7 +16,7 @@ import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {Project} from './models/projects/Project';
-import { trigger,style,transition,animate } from '@angular/animations';
+import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
@@ -85,9 +85,9 @@ export class AppComponent implements OnInit, OnDestroy {
       if (proj) {
 
         this.pages = [
-          {name: 'project.pages.board', url: `home/projects/${proj.id}/project-home`, icon: 'clipboard-outline'},
+          {name: 'project.pages.board', url: `home/projects/${proj.id}/`, icon: 'clipboard-outline'},
           {name: 'project.pages.backlog', url: `home/projects/${proj.id}/backlog`, icon: 'albums-outline'},
-          {name: 'project.pages.roadmap', url: `home/projects/${proj.id}/roadmap` + proj.id, icon: 'map-outline'},
+          {name: 'project.pages.roadmap', url: `home/projects/${proj.id}/roadmap`, icon: 'map-outline'},
           {name: 'project.pages.settings', url: `home/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 

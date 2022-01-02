@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {AngularFireStorage} from '@angular/fire/storage';
 
 import {from, Observable, switchMap} from 'rxjs';
