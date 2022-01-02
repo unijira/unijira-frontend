@@ -9,8 +9,6 @@
 
         <form [formGroup]="loginFG" (ngSubmit)="logIn()">
 
-          <ion-text color="danger" *ngIf="areWrongCredential">{{'login.wrongCredential' | translate}}</ion-text>
-
           <ion-item lines="full">
             <ion-label position="floating" [translate]="'login.email'"></ion-label>
             <ion-input name="username" type="email" [formControl]="emailFC" autocomplete="username"></ion-input>
@@ -26,7 +24,12 @@
           <ion-grid class="ion-align-items-baseline">
             <ion-row>
               <ion-col>
-                <ion-button type="submit" color="primary" expand="block" [translate]="'login.signIn'"></ion-button>
+                <ion-button type="submit" color="primary" expand="block" [translate]="'login.signIn'" [disabled]="!check()"></ion-button>
+                <ion-text *ngIf="areWrongCredential" color="danger">
+                  <p class="ion-text-center">
+                    {{'login.wrongCredential' | translate}}
+                  </p>
+                </ion-text>
               </ion-col>
             </ion-row>
             <ion-row>
@@ -47,6 +50,7 @@
               </ion-col>
             </ion-row>
           </ion-grid>
+
 
           <ion-item-divider class="ion-margin"></ion-item-divider>
 

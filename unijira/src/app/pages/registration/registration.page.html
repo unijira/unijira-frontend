@@ -30,7 +30,7 @@
           <ion-grid class="ion-align-items-baseline">
             <ion-row>
               <ion-col>
-                <ion-button type="submit" color="primary" expand="block">{{'register.signUp' | translate}}</ion-button>
+                <ion-button type="submit" color="primary" expand="block" [disabled]="!check()">{{'register.signUp' | translate}}</ion-button>
               </ion-col>
             </ion-row>
             <ion-row>

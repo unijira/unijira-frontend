@@ -64,9 +64,14 @@ export class LoginPage implements OnInit, OnDestroy {
     unsubscribeAll(this.formControlSubscription, this.loginSubscription, this.wrongCredentialSubscription);
   }
 
+
+  check(): boolean {
+    return this.emailFC.valid && this.passwordFC.valid;
+  }
+
   private redirect() {
-    if(this.route.snapshot.paramMap.has('returnUrl')) {
-      this.router.navigate([this.route.snapshot.paramMap.get('returnUrl')]).then();
+    if(this.route.snapshot.paramMap.has('idp')) {
+      this.router.navigate([this.route.snapshot.paramMap.get('idp')]).then();
     } else {
       this.router.navigate(['/home']).then();
     }

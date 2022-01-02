@@ -14,6 +14,7 @@ import {AlertController} from '@ionic/angular';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit, OnDestroy {
+
   emailFC: FormControl = new FormControl('', [
     Validators.required,
     Validators.email,
@@ -97,6 +98,10 @@ export class RegistrationPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
     unsubscribeAll(this.registrationFGSubscription);
+  }
+
+  check(): boolean {
+    return this.registrationFG.valid;
   }
 
 }
