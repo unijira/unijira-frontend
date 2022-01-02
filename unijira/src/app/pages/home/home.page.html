@@ -25,12 +25,13 @@
 
       <ion-row class="infinte-width">
         <ion-col size="9" size-lg="auto" class="ion-no-margin" *ngFor="let project of recentProjects">
-          <ion-card [routerLink]="['/projects/' + project.id]">
+          <ion-card [routerLink]="['/projects/' + project.id]" class="project-card">
             <ion-card-content>
               <ion-grid>
                 <ion-row>
                   <ion-col size="12" size-lg="2">
-                    <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+                    <ion-img (ionImgDidLoad)="project.iconLoaded = true" [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+                    <ion-spinner name="crescent" *ngIf="!project.iconLoaded"></ion-spinner>
                   </ion-col>
                   <ion-col>
                     <ion-card-title class="ion-margin-horizontal ion-margin-top">

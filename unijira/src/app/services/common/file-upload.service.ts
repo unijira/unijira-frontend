@@ -17,7 +17,7 @@ export class FileUploadService {
     const path = `${this.basePath}/${id}/${scope}/${file.name}`;
 
     return from(this.storage.upload(path, file)).pipe(
-      switchMap((_) => this.storage.ref(path).getDownloadURL()),
+      switchMap(_ => this.storage.ref(path).getDownloadURL()),
     );
 
   }
