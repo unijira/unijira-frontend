@@ -40,12 +40,14 @@
 
       <ion-row>
 
+        <!-- Details Title -->
         <ion-col>
           <ion-text>
             <h1 [translate]="'project.settings.details.title'"></h1>
           </ion-text>
         </ion-col>
 
+        <!-- Details Delete -->
         <ion-col>
           <ion-row class="ion-justify-content-end">
 
@@ -128,8 +130,9 @@
       <br>
       <br>
 
+      <!-- Save Details -->
       <ion-row class="ion-justify-content-center">
-        <ion-button color="light" (click)="save()">
+        <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
           <ion-icon slot="start" name="save-outline"></ion-icon>
           <span [translate]="'project.settings.details.save'"></span>
         </ion-button>
