@@ -85,18 +85,18 @@ export class AppComponent implements OnInit, OnDestroy {
       if (proj) {
 
         this.pages = [
-          {name: 'project.pages.board', url: `home/projects/${proj.id}/project-home`, icon: 'clipboard-outline'},
-          {name: 'project.pages.backlog', url: `home/projects/${proj.id}/backlog`, icon: 'albums-outline'},
-          {name: 'project.pages.roadmap', url: `home/projects/${proj.id}/roadmap` + proj.id, icon: 'map-outline'},
-          {name: 'project.pages.settings', url: `home/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
+          {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
+          {name: 'project.pages.backlog', url: `/projects/${proj.id}/backlog`, icon: 'albums-outline'},
+          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap` + proj.id, icon: 'map-outline'},
+          {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 
         this.settings = [
-          {name: 'project.pages.settings.details', url: `home/projects/${proj.id}/settings/details`, icon: 'information-outline'},
-          {name: 'project.pages.settings.notifications', url: `home/projects/${proj.id}/settings/notifications`, icon: 'notifications-outline'},
-          {name: 'project.pages.settings.roles', url: `home/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
-          {name: 'project.pages.settings.invitations', url: `home/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
-          {name: 'project.pages.settings.permissions', url: `home/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
+          {name: 'project.pages.settings.details', url: `/projects/${proj.id}/settings/details`, icon: 'information-outline'},
+          {name: 'project.pages.settings.notifications', url: `/projects/${proj.id}/settings/notifications`, icon: 'notifications-outline'},
+          {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
+          {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
+          {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
         ];
 
       }
@@ -167,7 +167,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkUrl() {
-    return /home\/projects\/\d/.test(this.router.url);
+    return /\/projects\/\d/.test(this.router.url);
   }
 
 }

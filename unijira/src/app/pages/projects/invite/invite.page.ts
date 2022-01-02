@@ -38,7 +38,7 @@ export class InvitePage implements OnInit {
 
                   if(res) {
                     // TODO.. Move to project home
-                    // this.router.navigate(['home/projects/']);
+                    // this.router.navigate(['/projects/']);
                   }
 
               });

@@ -15,7 +15,7 @@
         </ion-col>
         <ion-col>
           <ion-row class="ion-justify-content-end">
-            <ion-chip [disabled]="recentProjects?.length === 0" outline routerLink="/home/projects">
+            <ion-chip [disabled]="recentProjects?.length === 0" outline routerLink="/projects">
               <span [translate]="'user.home.seeAll'"></span>
               <ion-icon name="arrow-forward"></ion-icon>
             </ion-chip>
@@ -25,7 +25,7 @@
 
       <ion-row class="infinte-width">
         <ion-col size="9" size-lg="auto" class="ion-no-margin" *ngFor="let project of recentProjects">
-          <ion-card [routerLink]="['projects/' + project.id + '/project-home']">
+          <ion-card [routerLink]="['/projects/' + project.id]">
             <ion-card-content>
               <ion-grid>
                 <ion-row>
@@ -114,7 +114,7 @@
     <ion-grid>
       <ion-row class="ion-justify-content-end">
         <ion-col size="12" size-lg="auto">
-          <ion-button [routerLink]="'/home/projects/wizard'" expand="block" color="primary">
+          <ion-button [routerLink]="'/projects/wizard'" expand="block" color="primary">
             <ion-icon name="add" class="ion-margin-end"></ion-icon>
             <span [translate]="'user.home.createProject'"></span>
           </ion-button>
@@ -138,7 +138,7 @@
   <div class="ion-margin">
     <div *ngIf="currentSegment === 'open'">
       <ion-list>
-        <ion-item *ngFor="let ticket of myTicketsOpen" [routerLink]="'/home/tickets/' + ticket.id">
+        <ion-item *ngFor="let ticket of myTicketsOpen" [routerLink]="'/tickets/' + ticket.id">
           <ion-avatar slot="start">
             <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
           </ion-avatar>
@@ -166,7 +166,7 @@
     </div>
     <div *ngIf="currentSegment === 'done'">
       <ion-list>
-        <ion-item *ngFor="let ticket of myTicketsDone" [routerLink]="'/home/tickets/' + ticket.id">
+        <ion-item *ngFor="let ticket of myTicketsDone" [routerLink]="'/tickets/' + ticket.id">
           <ion-avatar slot="start">
             <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
           </ion-avatar>

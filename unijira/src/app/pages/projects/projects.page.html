@@ -8,7 +8,7 @@
         </ion-title>
       </ion-col>
       <ion-col size="auto">
-        <ion-button [routerLink]="'/home/projects/wizard'" color="primary">
+        <ion-button [routerLink]="'/projects/wizard'" color="primary">
           <ion-icon name="add" class="ion-margin-end"></ion-icon>
           <span>{{'user.projects.createProject' | translate}}</span>
         </ion-button>
@@ -23,7 +23,7 @@
 
   <div class="ion-margin">
     <ion-list>
-      <ion-item *ngFor="let project of filteredProjects" [routerLink]="['projects/' + project.id + '/project-home']">
+      <ion-item *ngFor="let project of filteredProjects" [routerLink]="['/projects/' + project.id]">
         <ion-avatar slot="start">
           <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
         </ion-avatar>

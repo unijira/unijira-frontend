@@ -15,21 +15,21 @@
 
       <ion-row>
 
-        <ion-chip [routerLink]="['/home/']">
+        <ion-chip [routerLink]="['/home']">
           <ion-icon name="home-outline"></ion-icon>
           <ion-label [translate]="'project.settings.details.home'"></ion-label>
         </ion-chip>
 
         <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
 
-        <ion-chip [routerLink]="['/home/projects/']">
+        <ion-chip [routerLink]="['/projects/']">
           <ion-icon name="briefcase-outline"></ion-icon>
           <ion-label [translate]="'project.settings.details.projects'"></ion-label>
         </ion-chip>
 
         <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
 
-        <ion-chip [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">
+        <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
           <ion-icon name="settings-outline"></ion-icon>
           <ion-label [translate]="'project.settings.details.settings'"></ion-label>
         </ion-chip>
