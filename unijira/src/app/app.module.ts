@@ -5,7 +5,7 @@ import {
   BacklogEditStatusPopoversComponent
 } from './pages/projects/backlog/popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {taskReducer} from './store/task.reducer';
@@ -78,6 +78,7 @@ export const createTranslateLoader = (http: HttpClient) =>
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SessionService,
     AuthGuard,
+    Title
   ],
   bootstrap: [AppComponent],
 })

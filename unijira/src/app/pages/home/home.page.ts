@@ -4,8 +4,8 @@ import {ProjectService} from '../../services/common/project.service';
 import {Ticket} from '../../models/projects/Ticket';
 import {TicketService} from '../../services/common/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
-import {SessionService} from '../../store/session.service';
-import {Router} from '@angular/router';
+import {TranslateService} from '@ngx-translate/core';
+import {PageService} from '../../services/page.service';
 
 @Component({
   selector: 'app-home',
@@ -25,9 +25,10 @@ export class HomePage implements OnInit {
   constructor(
     private projectService: ProjectService,
     private ticketService: TicketService,
-    private sessionService: SessionService,
-    private router: Router
-  ) { }
+    private pageService: PageService,
+  ) {
+    this.pageService.setTitle('home.title');
+  }
 
   ngOnInit() {
 
