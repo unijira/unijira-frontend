@@ -31,7 +31,7 @@
         <ion-row class="ion-align-items-center">
           <ion-col size="auto">
             <a routerLink="/home" (click)="isDisabled = false">
-              <ion-img src="/assets/logo-navbar.png" class="main-icon ion-margin-start"></ion-img>
+              <ion-img src="/assets/logo-navbar.webp" class="main-icon ion-margin-start"></ion-img>
             </a>
           </ion-col>
           <ion-col>
@@ -44,7 +44,7 @@
 
   <ion-split-pane content-id="content" *ngIf="isLogged && checkUrl()" [disabled]="isDisabled">
 
-    <ion-menu type="overlay">
+    <ion-menu type="overlay" content-id="content">
       <ion-content>
 
         <ion-list id="inbox-list">
@@ -54,7 +54,7 @@
 
           <div *ngIf="this.router.url.includes('settings')">
           <ion-menu-toggle auto-hide="false">
-            <ion-item routerDirection="root" [routerLink]="['/home/projects/' + project?.id + '/project-home']"
+            <ion-item routerDirection="root" [routerLink]="['/projects/' + project?.id]"
                       lines="none" detail="false" routerLinkActive="selected" >
               <ion-icon name="arrow-back-circle"></ion-icon>
               <ion-label class="ion-align-self-center ion-padding-start" [translate]="'project.pages.settings.back'"></ion-label>
@@ -64,7 +64,7 @@
           <hr>
           </div>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let element of this.router.url.includes('settings') ? settings : pages">
+          <ion-menu-toggle auto-hide="false" *ngFor="let element of (this.router.url.includes('settings') ? settings : pages)">
             <ion-item routerDirection="root" [routerLink]="[element?.url]"
                       lines="none" detail="false" routerLinkActive="selected">
               <ion-icon name="{{element?.icon}}"></ion-icon>
@@ -83,7 +83,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-router-outlet id="content" main></ion-router-outlet>
+    <ion-router-outlet id="content"></ion-router-outlet>
 
   </ion-split-pane>
 

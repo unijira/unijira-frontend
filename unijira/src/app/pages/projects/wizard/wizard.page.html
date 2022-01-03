@@ -1,13 +1,6 @@
 <ion-content>
 
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-  <br>
-
-  <ion-slides pager="false" class="swiper-no-swiping" #wizardSlider>
+  <ion-slides pager="false" class="swiper-no-swiping ion-margin-vertical" #wizardSlider>
 
     <ion-slide>
 
@@ -142,7 +135,9 @@
               </div>
 
               <div class="ion-align-self-center ion-padding-start">
-                <ion-button type="reset" *ngIf="invites.length > 0" color="warning" [translate]="'wizard.invite.removeAll'" (click)="invites = []" ></ion-button>
+                <ion-button type="reset" *ngIf="invites.length > 0" color="light" (click)="invites = []" >
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
               </div>
 
             </ion-row>

@@ -4,9 +4,9 @@ import {AlertController, IonSlides} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
-import {SessionService} from '../../../store/session.service';
 import {FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-wizard',
@@ -33,7 +33,12 @@ export class WizardPage implements OnInit {
               private projectService: ProjectService,
               private uploadService: FileUploadService,
               private db: AngularFireDatabase,
-              private router: Router) {}
+              private router: Router,
+              private pageService: PageService) {
+
+    this.pageService.setTitle('wizard.title');
+
+  }
 
   ngOnInit() {
     this.index = 0;
@@ -95,14 +100,14 @@ export class WizardPage implements OnInit {
                       url => {
 
                         this.projectService.updateProject(project.id, project.name, project.key, project.ownerId, new URL(url)).subscribe(
-                          () => this.router.navigate(['home/projects/' + project.id + '/project-home']).then()
+                          () => this.router.navigate(['/projects/' + project.id]).then()
                         );
 
                       }
                     );
 
                   } else {
-                    this.router.navigate(['home/projects/' + project.id + '/project-home']).then();
+                    this.router.navigate(['/projects/' + project.id]).then();
                   }
 
                 }

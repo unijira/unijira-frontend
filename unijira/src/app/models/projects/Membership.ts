@@ -4,12 +4,11 @@ import {UserInfo} from '../users/UserInfo';
 
 export class Membership {
 
-  public userInfo: UserInfo;
+  public userInfo?: UserInfo = null;
 
   constructor(
-    public id: number,
-    public userId: number,
-    public projectId: number,
+    public keyUserId: number,
+    public keyProjectId: number,
     public role: MembershipRoles,
     public status: MembershipStatus
   ) { }

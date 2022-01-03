@@ -14,7 +14,7 @@ export class AuthGuard implements CanActivate {
     return this.accountService.me()
       .pipe(map(res => true))
       .pipe(catchError(() => {
-          this.router.navigate(['/login'], { queryParams: { returnUrl: state.url }}).then();
+          this.router.navigate(['/login'], { queryParams: { idp: state.url }}).then();
           return of(false);
         })
       );

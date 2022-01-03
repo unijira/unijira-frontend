@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { PermissionsPage } from './permissions.page';
+import {PermissionsPage} from './permissions.page';
 
 describe('PermissionsPage', () => {
   let component: PermissionsPage;

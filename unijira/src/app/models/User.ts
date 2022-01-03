@@ -5,7 +5,7 @@ export class User {
   firstName: string;
   lastName: string;
   token: string;
-  avatar: string;
+  avatar: URL;
   constructor(
     id: number,
     username: string,
@@ -13,7 +13,7 @@ export class User {
     firstName: string,
     lastName: string,
     token: string,
-    avatar: string
+    avatar: URL
   ) {
     this.id = id ?? -1;
     this.username = username ?? '';
@@ -21,6 +21,6 @@ export class User {
     this.firstName = firstName ?? '';
     this.lastName = lastName ?? '';
     this.token = token ?? '';
-    this.avatar = avatar ?? '';
+    this.avatar = avatar ?? null;
   }
 }
