@@ -12,7 +12,6 @@
 /* eslint-disable @typescript-eslint/quotes */
 import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { DropDownListComponent } from '@syncfusion/ej2-angular-dropdowns';
 import {
   ToolbarItem,
   EditSettingsModel,
@@ -23,6 +22,7 @@ import { TextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { SessionService } from '../store/session.service';
+import { DialogUtility } from '@syncfusion/ej2-popups';
 
 @Component({
   selector: 'app-roadmap',
@@ -48,30 +48,39 @@ export class RoadmapPage {
   public enabled = false; //To show the Father select on the add item dialog
   public dataTmp: any[] = [];
   public subtasksTmp: any[] = [];
-  public fathersDropDown: string[] = [];
   public taskSettings: object;
   public editSettings: EditSettingsModel;
   public toolbar: ToolbarItem[];
   public editDialogFields: EditDialogFieldDirective;
   public rowData: any;
   public columns: object[];
+  public sortSettings: object;
   public visible: Boolean = false;
   public splitterSettings: object;
-  public animationSettings: Object = { effect: 'None' };
+  public epicItem = '';
+  public alert = false;
+  public animationSettingsDialog: Object = {
+    effect: 'Zoom',
+    duration: 400,
+    delay: 0,
+  };
+
   //End  Data for Gantt
-  public dataDropDown: string[] = ['epic', 'story', 'task', 'issue']; //DataDropDown
+  public dataDropDown: string[] = []; //DataDropDown
+  public dataFathersDropDown: any[] = [];
+
   public ngOnInit(): void {
     // Init columns
     this.columns = [
-      { field: 'TaskID', headerText: ' ID', width: 100},
+      { field: 'TaskID', headerText: ' ID', width: 100 },
       {
         field: 'ItemType',
         headerText: ' Type',
         editType: 'stringedit',
         mappingName: 'itemType',
-        width: 120
+        width: 120,
       },
-      { field: 'TaskName', headerText: ' Name', width: 250},
+      { field: 'TaskName', headerText: ' Name', width: 250 },
       { field: 'StartDate', headerText: 'Start Date' },
       { field: 'EndDate', headerText: 'End Date' },
       { field: 'Duration', headerText: 'Duration' },
@@ -84,33 +93,32 @@ export class RoadmapPage {
       startDate: 'StartDate',
       endDate: 'EndDate',
       duration: 'Duration',
+      dependency: '',
       child: 'subtasks',
       mode: 'Dialog',
     };
-      // Init editing
+    // Init editing
     this.editSettings = {
       allowAdding: true,
       allowEditing: true,
       allowDeleting: true,
       allowTaskbarEditing: true,
       showDeleteConfirmDialog: true,
+
     };
     //Iinit toolbar
-    this.toolbar = [
-      'Add',
-      'Edit',
-      'Delete',
-      'Cancel',
-      'ExpandAll',
-      'CollapseAll',
-    ];
+    this.toolbar = ['Add', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll'];
     this.splitterSettings = {
-      position: "27.5%"
-      };
+      position: '27.5%',
+    };
+    this.sortSettings = {
+      columns: [{ field: 'TaskID', direction: 'Ascending' }],
+    };
   }
 
   // Click add Button function
   public addokButton: EmitType<object> = () => {
+    this.alert = false;
     // Get all param
     var tasknameObj = (document.getElementById('taskName') as any)
       .ej2_instances[0];
@@ -126,80 +134,109 @@ export class RoadmapPage {
     if (currentId === 'NaN') {
       currentId = 1;
     }
+    console.log(taskEndDate.value, tasknameObj.value);
+    if (
+      taskStartDate.value === null ||
+      tasknameObj.value === null ||
+      taskEndDate.value === null ||
+      itemType.value === null
+    ) {
+      this.alert = true;
+      this.openDialogAlert();
+    }
     let record: object = {};
     // If epic add like father
-    if (itemType.value === 'epic') {
-      this.fathersDropDown.push(tasknameObj.value);
-      record = {
-        TaskName: tasknameObj.value,
-        TaskID: currentId,
-        StartDate: taskStartDate.value,
-        EndDate: taskEndDate.value,
-        ItemType: itemType.value,
-      };
-      this.data = this.data.concat(record);
-      // else add like subtask
-    } else {
-      this.subtasksTmp = [];
-      this.dataTmp = [];
-      var index = 0;
-      var father = (document.getElementById('father') as any).ej2_instances[0];
-      let recordFather: object = {};
-      this.data.find((obje) => {
-        if (obje.TaskName === father.value) {
-          //task has a subtasks already
-          if (obje.subtasks !== undefined) {
-            this.subtasksTmp = obje.subtasks;
-            recordFather = {
-              TaskName: obje.TaskName,
-              TaskID: obje.TaskID,
-              StartDate: obje.StartDate,
-              EndDate: obje.EndDate,
-              ItemType: obje.ItemType,
-              subtasks: this.subtasksTmp.concat({
-                TaskName: tasknameObj.value,
-                TaskID: currentId,
-                StartDate: taskStartDate.value,
-                EndDate: taskEndDate.value,
-                ItemType: itemType.value,
-              }),
-            };
-            //No subtasks
-          } else {
-            recordFather = {
-              TaskName: obje.TaskName,
-              TaskID: obje.TaskID,
-              StartDate: obje.StartDate,
-              EndDate: obje.EndDate,
-              ItemType: obje.ItemType,
-              subtasks: [
-                {
-                  TaskName: tasknameObj.value,
-                  TaskID: currentId,
-                  StartDate: taskStartDate.value,
-                  EndDate: taskEndDate.value,
-                  ItemType: itemType.value,
-                },
-              ],
-            };
-          }
-          //add the new task into data
-          delete this.data[index];
-          this.data = this.data.concat(recordFather);
-          this.data.forEach((item) => {
-            if (item.TaskID > 0) {
-              this.dataTmp = this.dataTmp.concat(item);
-            }
-          });
-          this.data = this.dataTmp;
-          console.log(this.data);
-        }
+    if (this.alert === false) {
+      if (itemType.value === 'epic') {
 
-        index = index + 1;
-      });
+        this.dataFathersDropDown=this.dataFathersDropDown.concat(tasknameObj.value);
+        console.log(this.dataFathersDropDown);
+        record = {
+          TaskName: tasknameObj.value,
+          TaskID: currentId,
+          StartDate: taskStartDate.value,
+          EndDate: taskEndDate.value,
+          ItemType: itemType.value,
+        };
+        this.data = this.data.concat(record);
+        // else add like subtask
+      } else {
+        this.subtasksTmp = [];
+        this.dataTmp = [];
+        var index = 0;
+        var father = (document.getElementById('father') as any)
+          .ej2_instances[0];
+        if (father.value === null) {
+          this.alert=true;
+          this.openDialogAlert();
+        } else {
+          let recordFather: object = {};
+          this.data.find((obje) => {
+            if (obje.TaskName === father.value) {
+              //task has a subtasks already
+              if (obje.subtasks !== undefined) {
+                this.subtasksTmp = obje.subtasks;
+                recordFather = {
+                  TaskName: obje.TaskName,
+                  TaskID: obje.TaskID,
+                  StartDate: obje.StartDate,
+                  EndDate: obje.EndDate,
+                  ItemType: obje.ItemType,
+                  subtasks: this.subtasksTmp.concat({
+                    TaskName: tasknameObj.value,
+                    TaskID: currentId,
+                    StartDate: taskStartDate.value,
+                    EndDate: taskEndDate.value,
+                    ItemType: itemType.value,
+                  }),
+                };
+                //No subtasks
+              } else {
+                recordFather = {
+                  TaskName: obje.TaskName,
+                  TaskID: obje.TaskID,
+                  StartDate: obje.StartDate,
+                  EndDate: obje.EndDate,
+                  ItemType: obje.ItemType,
+                  subtasks: [
+                    {
+                      TaskName: tasknameObj.value,
+                      TaskID: currentId,
+                      StartDate: taskStartDate.value,
+                      EndDate: taskEndDate.value,
+                      ItemType: itemType.value,
+                    },
+                  ],
+                };
+              }
+              //add the new task into data
+              delete this.data[index];
+              this.data = this.data.concat(recordFather);
+              this.data.forEach((item) => {
+                if (item.TaskID > 0) {
+                  this.dataTmp = this.dataTmp.concat(item);
+                }
+              });
+              this.data = this.dataTmp;
+              console.log(this.data);
+            }
+
+            index = index + 1;
+          });
+          father.value = null;
+        }
+      }
+      if (this.alert === false) {
+        tasknameObj.value = '';
+        taskEndDate.value = null;
+        taskStartDate.value = null;
+        itemType.value = null;
+        this.adddialog.hide();
+        this.sortSettings = {
+          columns: [{ field: 'TaskID', direction: 'Ascending' }],
+        };
+      }
     }
-    tasknameObj.value = '';
-    this.adddialog.hide();
   };
   //cancel button
   public addcancelButton: EmitType<object> = () => {
@@ -240,6 +277,12 @@ export class RoadmapPage {
     if (args.item.properties.id === 'ganttDefault_add') {
       args.cancel = true;
       this.adddialog.show();
+      this.enabled=false;
+      if (this.dataDropDown.length === 0) {
+        this.dataDropDown = ['epic'];
+      } else {
+        this.dataDropDown = ['epic', 'story', 'task', 'issue'];
+      }
     }
   }
   onLoad(args: any) {
@@ -249,12 +292,14 @@ export class RoadmapPage {
     if (args.data.ItemType === 'epic') {
       args.taskbarBgColor = 'grey';
     } else if (args.data.ItemType === 'task') {
-      args.taskbarBgColor = 'brown';
+      args.taskbarBgColor = 'yellow';
     } else if (args.data.ItemType === 'issue') {
       args.taskbarBgColor = 'red';
     }
   }
-  actionBegin(args: any) { }
+  actionBegin(args: any) {
+    console.log(args);
+  }
   showFathersDropDown(args: any) {
     if (args.itemData.value !== 'epic') {
       this.enabled = true;
@@ -262,4 +307,14 @@ export class RoadmapPage {
       this.enabled = false;
     }
   }
+  // eslint-disable-next-line prefer-arrow/prefer-arrow-functions
+  public openDialogAlert = function(): void {
+    DialogUtility.alert({
+      title: 'Attention!',
+      showCloseIcon: true,
+      content: 'Insert all requirements',
+      closeOnEscape: true,
+      animationSettings: { effect: 'Zoom' },
+    });
+  };
 }
