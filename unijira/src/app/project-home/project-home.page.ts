@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/dot-notation */
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {Project} from '../models/projects/Project';
 import {Membership} from '../models/projects/Membership';
