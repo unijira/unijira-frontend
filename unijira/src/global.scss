@@ -34,14 +34,6 @@
   color: #fff;
 }
 
-mark {
-  background-color: rgba(252, 248, 227, 1);
-}
-
-.notifications-popover {
-  --min-width: 480px;
-}
-
 /*  Questi devono stare qui, altrimenti non se li piglia! No... non piace nemmeno a me */
 .backlog-edit-like-popover .popover-wrapper.sc-ion-popover-md {
   --width: 80px;
@@ -74,3 +66,26 @@ mark {
   --width: 80px;
 }
 /* end porcheria */
+
+
+
+
+
+mark {
+  background-color: rgba(252, 248, 227, 1);
+}
+
+.notifications-popover {
+  --min-width: 480px;
+}
+
+.container-main-inner {
+  width: auto;
+  max-width: 1280px;
+}
+
+@media only screen and (min-width: 1480px) {
+  .container-main-inner {
+    width: 1280px;
+  }
+}

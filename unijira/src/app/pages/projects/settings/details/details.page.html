@@ -9,32 +9,36 @@
 
   <!-- Project Settings Details -->
   <ion-row class="ion-justify-content-center">
-    <ion-col size="8">
-      <div class="project-settings-details">
+    <ion-col size="auto">
+      <div class="container-main-inner">
 
         <!-- Details Header -->
         <ion-grid>
 
           <ion-row>
 
-            <ion-chip [routerLink]="['/home']">
-              <ion-icon name="home-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.home'"></ion-label>
-            </ion-chip>
+            <ion-col>
 
-            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+              <ion-chip [routerLink]="['/home']">
+                <ion-icon name="home-outline"></ion-icon>
+                <ion-label [translate]="'project.settings.details.home'"></ion-label>
+              </ion-chip>
 
-            <ion-chip [routerLink]="['/projects/']">
-              <ion-icon name="briefcase-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.projects'"></ion-label>
-            </ion-chip>
+              <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
 
-            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+              <ion-chip [routerLink]="['/projects/']">
+                <ion-icon name="briefcase-outline"></ion-icon>
+                <ion-label [translate]="'project.settings.details.projects'"></ion-label>
+              </ion-chip>
 
-            <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
-              <ion-icon name="settings-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.settings'"></ion-label>
-            </ion-chip>
+              <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+
+              <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
+                <ion-icon name="settings-outline"></ion-icon>
+                <ion-label [translate]="'project.settings.details.settings'"></ion-label>
+              </ion-chip>
+
+            </ion-col>
 
           </ion-row>
 
