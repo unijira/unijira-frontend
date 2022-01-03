@@ -1,3 +1,4 @@
+/* eslint-disable ngrx/no-reducer-in-key-names */
 import {
   BacklogEditWeightPopoversComponent
 } from './pages/projects/backlog/popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
@@ -28,18 +29,14 @@ import {FontAwesomeModule,} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {PipeModule} from './pipe.module';
-<<<<<<< HEAD
-import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
-import { GanttModule } from '@syncfusion/ej2-angular-gantt';
-import { DialogModule} from '@syncfusion/ej2-angular-popups';
-import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
-=======
 import {BlDetailComponent} from './pages/projects/backlog/modals/bl-detail/bl-detail.component';
 import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
->>>>>>> 842baa80c8fc374561a139e905cab53fe9f8bcb8
+import { GanttModule } from '@syncfusion/ej2-angular-gantt';
+import { DialogModule} from '@syncfusion/ej2-angular-popups';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -78,15 +75,12 @@ export const createTranslateLoader = (http: HttpClient) =>
     }),
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
-<<<<<<< HEAD
     GanttModule,
     DialogModule,
-    TextBoxModule
+    TextBoxModule,
 
-=======
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule
->>>>>>> 842baa80c8fc374561a139e905cab53fe9f8bcb8
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

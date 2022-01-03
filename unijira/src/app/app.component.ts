@@ -88,7 +88,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.pages = [
           {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
           {name: 'project.pages.backlog', url: `/projects/${proj.id}/backlog`, icon: 'albums-outline'},
-          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap` + proj.id, icon: 'map-outline'},
+          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap` , icon: 'map-outline'},
           {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 

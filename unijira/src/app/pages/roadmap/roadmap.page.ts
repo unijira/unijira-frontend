@@ -21,7 +21,7 @@ import {
 import { TextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
-import { SessionService } from '../store/session.service';
+import { SessionService } from '../../store/session.service';
 import { DialogUtility } from '@syncfusion/ej2-popups';
 
 @Component({
@@ -80,7 +80,7 @@ export class RoadmapPage {
         mappingName: 'itemType',
         width: 120,
       },
-      { field: 'TaskName', headerText: ' Name', width: 250 },
+      { field: 'TaskName', headerText: ' Name', width: 200 },
       { field: 'StartDate', headerText: 'Start Date' },
       { field: 'EndDate', headerText: 'End Date' },
       { field: 'Duration', headerText: 'Duration' },
@@ -109,7 +109,7 @@ export class RoadmapPage {
     //Iinit toolbar
     this.toolbar = ['Add', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll'];
     this.splitterSettings = {
-      position: '27.5%',
+      position: '25%',
     };
     this.sortSettings = {
       columns: [{ field: 'TaskID', direction: 'Ascending' }],

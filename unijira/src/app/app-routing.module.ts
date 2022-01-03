@@ -80,9 +80,9 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
   },
   {
-    path: 'roadmap/:id',
+    path: 'projects/:id/roadmap',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./roadmap/roadmap.module').then( m => m.RoadmapPageModule)
+    loadChildren: () => import('./pages/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
   },
 
 
