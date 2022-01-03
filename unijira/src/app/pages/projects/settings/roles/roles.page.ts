@@ -1,4 +1,5 @@
 import {Component, OnInit} from '@angular/core';
+import {PageService} from '../../../../services/page.service';
 
 @Component({
   selector: 'app-roles',
@@ -7,7 +8,9 @@ import {Component, OnInit} from '@angular/core';
 })
 export class RolesPage implements OnInit {
 
-  constructor() { }
+  constructor(private pageService: PageService) {
+    this.pageService.setTitle(['project.pages.settings','project.pages.settings.roles']);
+  }
 
   ngOnInit() {
   }

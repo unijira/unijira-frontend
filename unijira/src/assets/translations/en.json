@@ -151,5 +151,13 @@
   "project.settings.invitations.search": "Search members",
   "project.settings.invitations.mail": "Email address",
   "project.settings.invitations.date": "Invitation time",
-  "project.settings.invitations.status": "Status"
+  "project.settings.invitations.status": "Status",
+  "project.pages.invite.title": "Join a project",
+  "project.settings.invitations.confirm": "Invite",
+  "project.settings.invitations.alert.title": "Are you sure you want to continue?",
+  "project.settings.invitations.alert.description": "All selected members will receive an invitation to join the project!",
+  "project.settings.invitations.toast.success": "All invitations have been sent successfully.",
+  "project.settings.invitations.toast.failed": "There was a problem sending the invitations.",
+  "wizard.toast.success": "The project created successfully.",
+  "wizard.toast.failed": "There was a problem creating the project."
 }
