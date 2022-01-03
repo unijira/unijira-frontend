@@ -8,6 +8,7 @@ import {AlertController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {FileUploadService} from '../../../../services/common/file-upload.service';
+import {PageService} from "../../../../services/page.service";
 
 @Component({
   selector: 'app-details',
@@ -32,7 +33,10 @@ export class DetailsPage implements OnInit {
               private translateService: TranslateService,
               private uploadService: FileUploadService,
               private router: Router,
-              public toastController: ToastController) {
+              public toastController: ToastController,
+              private pageService: PageService) {
+
+    this.pageService.setTitle(['project.pages.settings','project.pages.settings.details']);
 
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
 

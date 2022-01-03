@@ -131,7 +131,8 @@
               </ion-item>
 
               <div class="ion-align-self-center ion-padding-start">
-                <ion-button type="submit" [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
+                <ion-button [disabled]="this.mailForm.value === this.userInfo.username"
+                            type="submit" [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
               </div>
 
               <div class="ion-align-self-center ion-padding-start">
