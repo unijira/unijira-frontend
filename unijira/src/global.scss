@@ -89,3 +89,9 @@ mark {
     width: 1280px;
   }
 }
+
+
+/* FIXME: Trovare un modo migliore per farlo funzionare */
+ion-content {
+  --padding-top: 70px !important;
+}

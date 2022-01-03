@@ -44,7 +44,7 @@
 
   <ion-split-pane content-id="content" *ngIf="isLogged && checkUrl()" [disabled]="isDisabled">
 
-    <ion-menu type="overlay">
+    <ion-menu type="overlay" content-id="content">
       <ion-content>
 
         <ion-list id="inbox-list">
@@ -83,7 +83,7 @@
       </ion-content>
     </ion-menu>
 
-    <ion-router-outlet id="content" main></ion-router-outlet>
+    <ion-router-outlet id="content"></ion-router-outlet>
 
   </ion-split-pane>
 
