@@ -18,9 +18,9 @@ export class PageService {
     }
 
     if(translate) {
-      this.translateService.get(key).subscribe(keys => this.title.setTitle(['Unijira', ...Object.values(keys)].filter(k => k).join(' \u{2013} ')));
+      this.translateService.get(key).subscribe(keys => this.title.setTitle('Unijira \u{2013} ' + [...Object.values(keys)].filter(k => k).join(' \u{BB} ')));
     } else {
-      this.title.setTitle(['Unijira', ...key].filter(k => k).join(' \u{2013} '));
+      this.title.setTitle('Unijira \u{2013} ' + [...key].filter(k => k).join(' \u{BB} '));
     }
 
   }
