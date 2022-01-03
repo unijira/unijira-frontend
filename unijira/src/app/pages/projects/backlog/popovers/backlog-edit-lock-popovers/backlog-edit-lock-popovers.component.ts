@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Task} from 'src/app/models/Task';
+import {Item} from 'src/app/models/Item';
 
 @Component({
   selector: 'app-backlog-edit-lock-popovers',
@@ -7,7 +7,7 @@ import {Task} from 'src/app/models/Task';
   styleUrls: ['./backlog-edit-lock-popovers.component.scss'],
 })
 export class BacklogEditLockPopoversComponent implements OnInit {
-  @Input() task: Task;
+  @Input() task: Item;
   constructor() { }
 
   ngOnInit() {}
