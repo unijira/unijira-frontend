@@ -38,7 +38,7 @@ export class InvitePage implements OnInit {
 
                   if(res) {
                     // TODO.. Move to project home
-                    // this.router.navigate(['home/projects/']);
+                    // this.router.navigate(['/projects/']);
                   }
 
               });
@@ -50,7 +50,7 @@ export class InvitePage implements OnInit {
             this.translateService.instant('project.invite.alert.failed.confirm')).then(res => {
 
               if(res) {
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/login']).then();
               }
 
           });

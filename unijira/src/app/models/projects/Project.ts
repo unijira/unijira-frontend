@@ -7,6 +7,7 @@ export class Project {
   public ownerId: number;
   public createdAt: number;
   public updatedAt: number;
+  public iconLoaded: boolean;
 
   public constructor(id: number, name: string, key: string, icon: URL, ownerId: number) {
     this.id = id;
@@ -16,6 +17,7 @@ export class Project {
     this.ownerId = ownerId;
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
+    this.iconLoaded = false;
   }
 
 }

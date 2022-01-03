@@ -8,3 +8,9 @@
   display: none;
 }
 
+/* size-lg (ionic) */
+@media only screen and (min-width: 992px) {
+  .project-card {
+    max-width: 24rem;
+  }
+}

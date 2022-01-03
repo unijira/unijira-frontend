@@ -34,14 +34,6 @@
   color: #fff;
 }
 
-mark {
-  background-color: rgba(252, 248, 227, 1);
-}
-
-.notifications-popover {
-  --min-width: 480px;
-}
-
 /*  Questi devono stare qui, altrimenti non se li piglia! No... non piace nemmeno a me */
 .backlog-edit-like-popover .popover-wrapper.sc-ion-popover-md {
   --width: 80px;
@@ -74,6 +66,7 @@ mark {
   --width: 80px;
 }
 /* end porcheria */
+<<<<<<< HEAD
 @import '~@ionic/angular/css/padding.css';
 
 
@@ -106,3 +99,34 @@ mark {
 .e-altrow, tr.e-chart-row:nth-child(even)  {
   background-color: #f2f2f2;
   }
+=======
+
+
+
+
+
+mark {
+  background-color: rgba(252, 248, 227, 1);
+}
+
+.notifications-popover {
+  --min-width: 480px;
+}
+
+.container-main-inner {
+  width: auto;
+  max-width: 1280px;
+}
+
+@media only screen and (min-width: 1480px) {
+  .container-main-inner {
+    width: 1280px;
+  }
+}
+
+
+/* FIXME: Trovare un modo migliore per farlo funzionare */
+ion-content {
+  --padding-top: 70px !important;
+}
+>>>>>>> 842baa80c8fc374561a139e905cab53fe9f8bcb8

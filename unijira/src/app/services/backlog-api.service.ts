@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from './http-service.service';
-import {SessionService} from './../store/session.service';
+import {SessionService} from '../store/session.service';
 import {Sprint} from '../models/Sprint';
 import {Task} from '../models/Task';
 import {User} from '../models/User';
@@ -21,7 +21,6 @@ export class BacklogAPIService {
     return this.httpService.get<any>(url).pipe(
       map((res) => {
         const newBacklog = new Sprint([], new Date(), new Date());
-        const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
           const task = new Task(
             element.item.id,
@@ -35,7 +34,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -55,7 +54,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newBacklog.tasks.push(task);
@@ -88,7 +87,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -108,7 +107,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newSprint.tasks.push(task);

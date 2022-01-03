@@ -2,8 +2,6 @@ import {Injectable} from '@angular/core';
 import {SessionState} from './session.reducer';
 import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
 import {catchError, Observable, of} from 'rxjs';
-import {User} from '../models/User';
-import {Error} from '../classes/error';
 import {AccountService} from '../services/account.service';
 
 import {
@@ -13,7 +11,6 @@ import {
   logInAction,
   logOutAction,
   projectAction,
-  setUserAction,
   userInfoAction,
   wrongCredentialAction
 } from './session.action';
@@ -44,11 +41,6 @@ export class SessionService {
 
   }
 
-  dispatchError(error: any) {
-    this.store.dispatch(errorAction({error: Error.toError(error)}));
-  }
-
-
   toggleLoading(toggle: boolean) {
     this.store.dispatch(loadingAction({loading: toggle}));
   }
@@ -67,10 +59,6 @@ export class SessionService {
     const selectIsLoggedIn = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
       (state) => state.isLoggedIn);
     return this.store.select(selectIsLoggedIn);
-  }
-
-  setUser(user: User) {
-    this.store.dispatch(setUserAction({ user }));
   }
 
   logIn(username: string, password: string) {
@@ -102,17 +90,17 @@ export class SessionService {
     this.store.dispatch(logOutAction());
   }
 
-  refreshToken(token: string) {
-
-    this.accountService.refreshToken(token)
-      .pipe(catchError(err => {
-
-        this.dispatchError(err);
-        return of(null);
-
-      })).subscribe(res => this.saveToken(res));
-
-  }
+  // refreshToken(token: string) {
+  //
+  //   this.accountService.refreshToken(token)
+  //     .pipe(catchError(err => {
+  //
+  //       this.dispatchError(err);
+  //       return of(null);
+  //
+  //     })).subscribe(res => this.saveToken(res));
+  //
+  // }
 
   saveToken(token?: string) {
 
@@ -126,14 +114,8 @@ export class SessionService {
 
   }
 
-  getToken(): Observable<string>{
-    const selectToken = createSelector(createFeatureSelector<SessionState>('sessionReducer'),
-      (state) => state.token);
-    return this.store.select(selectToken);
-  }
-
-  setWrongCredential(wrongCrdential: boolean) {
-    this.store.dispatch(wrongCredentialAction({wrongCredential: wrongCrdential}));
+  setWrongCredential(wrongCredential: boolean) {
+    this.store.dispatch(wrongCredentialAction({ wrongCredential }));
   }
 
   getWrongCredential(): Observable<boolean> {
@@ -148,8 +130,8 @@ export class SessionService {
 
   loadUserInfo() {
     this.accountService.me()
-      .subscribe(user => this.setUserInfo(user),
-          err => this.dispatchError(err));
+      .pipe(catchError(_ => of(null)))
+      .subscribe(res => this.setUserInfo(res));
   }
 
   getUserInfo(): Observable<UserInfo> {
@@ -159,10 +141,9 @@ export class SessionService {
   }
 
   loadProject(id: number){
-    this.projectService.getProject(id).subscribe(
-      (project) => this.store.dispatch(projectAction({project})),
-      (err) => this.dispatchError(err)
-    );
+    this.projectService.getProject(id)
+      .pipe(catchError(_ => of(null)))
+      .subscribe(project => this.store.dispatch(projectAction({ project })));
   }
 
   getProject(): Observable<Project> {

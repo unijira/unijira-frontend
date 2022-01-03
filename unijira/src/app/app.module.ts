@@ -1,11 +1,11 @@
 import {
   BacklogEditWeightPopoversComponent
-} from './popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+} from './pages/projects/backlog/popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
 import {
   BacklogEditStatusPopoversComponent
-} from './popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+} from './pages/projects/backlog/popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import {NgModule} from '@angular/core';
-import {BrowserModule} from '@angular/platform-browser';
+import {BrowserModule, Title} from '@angular/platform-browser';
 import {RouteReuseStrategy} from '@angular/router';
 import {IonicModule, IonicRouteStrategy} from '@ionic/angular';
 import {taskReducer} from './store/task.reducer';
@@ -13,7 +13,7 @@ import {AppComponent} from './app.component';
 import {AppRoutingModule} from './app-routing.module';
 import {StoreModule} from '@ngrx/store';
 import {SessionService} from './store/session.service';
-import {LoadingComponent} from './loading/loading.component';
+import {LoadingComponent} from './components/loading/loading.component';
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpClient, HttpClientModule} from '@angular/common/http';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
@@ -28,10 +28,18 @@ import {FontAwesomeModule,} from '@fortawesome/angular-fontawesome';
 import {FormsModule} from '@angular/forms';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {PipeModule} from './pipe.module';
+<<<<<<< HEAD
 import {BlDetailComponent} from './modals/bl-detail/bl-detail.component';
 import { GanttModule } from '@syncfusion/ej2-angular-gantt';
 import { DialogModule} from '@syncfusion/ej2-angular-popups';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+=======
+import {BlDetailComponent} from './pages/projects/backlog/modals/bl-detail/bl-detail.component';
+import {AngularFireModule} from '@angular/fire';
+import {AngularFireStorageModule} from '@angular/fire/storage';
+import {environment} from '../environments/environment';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+>>>>>>> 842baa80c8fc374561a139e905cab53fe9f8bcb8
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -44,10 +52,11 @@ export const createTranslateLoader = (http: HttpClient) =>
     BacklogEditWeightPopoversComponent,
     BacklogEditStatusPopoversComponent,
     NotificationsComponent,
-    BlDetailComponent,
+    BlDetailComponent
   ],
   entryComponents: [],
   imports: [
+    BrowserAnimationsModule,
     BrowserModule,
     PipeModule,
     IonicModule.forRoot(),
@@ -69,15 +78,21 @@ export const createTranslateLoader = (http: HttpClient) =>
     }),
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
+<<<<<<< HEAD
     GanttModule,
     DialogModule,
     TextBoxModule
 
+=======
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFireStorageModule
+>>>>>>> 842baa80c8fc374561a139e905cab53fe9f8bcb8
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SessionService,
     AuthGuard,
+    Title
   ],
   bootstrap: [AppComponent],
 })

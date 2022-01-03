@@ -1,0 +1,175 @@
+<ion-content>
+  <ion-row>
+    <ion-col size="8">
+      <ion-row>
+        <ion-col
+          ><ion-badge color="light">{{ task.epic }}</ion-badge> /
+
+          <ion-badge color="light">{{ task.story }}</ion-badge></ion-col
+        >
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12"
+          ><h1>{{ task.name }}</h1></ion-col
+        >
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-button size="small" color="light" (click)="allega()">
+            <fa-icon [icon]="['fas', 'paperclip']"> </fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="addChildren()">
+            <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="editLinkPopover($event)">
+            <fa-icon [icon]="['fas', 'link']"> </fa-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <h5 [translate]="'backlog.detail.description'"></h5>
+          <p>{{ task.description }}</p>
+        </ion-col>
+      </ion-row>
+
+      <ion-row *ngIf="task.children.length">
+        <ion-col size="12">
+          <h5>{{'backlog.detail.childTickets' | translate}} ({{ task.children.length }})</h5>
+          <ul class="lista-children">
+            <li *ngFor="let t of task.children">
+              <b>{{ t.name }}</b> | {{ t.description }} | {{ task.weight }}
+            </li>
+          </ul>
+        </ion-col>
+      </ion-row>
+
+      <!-- <ion-row *ngIf="task.link.length > 0">
+        <ion-col size="12">
+          <h5>Ticket collegati</h5>
+          <div *ngFor="let t; in: task.link">sds{{ t.name }}</div>
+        </ion-col>
+      </ion-row> -->
+
+      <ion-row>
+        <ion-col size="12">
+          <h5 [translate]="'backlog.detail.activity'"></h5>
+          <div [translate]="'backlog.detail.filters'"></div>
+          <div [translate]="'backlog.detail.activity.add'"></div>
+          <div [translate]="'backlog.detail.activity.comment.last'"></div>
+        </ion-col>
+      </ion-row>
+    </ion-col>
+
+    <i class="fas fa-ellipsis-h"></i>
+
+    <ion-col size="4">
+      <ion-row>
+        <ion-col>
+          <ion-button size="small" color="light" (click)="editLockPopover($event)">
+            <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="editVisibilityPopover($event)">
+            <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="editLikePopover($event)">
+            <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="editSharePopover($event)">
+            <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="actionsPopover($event)">
+            <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
+          </ion-button>
+          <ion-button size="small" color="light" (click)="close()">
+            <fa-icon [icon]="['fas', 'times']"></fa-icon>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="8">
+          <div (click)="editStatusPopover($event, task, 'sprint')">
+            <ion-badge
+              *ngIf="task.status === 'da_completare'"
+              color="medium"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+            <ion-badge
+              *ngIf="task.status === 'completato'"
+              color="success"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+            <ion-badge
+              *ngIf="task.status === 'in_corso'"
+              color="primary"
+              class="status-badge"
+              >{{ task.status.replace("_", " ") }}</ion-badge
+            >
+          </div>
+        </ion-col>
+
+        <ion-col size="4" *ng-if="task.status === 'completata'">
+          <fa-icon [icon]="['fas', 'check']"></fa-icon>
+          {{'backlog.detail.task.complete' | translate}}
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col class="dettagli-colonna">
+          <div class="dettagli-colonna-titolo">
+            <h5 class="dettagli-colonna-titolo-element" [translate]="'backlog.detail.task.details'"></h5>
+          </div>
+          <ion-row>
+            <ion-col size="12">
+              <div (click)="editAssegnatario()">
+                <h5 [translate]="'backlog.detail.task.assignee'"></h5>
+                <ion-thumbnail class="icon-avatar">
+                  <img [src]="task.assignedTo[0].avatar" />
+                </ion-thumbnail>
+              </div>
+              <div>
+                <h5 [translate]="'backlog.detail.task.tags'"></h5>
+                <ion-badge color="light" *ngFor="let tag of task.tags">{{
+                  tag
+                }}</ion-badge>
+              </div>
+              <div>
+                <h5 [translate]="'backlog.sprint'"></h5>
+                {{ task.sprint }}
+              </div>
+              <div>
+                <h5 [translate]="'backlog.detail.task.storyPoints'"></h5>
+                <div (click)="editPesoPopover($event, task, 'sprint')">
+                  <ion-badge
+                    class="weight-badge"
+                    color="light"
+                    (save)="editWeight($event, task, 'backlog')"
+                  >
+                    <span>{{ task.weight }}</span>
+                  </ion-badge>
+                </div>
+              </div>
+              <div>
+                <h5 [translate]="'backlog.detail.task.reporter'"></h5>
+
+                <ion-thumbnail class="icon-avatar">
+                  <img [src]="task.owner.avatar" />
+                </ion-thumbnail>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+
+      <ion-row>
+        <ion-col size="12">
+          <h5 [translate]="'backlog.detail.task.notes'"></h5>
+          {{ task.note }}
+        </ion-col>
+      </ion-row>
+    </ion-col>
+  </ion-row>
+</ion-content>

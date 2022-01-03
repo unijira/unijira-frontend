@@ -7,6 +7,10 @@ const routes: Routes = [
   {
     path: '',
     component: ProjectsPage
+  },
+  {
+    path: 'permissions',
+    loadChildren: () => import('./settings/permissions/permissions.module').then( m => m.PermissionsPageModule)
   }
 ];
 

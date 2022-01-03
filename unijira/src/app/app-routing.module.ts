@@ -10,22 +10,22 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
+    loadChildren: () => import('./pages/login/login.module').then(m => m.LoginPageModule)
   },
   {
     path: 'registration',
-    loadChildren: () => import('./registration/registration.module').then( m => m.RegistrationPageModule)
+    loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule)
   },
   {
-    path: 'backlog/:id',
+    path: 'projects/:id/backlog',
     // canActivate: [AuthGuard],
     loadChildren: () =>
-      import('./backlog/backlog.module').then((m) => m.BacklogPageModule),
+      import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
   },
   {
     path: 'auth/active',
     loadChildren: () =>
-      import('./activate/activate.module').then(
+      import('./pages/activate/activate.module').then(
         (m) => m.ActivatePageModule
       ),
   },
@@ -35,12 +35,12 @@ const routes: Routes = [
     loadChildren: () => import('./pages/home/home.module').then( m => m.HomePageModule)
   },
   {
-    path: 'home/projects',
+    path: 'projects',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
   },
   {
-    path: 'home/projects/wizard',
+    path: 'projects/wizard',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/wizard/wizard.module').then(m => m.WizardPageModule)
   },
@@ -50,9 +50,34 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
   {
-    path: 'project-home/:id',
+    path: 'projects/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./project-home/project-home.module').then( m => m.ProjectHomePageModule)
+    loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
+  },
+  {
+    path: 'projects/:id/settings/details',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/details/details.module').then(m => m.DetailsPageModule)
+  },
+  {
+    path: 'projects/:id/settings/notifications',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/notifications/notifications.module').then(m => m.NotificationsPageModule)
+  },
+  {
+    path: 'projects/:id/settings/roles',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/roles/roles.module').then(m => m.RolesPageModule)
+  },
+  {
+    path: 'projects/:id/settings/invitations',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/invitations/invitations.module').then(m => m.InvitationsPageModule)
+  },
+  {
+    path: 'projects/:id/settings/permissions',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
   },
   {
     path: 'roadmap/:id',

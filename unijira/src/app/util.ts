@@ -7,15 +7,11 @@ export const unsubscribeAll = (...subs: Subscription[]) => {
   (subs || []).forEach(s => s.unsubscribe());
 };
 
-export const monthsName = ['January', 'February', 'March', 'April', 'May', 'June',
-  'July', 'August', 'September', 'October', 'November', 'December'
-];
+/** @deprecated
+ * Use translateService.instant(key) instead (prefer subscribe() and async methods)
+ **/
+export const getTranslation = (translateService: TranslateService, key: string): string => translateService.instant(key);
 
-export const getTranslation = (translateService: TranslateService, key: string): string => {
-  let translation = '';
-  translateService.get(key, {value: 'world'}).subscribe((res: string) => translation = res);
-  return translation;
-};
 
 export const validateConfirmPassword = (g: FormGroup): any => {
   if (g.get('password1').value !== g.get('password2').value) {
@@ -23,20 +19,21 @@ export const validateConfirmPassword = (g: FormGroup): any => {
   }
 };
 
-export const presentAlertConfirm = async (alertController: AlertController, header: string, message: string) => {
+
+
+export const presentAlertConfirm = async (alertController: AlertController, header: string, message: string, handler?: (e: any) => void) => {
+
   const alert = await alertController.create({
-    cssClass: 'my-custom-class',
     header,
     message,
     buttons: [
       {
-        text: 'Okay',
-        handler: () => {
-          console.log('Confirm Okay');
-        },
+        text: 'OK',
+        handler: (e) => handler && handler(e)
       },
     ],
   });
 
   await alert.present();
+
 };

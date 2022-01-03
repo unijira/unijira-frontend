@@ -1,0 +1,69 @@
+<ion-content>
+
+  <div class="ion-margin">
+
+
+    <ion-row class="ion-justify-content-center">
+      <ion-col class="auth-form">
+
+        <ion-img src="/assets/logo.webp" alt=""></ion-img>
+
+        <form [formGroup]="registrationFG" (ngSubmit)="onSubmit()">
+
+          <ion-item>
+            <ion-label position="floating">{{'register.email' | translate}} *</ion-label>
+            <ion-input name="username" type="email" autocomplete="email" [formControl]="emailFC"></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="floating">{{'register.password' | translate}} *</ion-label>
+            <ion-input name="password" type="password" autocomplete="password" [formControl]="passwordFC1"></ion-input>
+          </ion-item>
+
+          <ion-item lines="full">
+            <ion-label position="floating">{{'register.password.confirm' | translate}} *</ion-label>
+            <ion-input name="confirm-password" type="password" autocomplete="confirm-password" [formControl]="passwordFC2"></ion-input>
+          </ion-item>
+
+          <br>
+
+          <ion-grid class="ion-align-items-baseline">
+            <ion-row>
+              <ion-col>
+                <ion-button type="submit" color="primary" expand="block" [disabled]="!check()">{{'register.signUp' | translate}}</ion-button>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-text color="success">
+                  <h3>{{ serverResponseOk | translate }}</h3>
+                </ion-text>
+                <ion-text color="danger">
+                  <h3>{{ serverResponseErr | translate }}</h3>
+                </ion-text>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+
+
+          <ion-item-divider class="ion-margin"></ion-item-divider>
+
+
+          <div class="ion-padding-vertical ion-text-center">
+            <ion-text color="medium">
+              <span [translate]="'register.alreadyHaveAccount'"></span>
+            </ion-text>
+            <br>
+            <br>
+            <ion-button type="button" color="primary" [routerLink]="['/login']" [translate]="'register.signIn'"></ion-button>
+          </div>
+
+
+        </form>
+
+      </ion-col>
+    </ion-row>
+
+
+  </div>
+</ion-content>
