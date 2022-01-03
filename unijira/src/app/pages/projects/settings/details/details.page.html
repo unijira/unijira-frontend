@@ -8,138 +8,142 @@
   <br>
 
   <!-- Project Settings Details -->
-  <div class="project-settings-details">
+  <ion-row class="ion-justify-content-center">
+    <ion-col size="8">
+      <div class="project-settings-details">
 
-    <!-- Details Header -->
-    <ion-grid>
+        <!-- Details Header -->
+        <ion-grid>
 
-      <ion-row>
+          <ion-row>
 
-        <ion-chip [routerLink]="['/home']">
-          <ion-icon name="home-outline"></ion-icon>
-          <ion-label [translate]="'project.settings.details.home'"></ion-label>
-        </ion-chip>
+            <ion-chip [routerLink]="['/home']">
+              <ion-icon name="home-outline"></ion-icon>
+              <ion-label [translate]="'project.settings.details.home'"></ion-label>
+            </ion-chip>
 
-        <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
 
-        <ion-chip [routerLink]="['/projects/']">
-          <ion-icon name="briefcase-outline"></ion-icon>
-          <ion-label [translate]="'project.settings.details.projects'"></ion-label>
-        </ion-chip>
+            <ion-chip [routerLink]="['/projects/']">
+              <ion-icon name="briefcase-outline"></ion-icon>
+              <ion-label [translate]="'project.settings.details.projects'"></ion-label>
+            </ion-chip>
 
-        <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
 
-        <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
-          <ion-icon name="settings-outline"></ion-icon>
-          <ion-label [translate]="'project.settings.details.settings'"></ion-label>
-        </ion-chip>
-
-      </ion-row>
-
-      <br>
-
-      <ion-row>
-
-        <!-- Details Title -->
-        <ion-col>
-          <ion-text>
-            <h1 [translate]="'project.settings.details.title'"></h1>
-          </ion-text>
-        </ion-col>
-
-        <!-- Details Delete -->
-        <ion-col>
-          <ion-row class="ion-justify-content-end">
-
-            <ion-fab vertical="right" horizontal="right">
-
-              <ion-fab-button size="small">
-                <ion-icon name="ellipsis-horizontal"></ion-icon>
-              </ion-fab-button>
-
-              <ion-fab-list side="end">
-                <ion-fab-button (click)="delete()">
-                  <ion-icon name="trash"></ion-icon>
-                </ion-fab-button>
-              </ion-fab-list>
-
-            </ion-fab>
+            <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
+              <ion-icon name="settings-outline"></ion-icon>
+              <ion-label [translate]="'project.settings.details.settings'"></ion-label>
+            </ion-chip>
 
           </ion-row>
-        </ion-col>
 
-      </ion-row>
+          <br>
 
-    </ion-grid>
+          <ion-row>
 
-    <br>
-    <br>
-    <hr>
-    <br>
-    <br>
+            <!-- Details Title -->
+            <ion-col>
+              <ion-text>
+                <h1 [translate]="'project.settings.details.title'"></h1>
+              </ion-text>
+            </ion-col>
 
-    <ion-grid >
+            <!-- Details Delete -->
+            <ion-col>
+              <ion-row class="ion-justify-content-end">
 
-      <!-- Project Icon -->
-      <ion-row class="ion-justify-content-center">
-        <div class="project-image">
-          <ion-img *ngIf="image === ''" [src]="project?.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
-          <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
-        </div>
-      </ion-row>
+                <ion-fab vertical="right" horizontal="right">
 
-      <br>
+                  <ion-fab-button size="small">
+                    <ion-icon name="ellipsis-horizontal"></ion-icon>
+                  </ion-fab-button>
 
-      <!-- Project Icon Selection -->
-      <ion-row class="ion-justify-content-center">
-        <input
-          style="display: none"
-          type="file" (change)="onFileChanged($event)"
-          #fileInput>
-        <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
-      </ion-row>
+                  <ion-fab-list side="end">
+                    <ion-fab-button (click)="delete()">
+                      <ion-icon name="trash"></ion-icon>
+                    </ion-fab-button>
+                  </ion-fab-list>
 
-      <br>
-      <br>
-      <br>
-      <br>
+                </ion-fab>
 
-      <!-- Project Name -->
-      <ion-row class="ion-justify-content-center">
-        <ion-item lines="full">
-          <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
-          <ion-input type="text" (ionChange)='onChangeTime($event.target.value)' [formControl]="nameForm"></ion-input>
-        </ion-item>
-        <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
-      </ion-row>
+              </ion-row>
+            </ion-col>
 
-      <br>
-      <br>
+          </ion-row>
 
-      <!-- Project Key -->
-      <ion-row class="ion-justify-content-center">
-        <ion-item lines="full">
-          <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
-          <ion-input type="text" [formControl]="keyForm"></ion-input>
-        </ion-item>
-        <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
-      </ion-row>
+        </ion-grid>
 
-      <br>
-      <br>
-      <br>
-      <br>
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
 
-      <!-- Save Details -->
-      <ion-row class="ion-justify-content-center">
-        <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
-          <ion-icon slot="start" name="save-outline"></ion-icon>
-          <span [translate]="'project.settings.details.save'"></span>
-        </ion-button>
-      </ion-row>
+        <ion-grid >
 
-    </ion-grid>
+          <!-- Project Icon -->
+          <ion-row class="ion-justify-content-center">
+            <div class="project-image">
+              <ion-img *ngIf="image === ''" [src]="project?.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
+            </div>
+          </ion-row>
 
-  </div>
+          <br>
+
+          <!-- Project Icon Selection -->
+          <ion-row class="ion-justify-content-center">
+            <input
+              style="display: none"
+              type="file" (change)="onFileChanged($event)"
+              #fileInput>
+            <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- Project Name -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
+              <ion-input type="text" (ionChange)='onChangeTime($event.target.value)' [formControl]="nameForm"></ion-input>
+            </ion-item>
+            <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+          <br>
+          <br>
+
+          <!-- Project Key -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
+              <ion-input type="text" [formControl]="keyForm"></ion-input>
+            </ion-item>
+            <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- Save Details -->
+          <ion-row class="ion-justify-content-center">
+            <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
+              <ion-icon slot="start" name="save-outline"></ion-icon>
+              <span [translate]="'project.settings.details.save'"></span>
+            </ion-button>
+          </ion-row>
+
+        </ion-grid>
+
+      </div>
+    </ion-col>
+  </ion-row>
 
 </ion-content>
