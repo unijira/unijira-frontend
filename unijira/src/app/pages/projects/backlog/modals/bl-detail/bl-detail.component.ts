@@ -253,6 +253,6 @@ export class BlDetailComponent implements OnInit {
   }
 
   editWeight(data) {
-    this.task.weight = data.data.value;
+    // this.task.weight = data.data.value;
   }
 }
