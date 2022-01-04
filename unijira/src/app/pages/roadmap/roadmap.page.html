@@ -33,7 +33,7 @@
   <!--[allowRowDragAndDrop]="true"-->
   <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" [header]="'project.roadmap.addNewItem.title'|translate"
     [buttons]="button" [visible]="visible" [animationSettings]="animationSettingsDialog">
-    <ng-template >
+    <ng-template #content >
       <h1></h1>
       <ion-row>
         <ejs-textbox id="taskName"  [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
