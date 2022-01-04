@@ -66,7 +66,7 @@ declare var require: any;
                   "editTask": "Modifica Item",
                   "deleteTask": "Elimina Item",
                   "expandAllTasks": "Espandere tutto",
-                  "collapseAll": "Mostra tutto",
+                  "collapseAll": "Comprimi tutto",
                   "expandAll": "Espandere tutto",
                   "emptyRecord": "ciaoo",
 
@@ -83,6 +83,31 @@ declare var require: any;
 })
 export class RoadmapPage {
   @ViewChild('adddialog', { static: true }) adddialog: DialogComponent;
+  // Data for Gantt
+  public data: any[] = [];
+  public dataDropDown: string[] = []; //DataDropDown
+  public dataFathersDropDown: any[] = [];
+  public enabled = false; //To show the Father select on the add item dialog
+  public dataTmp: any[] = [];
+  public subtasksTmp: any[] = [];
+  public taskSettings: object;
+  public editSettings: EditSettingsModel;
+  public toolbar: ToolbarItem[];
+  public editDialogFields: EditDialogFieldDirective;
+  public rowData: any;
+  public columns: object[];
+  public sortSettings: object;
+  public visible: Boolean = false;
+  public splitterSettings: object;
+  public epicItem = '';
+  public alert = false;
+  public animationSettingsDialog: Object = {
+    effect: 'Zoom',
+    duration: 400,
+    delay: 0,
+  };
+
+  //End  Data for Gantt
   constructor(
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute,
@@ -117,38 +142,14 @@ export class RoadmapPage {
       setCulture('en');
     }
   });
-
 }
-  // Data for Gantt
-  public data: any[] = [];
-  public dataDropDown: string[] = []; //DataDropDown
-  public dataFathersDropDown: any[] = [];
-  public enabled = false; //To show the Father select on the add item dialog
-  public dataTmp: any[] = [];
-  public subtasksTmp: any[] = [];
-  public taskSettings: object;
-  public editSettings: EditSettingsModel;
-  public toolbar: ToolbarItem[];
-  public editDialogFields: EditDialogFieldDirective;
-  public rowData: any;
-  public columns: object[];
-  public sortSettings: object;
-  public visible: Boolean = false;
-  public splitterSettings: object;
-  public epicItem = '';
-  public alert = false;
-  public animationSettingsDialog: Object = {
-    effect: 'Zoom',
-    duration: 400,
-    delay: 0,
-  };
-
-  //End  Data for Gantt
-
   public ngOnInit(): void {
+    this.initGantt();
+  }
 
-    // Init columns
-    this.columns = [
+  public initGantt(){
+     // Init columns
+     this.columns = [
       { field: 'TaskID', headerText: ' ID', width: 100 },
       {
         field: 'ItemType',
@@ -192,7 +193,6 @@ export class RoadmapPage {
       columns: [{ field: 'TaskID', direction: 'Ascending' }],
     };
   }
-
   // Click add Button function
   public addokButton: EmitType<object> = () => {
     this.alert = false;

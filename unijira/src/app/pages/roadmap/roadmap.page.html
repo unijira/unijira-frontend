@@ -33,22 +33,20 @@
   <!--[allowRowDragAndDrop]="true"-->
   <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" [header]="'project.roadmap.addNewItem.title'|translate"
     [buttons]="button" [visible]="visible" [animationSettings]="animationSettingsDialog">
-    <ng-template #content>
+    <ng-template >
       <h1></h1>
       <ion-row>
-        <ejs-textbox id="taskName" #taskname [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
-        <ejs-dropdownlist id="itemType" [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
+        <ejs-textbox id="taskName"  [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
+        <ejs-dropdownlist id="itemType"  [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
           style="margin-inline-start: 20px" (change)="showFathersDropDown($event)"></ejs-dropdownlist>
       </ion-row>
       <h1></h1>
-      <ion-row>
-        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
-        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
+        <ejs-datepicker id="startDate"  [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
+        <ejs-datepicker id="endDate"  [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
         </ejs-datepicker>
-      </ion-row>
       <h1></h1>
       <ion-row>
-        <ejs-dropdownlist id="father" [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
+        <ejs-dropdownlist id="father"  [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
           [enabled]="enabled"></ejs-dropdownlist>
       </ion-row>
     </ng-template>
