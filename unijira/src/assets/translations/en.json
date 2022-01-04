@@ -152,5 +152,8 @@
   "project.settings.invitations.mail": "Email address",
   "project.settings.invitations.date": "Invitation time",
   "project.settings.invitations.status": "Status",
-  "project.roadmap.taskName":"Task Name"
+  "project.roadmap.taskName":"Task Name",
+  "project.roadmap.startDate": "Start Date",
+  "project.roadmap.duration": "Duration",
+  "project.roadmap.type": "Type"
 }

@@ -12,7 +12,7 @@
     (queryTaskbarInfo)="queryTaskbarInfo($event)" (load)="onLoad($event)">
     <e-columns>
       <e-column field="TaskID" headerText="ID" textAlign="Left" width="100"></e-column>
-      <e-column field="ItemType" headerText="Type" mappingName="itemType" width="150">
+      <e-column field="ItemType" [headerText]="'project.roadmap.type' |translate" mappingName="itemType" width="150">
         <ng-template #template let-data>
           <ion-row>
             <ion-img src="/assets/img/tickets/{{data.ItemType}}.svg" style="height: 30px; width: 30px">
@@ -24,8 +24,8 @@
         </ng-template>
       </e-column>
       <e-column field="TaskName" [headerText]="'project.roadmap.taskName' | translate" width="150"> </e-column>
-      <e-column field="StartDate" headerText="Start Date" width="150"></e-column>
-      <e-column field="Duration" headerText="Duration" width="150"></e-column>
+      <e-column field="StartDate" [headerText]="'project.roadmap.startDate' | translate" width="150"></e-column>
+      <e-column field="Duration" [headerText]="'project.roadmap.duration'| translate" width="150"></e-column>
     </e-columns>
   </ejs-gantt>
 
