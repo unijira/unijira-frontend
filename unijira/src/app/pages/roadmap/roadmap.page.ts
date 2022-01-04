@@ -32,7 +32,6 @@ declare var require: any;
   L10n.load({
         'it': {
           'gantt': {
-                  "emptyRecord": "ciaoo",
                   "id": "id",
                   "name": "Nome",
                   "startDate": "Data inizio",
@@ -67,9 +66,10 @@ declare var require: any;
                   "editTask": "Modifica Item",
                   "deleteTask": "Elimina Item",
                   "expandAllTasks": "Espandere tutto",
-                  "collapseAllTasks": "Mostra tutto",
+                  "collapseAll": "Mostra tutto",
                   "expandAll": "Espandere tutto",
-                  "Add a new item": "Aggiungi nuovo item",
+                  "emptyRecord": "ciaoo",
+
           },
           datepicker: {
             today:"oggi"
@@ -359,13 +359,16 @@ export class RoadmapPage {
   onLoad(args: any) {
   }
   queryTaskbarInfo(args: any) {
- /**if (args.data.ItemType === 'epic') {
-      args.taskbarBgColor = 'grey';
+ if (args.data.ItemType === 'epic') {
+      args.taskbarBgColor = '#904ee2';
+    } else if (args.data.ItemType === 'story') {
+      args.taskbarBgColor = '#63ba3c';
     } else if (args.data.ItemType === 'task') {
-      args.taskbarBgColor = 'yellow';
-    } else if (args.data.ItemType === 'issue') {
-      args.taskbarBgColor = 'red';
-    } */
+      args.taskbarBgColor = '#00bfff';
+    }
+    else {
+      args.taskbarBgColor = '#e5493a';
+    }
   }
   actionBegin(args: any) {
   }
