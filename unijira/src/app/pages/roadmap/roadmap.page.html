@@ -9,7 +9,7 @@
     [allowSorting]="true" [splitterSettings]="splitterSettings" [sortSettings]="sortSettings" [allowFiltering]="true"
     [editDialogFields]="editDialogFields" (actionComplete)="onActionComplete($event)"
     (actionBegin)="actionBegin($event)" (toolbarClick)="toolbarClick($event)"
-    (queryTaskbarInfo)="queryTaskbarInfo($event)" (load)="onLoad($event)">
+    (queryTaskbarInfo)="queryTaskbarInfo($event)" (load)="onLoad($event)" >
     <e-columns>
       <e-column field="TaskID" headerText="ID" textAlign="Left" width="100"></e-column>
       <e-column field="ItemType" [headerText]="'project.roadmap.type' |translate" mappingName="itemType" width="150">
@@ -25,29 +25,30 @@
       </e-column>
       <e-column field="TaskName" [headerText]="'project.roadmap.taskName' | translate" width="150"> </e-column>
       <e-column field="StartDate" [headerText]="'project.roadmap.startDate' | translate" width="150"></e-column>
+      <e-column field="EndDate" [headerText]="'project.roadmap.endDate' | translate" width="150"></e-column>
       <e-column field="Duration" [headerText]="'project.roadmap.duration'| translate" width="150"></e-column>
     </e-columns>
   </ejs-gantt>
 
   <!--[allowRowDragAndDrop]="true"-->
-  <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" header="Add A New Item"
+  <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" [header]="'project.roadmap.addNewItem.title'|translate"
     [buttons]="button" [visible]="visible" [animationSettings]="animationSettingsDialog">
     <ng-template #content>
       <h1></h1>
       <ion-row>
-        <ejs-textbox id="taskName" #taskname placeholder="Task Name" width="300px"></ejs-textbox>
-        <ejs-dropdownlist id="itemType" [dataSource]="dataDropDown" placeholder="Item Type" width="300px"
+        <ejs-textbox id="taskName" #taskname [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
+        <ejs-dropdownlist id="itemType" [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
           style="margin-inline-start: 20px" (change)="showFathersDropDown($event)"></ejs-dropdownlist>
       </ion-row>
       <h1></h1>
       <ion-row>
-        <ejs-datepicker id="startDate" #startDate placeholder="Start Date" width="300px"></ejs-datepicker>
-        <ejs-datepicker id="endDate" #endDate placeholder="End Date" width="300px" style="margin-inline-start: 20px">
+        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
+        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
         </ejs-datepicker>
       </ion-row>
       <h1></h1>
       <ion-row>
-        <ejs-dropdownlist id="father" [dataSource]="dataFathersDropDown" placeholder="Select father" width="300px"
+        <ejs-dropdownlist id="father" [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
           [enabled]="enabled"></ejs-dropdownlist>
       </ion-row>
     </ng-template>

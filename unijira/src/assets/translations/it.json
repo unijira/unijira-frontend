@@ -159,7 +159,10 @@
   "project.settings.invitations.status" : "Stato",
   "project.roadmap.taskName":"Nome Task",
   "project.roadmap.startDate": "Data inizio",
+  "project.roadmap.endDate": "Data fine",
   "project.roadmap.duration": "Durata",
-  "project.roadmap.type": "Tipo"
+  "project.roadmap.type": "Tipo",
+  "project.roadmap.addNewItem.title": "Aggiungi un nuovo item",
+  "project.roadmap.selectFather": "Seleziona un padre"
 
 }

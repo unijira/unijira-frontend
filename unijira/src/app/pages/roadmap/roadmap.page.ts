@@ -1,3 +1,5 @@
+/* eslint-disable prefer-arrow/prefer-arrow-functions */
+/* eslint-disable max-len */
 /* eslint-disable one-var */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/dot-notation */
@@ -11,30 +13,75 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/quotes */
-import { Component, OnInit, ViewChild, ViewEncapsulation } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { loadCldr } from "@syncfusion/ej2-base";
 import {
   ToolbarItem,
   EditSettingsModel,
   EditDialogFieldDirective,
-  GanttComponent,
 } from '@syncfusion/ej2-angular-gantt';
-import { TextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { DialogUtility } from '@syncfusion/ej2-popups';
 import { SessionService } from 'src/app/store/session.service';
-import * as $ from 'jquery';
 import { TranslateService } from '@ngx-translate/core';
+import { L10n, setCulture } from '@syncfusion/ej2-base';
+import * as moment from 'moment';
+declare var require: any;
+  L10n.load({
+        'it': {
+          'gantt': {
+                  "emptyRecord": "ciaoo",
+                  "id": "id",
+                  "name": "Nome",
+                  "startDate": "Data inizio",
+                  "endDate": "Data fine",
+                  "duration": "Durata",
+                  "progress": "Progresso",
+                  "dependency": "Dipendenza",
+                  "notes": "Note",
+                  "type": "Tipo",
+                  "offset": "Compensare",
+                  "resourceName": "Nome Risorsa",
+                  "resourceID": "ID Risorsa",
+                  "day": "giorno",
+                  "hour": "ora",
+                  "minute": "minuto",
+                  "days": "giorni",
+                  "hours": "ore",
+                  "minutes": "minuti",
+                  "generalTab": "Generale",
+                  "customTab": "Colonne personalizzate",
+                  "writeNotes": "Scrivi nota",
+                  "addDialogTitle": "Nuovo titolo",
+                  "editDialogTitle": "Modifica titolo",
+                  "saveButton": "Salva",
+                  "add": "Aggiungi",
+                  "edit": "Modifica",
+                  "update": "Aggiorna",
+                  "delete": "Elimina",
+                  "cancel": "Cancella",
+                  "search": "Cerca",
+                  "addTask": "Aggiungi Item",
+                  "editTask": "Modifica Item",
+                  "deleteTask": "Elimina Item",
+                  "expandAllTasks": "Espandere tutto",
+                  "collapseAllTasks": "Mostra tutto",
+                  "expandAll": "Espandere tutto",
+                  "Add a new item": "Aggiungi nuovo item",
+          },
+          datepicker: {
+            today:"oggi"
+          }
+        }
+      });
 @Component({
   selector: 'app-roadmap',
   templateUrl: './roadmap.page.html',
   styleUrls: ['./roadmap.page.scss'],
 })
 export class RoadmapPage {
-  @ViewChild('gantt', { static: true }) gantt: GanttComponent;
-  @ViewChild('taskname', { static: true }) taskname: TextBoxComponent;
-  @ViewChild('editdialog', { static: true }) editdialog: DialogComponent;
   @ViewChild('adddialog', { static: true }) adddialog: DialogComponent;
   constructor(
     private sessionService: SessionService,
@@ -45,10 +92,37 @@ export class RoadmapPage {
     this.activatedRoute.params.subscribe((params) =>
       this.sessionService.loadProject(params['id'])
     );
-  }
+    if(translateService.currentLang === 'it'){
+    setCulture('it');
+      loadCldr(
+        require("cldr-data/main/it/numbers.json"),
+        require("cldr-data/main/it/ca-gregorian.json"),
+        require("cldr-data/supplemental/numberingSystems.json"),
+        require("cldr-data/main/it/timeZoneNames.json"),
+        require('cldr-data/supplemental/weekdata.json') // To load the culture based first day of week
+      );
+    }
+    this.translateService.onLangChange.subscribe(()=>{
+    if(translateService.currentLang === 'it'){
+      setCulture('it');
+      loadCldr(
+        require("cldr-data/main/it/numbers.json"),
+        require("cldr-data/main/it/ca-gregorian.json"),
+        require("cldr-data/supplemental/numberingSystems.json"),
+        require("cldr-data/main/it/timeZoneNames.json"),
+        require('cldr-data/supplemental/weekdata.json') // To load the culture based first day of week
+      );
+    }
+    else {
+      setCulture('en');
+    }
+  });
 
+}
   // Data for Gantt
   public data: any[] = [];
+  public dataDropDown: string[] = []; //DataDropDown
+  public dataFathersDropDown: any[] = [];
   public enabled = false; //To show the Father select on the add item dialog
   public dataTmp: any[] = [];
   public subtasksTmp: any[] = [];
@@ -70,9 +144,9 @@ export class RoadmapPage {
   };
 
   //End  Data for Gantt
-  public dataDropDown: string[] = []; //DataDropDown
-  public dataFathersDropDown: any[] = [];
+
   public ngOnInit(): void {
+
     // Init columns
     this.columns = [
       { field: 'TaskID', headerText: ' ID', width: 100 },
@@ -137,7 +211,6 @@ export class RoadmapPage {
     if (currentId === 'NaN') {
       currentId = 1;
     }
-    console.log(taskEndDate.value, tasknameObj.value);
     if (
       taskStartDate.value === null ||
       tasknameObj.value === null ||
@@ -153,7 +226,6 @@ export class RoadmapPage {
       if (itemType.value === 'epic') {
 
         this.dataFathersDropDown=this.dataFathersDropDown.concat(tasknameObj.value);
-        console.log(this.dataFathersDropDown);
         record = {
           TaskName: tasknameObj.value,
           TaskID: currentId,
@@ -221,7 +293,6 @@ export class RoadmapPage {
                 }
               });
               this.data = this.dataTmp;
-              console.log(this.data);
             }
 
             index = index + 1;
@@ -264,19 +335,16 @@ export class RoadmapPage {
 
   public onActionComplete(args: any): void {
     if (args.action === 'add' && args.requestType === 'add') {
-      console.log(args.data.taskData);
     }
   }
 
-  public renderDialog(data) {
-    this.editdialog.show();
-    var tasknameObj = document.getElementById('taskname') as any;
-    tasknameObj.value = data.TaskName;
-  }
+
   public renderAddDialog() {
     this.adddialog.show();
   }
   public toolbarClick(args: any) {
+
+
     if (args.item.properties.id === 'ganttDefault_add') {
       args.cancel = true;
       this.adddialog.show();
@@ -289,7 +357,6 @@ export class RoadmapPage {
     }
   }
   onLoad(args: any) {
-    console.log(args);
   }
   queryTaskbarInfo(args: any) {
  /**if (args.data.ItemType === 'epic') {
@@ -301,7 +368,6 @@ export class RoadmapPage {
     } */
   }
   actionBegin(args: any) {
-    console.log(args);
   }
   showFathersDropDown(args: any) {
     if (args.itemData.value !== 'epic') {
