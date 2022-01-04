@@ -156,5 +156,7 @@
   "project.settings.invitations.search" : "Cerca tra i membri",
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
-  "project.settings.invitations.status" : "Stato"
+  "project.settings.invitations.status" : "Stato",
+  "project.roadmap.taskName":"Nome Task"
+
 }

@@ -151,5 +151,6 @@
   "project.settings.invitations.search": "Search members",
   "project.settings.invitations.mail": "Email address",
   "project.settings.invitations.date": "Invitation time",
-  "project.settings.invitations.status": "Status"
+  "project.settings.invitations.status": "Status",
+  "project.roadmap.taskName":"Task Name"
 }

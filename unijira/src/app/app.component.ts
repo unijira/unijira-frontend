@@ -73,8 +73,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
-    translateService.setDefaultLang('it');
-    translateService.use('it');
+    translateService.setDefaultLang('en');
+    translateService.use('en');
     translateService.onLangChange.subscribe(() => {
       moment.locale(translateService.currentLang);
     });

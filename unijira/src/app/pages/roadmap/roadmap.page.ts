@@ -1,3 +1,4 @@
+/* eslint-disable one-var */
 /* eslint-disable arrow-body-style */
 /* eslint-disable @typescript-eslint/dot-notation */
 /* eslint-disable no-debugger */
@@ -21,9 +22,10 @@ import {
 import { TextBoxComponent } from '@syncfusion/ej2-angular-inputs';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
-import { SessionService } from '../../store/session.service';
 import { DialogUtility } from '@syncfusion/ej2-popups';
-
+import { SessionService } from 'src/app/store/session.service';
+import * as $ from 'jquery';
+import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-roadmap',
   templateUrl: './roadmap.page.html',
@@ -36,7 +38,9 @@ export class RoadmapPage {
   @ViewChild('adddialog', { static: true }) adddialog: DialogComponent;
   constructor(
     private sessionService: SessionService,
-    private activatedRoute: ActivatedRoute
+    private activatedRoute: ActivatedRoute,
+    private translateService: TranslateService
+
   ) {
     this.activatedRoute.params.subscribe((params) =>
       this.sessionService.loadProject(params['id'])
@@ -68,7 +72,6 @@ export class RoadmapPage {
   //End  Data for Gantt
   public dataDropDown: string[] = []; //DataDropDown
   public dataFathersDropDown: any[] = [];
-
   public ngOnInit(): void {
     // Init columns
     this.columns = [
@@ -289,13 +292,13 @@ export class RoadmapPage {
     console.log(args);
   }
   queryTaskbarInfo(args: any) {
-    if (args.data.ItemType === 'epic') {
+ /**if (args.data.ItemType === 'epic') {
       args.taskbarBgColor = 'grey';
     } else if (args.data.ItemType === 'task') {
       args.taskbarBgColor = 'yellow';
     } else if (args.data.ItemType === 'issue') {
       args.taskbarBgColor = 'red';
-    }
+    } */
   }
   actionBegin(args: any) {
     console.log(args);
@@ -317,4 +320,5 @@ export class RoadmapPage {
       animationSettings: { effect: 'Zoom' },
     });
   };
+
 }

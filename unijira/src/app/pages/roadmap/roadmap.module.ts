@@ -13,6 +13,8 @@ import { GanttComponent, EditService , FilterService, SortService, SelectionServ
 from '@syncfusion/ej2-angular-gantt';
 import { GanttAllModule } from '@syncfusion/ej2-angular-gantt';
 import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
+import * as $ from 'jquery';
+import {TranslateModule} from '@ngx-translate/core';
 
 
 @NgModule({
@@ -20,7 +22,7 @@ import { DatePickerModule } from '@syncfusion/ej2-angular-calendars';
     CommonModule,
     FormsModule,
     IonicModule,
-    RoadmapPageRoutingModule,GanttAllModule,DialogModule,TextBoxModule,DatePickerModule,DropDownListModule
+    RoadmapPageRoutingModule,GanttAllModule,DialogModule,TextBoxModule,DatePickerModule,DropDownListModule,TranslateModule
   ],
   declarations: [RoadmapPage],
   providers: [EditService , FilterService, SortService, SelectionService, RowDDService,ToolbarService,DayMarkersService,GanttComponent,
