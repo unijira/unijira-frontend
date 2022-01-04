@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Task} from '../../../../../models/Task';
+import {Item} from '../../../../../models/Item';
 import {ModalController, PopoverController} from '@ionic/angular';
 import {
   BacklogEditWeightPopoversComponent
@@ -33,8 +33,8 @@ import {
 })
 export class BlDetailComponent implements OnInit {
   @Input()
-  task: Task;
-  @Output() outputData = new EventEmitter<Task>();
+  task: Item;
+  @Output() outputData = new EventEmitter<Item>();
   @Output() closeModal = new EventEmitter<boolean>();
 
   constructor(
@@ -253,6 +253,6 @@ export class BlDetailComponent implements OnInit {
   }
 
   editWeight(data) {
-    this.task.weight = data.data.value;
+    // this.task.weight = data.data.value;
   }
 }

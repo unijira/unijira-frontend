@@ -145,7 +145,7 @@
   "project.settings.invitations.title" : "Inviti",
   "project.settings.invitations.add" : "Aggiungi membri",
   "project.settings.invitations.subtitle" : "Accesso al progetto",
-  "project.settings.invitations.info" : "Chiunque disponga dell'accesso al sito può accedere alle funzionalità di questo progetto. Ne caso in cui un utente non ha accettato di partecipare al progetto non puo accedere alle funzionalità dello stesso.",
+  "project.settings.invitations.info" : "Chiunque disponga dell'accesso al sito può accedere alle funzionalità di questo progetto. Nel caso in cui un utente non ha accettato di partecipare al progetto non puo accedere alle funzionalità dello stesso.",
   "project.settings.invitations.filter" : "Filtri:",
   "project.settings.invitations.null.title" : "Un grande lavoro inizia da un grande team!",
   "project.settings.invitations.null.subtitle" : "Aggiungi le persone che desideri lavorino al progetto: riceveranno un collegamento per prendere parte all'azione.",
@@ -156,5 +156,13 @@
   "project.settings.invitations.search" : "Cerca tra i membri",
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
-  "project.settings.invitations.status" : "Stato"
+  "project.settings.invitations.status" : "Stato",
+  "project.pages.invite.title" : "Patecipa ad un progetto",
+  "project.settings.invitations.confirm" : "Invita",
+  "project.settings.invitations.alert.title" : "Sei sicuro di voler continuare?",
+  "project.settings.invitations.alert.description" : "Tutti i membri selezionati riceveranno un invito per partecipare al progetto!",
+  "project.settings.invitations.toast.success" : "Tutti gli inviti sono stati inviati correttamente.",
+  "project.settings.invitations.toast.failed" : "Si è verificato un problema durante la procedura d'invio degli inviti.",
+  "wizard.toast.success" : "Il progetto è stato creato con successo.",
+  "wizard.toast.failed" : "Si è verificato un problema durante la creazione del progetto."
 }

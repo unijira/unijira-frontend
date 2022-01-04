@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Task} from '../../../../../models/Task';
+import {Item} from '../../../../../models/Item';
 
 @Component({
   selector: 'app-backlog-edit-visibility-popovers',
@@ -7,7 +7,7 @@ import {Task} from '../../../../../models/Task';
   styleUrls: ['./backlog-edit-visibility-popovers.component.scss'],
 })
 export class BacklogEditVisibilityPopoversComponent implements OnInit {
-  @Input() task: Task;
+  @Input() task: Item;
   constructor() {}
   ngOnInit() {}
 }
