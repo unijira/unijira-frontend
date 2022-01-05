@@ -27,7 +27,7 @@ import { DialogUtility } from '@syncfusion/ej2-popups';
 import { SessionService } from 'src/app/store/session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
-import * as moment from 'moment';
+import { ItemType } from 'src/app/models/projects/ItemsType';
 declare var require: any;
   L10n.load({
         'it': {
@@ -85,11 +85,14 @@ export class RoadmapPage {
   @ViewChild('adddialog', { static: true }) adddialog: DialogComponent;
   // Data for Gantt
   public data: any[] = [];
+  public itemTypeEnum= ItemType;
   public dataDropDown: string[] = []; //DataDropDown
   public dataFathersDropDown: any[] = [];
   public enabled = false; //To show the Father select on the add item dialog
   public dataTmp: any[] = [];
   public subtasksTmp: any[] = [];
+  public subTasksEpic: any[]=[];
+  public subtasksTmpStory: any[]= [];
   public taskSettings: object;
   public editSettings: EditSettingsModel;
   public toolbar: ToolbarItem[];
@@ -101,6 +104,7 @@ export class RoadmapPage {
   public splitterSettings: object;
   public epicItem = '';
   public alert = false;
+  public itemAdded= false;
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -196,6 +200,7 @@ export class RoadmapPage {
   // Click add Button function
   public addokButton: EmitType<object> = () => {
     this.alert = false;
+    this.itemAdded = false;
     // Get all param
     var tasknameObj = (document.getElementById('taskName') as any)
       .ej2_instances[0];
@@ -223,9 +228,7 @@ export class RoadmapPage {
     let record: object = {};
     // If epic add like father
     if (this.alert === false) {
-      if (itemType.value === 'epic') {
-
-        this.dataFathersDropDown=this.dataFathersDropDown.concat(tasknameObj.value);
+      if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,
           TaskID: currentId,
@@ -234,29 +237,34 @@ export class RoadmapPage {
           ItemType: itemType.value,
         };
         this.data = this.data.concat(record);
+        this.adddialog.hide();
         // else add like subtask
       } else {
         this.subtasksTmp = [];
+        this.subtasksTmpStory=[];
         this.dataTmp = [];
         var index = 0;
+        let recordFather: object = {};
         var father = (document.getElementById('father') as any)
           .ej2_instances[0];
         if (father.value === null) {
           this.alert=true;
           this.openDialogAlert();
         } else {
-          let recordFather: object = {};
-          this.data.find((obje) => {
-            if (obje.TaskName === father.value) {
+          // If father is epic
+          if(father.value.split(' - ')[1] === this.itemTypeEnum.epic){
+            var i =0;
+          for( i=0; i< this.data.length; i++) {
+            if (this.data[i].TaskName === father.value.split(' - ')[0]) {
               //task has a subtasks already
-              if (obje.subtasks !== undefined) {
-                this.subtasksTmp = obje.subtasks;
+              if (this.data[i].subtasks !== undefined) {
+                this.subtasksTmp = this.data[i].subtasks;
                 recordFather = {
-                  TaskName: obje.TaskName,
-                  TaskID: obje.TaskID,
-                  StartDate: obje.StartDate,
-                  EndDate: obje.EndDate,
-                  ItemType: obje.ItemType,
+                  TaskName: this.data[i].TaskName,
+                  TaskID: this.data[i].TaskID,
+                  StartDate: this.data[i].StartDate,
+                  EndDate: this.data[i].EndDate,
+                  ItemType: this.data[i].ItemType,
                   subtasks: this.subtasksTmp.concat({
                     TaskName: tasknameObj.value,
                     TaskID: currentId,
@@ -268,11 +276,11 @@ export class RoadmapPage {
                 //No subtasks
               } else {
                 recordFather = {
-                  TaskName: obje.TaskName,
-                  TaskID: obje.TaskID,
-                  StartDate: obje.StartDate,
-                  EndDate: obje.EndDate,
-                  ItemType: obje.ItemType,
+                  TaskName: this.data[i].TaskName,
+                  TaskID: this.data[i].TaskID,
+                  StartDate: this.data[i].StartDate,
+                  EndDate: this.data[i].EndDate,
+                  ItemType: this.data[i].ItemType,
                   subtasks: [
                     {
                       TaskName: tasknameObj.value,
@@ -293,24 +301,108 @@ export class RoadmapPage {
                 }
               });
               this.data = this.dataTmp;
+              break;
             }
 
             index = index + 1;
-          });
+          }
           father.value = null;
         }
+        else if(this.itemTypeEnum.story === father.value.split(' - ')[1])
+          {
+            if(itemType.value === this.itemTypeEnum.story){
+              this.alert=true;
+              this.openDialogAlertEqualTypeAndFather();
+            }
+            else {
+              i=0;
+              var j=0;
+              for( i=0; i< this.data.length; i++){
+                if(this.itemAdded){
+                  break;
+                }
+              index=0;
+              this.subTasksEpic=this.data[i].subtasks;
+                for( j=0; j< this.subTasksEpic.length; j++){
+                if (this.subTasksEpic[j].TaskName === father.value.split(' - ')[0]) {
+                  if (this.subTasksEpic[j].subtasks !== undefined) {
+                    this.subtasksTmpStory = this.subTasksEpic[j].subtasks;
+                    recordFather = {
+                      TaskName: this.subTasksEpic[j].TaskName,
+                      TaskID: this.subTasksEpic[j].TaskID,
+                      StartDate: this.subTasksEpic[j].StartDate,
+                      EndDate: this.subTasksEpic[j].EndDate,
+                      ItemType: this.subTasksEpic[j].ItemType,
+                      subtasks: this.subtasksTmpStory.concat({
+                        TaskName: tasknameObj.value,
+                        TaskID: currentId,
+                        StartDate: taskStartDate.value,
+                        EndDate: taskEndDate.value,
+                        ItemType: itemType.value,
+                      }),
+                    };
+                  }
+                  else {
+                    recordFather = {
+                      TaskName: this.subTasksEpic[j].TaskName,
+                      TaskID: this.subTasksEpic[j].TaskID,
+                      StartDate: this.subTasksEpic[j].StartDate,
+                      EndDate: this.subTasksEpic[j].EndDate,
+                      ItemType: this.subTasksEpic[j].ItemType,
+                      subtasks: [
+                        {
+                          TaskName: tasknameObj.value,
+                          TaskID: currentId,
+                          StartDate: taskStartDate.value,
+                          EndDate: taskEndDate.value,
+                          ItemType: itemType.value,
+                        },
+                      ]
+                    };
+                  }
+                  delete this.data[i].subtasks[index];
+                  this.data[i].subtasks = this.data[i].subtasks.concat(recordFather);
+                  this.data[i].subtasks.forEach((item) => {
+                  if (item.TaskID > 0) {
+                    this.dataTmp = this.dataTmp.concat(item);
+                  }
+                });
+                this.data[i].subtasks = this.dataTmp;
+                this.dataTmp=[];
+                this.data.forEach((item)=>{
+                  this.dataTmp=this.dataTmp.concat(item);
+                });
+                this.data=this.dataTmp;
+                this.itemAdded=true;
+                }
+                index=index+1;
+                if(this.itemAdded){
+                  break;
+                }
+               }
+
+            }
+          }
+        }
+
       }
+    }
       if (this.alert === false) {
+        if(itemType.value === this.itemTypeEnum.epic || itemType.value=== this.itemTypeEnum.story){
+          this.dataFathersDropDown=this.dataFathersDropDown.concat(tasknameObj.value+" - "+itemType.value);
+        }
         tasknameObj.value = '';
         taskEndDate.value = null;
         taskStartDate.value = null;
         itemType.value = null;
+        father.value = null;
         this.adddialog.hide();
         this.sortSettings = {
           columns: [{ field: 'TaskID', direction: 'Ascending' }],
         };
       }
     }
+
   };
   //cancel button
   public addcancelButton: EmitType<object> = () => {
@@ -350,20 +442,20 @@ export class RoadmapPage {
       this.adddialog.show();
       this.enabled=false;
       if (this.dataDropDown.length === 0) {
-        this.dataDropDown = ['epic'];
+        this.dataDropDown = [this.itemTypeEnum.epic];
       } else {
-        this.dataDropDown = ['epic', 'story', 'task', 'issue'];
+        this.dataDropDown = [this.itemTypeEnum.epic, this.itemTypeEnum.story, this.itemTypeEnum.task, this.itemTypeEnum.issue];
       }
     }
   }
   onLoad(args: any) {
   }
   queryTaskbarInfo(args: any) {
- if (args.data.ItemType === 'epic') {
+ if (args.data.ItemType === this.itemTypeEnum.epic) {
       args.taskbarBgColor = '#904ee2';
-    } else if (args.data.ItemType === 'story') {
+    } else if (args.data.ItemType === this.itemTypeEnum.story) {
       args.taskbarBgColor = '#63ba3c';
-    } else if (args.data.ItemType === 'task') {
+    } else if (args.data.ItemType === this.itemTypeEnum.task) {
       args.taskbarBgColor = '#00bfff';
     }
     else {
@@ -373,7 +465,7 @@ export class RoadmapPage {
   actionBegin(args: any) {
   }
   showFathersDropDown(args: any) {
-    if (args.itemData.value !== 'epic') {
+    if (args.itemData.value !== this.itemTypeEnum.epic) {
       this.enabled = true;
     } else {
       this.enabled = false;
@@ -385,6 +477,15 @@ export class RoadmapPage {
       title: 'Attention!',
       showCloseIcon: true,
       content: 'Insert all requirements',
+      closeOnEscape: true,
+      animationSettings: { effect: 'Zoom' },
+    });
+  };
+public openDialogAlertEqualTypeAndFather = function(): void {
+    DialogUtility.alert({
+      title: 'Attention!',
+      showCloseIcon: true,
+      content: 'Item type and father can\'t be equal',
       closeOnEscape: true,
       animationSettings: { effect: 'Zoom' },
     });

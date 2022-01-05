@@ -56,7 +56,6 @@
     "cldr-data": "^36.0.0",
     "firebase": "^8.10.0",
     "ionic4-tooltips": "^2.0.0",
-    "jquery": "^3.6.0",
     "lodash": "^4.17.21",
     "moment": "^2.29.1",
     "ng2-dragula": "^2.1.1",
