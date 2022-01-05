@@ -24,7 +24,7 @@ import {
 } from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
 import {
   BacklogEditLockPopoversComponent
-} from 'src/app/popovers/backlog/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
+} from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 @Component({
   selector: 'app-bl-detail',
@@ -45,7 +45,7 @@ export class BlDetailComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.gitSuggestion += this.namePrepare(this.task.name);
+    this.gitSuggestion += this.namePrepare(this.task.summary);
   }
   emitData(data) {
     this.outputData.emit(data);

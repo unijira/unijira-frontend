@@ -56,7 +56,7 @@ export class ProjectHomePage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    unsubscribeAll(this.projectSubscription);
+    // unsubscribeAll(this.projectSubscription);
   }
 
 }
