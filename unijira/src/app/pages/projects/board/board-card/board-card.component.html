@@ -1,0 +1,34 @@
+<ion-card *ngFor="let item of itemsToShow">
+  <ion-card-content>
+    <ion-row>
+      <ion-text>{{item.description}}</ion-text>
+    </ion-row>
+    <ion-row *ngIf="item.father && item.father.type === 'epic'">
+      <ion-chip style="margin-left: 0" color="danger">{{item.father.description}}</ion-chip>
+    </ion-row>
+    <ion-row style="padding-top: 5px">
+      <ion-col size="5" style="padding-left: 0">
+        <ion-row>
+          <ion-img *ngIf="item.type==='story'" src="/assets/img/tickets/story.svg"></ion-img>
+          <ion-img *ngIf="item.type==='issue'" src="/assets/img/tickets/issue.svg"></ion-img>
+          <ion-img *ngIf="item.type==='task'" src="/assets/img/tickets/task.svg"></ion-img>
+          <ion-label>{{item.id}}</ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col>
+        <div style="float: right" *ngIf="item.assignees">
+          <ion-row>
+            <ion-img *ngIf="!item.assignees[0].assignee.avatar" [title]="item.assignees[0].assignee.username"
+                     class="assignee-img" src="/assets/img/sample-img.png"></ion-img>
+            <ion-img *ngIf="item.assignees[0].assignee.avatar" [title]="item.assignees[0].assignee.username"
+                     class="assignee-img" [src]="item.assignees[0].assignee.avatar"></ion-img>
+            <ion-label *ngIf="item.assignees.length > 1">+{{item.assignees.length-1}}</ion-label>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="item.tags">
+      <ion-chip style="margin-left: 0" color="primary" *ngFor="let tag of item.tags.split(';')">{{tag}}</ion-chip>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

@@ -1,0 +1,34 @@
+ion-content {
+  --padding-top: 80px !important;
+}
+
+.main-card {
+  background-color: var(--ion-color-light-shade);
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.scrollbars::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbars {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.board-card-content {
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 560px;
+}
+
+.outline {
+  border-color: var(--ion-color-primary);
+  border-width: thin;
+  border-style: solid;
+  border-radius: 10px;
+}
+
+

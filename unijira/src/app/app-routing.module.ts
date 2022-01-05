@@ -52,7 +52,7 @@ const routes: Routes = [
   {
     path: 'projects/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
+    loadChildren: () => import('./pages/projects/board/board.module').then(m => m.BoardPageModule)
   },
   {
     path: 'projects/:id/settings/details',

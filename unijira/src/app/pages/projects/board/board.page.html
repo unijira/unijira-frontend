@@ -1,0 +1,103 @@
+<ion-content [formGroup]="formGroup">
+  <ion-row class="ion-justify-content-center">
+    <ion-chip [routerLink]="['/home']">
+      <ion-icon name="home-outline"></ion-icon>
+      <ion-label [translate]="'project.settings.details.home'"></ion-label>
+    </ion-chip>
+
+    <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+
+    <ion-chip [routerLink]="['/projects/']">
+      <ion-icon name="briefcase-outline"></ion-icon>
+      <ion-label [translate]="'project.settings.details.projects'"></ion-label>
+    </ion-chip>
+
+    <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
+
+    <ion-chip [routerLink]="['/projects/' + project?.id + '/settings/details']">
+      <ion-icon name="clipboard-outline"></ion-icon>
+      <ion-label [translate]="'project.pages.board'"></ion-label>
+    </ion-chip>
+
+  </ion-row>
+  <ion-title>
+    <h1 translate>project.pages.board</h1>
+  </ion-title>
+  <ion-row>
+    <ion-col size="2.5">
+      <ion-item lines="none" class="outline">
+        <ion-icon name="search"></ion-icon>
+        <ion-input inputmode="search" formControlName="search"></ion-input>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-label position="floating">Tag</ion-label>
+        <ion-select placeholder="Select" multiple interface="popover" formControlName="tags">
+          <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+    <ion-col size="3">
+      <ion-item lines="none">
+        <ion-label position="floating">Tipo</ion-label>
+        <ion-select placeholder="Select" multiple interface="popover" formControlName="types">
+          <ion-select-option *ngFor="let type of types" [value]="type">{{type}}</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+  <ion-row>
+    <ion-col size="3" style="padding: 0">
+      <ion-card class="main-card">
+        <ion-card-header>
+          <ion-card-subtitle>STORIES {{stories.length}} TICKETS</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="scrollbars board-card-content">
+          <ion-list style="background-color: var(--ion-color-light-shade)">
+            <app-board-card [itemsToShow]="storiesToShow"></app-board-card>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="3" style="padding: 0">
+      <ion-card class="main-card">
+        <ion-card-header>
+          <ion-card-subtitle>DA COMPLETARE {{toDoItems.length}} TICKETS</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="scrollbars board-card-content">
+          <ion-list style="background-color: var(--ion-color-light-shade)">
+            <app-board-card [itemsToShow]="toDoItemsToShow"></app-board-card>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="3" style="padding: 0">
+      <ion-card class="main-card">
+        <ion-card-header>
+          <ion-card-subtitle>IN CORSO {{openedItems.length}} TICKETS</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="scrollbars board-card-content">
+          <ion-list style="background-color: var(--ion-color-light-shade)">
+            <app-board-card [itemsToShow]="openedItemsToShow"></app-board-card>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+
+    <ion-col size="3" style="padding: 0">
+      <ion-card class="main-card">
+        <ion-card-header>
+          <ion-card-subtitle>COMPLETATI {{doneItems.length}} TICKETS</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content class="scrollbars board-card-content">
+          <ion-list style="background-color: var(--ion-color-light-shade)">
+            <app-board-card [itemsToShow]="doneItemsToShow"></app-board-card>
+          </ion-list>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -13,7 +13,7 @@ export class Item {
     public evaluation: number,
     public tags: string,
     public type: string,
-    public status: TaskStatus,
+    public status: ItemStatus,
     public owner: UserInfo,
     public father: Item,
     public notes: Note[],
@@ -23,7 +23,14 @@ export class Item {
   }
 }
 
-export enum TaskStatus {
+export enum ItemStatus {
   OPEN,
   DONE
+}
+
+export enum ItemType {
+  EPIC = 'epic',
+  STORY = 'story',
+  ISSUE = 'issue',
+  TASK = 'task'
 }
