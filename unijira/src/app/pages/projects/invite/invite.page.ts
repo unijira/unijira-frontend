@@ -3,6 +3,7 @@ import {ProjectService} from '../../../services/common/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-invite',
@@ -17,7 +18,10 @@ export class InvitePage implements OnInit {
               private translateService: TranslateService,
               private projectService: ProjectService,
               private route: ActivatedRoute,
-              private router: Router) { }
+              private router: Router,
+              private pageService: PageService) {
+    this.pageService.setTitle('project.pages.invite.title');
+  }
 
   ngOnInit() {
   }
@@ -37,8 +41,7 @@ export class InvitePage implements OnInit {
                     this.translateService.instant('project.invite.alert.success.confirm')).then(res => {
 
                   if(res) {
-                    // TODO.. Move to project home
-                    // this.router.navigate(['home/projects/']);
+                    this.router.navigate(['/projects/']).then();
                   }
 
               });
@@ -50,7 +53,7 @@ export class InvitePage implements OnInit {
             this.translateService.instant('project.invite.alert.failed.confirm')).then(res => {
 
               if(res) {
-                  this.router.navigate(['/login']);
+                  this.router.navigate(['/login']).then();
               }
 
           });

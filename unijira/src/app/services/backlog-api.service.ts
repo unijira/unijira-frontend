@@ -1,10 +1,10 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from './http-service.service';
-import { SessionService } from './../store/session.service';
-import { Sprint } from '../models/Sprint';
-import { Task } from '../models/Task';
-import { User } from '../models/User';
-import { map } from 'rxjs/operators';
+import {Injectable} from '@angular/core';
+import {HttpService} from './http-service.service';
+import {SessionService} from '../store/session.service';
+import {Sprint} from '../models/Sprint';
+import {Item} from '../models/Item';
+import {User} from '../models/User';
+import {map} from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root',
@@ -21,9 +21,8 @@ export class BacklogAPIService {
     return this.httpService.get<any>(url).pipe(
       map((res) => {
         const newBacklog = new Sprint([], new Date(), new Date());
-        const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          const task = new Task(
+          const task = new Item(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',
@@ -35,7 +34,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -57,7 +56,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newBacklog.tasks.push(task);
@@ -78,7 +77,7 @@ export class BacklogAPIService {
         const newSprint = new Sprint([], new Date(), new Date());
         const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          const task = new Task(
+          const task = new Item(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',
@@ -90,7 +89,7 @@ export class BacklogAPIService {
                 '',
                 '',
                 '',
-                `http://unsplash.it/${randInt}/${randInt}`
+                null
               ),
             ],
             element.item.evaluation,
@@ -112,7 +111,7 @@ export class BacklogAPIService {
               '',
               '',
               '',
-              `http://unsplash.it/${randInt}/${randInt}`
+              null
             )
           );
           newSprint.tasks.push(task);
@@ -198,12 +197,12 @@ export class BacklogAPIService {
     end: string
   ) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
-    let itemToSend = {
+    const itemToSend = {
       id: sprintId,
       startingDate: start,
       endingDate: end,
       insertions: [],
-      backlogId: backlogId,
+      backlogId,
     };
     return this.httpService.put<any>(url, itemToSend);
   }

@@ -3,7 +3,8 @@ export class UserInfo {
   constructor(
     public id: number,
     public username: string,
-    public actived: boolean,
+    public avatar: URL,
+    public activated: boolean,
     public disabled: boolean,
     public createdAt: string,
     public updatedAt: string,
@@ -18,6 +19,7 @@ export class UserInfo {
     return new UserInfo(
       json.id,
       json.username,
+      json.avatar,
       json.actived,
       json.disabled,
       json.createdAt,

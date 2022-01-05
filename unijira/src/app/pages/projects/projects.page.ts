@@ -1,8 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
-import {SessionService} from '../../store/session.service';
-import {Router} from '@angular/router';
+import {PageService} from 'src/app/services/page.service';
 
 @Component({
   selector: 'app-projects',
@@ -16,9 +15,10 @@ export class ProjectsPage implements OnInit {
 
   constructor(
     private projectService: ProjectService,
-    private sessionService: SessionService,
-    private router: Router
-  ) { }
+    private pageService: PageService
+  ) {
+    this.pageService.setTitle('user.projects.title');
+  }
 
 
   get filteredProjects() {
