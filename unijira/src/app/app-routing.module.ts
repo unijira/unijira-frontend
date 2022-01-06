@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './classes/auth-guard';
 
 const routes: Routes = [
@@ -16,18 +16,9 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule)
   },
-  // {
-  //   path: 'projects/:id/backlog',
-  //   // canActivate: [AuthGuard],
-  //   loadChildren: () =>
-  //     import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
-  // },
   {
-    path: 'auth/active',
-    loadChildren: () =>
-      import('./pages/activate/activate.module').then(
-        (m) => m.ActivatePageModule
-      ),
+    path: 'activate',
+    loadChildren: () => import('./pages/activate/activate.module').then(m => m.ActivatePageModule)
   },
   {
     path: 'home',
@@ -45,14 +36,14 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/wizard/wizard.module').then(m => m.WizardPageModule)
   },
   {
-    path: 'projects/:id/invite',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
-  },
-  {
     path: 'projects/:id',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
+  },
+  {
+    path: 'projects/:id/invite',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
   },
   {
     path: 'projects/:id/settings/details',

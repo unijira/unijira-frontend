@@ -67,8 +67,6 @@ export class RolesPage implements OnInit {
 
             this.memberships = members;
 
-            console.log(this.memberships);
-
             members.forEach(member => {
                 this.usersService.getUser(member.keyUserId).subscribe(user => {
                   member.userInfo = user;
