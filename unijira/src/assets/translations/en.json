@@ -196,5 +196,10 @@
   "board.doneTickets" : "{{value}} DONE TICKET",
   "board.type" : "Type",
   "board.tag" : "Tag",
-  "board.select" : "Select"
+  "board.select" : "Select",
+  "board.searchText" : "Search text",
+  "board.noSprintActive": "No sprint active yet",
+  "board.epic" : "Epic",
+  "board.endSprint" : "End sprint",
+  "board.sprintDate" : "Sprint from {{d1}} to {{d2}}"
 }

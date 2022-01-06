@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
@@ -79,6 +79,11 @@ export class LoginPage implements OnInit, OnDestroy {
     } else {
       this.router.navigate(['/home']).then();
     }
+  }
+
+  @HostListener('document:keydown.enter', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    this.logIn();
   }
 
 }

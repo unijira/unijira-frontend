@@ -9,6 +9,7 @@ import { BoardPageRoutingModule } from './board-routing.module';
 import { BoardPage } from './board.page';
 import {TranslateModule} from '@ngx-translate/core';
 import {BoardCardComponent} from './board-card/board-card.component';
+import {PipeModule} from '../../../pipe.module';
 
 @NgModule({
   imports: [
@@ -18,6 +19,7 @@ import {BoardCardComponent} from './board-card/board-card.component';
     BoardPageRoutingModule,
     TranslateModule,
     ReactiveFormsModule,
+    PipeModule
   ],
   declarations: [BoardPage, BoardCardComponent]
 })

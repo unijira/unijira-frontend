@@ -157,6 +157,7 @@
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
   "project.settings.invitations.status" : "Stato",
+  "project.pages.tickets": "Ticket",
   "projects.tickets.title": "Ticket",
   "projects.tickets.export": "Esporta CSV",
   "projects.tickets.add": "Aggiungi ticket",
@@ -219,5 +220,10 @@
   "board.doneTickets" : "COMPLETATI {{value}} TICKET",
   "board.type" : "Tipo",
   "board.tag" : "Tag",
-  "board.select" : "Seleziona"
+  "board.select" : "Seleziona",
+  "board.searchText" : "Ricerca testo",
+  "board.noSprintActive": "Nessuno sprint avviato",
+  "board.epic" : "Epic",
+  "board.endSprint" : "Completa sprint",
+  "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}"
 }

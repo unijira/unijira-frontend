@@ -1,5 +1,6 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Item} from '../../../../models/Item';
+import {Item} from '../../../../models/item/Item';
+import {ItemType} from "../../../../models/item/ItemType";
 
 @Component({
   selector: 'app-board-card',
@@ -10,6 +11,12 @@ export class BoardCardComponent implements OnInit {
 
   @Input()
   itemsToShow: Item[] = [];
+
+  @Input()
+  searchedText: string = '';
+
+  itemType = ItemType;
+
 
   constructor() { }
 

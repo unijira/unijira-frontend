@@ -23,7 +23,21 @@ export class Item {
   public updatedAt: number;
 
 
-  constructor(id: number, summary: string, description: string, measureUnit: string, evaluation: number, tags: string, type: ItemType, status: ItemStatus, owner: UserInfo, father: Item) {
+  constructor(
+    id: number,
+    summary: string,
+    description: string,
+    measureUnit: string,
+    evaluation: number,
+    tags: string,
+    type: ItemType,
+    status: ItemStatus,
+    owner: UserInfo,
+    father: Item,
+    notes?: Note[],
+    assignees?: ItemAssignment[])
+  {
+    // per fare questi assegnamenti è meno verboso scrivere direttamente "public field: type" nel costruttore
     this.id = id;
     this.summary = summary;
     this.description = description;
@@ -34,8 +48,8 @@ export class Item {
     this.status = status;
     this.owner = owner;
     this.father = father;
-    this.assignees = [];
-    this.notes = [];
+    this.assignees = assignees || [];
+    this.notes = notes || [];
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
   }
