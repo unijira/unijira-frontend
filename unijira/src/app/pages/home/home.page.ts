@@ -1,10 +1,11 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
 import {Item} from '../../models/item/Item';
 import {TicketService} from '../../services/common/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
 import {PageService} from '../../services/page.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -25,6 +26,7 @@ export class HomePage implements OnInit {
     private projectService: ProjectService,
     private ticketService: TicketService,
     private pageService: PageService,
+    private router: Router
   ) {
     this.pageService.setTitle('user.home.title');
   }
@@ -33,7 +35,13 @@ export class HomePage implements OnInit {
 
     this.projectService.getProjects(0, 5).subscribe(
       (projects: Array<Project>) => {
-        this.recentProjects = projects;
+
+        this.recentProjects = projects || [];
+
+        if(this.recentProjects.length === 0) {
+          this.router.navigate(['/projects/wizard']).then();
+        }
+
       }
     );
 
