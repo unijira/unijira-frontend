@@ -105,6 +105,10 @@ export class RoadmapPage {
   public epicItem = '';
   public alert = false;
   public itemAdded= false;
+  public todayDate: Date= new Date();
+  public minStartDate : object= new Date(this.todayDate);
+  public minEndDate : object= new Date(this.todayDate);
+
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,

@@ -41,8 +41,8 @@
           style="margin-inline-start: 20px" (change)="showFathersDropDown($event)" #itemType ></ejs-dropdownlist>
       </ion-row>
       <h1></h1>
-        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
-        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
+        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" [min]='minStartDate' width="300px" ></ejs-datepicker>
+        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px"  [min]='minEndDate' style="margin-inline-start: 20px" >
         </ejs-datepicker>
       <h1></h1>
       <ion-row>
