@@ -68,7 +68,7 @@ declare var require: any;
                   "expandAllTasks": "Espandere tutto",
                   "collapseAll": "Comprimi tutto",
                   "expandAll": "Espandere tutto",
-                  "emptyRecord": "ciaoo",
+                  "emptyRecord": "Non ci sono record da visualizzare",
 
           },
           datepicker: {
@@ -395,7 +395,9 @@ export class RoadmapPage {
         taskEndDate.value = null;
         taskStartDate.value = null;
         itemType.value = null;
+        if(father !== undefined){
         father.value = null;
+      }
         this.adddialog.hide();
         this.sortSettings = {
           columns: [{ field: 'TaskID', direction: 'Ascending' }],
@@ -465,7 +467,7 @@ export class RoadmapPage {
   actionBegin(args: any) {
   }
   showFathersDropDown(args: any) {
-    if (args.itemData.value !== this.itemTypeEnum.epic) {
+    if (args.itemData !== null && args.itemData.value !== this.itemTypeEnum.epic) {
       this.enabled = true;
     } else {
       this.enabled = false;

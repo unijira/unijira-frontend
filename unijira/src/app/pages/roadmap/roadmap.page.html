@@ -36,17 +36,17 @@
     <ng-template #content >
       <h1></h1>
       <ion-row>
-        <ejs-textbox id="taskName"  [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
+        <ejs-textbox id="taskName" #taskName [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
         <ejs-dropdownlist id="itemType"  [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
-          style="margin-inline-start: 20px" (change)="showFathersDropDown($event)"></ejs-dropdownlist>
+          style="margin-inline-start: 20px" (change)="showFathersDropDown($event)" #itemType ></ejs-dropdownlist>
       </ion-row>
       <h1></h1>
-        <ejs-datepicker id="startDate"  [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
-        <ejs-datepicker id="endDate"  [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
+        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" width="300px" ></ejs-datepicker>
+        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px" style="margin-inline-start: 20px" >
         </ejs-datepicker>
       <h1></h1>
       <ion-row>
-        <ejs-dropdownlist id="father"  [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
+        <ejs-dropdownlist id="father" #farther [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
           [enabled]="enabled"></ejs-dropdownlist>
       </ion-row>
     </ng-template>
