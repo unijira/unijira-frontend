@@ -10,7 +10,6 @@ import {Membership} from '../../../../models/projects/Membership';
 import {UsersService} from '../../../../services/common/users.service';
 import {MembershipStatus} from '../../../../models/projects/MembershipStatus';
 import {PageService} from '../../../../services/page.service';
-import { ModalController } from '@ionic/angular';
 import { IonAccordionGroup } from '@ionic/angular';
 import {FormControl, Validators} from '@angular/forms';
 import {UserInfo} from '../../../../models/users/UserInfo';
@@ -42,6 +41,7 @@ export class InvitationsPage implements OnInit {
 
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
+  users: string[] = [];
 
   mailForm: FormControl = new FormControl('', [Validators.required, Validators.email]);
 
@@ -67,11 +67,17 @@ export class InvitationsPage implements OnInit {
 
         this.projectService.getMemberships(p.id).subscribe(
           members => {
+
             this.memberships = members;
+
             members.forEach(member => {
-                this.usersService.getUser(member.keyUserId).subscribe(user => member.userInfo = user);
+                this.usersService.getUser(member.keyUserId).subscribe(user => {
+                  member.userInfo = user;
+                  this.users.push(user.username);
+                });
               }
             );
+
           }
         );
 
@@ -125,7 +131,7 @@ export class InvitationsPage implements OnInit {
 
   invite() {
 
-    if(this.mailForm.value === this.userInfo.username) {
+    if(this.mailForm.value === this.userInfo.username || this.users.includes(this.mailForm.value)) {
       return;
     }
 
@@ -153,6 +159,7 @@ export class InvitationsPage implements OnInit {
       .then(results => {
 
         if (results) {
+
           this.projectService.sendInvitations(this.project.id, this.invites).subscribe(i => {
 
             if(i) {

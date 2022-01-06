@@ -25,6 +25,7 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
+
 .loading-class {
   --background: #222;
   --spinner-color: #3880ff;
@@ -92,6 +93,10 @@ mark {
 
 
 /* FIXME: Trovare un modo migliore per farlo funzionare */
-ion-content {
+ion-content:not(.popover-wrapper) {
   --padding-top: 70px !important;
+}
+
+.w-100 {
+  width: 100%;
 }

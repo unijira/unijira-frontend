@@ -79,6 +79,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
   },
+  {
+    path: 'projects/:id/tickets',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/tickets/tickets.module').then(m => m.TicketsPageModule)
+  },
 ];
 
 @NgModule({

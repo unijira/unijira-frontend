@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Item} from 'src/app/models/Item';
+import {Item} from 'src/app/models/item/Item';
 
 @Component({
   selector: 'app-backlog-edit-lock-popovers',

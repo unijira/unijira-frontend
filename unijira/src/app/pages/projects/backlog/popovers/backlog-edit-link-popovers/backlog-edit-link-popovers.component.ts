@@ -1,5 +1,5 @@
 import {Component, Input, OnInit} from '@angular/core';
-import {Item} from '../../../../../models/Item';
+import {Item} from '../../../../../models/item/Item';
 
 @Component({
   selector: 'app-backlog-edit-link-popovers',
