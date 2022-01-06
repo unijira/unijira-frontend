@@ -4,6 +4,9 @@ import {Project} from '../../models/projects/Project';
 import {HttpService} from '../http-service.service';
 import {Membership} from '../../models/projects/Membership';
 import {HttpParams} from '@angular/common/http';
+import {MembershipRoles} from '../../models/projects/MembershipRoles';
+import {MembershipStatus} from '../../models/projects/MembershipStatus';
+import {MembershipPermission} from '../../models/projects/MembershipPermission';
 
 @Injectable({
   providedIn: 'root'
@@ -65,9 +68,18 @@ export class ProjectService {
 
   }
 
-  getMemberships(idProject: number): Observable<Membership[]> {
+  getMemberships(projectId: number): Observable<Membership[]> {
 
-    return this.http.get<Membership[]>('/projects/' + idProject + '/memberships');
+    return this.http.get<Membership[]>('/projects/' + projectId + '/memberships')
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  updateMemberships(keyProjectId: number, keyUserId: number, role: MembershipRoles, status: MembershipStatus, permissions: MembershipPermission[]): Observable<Membership> {
+
+    return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyProjectId, keyUserId, role, status, permissions})
+      .pipe(catchError(() => of(null)));
+
   }
 
 }

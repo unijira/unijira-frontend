@@ -52,7 +52,7 @@ const routes: Routes = [
   {
     path: 'projects/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
+    loadChildren: () => import('./pages/projects/board/board.module').then(m => m.BoardPageModule)
   },
   {
     path: 'projects/:id/settings/details',
@@ -79,11 +79,18 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
   },
+  {
+    path: 'projects/:id/tickets',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/tickets/tickets.module').then(m => m.TicketsPageModule)
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload',
+    })
   ],
   providers: [AuthGuard],
   exports: [RouterModule]

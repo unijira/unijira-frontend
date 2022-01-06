@@ -1,4 +1,3 @@
-import {Item} from './Item';
 import {SprintInsertion} from './SprintInsertion';
 
 export class Sprint {
