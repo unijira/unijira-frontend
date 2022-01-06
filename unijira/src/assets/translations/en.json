@@ -189,5 +189,17 @@
   "wizard.toast.failed": "There was a problem creating the project.",
   "project.settings.roles.member" : "Member",
   "project.settings.roles.product.owner" : "Product Owner",
-  "project.settings.roles.scrum.master" : "Scrum Master"
+  "project.settings.roles.scrum.master" : "Scrum Master",
+  "board.toDoTickets" : "{{value}} TO DO TICKET",
+  "board.storiesTickets" : "{{value}} STORIES TICKET",
+  "board.openedTickets" : "{{value}} OPENED TICKET",
+  "board.doneTickets" : "{{value}} DONE TICKET",
+  "board.type" : "Type",
+  "board.tag" : "Tag",
+  "board.select" : "Select",
+  "board.searchText" : "Search text",
+  "board.noSprintActive": "No sprint active yet",
+  "board.epic" : "Epic",
+  "board.endSprint" : "End sprint",
+  "board.sprintDate" : "Sprint from {{d1}} to {{d2}}"
 }

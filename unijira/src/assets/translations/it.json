@@ -134,7 +134,6 @@
   "project.pages.board": "Board",
   "project.pages.backlog": "Backlog",
   "project.pages.roadmap": "Roadmap",
-  "project.pages.tickets": "Ticket",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
   "project.settings.details.toast.update.success" : "I dettagli del progetto sono stati modificati correttamente.",
@@ -158,6 +157,7 @@
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
   "project.settings.invitations.status" : "Stato",
+  "project.pages.tickets": "Ticket",
   "projects.tickets.title": "Ticket",
   "projects.tickets.export": "Esporta CSV",
   "projects.tickets.add": "Aggiungi ticket",
@@ -212,6 +212,18 @@
   "project.settings.roles.alert.description" : "I ruoli verranno assegnati ai membri scelti.",
   "project.settings.roles.toast.success" : "I ruoli sono stati assegnati correttemente",
   "project.settings.roles.toast.failed" : "Si è verificato un problema durante la procedura d'assegnamento dei ruoli.",
-  "project.settings.roles.update" : "Salva ruoli"
+  "project.settings.roles.update" : "Salva ruoli",
 
+  "board.toDoTickets" : "DA COMPLETARE {{value}} TICKET",
+  "board.storiesTickets" : "STORIES {{value}} TICKET",
+  "board.openedTickets" : "IN CORSO {{value}} TICKET",
+  "board.doneTickets" : "COMPLETATI {{value}} TICKET",
+  "board.type" : "Tipo",
+  "board.tag" : "Tag",
+  "board.select" : "Seleziona",
+  "board.searchText" : "Ricerca testo",
+  "board.noSprintActive": "Nessuno sprint avviato",
+  "board.epic" : "Epic",
+  "board.endSprint" : "Completa sprint",
+  "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}"
 }

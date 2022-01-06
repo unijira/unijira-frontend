@@ -11,7 +11,11 @@ const routes: Routes = [
   {
     path: 'permissions',
     loadChildren: () => import('./settings/permissions/permissions.module').then( m => m.PermissionsPageModule)
+  },  {
+    path: 'board',
+    loadChildren: () => import('./board/board.module').then( m => m.BoardPageModule)
   }
+
 ];
 
 @NgModule({
