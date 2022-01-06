@@ -7,7 +7,6 @@ import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {UsersService} from '../../../../services/common/users.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
-import {MembershipStatus} from '../../../../models/projects/MembershipStatus';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
