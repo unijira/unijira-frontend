@@ -7,6 +7,7 @@
   "error.auth.expired": "Session has expired",
   "error.api.default": "There was an unexpected error while trying to communicate with the server",
   "login.title": "Login",
+  "login.altTitle": "Welcome",
   "login.signIn": "Sign in",
   "login.signUp": "Sign up",
   "login.rememberMe": "Remember me",

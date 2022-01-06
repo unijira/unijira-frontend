@@ -7,6 +7,7 @@
   "error.auth.expired": "Sessione scaduta",
   "error.api.default": "Si è verificato un errore. Per favore riprova più tardi",
   "login.title": "Accedi",
+  "login.altTitle": "Benvenuto",
   "login.signIn": "Accedi",
   "login.signUp": "Registrati",
   "login.rememberMe": "Ricordami",

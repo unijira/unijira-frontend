@@ -5,6 +5,7 @@ import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
 import {unsubscribeAll} from '../../util';
 import {PageService} from '../../services/page.service';
+import {TranslateService} from "@ngx-translate/core";
 
 @Component({
   selector: 'app-login',
@@ -35,7 +36,8 @@ export class LoginPage implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private sessionService: SessionService,
-    private pageService: PageService
+    private pageService: PageService,
+    public translateService: TranslateService,
   ) {
 
     this.pageService.setTitle('login.title');
@@ -81,4 +83,11 @@ export class LoginPage implements OnInit, OnDestroy {
     }
   }
 
+  switchLanguage() {
+    if (this.translateService.currentLang === 'it') {
+      this.translateService.use('en');
+    } else {
+      this.translateService.use('it');
+    }
+  }
 }
