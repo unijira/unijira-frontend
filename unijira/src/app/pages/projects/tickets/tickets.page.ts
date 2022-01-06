@@ -1,9 +1,9 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {PageService} from '../../../services/page.service';
 import {ItemType} from '../../../models/item/ItemType';
 import {ItemStatus} from '../../../models/item/ItemStatus';
 import {TicketService} from '../../../services/common/ticket.service';
-import {Ticket} from '../../../models/projects/Ticket';
+import {Item} from '../../../models/item/Item';
 import {SessionService} from '../../../store/session.service';
 import {first} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
@@ -18,7 +18,7 @@ export class TicketsPage implements OnInit {
   filterSearch = '';
   filterStatus: string[] = [];
   filterType: string[] = [];
-  tickets: Ticket[] = null;
+  tickets: Item[] = null;
   projectId: number = null;
 
   itemType = ItemType;

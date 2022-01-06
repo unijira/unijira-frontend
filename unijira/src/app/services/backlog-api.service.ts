@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http-service.service';
 import {SessionService} from '../store/session.service';
 import {Sprint} from '../models/Sprint';
-import {Task} from '../models/Task';
+import {Item} from '../models/item/Item';
 import {User} from '../models/User';
 import {map} from 'rxjs/operators';
 
@@ -22,7 +22,7 @@ export class BacklogAPIService {
       map((res) => {
         const newBacklog = new Sprint([], new Date(), new Date());
         res.forEach((element) => {
-          const task = new Task(
+          const task = new Item(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',
@@ -75,7 +75,7 @@ export class BacklogAPIService {
         const newSprint = new Sprint([], new Date(), new Date());
         const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          const task = new Task(
+          const task = new Item(
             element.item.id,
             element.item.summary,
             element.item.status ?? 'da_completare',

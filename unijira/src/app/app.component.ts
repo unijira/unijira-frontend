@@ -168,7 +168,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkUrl() {
-    return /\/projects\/\d/.test(this.router.url);
+    return /\/projects\/\d/.test(this.router.url) && !(this.router.url.includes('invite'));
   }
 
 }
