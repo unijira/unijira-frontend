@@ -164,5 +164,27 @@
   "project.settings.invitations.toast.success" : "Tutti gli inviti sono stati inviati correttamente.",
   "project.settings.invitations.toast.failed" : "Si è verificato un problema durante la procedura d'invio degli inviti.",
   "wizard.toast.success" : "Il progetto è stato creato con successo.",
-  "wizard.toast.failed" : "Si è verificato un problema durante la creazione del progetto."
+  "wizard.toast.failed" : "Si è verificato un problema durante la creazione del progetto.",
+  "project.settings.roles.member" : "Membro",
+  "project.settings.roles.product.owner" : "Product Owner",
+  "project.settings.roles.scrum.master" : "Scrum Master",
+  "project.settings.roles.manager" : "Manager",
+  "project.settings.roles.stakeholder" : "Stakeholder",
+  "project.settings.roles.title" : "Ruoli",
+  "project.settings.roles.subtitle" : "Assegna i ruoli di un Progetto Scrum",
+  "project.settings.roles.info" : "Ogni parte del framework ha uno scopo specifico ed è essenziale per il successo e l'utilizzo di Scrum! Ad ogni ruolo sono assegnati differenti permessi al fine di usufruire delle funzionalità di Unijira.",
+  "project.settings.roles.filter" : "Filtri:",
+  "project.settings.roles.null.title" : "Sfrutta al massimo le potenzialità di Scrum!",
+  "project.settings.roles.null.subtitle" : "Seleziona con cura i ruoli da assengnare ai membri del tuo Team Scrum, utilizza i nostri suggerimenti per migliorare l'utilizzo di Scrum",
+  "project.settings.roles.search" : "Cerca tra i membri",
+  "project.settings.roles.mail" : "Indirizzo e-mail",
+  "project.settings.roles.status" : "Stato",
+  "project.settings.roles" : "Ruolo",
+  "project.settings.roles.confirm" : "Invita",
+  "project.settings.roles.alert.title" : "Sei sicuro di voler continuare?",
+  "project.settings.roles.alert.description" : "I ruoli verranno assegnati ai membri scelti.",
+  "project.settings.roles.toast.success" : "I ruoli sono stati assegnati correttemente",
+  "project.settings.roles.toast.failed" : "Si è verificato un problema durante la procedura d'assegnamento dei ruoli.",
+  "project.settings.roles.update" : "Salva ruoli"
+
 }

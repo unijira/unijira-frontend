@@ -8,15 +8,17 @@ import {RolesPageRoutingModule} from './roles-routing.module';
 
 import {RolesPage} from './roles.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../../../pipe.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    RolesPageRoutingModule,
-    TranslateModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        RolesPageRoutingModule,
+        TranslateModule,
+        PipeModule
+    ],
   declarations: [RolesPage]
 })
 export class RolesPageModule {}

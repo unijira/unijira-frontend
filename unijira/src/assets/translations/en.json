@@ -159,5 +159,8 @@
   "project.settings.invitations.toast.success": "All invitations have been sent successfully.",
   "project.settings.invitations.toast.failed": "There was a problem sending the invitations.",
   "wizard.toast.success": "The project created successfully.",
-  "wizard.toast.failed": "There was a problem creating the project."
+  "wizard.toast.failed": "There was a problem creating the project.",
+  "project.settings.roles.member" : "Member",
+  "project.settings.roles.product.owner" : "Product Owner",
+  "project.settings.roles.scrum.master" : "Scrum Master"
 }

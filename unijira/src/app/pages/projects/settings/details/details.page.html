@@ -5,35 +5,19 @@
     <ion-col size="auto">
       <div class="container-main-inner">
 
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.home' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
         <!-- Details Header -->
         <ion-grid>
-
-          <ion-row>
-
-            <ion-col>
-
-              <ion-chip [routerLink]="['/home']">
-                <ion-icon name="home-outline"></ion-icon>
-                <ion-label [translate]="'project.settings.details.home'"></ion-label>
-              </ion-chip>
-
-              <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
-
-              <ion-chip [routerLink]="['/projects/']">
-                <ion-icon name="briefcase-outline"></ion-icon>
-                <ion-label [translate]="'project.settings.details.projects'"></ion-label>
-              </ion-chip>
-
-              <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
-
-              <ion-chip [routerLink]="['/projects/' + this.project?.id + '/settings/details']">
-                <ion-icon name="settings-outline"></ion-icon>
-                <ion-label [translate]="'project.settings.details.settings'"></ion-label>
-              </ion-chip>
-
-            </ion-col>
-
-          </ion-row>
 
           <br>
 
