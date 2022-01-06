@@ -15,4 +15,5 @@ export class BoardCardComponent implements OnInit {
 
   ngOnInit() {}
 
+
 }

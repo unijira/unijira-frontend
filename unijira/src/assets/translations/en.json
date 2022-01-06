@@ -159,5 +159,12 @@
   "project.settings.invitations.toast.success": "All invitations have been sent successfully.",
   "project.settings.invitations.toast.failed": "There was a problem sending the invitations.",
   "wizard.toast.success": "The project created successfully.",
-  "wizard.toast.failed": "There was a problem creating the project."
+  "wizard.toast.failed": "There was a problem creating the project.",
+  "board.toDoTickets" : "{{value}} TO DO TICKET",
+  "board.storiesTickets" : "{{value}} STORIES TICKET",
+  "board.openedTickets" : "{{value}} OPENED TICKET",
+  "board.doneTickets" : "{{value}} DONE TICKET",
+  "board.type" : "Type",
+  "board.tag" : "Tag",
+  "board.select" : "Select"
 }

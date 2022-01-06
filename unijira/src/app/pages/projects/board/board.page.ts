@@ -25,6 +25,7 @@ export class BoardPage implements OnInit {
   project: Project;
   tags: string[] = [];
   types: string[] = [];
+  epics: Item[] = [];
 
   stories: Item[] = [];
   storiesToShow: Item[] = [];
@@ -40,12 +41,14 @@ export class BoardPage implements OnInit {
 
   tagsCheckedFC: FormControl = new FormControl([]);
   typesCheckedFC: FormControl = new FormControl([]);
+  epicCheckedFC: FormControl = new FormControl([]);
   searchFC: FormControl = new FormControl('');
 
   formGroup: FormGroup = new FormGroup({
     tags: this.tagsCheckedFC,
     types: this.typesCheckedFC,
-    search: this.searchFC
+    search: this.searchFC,
+    epic: this.epicCheckedFC
   })
 
 
@@ -97,6 +100,10 @@ export class BoardPage implements OnInit {
         this.storiesToShow.push(ins.item);
       }
 
+      if (ins.item.type === ItemType.EPIC) {
+        this.epics.push(ins.item);
+      }
+
       if (ins.item.type === ItemType.ISSUE || ins.item.type === ItemType.TASK) {
         switch (ins.item.status) {
           case ItemStatus.DONE:
@@ -115,6 +122,7 @@ export class BoardPage implements OnInit {
     });
 
     this.tags = [...new Set(this.tags)];
+    this.epics = [...new Set(this.epics)];
   }
 
   filterItems() {
@@ -139,6 +147,10 @@ export class BoardPage implements OnInit {
       this.toDoItemsToShow = this.toDoItemsToShow.filter(item => this.typesCheckedFC.value.includes(item.type));
       this.openedItemsToShow = this.openedItemsToShow.filter(item => this.typesCheckedFC.value.includes(item.type));
       this.storiesToShow = this.storiesToShow.filter(item => this.typesCheckedFC.value.includes(item.type));
+    }
+
+    if (this.epicCheckedFC.value.length > 0) {
+      this.doneItemsToShow = this.doneItemsToShow.filter(item => this.epicCheckedFC.value.includes(item.father.id));
     }
 
     this.doneItemsToShow = this.doneItemsToShow.filter(item => item.description.includes(this.searchFC.value));

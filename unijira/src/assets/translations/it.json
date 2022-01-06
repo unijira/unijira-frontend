@@ -164,5 +164,12 @@
   "project.settings.invitations.toast.success" : "Tutti gli inviti sono stati inviati correttamente.",
   "project.settings.invitations.toast.failed" : "Si è verificato un problema durante la procedura d'invio degli inviti.",
   "wizard.toast.success" : "Il progetto è stato creato con successo.",
-  "wizard.toast.failed" : "Si è verificato un problema durante la creazione del progetto."
+  "wizard.toast.failed" : "Si è verificato un problema durante la creazione del progetto.",
+  "board.toDoTickets" : "DA COMPLETARE {{value}} TICKET",
+  "board.storiesTickets" : "STORIES {{value}} TICKET",
+  "board.openedTickets" : "IN CORSO {{value}} TICKET",
+  "board.doneTickets" : "COMPLETATI {{value}} TICKET",
+  "board.type" : "Tipo",
+  "board.tag" : "Tag",
+  "board.select" : "Seleziona"
 }
