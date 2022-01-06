@@ -1,7 +1,11 @@
 import {UserInfo} from '../users/UserInfo';
+import {ItemStatus} from './ItemStatus';
+import {ItemType} from './ItemType';
+import {Note} from './Note';
+import {ItemAssignment} from './ItemAssignment';
 
 
-export class Ticket {
+export class Item {
 
   public id: number;
   public summary: string;
@@ -9,15 +13,17 @@ export class Ticket {
   public measureUnit: string;
   public evaluation: number;
   public tags: string;
-  public type: string;
-  public status: string;
+  public type: ItemType;
+  public status: ItemStatus;
   public owner: UserInfo;
-  public father: Ticket;
+  public father: Item;
+  public notes: Note[];
+  public assignees: ItemAssignment[];
   public createdAt: number;
   public updatedAt: number;
 
 
-  constructor(id: number, summary: string, description: string, measureUnit: string, evaluation: number, tags: string, type: string, status: string, owner: UserInfo, father: Ticket) {
+  constructor(id: number, summary: string, description: string, measureUnit: string, evaluation: number, tags: string, type: ItemType, status: ItemStatus, owner: UserInfo, father: Item) {
     this.id = id;
     this.summary = summary;
     this.description = description;
@@ -28,6 +34,8 @@ export class Ticket {
     this.status = status;
     this.owner = owner;
     this.father = father;
+    this.assignees = [];
+    this.notes = [];
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
   }

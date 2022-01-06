@@ -3,7 +3,7 @@ import {ProjectService} from '../../../services/common/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {PageService} from "../../../services/page.service";
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-invite',

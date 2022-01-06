@@ -8,7 +8,7 @@ import {AlertController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {FileUploadService} from '../../../../services/common/file-upload.service';
-import {PageService} from "../../../../services/page.service";
+import {PageService} from '../../../../services/page.service';
 
 @Component({
   selector: 'app-details',

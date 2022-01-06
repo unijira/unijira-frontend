@@ -1,7 +1,7 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/common/project.service';
-import {Ticket} from '../../models/projects/Ticket';
+import {Item} from '../../models/item/Item';
 import {TicketService} from '../../services/common/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
 import {PageService} from '../../services/page.service';
@@ -15,8 +15,8 @@ import {PageService} from '../../services/page.service';
 export class HomePage implements OnInit {
 
   @Input() recentProjects: Array<Project> = null;
-  @Input() myTicketsOpen: Array<Ticket> = null;
-  @Input() myTicketsDone: Array<Ticket> = null;
+  @Input() myTicketsOpen: Array<Item> = null;
+  @Input() myTicketsDone: Array<Item> = null;
   @Input() myTicketsOpenCount = 0;
   @Input() myTicketsDoneCount = 0;
   @Input() currentSegment = 'open';
@@ -38,13 +38,13 @@ export class HomePage implements OnInit {
     );
 
     this.ticketService.getMyTicketsOpen(20).subscribe(
-      (tickets: Array<Ticket>) => {
+      (tickets: Array<Item>) => {
         this.myTicketsOpen = tickets;
       }
     );
 
     this.ticketService.getMyTicketsDone(20).subscribe(
-      (tickets: Array<Ticket>) => {
+      (tickets: Array<Item>) => {
         this.myTicketsDone = tickets;
       }
     );

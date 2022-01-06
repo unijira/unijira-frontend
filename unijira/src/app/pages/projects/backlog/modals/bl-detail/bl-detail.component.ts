@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Item} from '../../../../../models/Item';
+import {Item} from '../../../../../models/item/Item';
 import {ModalController, PopoverController} from '@ionic/angular';
 import {
   BacklogEditWeightPopoversComponent
