@@ -34,11 +34,12 @@
                     <ion-spinner name="crescent" *ngIf="!project.iconLoaded"></ion-spinner>
                   </ion-col>
                   <ion-col>
-                    <ion-card-title class="ion-margin-horizontal ion-margin-top">
-                      <h2>{{ project.name }}</h2>
-                      <p>{{ project.key }}</p>
-                    </ion-card-title>
-                    <ion-item-divider></ion-item-divider>
+                    <ion-item-divider class="ion-no-padding ion-padding-bottom">
+                      <ion-card-title class="ion-margin-horizontal ion-margin-top">
+                        <h2>{{ project.name }}</h2>
+                        <p>{{ project.key }}</p>
+                      </ion-card-title>
+                    </ion-item-divider>
                     <ion-grid>
                       <ion-row>
                         <ion-col>

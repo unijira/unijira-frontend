@@ -4,21 +4,21 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {RolesPageRoutingModule} from './roles-routing.module';
+import {TicketsPageRoutingModule} from './tickets-routing.module';
 
-import {RolesPage} from './roles.page';
+import {TicketsPage} from './tickets.page';
 import {TranslateModule} from '@ngx-translate/core';
-import {PipeModule} from '../../../../pipe.module';
+import {PipeModule} from '../../../pipe.module';
 
 @NgModule({
     imports: [
         CommonModule,
         FormsModule,
         IonicModule,
-        RolesPageRoutingModule,
+        TicketsPageRoutingModule,
         TranslateModule,
         PipeModule
     ],
-  declarations: [RolesPage]
+  declarations: [TicketsPage]
 })
-export class RolesPageModule {}
+export class TicketsPageModule {}

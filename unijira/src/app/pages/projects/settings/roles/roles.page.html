@@ -1,9 +1,185 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>roles</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <!-- Project Settings Roles -->
+  <ion-row class="ion-justify-content-center ion-margin-vertical">
+    <ion-col size="auto">
+      <div class="container-main-inner">
+
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.home' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
+        <!-- Roles Header -->
+        <ion-grid>
+
+          <br>
+
+          <ion-row>
+
+            <!-- Roles Title -->
+            <ion-col>
+              <ion-text>
+                <h1 [translate]="'project.settings.roles.title'"></h1>
+              </ion-text>
+            </ion-col>
+
+            <!-- UpdateRoles -->
+            <ion-col>
+              <ion-row class="ion-justify-content-end">
+                <ion-button id="update-roles" [disabled]="!updates" (click)="updateRoles()">
+                  <ion-icon slot="start" name="people-outline"></ion-icon>
+                  <span [translate]="'project.settings.roles.update'"></span>
+                </ion-button>
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+
+            <!-- Roles Subtitle -->
+            <ion-col>
+              <ion-text>
+                <h4 [translate]="'project.settings.roles.subtitle'"></h4>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+
+            <!-- Roles Information's Icon -->
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-icon size="large" name="information-circle" class="info-icon"></ion-icon>
+            </ion-col>
+
+            <!-- Roles Information's -->
+            <ion-col class="ion-align-self-center">
+              <ion-text>
+                <h5 class="info-text" [translate]="'project.settings.roles.info'"></h5>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <br>
+          <br>
+
+
+          <ion-row>
+
+            <!-- Roles Searchbar -->
+            <ion-col size="auto" class="ion-align-self-center">
+              <div class="ion-margin">
+                <ion-searchbar [(ngModel)]="searchTerm" placeholder="{{'project.settings.roles.search' | translate}}"></ion-searchbar>
+              </div>
+            </ion-col>
+
+            <!-- Roles Filter -->
+            <ion-col *ngFor="let entry of filters" size="auto" class="ion-align-self-center">
+              <ion-list lines="none">
+                <ion-item>
+                  <ion-label>{{entry.translate | translate}}</ion-label>
+                  <ion-checkbox slot="end" [(ngModel)]="entry.active"></ion-checkbox>
+                </ion-item>
+              </ion-list>
+            </ion-col>
+
+          </ion-row>
+
+
+          <div class="ion-margin">
+
+            <!-- Invitations List -->
+
+            <ion-list-header>
+
+              <ion-col>
+                <ion-label [translate]="'project.settings.roles.mail'"></ion-label>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-label [translate]="'project.settings.roles'"></ion-label>
+              </ion-col>
+
+            </ion-list-header>
+
+
+            <ion-list>
+              <ion-item class="roles-item" *ngFor="let membership of filteredMemberships">
+
+                <!-- Profile Image -->
+                <div *ngIf="membership?.userInfo">
+                  <ion-avatar slot="start" *ngIf="membership?.userInfo.avatar !== null">
+                    <ion-img [src]="membership.userInfo.avatar" class="ion-no-margin"></ion-img>
+                  </ion-avatar>
+                </div>
+
+                <div class="ion-margin" *ngIf="membership?.userInfo">
+                  <ion-icon class="profile-icon" size="large" name="person-circle-outline" *ngIf="membership.userInfo.avatar === null"></ion-icon>
+                </div>
+
+                <!-- Profile Mail -->
+                <ion-label *ngIf="membership?.userInfo">
+                  <h2 [innerHTML]="membership.userInfo.username | filtered:searchTerm"></h2>
+                </ion-label>
+
+                <ion-label *ngIf="membership?.userInfo === undefined">
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+
+                <!-- Profile Membership Role -->
+                <ion-item slot="end" lines="none">
+                  <ion-select value='{{membership?.role}}' interface="popover" [(ngModel)]="membership.role" (ionChange)="this.updates = true">
+                    <ion-select-option value="{{MembershipRoles.member}}">{{ 'project.settings.roles.member' | translate }}</ion-select-option>
+                    <ion-select-option value="{{MembershipRoles.productOwner}}">{{ 'project.settings.roles.product.owner' | translate }}</ion-select-option>
+                    <ion-select-option value="{{MembershipRoles.scrumMaster}}">{{ 'project.settings.roles.scrum.master' | translate }}</ion-select-option>
+                    <ion-select-option value="{{MembershipRoles.stakeholder}}">{{ 'project.settings.roles.stakeholder' | translate }}</ion-select-option>
+                    <ion-select-option value="{{MembershipRoles.manager}}">{{ 'project.settings.roles.manager' | translate }}</ion-select-option>
+                  </ion-select>
+                </ion-item>
+
+
+              </ion-item>
+            </ion-list>
+
+            <ion-list *ngIf="memberships === null">
+              <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
+                <ion-label>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                  <ion-skeleton-text animated></ion-skeleton-text>
+                </ion-label>
+                <ion-skeleton-text animated></ion-skeleton-text>
+              </ion-item>
+            </ion-list>
+
+            <br>
+
+            <!-- Settings Roles Footer -->
+            <ion-grid *ngIf="memberships?.length <= 1">
+              <ion-row class="ion-justify-content-center ion-margin">
+                <img src="/assets/img/projects/settings-roles.png" class="project-settings-invitations-image" alt="">
+              </ion-row>
+              <ion-row class="ion-justify-content-center">
+                <h1 class="ion-color-medium">{{'project.settings.roles.null.title' | translate}}</h1>
+              </ion-row>
+              <ion-row class="ion-justify-content-center ion-text-center">
+                <div class="text-limit"><span class="ion-color-medium"><i>{{'project.settings.roles.null.subtitle' | translate}}</i></span></div>
+              </ion-row>
+            </ion-grid>
+
+          </div>
+
+        </ion-grid>
+
+      </div>
+    </ion-col>
+  </ion-row>
 
 </ion-content>
