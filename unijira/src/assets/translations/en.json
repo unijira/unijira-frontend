@@ -84,6 +84,7 @@
   "project.pages.backlog": "Backlog",
   "project.pages.roadmap": "Roadmap",
   "project.pages.tickets": "Tickets",
+  "project.pages.releases": "Releases",
   "project.pages.settings" : "Project settings",
   "project.pages.settings.details" : "Details",
   "project.pages.settings.notifications" : "Notifications",
@@ -181,7 +182,7 @@
   "projects.tickets.list.updatedAt": "Update Date",
   "projects.tickets.list.empty": "No tickets found",
   "projects.tickets.list.unassigned": "Unassigned",
-  "project.pages.invite.title",: "Join a project",
+  "project.pages.invite.title": "Join a project",
   "project.settings.invitations.confirm": "Invite",
   "project.settings.invitations.alert.title": "Are you sure you want to continue?",
   "project.settings.invitations.alert.description": "All selected members will receive an invitation to join the project!",
@@ -225,5 +226,7 @@
   "board.endSprint" : "End sprint",
   "board.sprintDate" : "Sprint from {{d1}} to {{d2}}",
   "projects.settings.roles.filter.type": "Select role",
-  "projects.settings.invitations.filter.type": "Select state"
+  "projects.settings.invitations.filter.type": "Select state",
+  "projects.releases.title" : "Releases",
+  "projects.releases.add" : "Add release"
 }

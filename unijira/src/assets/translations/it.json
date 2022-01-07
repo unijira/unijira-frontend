@@ -134,6 +134,8 @@
   "project.pages.board": "Board",
   "project.pages.backlog": "Backlog",
   "project.pages.roadmap": "Roadmap",
+  "project.pages.tickets": "Ticket",
+  "project.pages.releases": "Rilasci",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
   "project.settings.details.toast.update.success" : "I dettagli del progetto sono stati modificati correttamente.",
@@ -157,7 +159,6 @@
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
   "project.settings.invitations.status" : "Stato",
-  "project.pages.tickets": "Ticket",
   "projects.tickets.title": "Ticket",
   "projects.tickets.export": "Esporta CSV",
   "projects.tickets.add": "Aggiungi ticket",
@@ -229,5 +230,8 @@
   "board.endSprint" : "Completa sprint",
   "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}",
   "projects.settings.roles.filter.type" : "Seleziona ruolo",
-  "projects.settings.invitations.filter.type" : "Seleziona stato"
+  "projects.settings.invitations.filter.type" : "Seleziona stato",
+  "projects.releases.title" : "Rilasci",
+  "projects.releases.add": "Crea versione"
+
 }

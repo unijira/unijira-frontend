@@ -4,9 +4,9 @@ import { FormsModule } from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
-import { ReleasePageRoutingModule } from './release-routing.module';
+import { ReleasePageRoutingModule } from './releases-routing.module';
 
-import { ReleasePage } from './release.page';
+import { ReleasesPage } from './releases-page.component';
 
 @NgModule({
   imports: [
@@ -15,6 +15,6 @@ import { ReleasePage } from './release.page';
     IonicModule,
     ReleasePageRoutingModule
   ],
-  declarations: [ReleasePage]
+  declarations: [ReleasesPage]
 })
 export class ReleasePageModule {}
