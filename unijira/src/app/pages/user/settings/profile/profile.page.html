@@ -23,7 +23,7 @@
       <ion-row>
         <ion-col>
           <div class="round-image">
-            <ion-img [src]="avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+            <ion-img [src]="user?.avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
           </div>
         </ion-col>
       </ion-row>
@@ -42,18 +42,18 @@
       <ion-col>
           <ion-card class="ion-justify-content-center">
             <ion-card-header>
-              <ion-card-title class="ion-justify-content-center">{{(firstName || "") + " " +  (lastName || "")}}</ion-card-title>
+              <ion-card-title class="ion-justify-content-center">{{(user?.firstName || "") + " " +  (user?.lastName || "")}}</ion-card-title>
             </ion-card-header>
             <ion-card-content>
               <div>
-                <ion-text>{{'on.unijira.since' | translate}}{{createdAt || ""}}</ion-text>
+                <ion-text>{{'on.unijira.since' | translate}}{{user?.createdAt || ""}}</ion-text>
               </div>
             </ion-card-content>
           </ion-card>
           <ion-card class="ion-justify-content-center">
             <ion-card-header>
               <ion-card-subtitle><ion-icon name="hammer"></ion-icon> {{'carreer' | translate}}</ion-card-subtitle>
-              <ion-card-title class="ion-justify-content-center"><ion-input placeholder="{{'carreer.placeholder' | translate}}" [(ngModel)]="role"></ion-input></ion-card-title>
+              <ion-card-title class="ion-justify-content-center"><ion-input placeholder="{{'carreer.placeholder' | translate}}" [(ngModel)]="user.role"></ion-input></ion-card-title>
             </ion-card-header>
             <ion-card-content>
               <ion-input placeholder="{{'description.placeholder' | translate}}"></ion-input>
@@ -105,13 +105,13 @@
               <ion-col>
                 <ion-item lines="full">
                   <ion-label position="floating">{{'profile.firstname'|translate}}</ion-label>
-                  <ion-input type="text" value="{{firstName}}" placeholder="{{'profile.placeholder.firstname' | translate}}" [(ngModel)]="firstName"></ion-input>
+                  <ion-input type="text" value="{{user?.firstName}}" placeholder="{{'profile.placeholder.firstname' | translate}}" [(ngModel)]="user.firstName"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item lines="full">
                   <ion-label position="floating">{{'profile.lastname'|translate}}</ion-label>
-                  <ion-input type="text" value="{{lastName}}" placeholder="{{'profile.placeholder.lastname' | translate}}" [(ngModel)]="lastName"></ion-input>
+                  <ion-input type="text" value="{{user?.lastName}}" placeholder="{{'profile.placeholder.lastname' | translate}}" [(ngModel)]="user.lastName"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -119,13 +119,13 @@
               <ion-col>
                 <ion-item lines="full">
                   <ion-label position="floating">{{'profile.email'|translate}}</ion-label>
-                  <ion-input type="email" value="{{username}}" placeholder="{{username || 'xxxx@xmail.com'}}" [(ngModel)]="username"></ion-input>
+                  <ion-input type="email" value="{{user?.username}}" placeholder="{{user?.username || 'xxxx@xmail.com'}}" [(ngModel)]="user.username"></ion-input>
                 </ion-item>
               </ion-col>
               <ion-col>
                 <ion-item lines="full">
                   <ion-label position="floating">{{'profile.birthdate'|translate}}</ion-label>
-                  <ion-input type="text" placeholder="DD/MM/YYYY" [(ngModel)]="birthdate"></ion-input>
+                  <ion-input type="text" placeholder="DD/MM/YYYY" [(ngModel)]="user.birthDate"></ion-input>
                 </ion-item>
               </ion-col>
             </ion-row>
@@ -148,13 +148,13 @@
                 <ion-col>
                   <ion-item lines="full">
                     <ion-icon name="logo-github"></ion-icon><ion-label position="floating">Github</ion-label>
-                    <ion-input type="text"  placeholder="github.com/xxxxxx" [(ngModel)]="github"></ion-input>
+                    <ion-input type="text"  placeholder="github.com/xxxxxx" [(ngModel)]="user.github"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col>
                   <ion-item lines="full">
                     <ion-icon name="logo-linkedin"></ion-icon><ion-label position="floating">Linkedin</ion-label>
-                    <ion-input type="text" placeholder="linkedin.com/xxxxxx" [(ngModel)]="linkedin"></ion-input>
+                    <ion-input type="text" placeholder="linkedin.com/xxxxxx" [(ngModel)]="user.linkedin"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -162,7 +162,7 @@
                 <ion-col>
                   <ion-item lines="full">
                     <ion-icon name="call"></ion-icon><ion-label position="floating">{{'profile.phone.number'|translate}}</ion-label>
-                    <ion-input type="email" placeholder="+00-000 0000000" [(ngModel)]="phoneNumber"></ion-input>
+                    <ion-input type="email" placeholder="+00-000 0000000" [(ngModel)]="user.phoneNumber"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
