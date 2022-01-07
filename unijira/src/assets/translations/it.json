@@ -163,6 +163,8 @@
   "project.roadmap.duration": "Durata",
   "project.roadmap.type": "Tipo",
   "project.roadmap.addNewItem.title": "Aggiungi un nuovo item",
-  "project.roadmap.selectFather": "Seleziona un padre"
+  "project.roadmap.selectFather": "Seleziona un padre",
+  "project.roadmap.status": "Stato"
+
 
 }

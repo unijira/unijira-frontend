@@ -24,6 +24,7 @@
         </ng-template>
       </e-column>
       <e-column field="TaskName" [headerText]="'project.roadmap.taskName' | translate" width="150"> </e-column>
+      <e-column field="Status" [headerText]="'project.roadmap.status' | translate" width="150"> </e-column>
       <e-column field="StartDate" [headerText]="'project.roadmap.startDate' | translate" width="150"></e-column>
       <e-column field="EndDate" [headerText]="'project.roadmap.endDate' | translate" width="150"></e-column>
       <e-column field="Duration" [headerText]="'project.roadmap.duration'| translate" width="150"></e-column>
@@ -36,13 +37,13 @@
     <ng-template #content >
       <h1></h1>
       <ion-row>
-        <ejs-textbox id="taskName" #taskName [placeholder]="'project.roadmap.taskName' | translate" width="300px"></ejs-textbox>
+        <ejs-textbox id="taskName" #taskName [placeholder]="'project.roadmap.taskName' | translate" maxlength=200 width="300px"></ejs-textbox>
         <ejs-dropdownlist id="itemType"  [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
           style="margin-inline-start: 20px" (change)="showFathersDropDown($event)" #itemType ></ejs-dropdownlist>
       </ion-row>
       <h1></h1>
-        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" [min]='minStartDate' width="300px" ></ejs-datepicker>
-        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px"  [min]='minEndDate' style="margin-inline-start: 20px" >
+        <ejs-datepicker id="startDate" #startDate [placeholder]="'project.roadmap.startDate' | translate" [min]='minStartDate' format="dd MMMM yyyy"width="300px" ></ejs-datepicker>
+        <ejs-datepicker id="endDate" #endDate [placeholder]="'project.roadmap.endDate' | translate" width="300px"  [min]='minEndDate' format="dd MMMM yyyy" style="margin-inline-start: 20px" >
         </ejs-datepicker>
       <h1></h1>
       <ion-row>

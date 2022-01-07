@@ -60,7 +60,7 @@ declare var require: any;
                   "edit": "Modifica",
                   "update": "Aggiorna",
                   "delete": "Elimina",
-                  "cancel": "Cancella",
+                  "cancel": "Annulla",
                   "search": "Cerca",
                   "addTask": "Aggiungi Item",
                   "editTask": "Modifica Item",
@@ -68,7 +68,8 @@ declare var require: any;
                   "expandAllTasks": "Espandere tutto",
                   "collapseAll": "Comprimi tutto",
                   "expandAll": "Espandere tutto",
-                  "emptyRecord": "Non ci sono record da visualizzare",
+                  "emptyRecord": "No record tooo",
+                  "confirmDelete": "Sei sicuro di voler eliminare questo item?"
 
           },
           datepicker: {
@@ -108,7 +109,7 @@ export class RoadmapPage {
   public todayDate: Date= new Date();
   public minStartDate : object= new Date(this.todayDate);
   public minEndDate : object= new Date(this.todayDate);
-
+  public Status = 'Aperto';
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -132,7 +133,7 @@ export class RoadmapPage {
         require("cldr-data/main/it/ca-gregorian.json"),
         require("cldr-data/supplemental/numberingSystems.json"),
         require("cldr-data/main/it/timeZoneNames.json"),
-        require('cldr-data/supplemental/weekdata.json') // To load the culture based first day of week
+        require('cldr-data/supplemental/weekdata.json')
       );
     }
     this.translateService.onLangChange.subscribe(()=>{
@@ -143,11 +144,13 @@ export class RoadmapPage {
         require("cldr-data/main/it/ca-gregorian.json"),
         require("cldr-data/supplemental/numberingSystems.json"),
         require("cldr-data/main/it/timeZoneNames.json"),
-        require('cldr-data/supplemental/weekdata.json') // To load the culture based first day of week
+        require('cldr-data/supplemental/weekdata.json')
       );
     }
     else {
+      this.Status='Open'
       setCulture('en');
+
     }
   });
 }
@@ -156,26 +159,12 @@ export class RoadmapPage {
   }
 
   public initGantt(){
-     // Init columns
-     this.columns = [
-      { field: 'TaskID', headerText: ' ID', width: 100 },
-      {
-        field: 'ItemType',
-        headerText: ' Type',
-        editType: 'stringedit',
-        mappingName: 'itemType',
-        width: 120,
-      },
-      { field: 'TaskName', headerText: ' Name', width: 200 },
-      { field: 'StartDate', headerText: 'Start Date' },
-      { field: 'EndDate', headerText: 'End Date' },
-      { field: 'Duration', headerText: 'Duration' },
-    ];
     // Init taskSetting
     this.taskSettings = {
       id: 'TaskID',
       itemType: 'ItemType',
       name: 'TaskName',
+      status: 'Status',
       startDate: 'StartDate',
       endDate: 'EndDate',
       duration: 'Duration',
@@ -195,7 +184,7 @@ export class RoadmapPage {
     //Iinit toolbar
     this.toolbar = ['Add', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll'];
     this.splitterSettings = {
-      position: '25%',
+      position: '30%',
     };
     this.sortSettings = {
       columns: [{ field: 'TaskID', direction: 'Ascending' }],
@@ -235,6 +224,7 @@ export class RoadmapPage {
       if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,
+          Status: this.Status,
           TaskID: currentId,
           StartDate: taskStartDate.value,
           EndDate: taskEndDate.value,
@@ -267,11 +257,13 @@ export class RoadmapPage {
                   TaskName: this.data[i].TaskName,
                   TaskID: this.data[i].TaskID,
                   StartDate: this.data[i].StartDate,
+                  Status: this.data[i].Status,
                   EndDate: this.data[i].EndDate,
                   ItemType: this.data[i].ItemType,
                   subtasks: this.subtasksTmp.concat({
                     TaskName: tasknameObj.value,
                     TaskID: currentId,
+                    Status: this.Status,
                     StartDate: taskStartDate.value,
                     EndDate: taskEndDate.value,
                     ItemType: itemType.value,
@@ -282,6 +274,7 @@ export class RoadmapPage {
                 recordFather = {
                   TaskName: this.data[i].TaskName,
                   TaskID: this.data[i].TaskID,
+                  Status: this.data[i].Status,
                   StartDate: this.data[i].StartDate,
                   EndDate: this.data[i].EndDate,
                   ItemType: this.data[i].ItemType,
@@ -290,6 +283,7 @@ export class RoadmapPage {
                       TaskName: tasknameObj.value,
                       TaskID: currentId,
                       StartDate: taskStartDate.value,
+                      Status: this.Status,
                       EndDate: taskEndDate.value,
                       ItemType: itemType.value,
                     },
@@ -335,6 +329,7 @@ export class RoadmapPage {
                       TaskName: this.subTasksEpic[j].TaskName,
                       TaskID: this.subTasksEpic[j].TaskID,
                       StartDate: this.subTasksEpic[j].StartDate,
+                      Status: this.subTasksEpic[j].Status,
                       EndDate: this.subTasksEpic[j].EndDate,
                       ItemType: this.subTasksEpic[j].ItemType,
                       subtasks: this.subtasksTmpStory.concat({
@@ -351,6 +346,7 @@ export class RoadmapPage {
                       TaskName: this.subTasksEpic[j].TaskName,
                       TaskID: this.subTasksEpic[j].TaskID,
                       StartDate: this.subTasksEpic[j].StartDate,
+                      Status: this.subTasksEpic[j].Status,
                       EndDate: this.subTasksEpic[j].EndDate,
                       ItemType: this.subTasksEpic[j].ItemType,
                       subtasks: [
@@ -358,6 +354,7 @@ export class RoadmapPage {
                           TaskName: tasknameObj.value,
                           TaskID: currentId,
                           StartDate: taskStartDate.value,
+                          Status: this.Status,
                           EndDate: taskEndDate.value,
                           ItemType: itemType.value,
                         },
