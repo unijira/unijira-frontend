@@ -1,3 +1,4 @@
+import { forEach } from 'lodash';
 import { Injectable } from '@angular/core';
 import { HttpService } from './http-service.service';
 import { SessionService } from '../store/session.service';
@@ -19,23 +20,18 @@ export class BacklogAPIService {
 
   getFirstBacklog(projectId: number) {
     const url = `/projects/${projectId}/backlogs`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => res[0])
-    );
+    return this.httpService.get<any>(url).pipe(map((res) => res[0]));
   }
 
   getBacklog(projectId: number, backlogId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}`;
-    return this.httpService.get<Backlog>(url).pipe(
-      map((res) => res)
-    );
+    return this.httpService.get<Backlog>(url).pipe(map((res) => res));
   }
 
   getBacklogItems(projectId: number, backlogId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
     return this.httpService.get<BacklogInsertion>(url);
   }
-
 
   getSprintItems(projectId: number, backlogId: number, sprintId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
@@ -84,22 +80,16 @@ export class BacklogAPIService {
 
   getBacklogList(projectId: number) {
     const url = `/projects/${projectId}/backlogs`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => res)
-    );
+    return this.httpService.get<any>(url).pipe(map((res) => res));
   }
 
   getSprintList(projectId: number, backlogId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => res)
-    );
+    return this.httpService.get<any>(url);
   }
 
   getSprintInfo(projectId: number, backlogId: number, sprintId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => res)
-    );
+    return this.httpService.get<any>(url).pipe(map((res) => res));
   }
 }

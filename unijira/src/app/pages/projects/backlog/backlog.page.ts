@@ -20,7 +20,7 @@ import { Backlog } from '../../../models/Backlog';
 import { BacklogInsertion } from '../../../models/BacklogInsertion';
 import { SprintInsertion } from '../../../models/SprintInsertion';
 import { forEach } from 'lodash';
-import { Item }  from '../../../models/item/Item';
+import { Item } from '../../../models/item/Item';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -64,11 +64,8 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService.getFirstBacklog(this.projectId).subscribe((res) => {
       that.backlogId = res.id;
       that.sprintId = res.sprints[0].id;
-      that.backlog = res;
-      that.sprint = res.sprints[0];
+      this.getFromApi();
     });
-
-
 
     this.backlogAPIService
       .getSprintInfo(this.projectId, this.backlogId, this.sprintId)
@@ -142,14 +139,11 @@ export class BacklogPage implements OnInit {
         datetoSend1,
         dateToSend2
       )
-      .subscribe((response) => {
-      });
+      .subscribe((response) => {});
   }
-  onDateChangeStart(ev) {
-  }
+  onDateChangeStart(ev) {}
 
-  onDateChangeEnd(ev) {
-  }
+  onDateChangeEnd(ev) {}
   /* MODAL */
   async presentModal(task) {
     const modal = await this.modalController.create({
@@ -239,6 +233,8 @@ export class BacklogPage implements OnInit {
     }
   }
 
+
+
   getFromApi() {
     const that = this;
     this.backlogAPIService
@@ -271,7 +267,7 @@ export class BacklogPage implements OnInit {
   }
   changeSprint(ev) {
     this.sprintId = ev;
-    this.changeRoute();
+    this.getFromApi();
   }
 
   saveToAPI() {
@@ -300,7 +296,6 @@ export class BacklogPage implements OnInit {
     // TODO
     alert('Create sprint');
   }
-
 
   async editPesoPopover(ev: any, task, type) {
     const popOver = await this.popOverCtrl.create({

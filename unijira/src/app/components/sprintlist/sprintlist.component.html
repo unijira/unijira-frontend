@@ -1,9 +1,6 @@
-Sprint Disponibili per questo p{{projectId}} e b{{backlogId}} =>   {{sprintList.length}}
 <ion-item>
   <ion-label>Sprint</ion-label>
   <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange) = "handleSelection($event)">
     <ion-select-option *ngFor="let sprint of sprintList" value="{{ sprint.id }}">{{ sprint.id }}</ion-select-option>
-    <ion-select-option value="42">42</ion-select-option>
-
   </ion-select>
 </ion-item>

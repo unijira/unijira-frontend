@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NTU2NTYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTUyMDU2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.yHjSTO8-0GlZxKmYc9ijrLB1RRO3zuDDVJguJZmBFlU
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NjY5ODUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTYzMzg1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.jjHsB9WE60MDRlxjnlwzx9fQkUx5S2LlEaS-xtDq9dU
 
 # @token = {{login.response.body.token}}
 
@@ -266,7 +266,7 @@ Content-Type: application/json
 ### Item (generici) #####################################
 
 ### Tutti gli item 
-GET http://localhost:7080/items
+GET http://localhost:7080/items/2
 Authorization: Bearer {{token}}
 
 ### 

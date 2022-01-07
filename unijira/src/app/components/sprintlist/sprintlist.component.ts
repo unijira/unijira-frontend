@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
 import { Sprint } from '../../models/Sprint';
 // import { Task } from '../../models/';
 import { Item } from '../../models/item/Item';
@@ -9,7 +9,7 @@ import { BacklogAPIService } from 'src/app/services/backlog-api.service';
   templateUrl: './sprintlist.component.html',
   styleUrls: ['./sprintlist.component.scss'],
 })
-export class SprintlistComponent implements OnInit {
+export class SprintlistComponent implements OnInit, OnChanges {
   @Input() projectId: number;
   @Input() backlogId: number;
   @Output() sprintSelected = new EventEmitter();
@@ -25,14 +25,15 @@ export class SprintlistComponent implements OnInit {
     this.sprintList = [];
   }
 
-  ngOnInit() {
-    if (this.projectId !== 0 && this.backlogId !== 0) {
-      this.backlogService
-        .getSprintList(this.projectId, this.backlogId)
-        .subscribe((res) => {
-          this.sprintList = res;
-        });
-    }
+  ngOnInit() {}
+
+  ngOnChanges() {
+    this.backlogService
+    .getSprintList(this.projectId, this.backlogId)
+    .subscribe((res) => {
+      this.sprintList = res;
+      console.log('SPRINTLIST ',this.sprintList);
+    });
   }
 
   handleSelection(ev) {
