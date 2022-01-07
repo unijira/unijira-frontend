@@ -26,14 +26,16 @@ export class RolesPage implements OnInit {
   @Input() updates = false;
 
   @Input() filters = [
-    { value: MembershipRoles.member,  translate: 'project.settings.roles.member',  active: true },
-    { value: MembershipRoles.productOwner,  translate: 'project.settings.roles.product.owner',  active: true },
-    { value: MembershipRoles.scrumMaster, translate: 'project.settings.roles.scrum.master', active: true },
-    { value: MembershipRoles.manager, translate: 'project.settings.roles.manager', active: true },
-    { value: MembershipRoles.stakeholder, translate: 'project.settings.roles.stakeholder', active: true }
+    { value: MembershipRoles.member,  translate: 'project.settings.roles.member'},
+    { value: MembershipRoles.productOwner,  translate: 'project.settings.roles.product.owner'},
+    { value: MembershipRoles.scrumMaster, translate: 'project.settings.roles.scrum.master'},
+    { value: MembershipRoles.manager, translate: 'project.settings.roles.manager'},
+    { value: MembershipRoles.stakeholder, translate: 'project.settings.roles.stakeholder'}
   ];
 
-  @Input() users = [];
+  @Input() filterType: string[] = [];
+  @Input() currentRoles: any = [];
+  @Input() initialRoles: any = [];
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MembershipRoles = MembershipRoles;
@@ -56,34 +58,38 @@ export class RolesPage implements OnInit {
 
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
-    this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
+    this.activatedRoute.params.subscribe(params => {
 
-      this.project = p;
+      this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
 
-      if(p) {
+        this.project = p;
 
-        this.projectService.getMemberships(p.id).subscribe(
-          members => {
+        if(p) {
 
-            this.memberships = members;
+          this.projectService.getMemberships(p.id).subscribe(
+            members => {
 
-            console.log(this.memberships);
+              this.memberships = members;
 
-            members.forEach(member => {
-                this.usersService.getUser(member.keyUserId).subscribe(user => {
-                  member.userInfo = user;
-                });
-              }
-            );
+              members.forEach(member => {
 
-          }
-        );
+                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+                    member.userInfo = user;
+                  });
 
-      }
+                  this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+                  this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+                }
+              );
+
+            }
+          );
+
+        }
+
+      });
 
     });
-
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
   }
 
@@ -97,16 +103,13 @@ export class RolesPage implements OnInit {
 
     this.filters.forEach(f => {
 
-        if(f.active) {
+        this.memberships.forEach(membership => {
 
-          this.memberships.forEach(membership => {
+          if (membership.role === f.value && !(this.filterType.includes(f.value))) {
+            filtered.push(membership);
+          }
 
-            if (membership.role === f.value) {
-              filtered.push(membership);
-            }
-
-          });
-        }
+        });
 
       }
     );
@@ -123,7 +126,6 @@ export class RolesPage implements OnInit {
   }
 
   updateRoles() {
-
 
     this.showAlert(this.translateService.instant('project.settings.roles.alert.title'),
       this.translateService.instant('project.settings.roles.alert.description'),
@@ -143,13 +145,21 @@ export class RolesPage implements OnInit {
 
                 this.projectService.getMemberships(this.project.id).subscribe(
                   members => {
+
                     this.memberships = members;
+
                     members.forEach(m => {
                         this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
                       }
                     );
+
+                    this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+                    this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+
                   }
                 );
+
+                this.updates = false;
 
               } else {
 
@@ -206,6 +216,38 @@ export class RolesPage implements OnInit {
       await alert.present();
 
     });
+  }
+
+  updateChange($event: any, keyUserId: number | undefined) {
+
+    let modify = false;
+
+    this.currentRoles.forEach(item => {
+
+      if(item.keyUserId === keyUserId) {
+        item.role = $event.detail.value;
+      }
+
+    });
+
+
+    this.currentRoles.forEach(i => {
+      this.initialRoles.forEach(j => {
+
+        if(i.keyUserId === j.keyUserId) {
+          if(i.role !== j.role) {
+            this.updates = true;
+            modify = true;
+          }
+        }
+
+      });
+    });
+
+    if(!modify) {
+      this.updates = false;
+    }
+
   }
 
 }
