@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NTAxNzYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTQ2NTc2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.4mqLMu9n4XPsOv_I_f2NAA4ewwgILPijy-k8EglgjCo
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NTU2NTYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTUyMDU2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.yHjSTO8-0GlZxKmYc9ijrLB1RRO3zuDDVJguJZmBFlU
 
 # @token = {{login.response.body.token}}
 
@@ -59,6 +59,10 @@ Authorization: Bearer {{token}}
 
 ###
 GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items
 Authorization: Bearer {{token}}
 
 ###

@@ -7,7 +7,7 @@ export class Backlog {
   constructor(
     public id: number,
     public project: Project,
-    public sprint: Sprint,
+    public sprints: Sprint[],
     public insertions: BacklogInsertion[],
   ) {
 

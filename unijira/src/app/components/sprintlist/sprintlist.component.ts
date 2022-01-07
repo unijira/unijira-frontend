@@ -10,7 +10,6 @@ import { BacklogAPIService } from 'src/app/services/backlog-api.service';
   styleUrls: ['./sprintlist.component.scss'],
 })
 export class SprintlistComponent implements OnInit {
-
   @Input() projectId: number;
   @Input() backlogId: number;
   @Output() sprintSelected = new EventEmitter();
@@ -26,21 +25,17 @@ export class SprintlistComponent implements OnInit {
     this.sprintList = [];
   }
 
-
   ngOnInit() {
-    this.backlogService.getSprintList(this.projectId, this.backlogId).subscribe((res) => {
-      this.sprintList = res;
-      console.log(res);
-    });
+    if (this.projectId !== 0 && this.backlogId !== 0) {
+      this.backlogService
+        .getSprintList(this.projectId, this.backlogId)
+        .subscribe((res) => {
+          this.sprintList = res;
+        });
+    }
   }
-
 
   handleSelection(ev) {
     this.sprintSelected.emit(ev.target.value);
   }
-
-
-
-
-
 }
