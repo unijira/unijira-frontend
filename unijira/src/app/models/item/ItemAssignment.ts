@@ -5,7 +5,7 @@ export class ItemAssignment {
 
   constructor(
     public id: number,
-    public item: Item,
+    public itemId: number,
     public assignee: UserInfo
   ) {
   }

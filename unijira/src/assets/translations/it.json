@@ -184,6 +184,7 @@
   "projects.tickets.list.createdAt": "Data di creazione",
   "projects.tickets.list.updatedAt": "Data di aggiornamento",
   "projects.tickets.list.empty": "Nessun ticket trovato",
+  "projects.tickets.list.unassigned": "Non assegnato",
   "project.pages.invite.title" : "Patecipa ad un progetto",
   "project.settings.invitations.confirm" : "Invita",
   "project.settings.invitations.alert.title" : "Sei sicuro di voler continuare?",

@@ -155,23 +155,27 @@
             </ion-col>
             <ion-col size="1">
               <ion-text *ngIf="!ticket.owner">
-                &ndash;
+                &mdash;
               </ion-text>
-              <ion-row *ngIf="ticket.owner" [title]="ticket.owner.username" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
+              <ion-row *ngIf="ticket.owner" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
                 <ion-col size="auto">
-                  <ion-avatar class="row-icon">
+                  <ion-avatar class="row-icon" [title]="ticket.owner.username">
                     <ion-img [src]="ticket.owner.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                   </ion-avatar>
-                </ion-col>
-                <ion-col>
-                  <ion-label>
-                    <small>{{ ticket.owner.username }}</small>
-                  </ion-label>
                 </ion-col>
               </ion-row>
             </ion-col>
             <ion-col>
-              <!-- Assignees -->
+              <ion-text *ngIf="!ticket.assignees?.length" color="medium">
+                <small><i [translate]="'projects.tickets.list.unassigned'"></i></small>
+              </ion-text>
+              <ion-row *ngIf="ticket.assignees.length" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
+                <ion-col *ngFor="let assignee of ticket.assignees.slice(0, 3)" size="auto">
+                  <ion-avatar class="row-icon" [title]="assignee.assignee.username">
+                    <ion-img [src]="assignee.assignee?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                  </ion-avatar>
+                </ion-col>
+              </ion-row>
             </ion-col>
             <ion-col>
               <ion-badge [color]="getBadgeColor(ticket.status)">

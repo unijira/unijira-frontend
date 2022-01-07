@@ -6,6 +6,7 @@ import {HttpService} from '../http-service.service';
 import {AccountService} from '../account.service';
 import {ItemType} from '../../models/item/ItemType';
 import {ItemStatus} from '../../models/item/ItemStatus';
+import {ItemAssignment} from '../../models/item/ItemAssignment';
 
 @Injectable({
   providedIn: 'root'
@@ -20,17 +21,16 @@ export class TicketService {
 
   public getMyTicketsOpen(limit: number): Observable<Item[]> {
 
-    return this.http.get<Item[]>('/users/0/tickets/OPEN', new HttpParams()
+    return this.http.get<Item[]>('/users/me/tickets/OPEN', new HttpParams()
         .set('page', 0)
         .set('size', limit))
       .pipe(catchError(e => of([])));
-
 
   }
 
   public getMyTicketsDone(limit: number): Observable<Item[]> {
 
-    return this.http.get<Item[]>('/users/0/tickets/DONE', new HttpParams()
+    return this.http.get<Item[]>('/users/me/tickets/DONE', new HttpParams()
       .set('page', 0)
       .set('size', limit))
       .pipe(catchError(e => of([])));
@@ -41,7 +41,9 @@ export class TicketService {
 
     return this.accountService.me()
       .pipe(map(me => [
-          new Item(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Description 1', null, 1, null, ItemType.epic, ItemStatus.open, me, null),
+          new Item(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Description 1', null, 1, null, ItemType.epic, ItemStatus.open, me, null, null, [
+            new ItemAssignment(1, 1, me),
+          ]),
           new Item(2, 'Summary 2', 'Description 2', null, 1, null, ItemType.story, ItemStatus.open, me, null),
           new Item(3, 'Summary 3', 'Description 3', null, 1, null, ItemType.epic, ItemStatus.open, me, null),
           new Item(4, 'Summary 4', 'Description 4', null, 1, null, ItemType.epic, ItemStatus.done, me, null),
