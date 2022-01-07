@@ -20,47 +20,47 @@ export class BacklogAPIService {
     const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
     return this.httpService.get<any>(url).pipe(
       map((res) => {
-        const newBacklog = new Sprint([], new Date(), new Date());
-        res.forEach((element) => {
-          const task = new Item(
-            element.item.id,
-            element.item.summary,
-            element.item.status ?? 'da_completare',
-            [
-              new User(
-                element.item.owner.id,
-                element.item.owner.username,
-                '',
-                '',
-                '',
-                '',
-                null
-              ),
-            ],
-            element.item.evaluation,
-            element.item.children,
-            element.item.type,
-            element.item.comments,
-            element.item.tags.split(';'),
-            element.item.description,
-            element.item.note,
-            element.item.epic,
-            element.item.story,
-            element.backlog.sprints
-              ? '#' + element.backlog.sprints[0].id
-              : '--',
-            new User(
-              element.item.owner.id,
-              element.item.owner.username,
-              '',
-              '',
-              '',
-              '',
-              null
-            )
-          );
-          newBacklog.tasks.push(task);
-        });
+        const newBacklog = new Sprint(0, new Date(), new Date(), [],  0);
+        // res.forEach((element) => {
+        //   const task = new Item(
+        //     element.item.id,
+        //     element.item.summary,
+        //     element.item.status ?? 'da_completare',
+        //     [
+        //       new User(
+        //         element.item.owner.id,
+        //         element.item.owner.username,
+        //         '',
+        //         '',
+        //         '',
+        //         '',
+        //         null
+        //       ),
+        //     ],
+        //     element.item.evaluation,
+        //     element.item.children,
+        //     element.item.type,
+        //     element.item.comments,
+        //     element.item.tags.split(';'),
+        //     element.item.description,
+        //     element.item.note,
+        //     element.item.epic,
+        //     element.item.story,
+        //     element.backlog.sprints
+        //       ? '#' + element.backlog.sprints[0].id
+        //       : '--',
+        //     new User(
+        //       element.item.owner.id,
+        //       element.item.owner.username,
+        //       '',
+        //       '',
+        //       '',
+        //       '',
+        //       null
+        //     )
+        //   );
+        //   newBacklog.tasks.push(task);
+        // });
         return newBacklog;
       })
     );
@@ -72,49 +72,49 @@ export class BacklogAPIService {
     return this.httpService.get<any>(url).pipe(
       map((res) => {
         if (res.length === 0) {
-          return new Sprint([], new Date(), new Date());
+          return new Sprint(0, new Date(), new Date(), [], 0);
         }
-        const newSprint = new Sprint([], new Date(), new Date());
+        const newSprint = new Sprint(0, new Date(), new Date(), [], 0);
         const randInt = Math.floor(Math.random() * (110 - 100) + 100);
         res.forEach((element) => {
-          const task = new Item(
-            element.item.id,
-            element.item.summary,
-            element.item.status ?? 'da_completare',
-            [
-              new User(
-                element.item.owner.id,
-                element.item.owner.username,
-                '',
-                '',
-                '',
-                '',
-                null
-              ),
-            ],
-            element.item.evaluation,
-            element.item.children,
-            element.item.type,
-            element.item.comments,
-            element.item.description,
-            element.item.tags,
-            element.item.note,
-            element.item.epic,
-            element.item.story,
-            element.backlog.sprints
-              ? '#' + element.backlog.sprints[0].id
-              : '--',
-            new User(
-              element.item.owner.id,
-              element.item.owner.username,
-              '',
-              '',
-              '',
-              '',
-              null
-            )
-          );
-          newSprint.tasks.push(task);
+          // const task = new Item(
+          //   element.item.id,
+          //   element.item.summary,
+          //   element.item.status ?? 'da_completare',
+          //   [
+          //     new User(
+          //       element.item.owner.id,
+          //       element.item.owner.username,
+          //       '',
+          //       '',
+          //       '',
+          //       '',
+          //       null
+          //     ),
+          //   ],
+          //   element.item.evaluation,
+          //   element.item.children,
+          //   element.item.type,
+          //   element.item.comments,
+          //   element.item.description,
+          //   element.item.tags,
+          //   element.item.note,
+          //   element.item.epic,
+          //   element.item.story,
+          //   element.backlog.sprints
+          //     ? '#' + element.backlog.sprints[0].id
+          //     : '--',
+          //   new User(
+          //     element.item.owner.id,
+          //     element.item.owner.username,
+          //     '',
+          //     '',
+          //     '',
+          //     '',
+          //     null
+          //   )
+          // );
+          // newSprint.tasks.push(task);
         });
         return newSprint;
       })
@@ -141,34 +141,34 @@ export class BacklogAPIService {
 
   setBacklog(projectId: number, backlogId: number, backlog: Sprint) {
     const items = [];
-    console.log('[MAP setBacklog] #items ', backlog.tasks.length);
-    backlog.tasks.forEach((element, index) => {
-      items.push({
-        id: element.id,
-        item: {
-          id: element.id,
-          summary: element.name,
-          description: element.description,
-          measureUnit: 'story points',
-          evaluation: element.weight,
-          tags: element.tags.join(';'),
-          type: element.type,
-          notes: [],
-          owner: {
-            id: 1,
-            username: 'paolaguarasci@gmail.com',
-          },
-          assegnees: [
-            {
-              id: 1,
-              username: 'paolaguarasci@gmail.com',
-            },
-          ],
-          father: null,
-        },
-        priority: '' + index,
-      });
-    });
+    // console.log('[MAP setBacklog] #items ', backlog.tasks.length);
+    // backlog.tasks.forEach((element, index) => {
+    //   items.push({
+    //     id: element.id,
+    //     item: {
+    //       id: element.id,
+    //       summary: element.name,
+    //       description: element.description,
+    //       measureUnit: 'story points',
+    //       evaluation: element.weight,
+    //       tags: element.tags.join(';'),
+    //       type: element.type,
+    //       notes: [],
+    //       owner: {
+    //         id: 1,
+    //         username: 'paolaguarasci@gmail.com',
+    //       },
+    //       assegnees: [
+    //         {
+    //           id: 1,
+    //           username: 'paolaguarasci@gmail.com',
+    //         },
+    //       ],
+    //       father: null,
+    //     },
+    //     priority: '' + index,
+    //   });
+    // });
 
     items.forEach((element) => {
       const url = `/projects/${projectId}/backlogs/${backlogId}/items/${element.id}`;

@@ -16,12 +16,12 @@ const routes: Routes = [
     path: 'registration',
     loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule)
   },
-  // {
-  //   path: 'projects/:id/backlog',
-  //   // canActivate: [AuthGuard],
-  //   loadChildren: () =>
-  //     import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
-  // },
+  {
+    path: 'projects/:id/backlog',
+    // canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
+  },
   {
     path: 'auth/active',
     loadChildren: () =>

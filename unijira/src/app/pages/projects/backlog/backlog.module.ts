@@ -1,5 +1,5 @@
-import { SprintlistComponent } from './../components/sprintlist/sprintlist.component';
-import { BackloglistComponent } from './../components/backloglist/backloglist.component';
+import { SprintlistComponent } from '../../../components/sprintlist/sprintlist.component';
+import { BackloglistComponent } from '../../../components/backloglist/backloglist.component';
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';

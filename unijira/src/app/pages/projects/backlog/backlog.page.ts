@@ -1,17 +1,16 @@
-import { monthsName } from './../util';
+// import { monthsName } from './../util';
 import { Component, OnInit } from '@angular/core';
-import { Sprint } from '../models/Sprint';
+import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
-import { TaskService } from '../store/task.service';
-import * as TaskActions from '../store/task.action';
+import { TaskService } from '../../../store/task.service';
+import * as TaskActions from '../../../store/task.action';
 import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import { BlDetailComponent } from '../modals/bl-detail/bl-detail.component';
+import { BlDetailComponent } from './modals/bl-detail/bl-detail.component';
 import { ModalController, PopoverController } from '@ionic/angular';
-import { BacklogAPIService } from '../services/backlog-api.service';
-import { BacklogEditWeightPopoversComponent } from '../popovers/backlog/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from '../popovers/backlog/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-
+import { BacklogAPIService } from '../../../services/backlog-api.service';
+import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
@@ -24,8 +23,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./backlog.page.scss'],
 })
 export class BacklogPage implements OnInit {
-  sprint: Sprint = new Sprint([], new Date(), new Date());
-  backlog: Sprint = new Sprint([], new Date(), new Date());
+  sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
+  backlog: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
 
   filterP$: number;
   filterB$: number;
@@ -62,25 +61,27 @@ export class BacklogPage implements OnInit {
     private router: Router
   ) {
     const that = this;
-    this.backlogAPIService.getSprintInfo(this.projectId, this.backlogId, this.sprintId).subscribe((response) => {
-      // that.sprintInfo = response;
-      // that.startSprintDate = new Date(response.startingDate);
-      // that.endSprintDate = new Date(response.enddingDate);
-      // that.minDate = new Date(response.startDate).toISOString().split("T")[0];
-      // that.startSpring = new Date(response.startDate).toISOString().split("T")[0];
-      // that.endSpring = new Date(response.endDate).toISOString().split("T")[0];
-      // that.sprintIsStarted = response.isStarted;
-      this.sprintInfo = response;
-      console.log(response);
-    });
+    this.backlogAPIService
+      .getSprintInfo(this.projectId, this.backlogId, this.sprintId)
+      .subscribe((response) => {
+        // that.sprintInfo = response;
+        // that.startSprintDate = new Date(response.startingDate);
+        // that.endSprintDate = new Date(response.enddingDate);
+        // that.minDate = new Date(response.startDate).toISOString().split("T")[0];
+        // that.startSpring = new Date(response.startDate).toISOString().split("T")[0];
+        // that.endSpring = new Date(response.endDate).toISOString().split("T")[0];
+        // that.sprintIsStarted = response.isStarted;
+        this.sprintInfo = response;
+        console.log(response);
+      });
 
     this.minDate = new Date().toISOString().split('T')[0];
     this.startSpring = this.minDate;
     this.endSpring = this.minDate;
 
-    if (this.sprint.start) {
-      this.sprintIsStarted = true;
-    }
+    // if (this.sprint.start) {
+    //   this.sprintIsStarted = true;
+    // }
     this.dragulaService.destroy('bag');
 
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
@@ -105,25 +106,37 @@ export class BacklogPage implements OnInit {
   }
 
   ngOnInit() {
-    // this.route.paramMap.subscribe((params: ParamMap) => {
-      // this.filterP$ = parseInt(params.get('pid'));
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.filterP$ = parseInt(params.get('id'), 10);
       // this.filterB$ = parseInt(params.get('bid'));
       // this.filterS$ = parseInt(params.get('sid'));
-    // });
+    });
 
-    // this.projectId = this.filterP$;
+    this.projectId = this.filterP$;
     // this.backlogId = this.filterB$;
     // this.sprintId = this.filterS$;
 
-    // this.getFromApi();
+    this.getFromApi();
   }
 
   editSprint() {
-    const datetoSend1 = new Date(this.startSprintDate).toISOString().split('T')[0];
-    const dateToSend2 = new Date(this.endSprintDate).toISOString().split('T')[0];
-    this.backlogAPIService.editSprint(this.projectId, this.backlogId, this.sprintId, datetoSend1, dateToSend2 ).subscribe((response) => {
-      console.log(response);
-    });
+    const datetoSend1 = new Date(this.startSprintDate)
+      .toISOString()
+      .split('T')[0];
+    const dateToSend2 = new Date(this.endSprintDate)
+      .toISOString()
+      .split('T')[0];
+    this.backlogAPIService
+      .editSprint(
+        this.projectId,
+        this.backlogId,
+        this.sprintId,
+        datetoSend1,
+        dateToSend2
+      )
+      .subscribe((response) => {
+        console.log(response);
+      });
   }
   onDateChangeStart(ev) {
     console.log(this.startSprintDate);
@@ -156,25 +169,25 @@ export class BacklogPage implements OnInit {
       const newTask = _.clone(task);
       newTask.status = data.data.value;
       const backlog = _.clone(this.backlog);
-      backlog.tasks = this.backlog.tasks.map((t) => {
-        if (t.id === task.id) {
-          return newTask;
-        } else {
-          return t;
-        }
-      });
+      // backlog.tasks = this.backlog.tasks.map((t) => {
+      //   if (t.id === task.id) {
+      //     return newTask;
+      //   } else {
+      //     return t;
+      //   }
+      // });
       this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
       const newTask = _.clone(task);
       newTask.status = data.data.value;
       const sprint = _.clone(this.sprint);
-      sprint.tasks = this.sprint.tasks.map((t) => {
-        if (t.id === task.id) {
-          return newTask;
-        } else {
-          return t;
-        }
-      });
+      // sprint.tasks = this.sprint.tasks.map((t) => {
+      //   if (t.id === task.id) {
+      //     return newTask;
+      //   } else {
+      //     return t;
+      //   }
+      // });
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
@@ -193,14 +206,14 @@ export class BacklogPage implements OnInit {
         const newTask = _.clone(task);
         newTask.weight = parseInt(data.data.value, 10);
         const backlog = _.clone(this.backlog);
-        backlog.tasks = this.backlog.tasks.map((t) => {
-          if (t.id === task.id) {
-            return newTask;
-          } else {
-            return t;
-          }
-        });
-        console.log(backlog.tasks);
+        // backlog.tasks = this.backlog.tasks.map((t) => {
+        //   if (t.id === task.id) {
+        //     return newTask;
+        //   } else {
+        //     return t;
+        //   }
+        // });
+        // console.log(backlog.tasks);
         this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
       }
     } else if (type === 'sprint') {
@@ -210,14 +223,14 @@ export class BacklogPage implements OnInit {
         console.log(data.data.value, task);
         newTask.weight = parseInt(data.data.value, 10);
         const sprint = _.clone(this.sprint);
-        sprint.tasks = this.sprint.tasks.map((t) => {
-          if (t.id === task.id) {
-            return newTask;
-          } else {
-            return t;
-          }
-        });
-        console.log(sprint.tasks);
+        // sprint.tasks = this.sprint.tasks.map((t) => {
+        //   if (t.id === task.id) {
+        //     return newTask;
+        //   } else {
+        //     return t;
+        //   }
+        // });
+        // console.log(sprint.tasks);
         this.store.dispatch(TaskActions.setSprintAction({ sprint }));
       }
     }
@@ -265,10 +278,10 @@ export class BacklogPage implements OnInit {
     //     console.log(response);
     //   });
 
-    this.backlog.tasks.forEach((element, index) => {
-      console.log(element);
-      this.backlogAPIService.setItems(element).subscribe((response) => {});
-    });
+    // this.backlog.tasks.forEach((element, index) => {
+    //   console.log(element);
+    //   this.backlogAPIService.setItems(element).subscribe((response) => {});
+    // });
 
     // this.backlogAPIService
     // .setBacklog(this.projectId, this.backlogId, this.backlog)
