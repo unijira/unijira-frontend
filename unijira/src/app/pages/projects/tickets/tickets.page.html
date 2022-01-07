@@ -1,0 +1,234 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'projects.tickets.title'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'projects.tickets.title'"></h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="!filteredTickets || filteredTickets?.length === 0">
+            <ion-icon slot="start" name="create"></ion-icon>
+            <ion-text [translate]="'projects.tickets.export'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="primary" expand="block" [routerLink]="'/projects/' + projectId + '/tickets/add'" [disabled]="!projectId">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-text [translate]="'projects.tickets.add'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Filters -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" size-lg="6">
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.tickets.search.label'"></small>
+          </ion-text>
+          <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearch"></ion-searchbar>
+        </ion-col>
+        <ion-col>
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.tickets.status.label'"></small>
+          </ion-text>
+          <ion-item>
+            <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option [value]="itemStatus.open">{{ 'projects.tickets.status.open' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemStatus.done">{{ 'projects.tickets.status.done' | translate }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col>
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.tickets.type.label'"></small>
+          </ion-text>
+          <ion-item>
+            <ion-select [(ngModel)]="filterType" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option [value]="itemType.epic">{{ 'projects.tickets.type.epic' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.story">{{ 'projects.tickets.type.story' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.task">{{ 'projects.tickets.type.task' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.issue">{{ 'projects.tickets.type.issue' | translate }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+
+  <section class="ion-margin">
+    <ion-list class="infinte-width">
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="1">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.type'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.id'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.summary'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.owner'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.assignees'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.status'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium">
+                <strong>
+                 <ion-label [translate]="'projects.tickets.list.createdAt'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.tickets.list.updatedAt'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item *ngFor="let ticket of filteredTickets" [routerLink]="'/projects/' + projectId + '/tickets/' + ticket.id" [disabled]="!projectId">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1">
+              <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'" class="row-icon" [title]="ticket.type | titlecase" alt=""></ion-img>
+            </ion-col>
+            <ion-col size="1">
+              <ion-text>
+                <strong>#{{ ticket.id }}</strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-label [title]="ticket.summary" [innerHTML]="ticket.summary | filtered:filterSearch"></ion-label>
+            </ion-col>
+            <ion-col size="1">
+              <ion-text *ngIf="!ticket.owner">
+                &ndash;
+              </ion-text>
+              <ion-row *ngIf="ticket.owner" [title]="ticket.owner.username" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
+                <ion-col size="auto">
+                  <ion-avatar class="row-icon">
+                    <ion-img [src]="ticket.owner.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                  </ion-avatar>
+                </ion-col>
+                <ion-col>
+                  <ion-label>
+                    <small>{{ ticket.owner.username }}</small>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+            <ion-col>
+              <!-- Assignees -->
+            </ion-col>
+            <ion-col>
+              <ion-badge [color]="getBadgeColor(ticket.status)">
+                {{ ticket.status }}
+              </ion-badge>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                {{ ticket.createdAt | time | async }}
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                {{ ticket.updatedAt | time | async }}
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!tickets">
+      <ion-item *ngFor="let ticket of [1,2,3,4,5,6]">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="3">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="tickets?.length === 0" class="ion-text-center ion-margin">
+      <ion-text color="medium">
+        <i [translate]="'projects.tickets.list.empty'"></i>
+      </ion-text>
+    </p>
+  </section>
+
+</ion-content>

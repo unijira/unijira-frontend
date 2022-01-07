@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
@@ -52,6 +52,10 @@ export class LoginPage implements OnInit, OnDestroy {
     this.formControlSubscription = this.loginFG.statusChanges.subscribe(() => this.sessionService.setWrongCredential(false));
   }
 
+  @HostListener('document:keydown.enter', ['$event'])
+  handleKeyDown(event: KeyboardEvent) {
+    this.logIn();
+  }
 
   ngOnInit() {
   }
@@ -80,5 +84,7 @@ export class LoginPage implements OnInit, OnDestroy {
       this.router.navigate(['/home']).then();
     }
   }
+
+
 
 }

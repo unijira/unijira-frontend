@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpService} from './http-service.service';
 import {SessionService} from '../store/session.service';
 import {Sprint} from '../models/Sprint';
-import {Item} from '../models/Item';
+import {Item} from '../models/item/Item';
 import {User} from '../models/User';
 import {map} from 'rxjs/operators';
 

@@ -1,0 +1,14 @@
+.row-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.infinte-width {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-scrolling: touch;
+}
+
+.infinte-width::-webkit-scrollbar {
+  display: none;
+}
