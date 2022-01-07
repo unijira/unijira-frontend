@@ -75,8 +75,8 @@
   </section>
 
 
-  <section class="ion-margin">
-    <ion-list class="infinte-width">
+  <section class="ion-margin infinte-width">
+    <ion-list class="infinte-width-inner">
       <ion-item>
         <ion-grid>
           <ion-row>
@@ -157,7 +157,7 @@
               <ion-text *ngIf="!ticket.owner">
                 &mdash;
               </ion-text>
-              <ion-row *ngIf="ticket.owner" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
+              <ion-row *ngIf="ticket.owner" class="ion-align-items-center ion-justify-content-center ion-nowrap ion-padding-horizontal">
                 <ion-col size="auto">
                   <ion-avatar class="row-icon" [title]="ticket.owner.username">
                     <ion-img [src]="ticket.owner.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
@@ -169,7 +169,7 @@
               <ion-text *ngIf="!ticket.assignees?.length" color="medium">
                 <small><i [translate]="'projects.tickets.list.unassigned'"></i></small>
               </ion-text>
-              <ion-row *ngIf="ticket.assignees.length" class="ion-align-items-center ion-nowrap ion-padding-horizontal">
+              <ion-row *ngIf="ticket.assignees.length" class="ion-align-items-center ion-justify-content-start ion-nowrap">
                 <ion-col *ngFor="let assignee of ticket.assignees.slice(0, 3)" size="auto">
                   <ion-avatar class="row-icon" [title]="assignee.assignee.username">
                     <ion-img [src]="assignee.assignee?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>

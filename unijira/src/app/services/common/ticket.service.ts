@@ -43,6 +43,9 @@ export class TicketService {
       .pipe(map(me => [
           new Item(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Description 1', null, 1, null, ItemType.epic, ItemStatus.open, me, null, null, [
             new ItemAssignment(1, 1, me),
+            new ItemAssignment(1, 1, me),
+            new ItemAssignment(1, 1, me),
+            new ItemAssignment(1, 1, me),
           ]),
           new Item(2, 'Summary 2', 'Description 2', null, 1, null, ItemType.story, ItemStatus.open, me, null),
           new Item(3, 'Summary 3', 'Description 3', null, 1, null, ItemType.epic, ItemStatus.open, me, null),
