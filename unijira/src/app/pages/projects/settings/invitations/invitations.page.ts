@@ -30,10 +30,12 @@ export class InvitationsPage implements OnInit {
 
   @Input() invites: string[] = [];
   @Input() filters = [
-    { value: MembershipStatus.pending,  translate: 'project.settings.invitations.pending',  active: true },
-    { value: MembershipStatus.enabled,  translate: 'project.settings.invitations.enabled',  active: true },
-    { value: MembershipStatus.disabled, translate: 'project.settings.invitations.disabled', active: true }
+    { value: MembershipStatus.pending,  translate: 'project.settings.invitations.pending'},
+    { value: MembershipStatus.enabled,  translate: 'project.settings.invitations.enabled'},
+    { value: MembershipStatus.disabled, translate: 'project.settings.invitations.disabled'}
   ];
+
+  filterType: string[] = [];
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MembershipStatus = MembershipStatus;
@@ -59,33 +61,35 @@ export class InvitationsPage implements OnInit {
 
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
-    this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
+    this.activatedRoute.params.subscribe(params => {
 
-      this.project = p;
+      this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
 
-      if(p) {
+        this.project = p;
 
-        this.projectService.getMemberships(p.id).subscribe(
-          members => {
+        if(p) {
 
-            this.memberships = members;
+          this.projectService.getMemberships(p.id).subscribe(
+            members => {
 
-            members.forEach(member => {
-                this.usersService.getUser(member.keyUserId).subscribe(user => {
-                  member.userInfo = user;
-                  this.users.push(user.username);
-                });
-              }
-            );
+              this.memberships = members;
 
-          }
-        );
+              members.forEach(member => {
+                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+                    member.userInfo = user;
+                    this.users.push(user.username);
+                  });
+                }
+              );
 
-      }
+            }
+          );
+
+        }
+
+      });
 
     });
-
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
   }
 
@@ -99,16 +103,13 @@ export class InvitationsPage implements OnInit {
 
     this.filters.forEach(f => {
 
-        if(f.active) {
+        this.memberships.forEach(membership => {
 
-          this.memberships.forEach(membership => {
+          if (membership.status === f.value && !(this.filterType.includes(f.value))) {
+            filtered.push(membership);
+          }
 
-            if (membership.status === f.value) {
-              filtered.push(membership);
-            }
-
-          });
-        }
+        });
 
       }
     );
