@@ -9,7 +9,7 @@ import {UserInfo} from '../../../models/users/UserInfo';
 import {Subscription} from 'rxjs';
 import {Project} from '../../../models/projects/Project';
 import {ItemAssignment} from '../../../models/item/ItemAssignment';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {ItemStatus} from '../../../models/item/ItemStatus';
 import {ItemType} from '../../../models/item/ItemType';
@@ -77,16 +77,16 @@ export class BoardPage implements OnInit, OnDestroy {
       new SprintInsertion(0, 1, new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null)),
       new SprintInsertion(0, 1, new Item(0, '', 'item 0', '', 1,
         'backend', ItemType.task, ItemStatus.open,
-        new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, '', ''),
+        new UserInfo(0, 'user0', new URL('https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg'), true, false, '', ''),
         null, null, null)),
       new SprintInsertion(1, 1, new Item(1, '',
         'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan ipsum nec volutpat imperdiet. Nam felis nunc, tempus non dignissim.', '', 1,
         'frontend', ItemType.story, ItemStatus.open,
-        new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, '', ''),
+        new UserInfo(0, 'user0', new URL('https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg'), true, false, '', ''),
         new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, [new ItemAssignment(0, null,
-          new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),),
+          new UserInfo(0, 'user0', new URL('https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg'),true, false, '', ''),),
           new ItemAssignment(0, null,
-            new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),)])),
+            new UserInfo(0, 'user0', new URL('https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg'),true, false, '', ''),)])),
 
       new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
         'backend;frontend', ItemType.issue, ItemStatus.done,
@@ -115,15 +115,15 @@ export class BoardPage implements OnInit, OnDestroy {
         switch (ins.item.status) {
           case ItemStatus.done:
             this.doneItems.push(ins.item);
-            this.doneItemsToShow.push(ins.item)
+            this.doneItemsToShow.push(ins.item);
             break;
           case ItemStatus.open:
             this.openedItems.push(ins.item);
-            this.openedItemsToShow.push(ins.item)
+            this.openedItemsToShow.push(ins.item);
             break;
           default:
             this.toDoItems.push(ins.item);
-            this.toDoItemsToShow.push(ins.item)
+            this.toDoItemsToShow.push(ins.item);
         }
       }
     });
