@@ -16,6 +16,7 @@ export class Item {
   public type: ItemType;
   public status: ItemStatus;
   public owner: UserInfo;
+  public sons: Item[];
   public father: Item;
   public notes: Note[];
   public assignees: ItemAssignment[];
@@ -35,7 +36,9 @@ export class Item {
     owner: UserInfo,
     father: Item,
     notes?: Note[],
-    assignees?: ItemAssignment[])
+    assignees?: ItemAssignment[],
+    sons?: Item[],
+    )
   {
     // per fare questi assegnamenti è meno verboso scrivere direttamente "public field: type" nel costruttore
     this.id = id;
@@ -52,6 +55,7 @@ export class Item {
     this.notes = notes || [];
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
+    this.sons = sons || [];
   }
 
 }

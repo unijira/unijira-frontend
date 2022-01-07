@@ -1,3 +1,4 @@
+import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
 import { Component, OnInit } from '@angular/core';
@@ -65,7 +66,7 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService.getFirstBacklog(this.projectId).subscribe((res) => {
       that.backlogId = res.id;
       that.sprintId = res.sprints[0].id;
-      this.getFromApi();
+      // this.getFromApi();
     });
 
     this.backlogAPIService
@@ -91,9 +92,8 @@ export class BacklogPage implements OnInit {
     this.dragulaService.destroy('bag');
 
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
-      const tmpS = _.clone(that.sprint);
-      const tmpB = _.clone(that.backlog);
-
+      const tmpS = _.cloneDeep(that.sprint);
+      const tmpB = _.cloneDeep(that.backlog);
       that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
       that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
     });
@@ -103,11 +103,11 @@ export class BacklogPage implements OnInit {
     });
 
     this.taskService.getBacklog().subscribe((b) => {
-      this.backlog = _.clone(b);
+      this.backlog = _.cloneDeep(b);
     });
 
     this.taskService.getSprint().subscribe((s) => {
-      this.sprint = _.clone(s);
+      this.sprint = _.cloneDeep(s);
     });
   }
 
@@ -216,10 +216,8 @@ export class BacklogPage implements OnInit {
         this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
       }
     } else if (type === 'sprint') {
-      console.log(data.data.value, task);
       if (data.data.value !== undefined) {
         const newTask = _.cloneDeep(task);
-        console.log(data.data.value, task);
         newTask.item.evaluation = parseInt(data.data.value, 10);
         const sprint = _.cloneDeep(this.sprint);
         sprint.insertions = this.sprint.insertions.map((t) => {
@@ -237,6 +235,8 @@ export class BacklogPage implements OnInit {
   getFromApi() {
     const that = this;
 
+
+
     this.backlogAPIService.getBacklog(this.projectId, this.backlogId).subscribe((response) => {
       that.backlog = response;
     });
@@ -247,8 +247,12 @@ export class BacklogPage implements OnInit {
         this.backlog.insertions = [];
         forEach(response, (item) => {
           this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
-          console.log(this.backlog.insertions);
         });
+        this.backlog.insertions.sort((a, b) => a.priority - b.priority);
+
+        const tmpB = _.cloneDeep(that.backlog);
+        that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
+
       });
 
     this.backlogAPIService
@@ -257,8 +261,9 @@ export class BacklogPage implements OnInit {
         this.sprint.insertions = [];
         forEach(response, (item) => {
           this.sprint.insertions.push(JSON.parse(JSON.stringify(item)));
-          console.log(this.sprint.insertions);
         });
+        const tmpS = _.cloneDeep(that.sprint);
+        that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
       });
   }
   changeBacklog(ev) {
@@ -275,19 +280,23 @@ export class BacklogPage implements OnInit {
   }
 
   saveToAPI() {
-    const tmpS = _.clone(this.sprint);
-    const tmpB = _.clone(this.backlog);
+    const tmpS = _.cloneDeep(this.sprint);
+    const tmpB = _.cloneDeep(this.backlog);
 
-    this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
-    this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
     // this.backlogAPIService
     //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
     //   .subscribe((response) => {});
-
-    this.backlog.insertions.forEach((element, index) => {
+    tmpB.insertions.forEach((item, index) => {
+      console.log('item index', item.item.summary, index);
+      item.priority = index;
+    });
+    tmpB.insertions.forEach((element, index) => {
+      this.backlogAPIService.setBakclogInsertion(this.projectId, this.backlogId, element).subscribe((response) => {});
       this.backlogAPIService.setItems(element).subscribe((response) => {});
     });
+    this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
+    this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
     // this.backlogAPIService
     // .setBacklog(this.projectId, this.backlogId, this.backlog)

@@ -45,10 +45,13 @@ export class BacklogAPIService {
 
   setItems(item) {
     const url = `/items/${item.item.id}`;
-    console.log('SAVE ITEM', item.item);
     return this.httpService.put<Item>(url, item.item);
   }
-
+  setBakclogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions/${backlogInsertion.id}`;
+    console.log('set backlog insertion', backlogInsertion);
+    return this.httpService.put<BacklogInsertion>(url, backlogInsertion);
+  }
   setBacklog(projectId: number, backlogId: number, backlog: Backlog) {
     const url = `/projects/${projectId}/backlogs/${backlogId}`;
     return this.httpService.put<Backlog>(url, backlog);

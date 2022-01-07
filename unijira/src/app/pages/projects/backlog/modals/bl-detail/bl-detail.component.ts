@@ -106,7 +106,7 @@ export class BlDetailComponent implements OnInit {
       },
     });
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -125,7 +125,7 @@ export class BlDetailComponent implements OnInit {
       },
     });
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -144,7 +144,7 @@ export class BlDetailComponent implements OnInit {
       },
     });
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -163,7 +163,7 @@ export class BlDetailComponent implements OnInit {
     });
 
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -182,7 +182,7 @@ export class BlDetailComponent implements OnInit {
     });
 
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -201,7 +201,7 @@ export class BlDetailComponent implements OnInit {
     });
 
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
       }
     });
@@ -221,7 +221,7 @@ export class BlDetailComponent implements OnInit {
     });
 
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data !== undefined) {
         this.editWeight(data);
       }
@@ -242,7 +242,7 @@ export class BlDetailComponent implements OnInit {
     });
 
     popOver.onDidDismiss().then((data) => {
-      console.log(data);
+
       if (data.data.value !== undefined) {
         this.editStatus(data);
       }

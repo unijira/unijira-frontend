@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1ODYwODYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTgyNDg2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.E9VQfjhS9hKtYcLpzPY-x-hSq6RBkTQXRggLgXfo0xY
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1OTA3MzEsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTg3MTMxLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.WnoDKGtAPwIK9n8LVlGyC8KClvTbzBz8A98-GOLJMj4
 
 # @token = {{login.response.body.token}}
 
@@ -60,6 +60,62 @@ Authorization: Bearer {{token}}
 ###
 GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}
 Authorization: Bearer {{token}}
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/insertions
+Authorization: Bearer {{token}}
+
+###
+
+PUT http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/insertions/68
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+    "id": 68,
+    "item": {
+      "createdAt": "2022-01-07T21:23:59.725031",
+      "updatedAt": "2022-01-07T21:23:59.725038",
+      "id": 4,
+      "summary": "Summary 2",
+      "description": "Item 2",
+      "measureUnit": "Unit",
+      "evaluation": 12,
+      "tags": "#tag1#,#tag2#",
+      "type": "task",
+      "status": "OPEN",
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "activated": false,
+        "disabled": false,
+        "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+        "createdAt": "2022-01-07T21:23:59.581926",
+        "updatedAt": "2022-01-07T21:23:59.58194"
+      },
+      "fatherId": null,
+      "sons": [],
+      "notes": [],
+      "assignees": [
+        {
+          "id": 80,
+          "itemId": 4,
+          "assignee": {
+            "id": 1,
+            "username": "paolaguarasci@gmail.com",
+            "activated": false,
+            "disabled": false,
+            "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+            "createdAt": "2022-01-07T21:23:59.581926",
+            "updatedAt": "2022-01-07T21:23:59.58194"
+          }
+        }
+      ]
+    },
+    "priority": 3
+}
+
+
+
 
 ###
 GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/items

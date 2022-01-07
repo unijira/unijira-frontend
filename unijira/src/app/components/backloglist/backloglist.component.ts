@@ -13,6 +13,11 @@ export class BackloglistComponent implements OnInit {
   backlogList: any;
 
 
+  customPopoverOptions: any = {
+    // header: 'Hair Color',
+    // subHeader: 'Select your hair color',
+    // message: 'Only select your dominant hair color'
+  };
   constructor(private backlogService: BacklogAPIService) {
     this.backlogList = [];
   }
@@ -20,7 +25,6 @@ export class BackloglistComponent implements OnInit {
   ngOnInit() {
     this.backlogService.getBacklogList(this.projectId).subscribe((res) => {
       this.backlogList = res;
-      console.log(res);
     });
   }
 
@@ -29,9 +33,4 @@ export class BackloglistComponent implements OnInit {
     this.backlogSelected.emit(ev.target.value);
   }
 
-  customPopoverOptions: any = {
-    // header: 'Hair Color',
-    // subHeader: 'Select your hair color',
-    // message: 'Only select your dominant hair color'
-  };
 }

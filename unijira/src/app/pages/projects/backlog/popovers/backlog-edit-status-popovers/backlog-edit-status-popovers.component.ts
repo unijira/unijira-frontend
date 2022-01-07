@@ -39,12 +39,10 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
     event.target.classList.add('selected');
   }
   save() {
-    console.log(this.statusModificato);
     this.popoverCtrl.dismiss({ value: this.statusModificato }).then();
   }
 
   dismiss() {
-    console.log('dismiss');
     this.popoverCtrl.dismiss({ value: undefined }).then();
   }
 }

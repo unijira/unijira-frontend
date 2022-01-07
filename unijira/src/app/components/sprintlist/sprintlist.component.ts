@@ -32,7 +32,6 @@ export class SprintlistComponent implements OnInit, OnChanges {
     .getSprintList(this.projectId, this.backlogId)
     .subscribe((res) => {
       this.sprintList = res;
-      console.log('SPRINTLIST ',this.sprintList);
     });
   }
 

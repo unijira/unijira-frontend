@@ -17,12 +17,10 @@ export class BacklogEditWeightPopoversComponent implements OnInit {
   }
 
   save() {
-    console.log(this.pesomodificato);
     this.popoverCtrl.dismiss({value: this.pesomodificato}).then();
   }
 
   dismiss() {
-    console.log('dismiss');
     this.popoverCtrl.dismiss({value: undefined}).then();
   }
 }
