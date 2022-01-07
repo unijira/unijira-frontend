@@ -1,10 +1,10 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NjY5ODUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTYzMzg1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.jjHsB9WE60MDRlxjnlwzx9fQkUx5S2LlEaS-xtDq9dU
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1ODYwODYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTgyNDg2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.E9VQfjhS9hKtYcLpzPY-x-hSq6RBkTQXRggLgXfo0xY
 
 # @token = {{login.response.body.token}}
 
 @projectid = 12
-@backlogid = 15
-@sprintid = 24
+@backlogid = 13
+@sprintid = 30
 ############## AUTH #############
 
 
@@ -318,21 +318,47 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:7080/items/1
+PUT http://localhost:7080/items/3
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-    "summary": "HELLO I'M AN EPIC 1",
-    "description": "HI I'M AN EPIC AND I WANTO TO BE A GOOD EPIC",
-    "measureUnit": "story points",
-    "evaluation": "100000",
-    "tags" : "#BACKEND#;#FRONTEND#",
-    "type" : "epic",
-    "owner" : { 
-      "id": 1, 
-      "username" : "paolaguarasci@gmail.com"
+  "createdAt": "2022-01-07T19:01:15.588264",
+  "updatedAt": "2022-01-07T19:01:15.588277",
+  "id": 3,
+  "summary": "Summary 1",
+  "description": "Item 1",
+  "measureUnit": "Unit",
+  "evaluation": 11,
+  "tags": "#tag1#,#tag2#",
+  "type": "task",
+  "status": "DONE",
+  "owner": {
+    "id": 1,
+    "username": "paolaguarasci@gmail.com",
+    "activated": false,
+    "disabled": false,
+    "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+    "createdAt": "2022-01-07T19:01:15.455946",
+    "updatedAt": "2022-01-07T19:01:15.455961"
+  },
+  "father": null,
+  "notes": [],
+  "assignees": [
+    {
+      "id": 64,
+      "itemId": 3,
+      "assignee": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "activated": false,
+        "disabled": false,
+        "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+        "createdAt": "2022-01-07T19:01:15.455946",
+        "updatedAt": "2022-01-07T19:01:15.455961"
+      }
     }
+  ]
 }
 
 

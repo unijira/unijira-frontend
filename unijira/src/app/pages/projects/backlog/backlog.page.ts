@@ -236,6 +236,11 @@ export class BacklogPage implements OnInit {
 
   getFromApi() {
     const that = this;
+
+    this.backlogAPIService.getBacklog(this.projectId, this.backlogId).subscribe((response) => {
+      that.backlog = response;
+    });
+
     this.backlogAPIService
       .getBacklogItems(this.projectId, this.backlogId)
       .subscribe((response) => {
@@ -276,17 +281,17 @@ export class BacklogPage implements OnInit {
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
-    this.backlogAPIService
-      .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
-      .subscribe((response) => {});
+    // this.backlogAPIService
+    //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+    //   .subscribe((response) => {});
 
     this.backlog.insertions.forEach((element, index) => {
       this.backlogAPIService.setItems(element).subscribe((response) => {});
     });
 
-    this.backlogAPIService
-    .setBacklog(this.projectId, this.backlogId, this.backlog)
-    .subscribe((response) => {});
+    // this.backlogAPIService
+    // .setBacklog(this.projectId, this.backlogId, this.backlog)
+    // .subscribe((response) => {});
   }
 
   createSprint() {
