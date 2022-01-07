@@ -4,8 +4,9 @@ export class BacklogInsertion {
 
   constructor(
     public id: number,
-    public backlogId: number,
-    public item: Item
+    public item: Item,
+    public backlog: number,
+    public priority: number,
   ) {
   }
 }

@@ -10,9 +10,7 @@ export interface TaskState {
   sprint: Sprint;
 }
 export const initialState: TaskState = {
-  // backlog: new Sprint([], new Date(), new Date()),
-  // sprint: new Sprint([], new Date(), new Date()),
-  backlog: new Backlog(0, new Date(), new Date(), [], 0),
+  backlog: new Backlog(0, null, null, []),
   sprint: new Sprint(0, new Date(), new Date(), [], 0),
 };
 

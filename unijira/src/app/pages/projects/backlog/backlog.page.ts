@@ -26,13 +26,11 @@ import { SprintInsertion } from '../../../models/SprintInsertion';
 })
 export class BacklogPage implements OnInit {
   sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
-  backlog: Backlog = new Backlog(0, new Date(), new Date(), [], 0);
+  backlog: Backlog = new Backlog(0, null, null, []);
 
   filterP$: number;
-  filterB$: number;
-  filterS$: number;
-
-  // filter$: Observable<string>;
+  // filterB$: number;
+  // filterS$: number;
 
   startSpring: string;
   endSpring: string;
@@ -59,7 +57,6 @@ export class BacklogPage implements OnInit {
     private backlogAPIService: BacklogAPIService,
     private popOverCtrl: PopoverController,
     private route: ActivatedRoute,
-    private location: Location,
     private router: Router
   ) {
     const that = this;

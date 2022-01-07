@@ -1,13 +1,14 @@
+import { Sprint } from './Sprint';
 import {BacklogInsertion} from './BacklogInsertion';
+import { Project } from './projects/Project';
 
 export class Backlog {
 
   constructor(
     public id: number,
-    public startingDate: Date,
-    public endingDate: Date,
+    public project: Project,
+    public sprint: Sprint,
     public insertions: BacklogInsertion[],
-    public projectId: number
   ) {
 
   }
