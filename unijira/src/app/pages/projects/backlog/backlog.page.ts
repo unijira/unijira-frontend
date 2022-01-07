@@ -16,7 +16,9 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Location } from '@angular/common';
 import { Router } from '@angular/router';
-
+import { Backlog } from '../../../models/Backlog';
+import { BacklogInsertion } from '../../../models/BacklogInsertion';
+import { SprintInsertion } from '../../../models/SprintInsertion';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -24,7 +26,7 @@ import { Router } from '@angular/router';
 })
 export class BacklogPage implements OnInit {
   sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
-  backlog: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
+  backlog: Backlog = new Backlog(0, new Date(), new Date(), [], 0);
 
   filterP$: number;
   filterB$: number;
@@ -41,9 +43,9 @@ export class BacklogPage implements OnInit {
   minDate: string;
 
   // TODO Scablare
-  projectId = 0;
-  backlogId = 0;
-  sprintId = 0;
+  projectId = 12;
+  backlogId = 15;
+  sprintId = 24;
 
   sprintIsStarted = false;
 

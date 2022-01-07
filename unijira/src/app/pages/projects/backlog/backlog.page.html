@@ -2,56 +2,55 @@
   <div class="page">
     <ion-row>
       <ion-col>
-      <h2>Progetto {{projectId}}</h2>
+        <h2>Progetto {{projectId}}</h2>
       </ion-col>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">DD/MM/YYYY</ion-label>
-          <ion-datetime
-            (ionChange)="onDateChangeStart($event)"
-            displayFormat="DD/MM/YYYY"
-            [min]="minDate"
-            max="2022-12-31"
-            [(ngModel)]="startSprintDate"
-          ></ion-datetime>
-        </ion-item>
+        <!--        <ion-item> -->
+        <!--          <ion-label position="floating">DD/MM/YYYY</ion-label> -->
+        <!--          <ion-datetime -->
+        <!--            (ionChange)="onDateChangeStart($event)" -->
+        <!--            displayFormat="DD/MM/YYYY" -->
+        <!--            [min]="minDate" -->
+        <!--            max="2022-12-31" -->
+        <!--            [(ngModel)]="startSprintDate" -->
+        <!--          ></ion-datetime> -->
+        <!--        </ion-item> -->
       </ion-col>
       <ion-col>
-        <ion-item>
-          <ion-label position="floating">DD/MM/YYYY</ion-label>
-          <ion-datetime
-            (ionChange)="onDateChangeEnd($event)"
-            displayFormat="DD/MM/YYYY"
-            [min]="minDate"
-            max="2022-12-31"
-            [(ngModel)]="endSprintDate"
-          ></ion-datetime>
-        </ion-item>
+        <!--        <ion-item> -->
+        <!--          <ion-label position="floating">DD/MM/YYYY</ion-label> -->
+        <!--          <ion-datetime -->
+        <!--            (ionChange)="onDateChangeEnd($event)" -->
+        <!--            displayFormat="DD/MM/YYYY" -->
+        <!--            [min]="minDate" -->
+        <!--            max="2022-12-31" -->
+        <!--            [(ngModel)]="endSprintDate" -->
+        <!--          ></ion-datetime> -->
+        <!--        </ion-item> -->
       </ion-col>
       <ion-col *ngIf="sprintIsStarted">
         <ion-button (click)="editSprint()">
           <ion-icon name="play"></ion-icon>
         </ion-button>
       </ion-col>
-      <ion-col>
-      </ion-col>
+      <ion-col> </ion-col>
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1>Sprint {{sprintId}}</h1> <h5>{{ sprintInfo}}</h5>
+        <h1>Sprint {{sprintId}}</h1>
         <div class="sprint">
-          <div *ngIf="!sprint || !sprint.tasks">
+          <div *ngIf="!sprint || !sprint.insertions">
             <p [translate]="'backlog.sprint.empty'">Sprint vuoto</p>
           </div>
-          <div *ngIf="sprint && sprint.tasks">
+          <div *ngIf="sprint && sprint.insertions">
             <ion-list
               dragula="bag"
-              [(dragulaModel)]="sprint.tasks"
+              [(dragulaModel)]="sprint.insertions"
               lines="none"
               class="light-gray-bg"
             >
               <ion-row
-                *ngFor="let task of sprint.tasks"
+                *ngFor="let task of sprint.insertions"
                 class="ion-align-items-end task-item white-bg"
               >
                 <ion-col>
@@ -128,20 +127,20 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <h1 [translate]="'backlog'"></h1>
+        <h1>Backlog {{ backlogId }}</h1>
         <div class="backlog">
-          <div *ngIf="!backlog || !backlog.tasks">
+          <div *ngIf="!backlog || !backlog.insertions">
             <p [translate]="'backlog.empty'"></p>
           </div>
-          <div *ngIf="backlog && backlog.tasks">
+          <div *ngIf="backlog && backlog.insertions">
             <ion-list
               dragula="bag"
               lines="none"
               class="light-gray-bg"
-              [(dragulaModel)]="backlog.tasks"
+              [(dragulaModel)]="backlog.insertions"
             >
               <ion-row
-                *ngFor="let task of backlog.tasks"
+                *ngFor="let task of backlog.insertions"
                 class="ion-align-items-end task-item white-bg"
               >
                 <ion-col>

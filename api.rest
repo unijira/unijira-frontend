@@ -1,10 +1,10 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDA3ODE5MjIsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQwNzc4MzIyLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.KgGPFF7p1kbw3dRlwGySIS9VaB4GhXR_qzZUDM-f9u8
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1NDY1MDQsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTQyOTA0LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.FXdS-s4fCwFT5QzdHNY9iqtqQJjsZofFmIka9OeaTM4
 
 # @token = {{login.response.body.token}}
 
-@projectid = 2
-@backlogid = 3
-@sprintid = 17
+@projectid = 12
+@backlogid = 15
+@sprintid = 24
 ############## AUTH #############
 
 
@@ -261,9 +261,14 @@ Content-Type: application/json
 
 ### Item (generici) #####################################
 
-
-###
+### Tutti gli item 
 GET http://localhost:7080/items
+Authorization: Bearer {{token}}
+
+### 
+
+### Tutti gli item assegnati all'utente
+GET http://localhost:7080/items/by-user/1
 Authorization: Bearer {{token}}
 
 ### 

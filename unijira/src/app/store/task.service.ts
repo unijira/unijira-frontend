@@ -1,3 +1,4 @@
+import { Backlog } from './../models/Backlog';
 import {Injectable} from '@angular/core';
 import {TaskState} from './task.reducer';
 import {createFeatureSelector, createSelector, Store,} from '@ngrx/store';
@@ -8,7 +9,7 @@ import {Sprint} from '../models/Sprint';
 export class TaskService {
   constructor(private store: Store) {}
 
-  getBacklog(): Observable<Sprint> {
+  getBacklog(): Observable<Backlog> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
       (state) => state.backlog
