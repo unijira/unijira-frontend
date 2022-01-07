@@ -85,7 +85,8 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/tickets/tickets.module').then(m => m.TicketsPageModule)
   },
   {
-    path: 'users/:id/settings/profile',
+    canActivate: [AuthGuard],
+    path: 'profile',
     loadChildren: () => import('./pages/user/settings/profile/profile.module').then( m => m.ProfilePageModule)
   },
 ];

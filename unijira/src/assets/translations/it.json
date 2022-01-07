@@ -212,6 +212,25 @@
   "project.settings.roles.alert.description" : "I ruoli verranno assegnati ai membri scelti.",
   "project.settings.roles.toast.success" : "I ruoli sono stati assegnati correttemente",
   "project.settings.roles.toast.failed" : "Si è verificato un problema durante la procedura d'assegnamento dei ruoli.",
-  "project.settings.roles.update" : "Salva ruoli"
-
+  "project.settings.roles.update" : "Salva ruoli",
+  "profile" : "Profilo",
+  "profile.edit.propic" : "Cambia immagine",
+  "on.unijira.since" : "Iscritto dal",
+  "carreer": "Carriera",
+  "description.placeholder": "Astronauta presso Nasa, autore di Il ritratto di Dorian Gray",
+  "carreer.placeholder" : "Amministratore delegato del pianeta terra",
+  "team" : "Team",
+  "works.with": "Collabora con",
+  "projects" : "Progetti",
+  "enrolled.in" : "Partecipa a",
+  "basic.personal.data" : "Anagrafica di base",
+  "profile.placeholder.firstname" : "Mario",
+  "profile.placeholder.lastname": "Rossi",
+  "profile.firstname" : "Nome",
+  "profile.lastname" : "Cognome",
+  "profile.birthdate" : "Data di nascita",
+  "profile.email" : "Email",
+  "profile.personal.contacts" : "Contatti e social",
+  "profile.phone.number" : "Numero di telefono",
+  "profile.save.and.exit" : "Salva ed esci"
 }
