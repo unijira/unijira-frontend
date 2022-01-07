@@ -68,7 +68,7 @@ declare var require: any;
                   "expandAllTasks": "Espandere tutto",
                   "collapseAll": "Comprimi tutto",
                   "expandAll": "Espandere tutto",
-                  "emptyRecord": "No record tooo",
+                  "emptyRecord": "Non ci sono record da visualizzare",
                   "confirmDelete": "Sei sicuro di voler eliminare questo item?"
 
           },
