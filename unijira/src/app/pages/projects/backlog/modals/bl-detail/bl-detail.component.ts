@@ -1,31 +1,16 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {Item} from '../../../../../models/item/Item';
-import {ModalController, PopoverController} from '@ionic/angular';
-import {
-  BacklogEditWeightPopoversComponent
-} from '../../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import {
-  BacklogEditStatusPopoversComponent
-} from '../../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import {
-  BacklogEditSharePopoversComponent
-} from '../../popovers/backlog-edit-share-popovers/backlog-edit-share-popovers.component';
-import {
-  BacklogEditLikePopoversComponent
-} from '../../popovers/backlog-edit-like-popovers/backlog-edit-like-popovers.component';
-import {
-  BacklogEditVisibilityPopoversComponent
-} from '../../popovers/backlog-edit-visibility-popovers/backlog-edit-visibility-popovers.component';
-import {
-  BacklogEditSubmenuPopoversComponent
-} from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
-import {
-  BacklogEditLinkPopoversComponent
-} from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
-import {
-  BacklogEditLockPopoversComponent
-} from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Item } from '../../../../../models/item/Item';
+import { ModalController, PopoverController } from '@ionic/angular';
+import { BacklogEditWeightPopoversComponent } from '../../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from '../../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import { BacklogEditSharePopoversComponent } from '../../popovers/backlog-edit-share-popovers/backlog-edit-share-popovers.component';
+import { BacklogEditLikePopoversComponent } from '../../popovers/backlog-edit-like-popovers/backlog-edit-like-popovers.component';
+import { BacklogEditVisibilityPopoversComponent } from '../../popovers/backlog-edit-visibility-popovers/backlog-edit-visibility-popovers.component';
+import { BacklogEditSubmenuPopoversComponent } from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
+import { BacklogEditLinkPopoversComponent } from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
+import { BacklogEditLockPopoversComponent } from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
 import { Clipboard } from '@angular/cdk/clipboard';
+import { BacklogInsertion } from 'src/app/models/BacklogInsertion';
 @Component({
   selector: 'app-bl-detail',
   templateUrl: './bl-detail.component.html',
@@ -33,26 +18,33 @@ import { Clipboard } from '@angular/cdk/clipboard';
 })
 export class BlDetailComponent implements OnInit {
   @Input()
-  task: Item;
+  backlogInsertion: BacklogInsertion;
   @Output() outputData = new EventEmitter<Item>();
   @Output() closeModal = new EventEmitter<boolean>();
   gitSuggestion = 'git checkout -b ';
+  tags = [];
   constructor(
     private popOverCtrl: PopoverController,
     private modalCtrl: ModalController,
     private clipboard: Clipboard
-
   ) {}
 
   ngOnInit() {
-    this.gitSuggestion += this.namePrepare(this.task.summary);
+    this.gitSuggestion += this.namePrepare(this.backlogInsertion.item.summary);
+    this.tags = this.tagsParse(this.backlogInsertion.item.tags);
   }
   emitData(data) {
     this.outputData.emit(data);
   }
-
+  tagsParse(tags) {
+    return tags.split(',').map((tag) => tag.trim());
+  }
   namePrepare(name) {
-    return name.replace(/\s/g, '-').toLowerCase().trim().replace(/[^a-z0-9-]/g, '');
+    return name
+      .replace(/\s/g, '-')
+      .toLowerCase()
+      .trim()
+      .replace(/[^a-z0-9-]/g, '');
   }
 
   editAssegnatario() {
@@ -110,7 +102,7 @@ export class BlDetailComponent implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
     popOver.onDidDismiss().then((data) => {
@@ -129,7 +121,7 @@ export class BlDetailComponent implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
     popOver.onDidDismiss().then((data) => {
@@ -148,7 +140,7 @@ export class BlDetailComponent implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
     popOver.onDidDismiss().then((data) => {
@@ -166,7 +158,7 @@ export class BlDetailComponent implements OnInit {
       cssClass: 'backlog-edit-visibility-popover',
       event: ev,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
 
@@ -185,7 +177,7 @@ export class BlDetailComponent implements OnInit {
       cssClass: 'backlog-edit-like-popover',
       event: ev,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
 
@@ -204,7 +196,7 @@ export class BlDetailComponent implements OnInit {
       cssClass: 'backlog-edit-share-popover',
       event: ev,
       componentProps: {
-        task: this.task,
+        item: this.backlogInsertion.item,
       },
     });
 
@@ -217,14 +209,14 @@ export class BlDetailComponent implements OnInit {
     return await popOver.present();
   }
 
-  async editPesoPopover(ev: any, task) {
+  async editPesoPopover(ev: any, item) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditWeightPopoversComponent,
       cssClass: 'backlog-edit-weight-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        pesoOriginal: task.weight,
+        pesoOriginal: item.weight,
       },
     });
 
@@ -238,14 +230,14 @@ export class BlDetailComponent implements OnInit {
     return await popOver.present();
   }
 
-  async editStatusPopover(ev: any, task) {
+  async editStatusPopover(ev: any, item) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
       cssClass: 'backlog-edit-status-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        statusOriginal: task.status,
+        statusOriginal: item.status,
       },
     });
 
@@ -259,10 +251,10 @@ export class BlDetailComponent implements OnInit {
     return await popOver.present();
   }
   editStatus(data) {
-    this.task.status = data.data.value;
+    this.backlogInsertion.item.status = data.data.value;
   }
 
   editWeight(data) {
-    // this.task.weight = data.data.value;
+    // this.backlogInsertion.item.weight = data.data.value;
   }
 }

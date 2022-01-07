@@ -1,6 +1,7 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {PopoverController} from '@ionic/angular';
-
+import { map } from 'rxjs';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { PopoverController } from '@ionic/angular';
+import { ItemStatus } from 'src/app/models/item/ItemStatus';
 @Component({
   selector: 'app-backlog-edit-status-popovers',
   templateUrl: './backlog-edit-status-popovers.component.html',
@@ -10,15 +11,21 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
   @Input() statusOriginale: number;
   @Output() editStatus: EventEmitter<number> = new EventEmitter<number>();
 
-  statusModificato: number;   // Are we sure about it?
+  statusModificato: number; // Are we sure about it?
 
-  statusType = [
-    { name: 'backlog.edit.status.progress', value: 'in_corso', className: 'primary' },
-    { name: 'backlog.edit.status.done', value: 'completato', className: 'success' },
-    { name: 'backlog.edit.status.toDo', value: 'da_completare', className: 'light' },
-  ];
+  statusType = [];
 
-  constructor(private popoverCtrl: PopoverController) {}
+  constructor(private popoverCtrl: PopoverController) {
+    for (const status in ItemStatus) {
+      if (ItemStatus.hasOwnProperty(status)) {
+        this.statusType.push({
+          name: `backlog.edit.status.${status}`,
+          value: status,
+          className: status,
+        });
+      }
+    }
+  }
 
   ngOnInit() {}
 

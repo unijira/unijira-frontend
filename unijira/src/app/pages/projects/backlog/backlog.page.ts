@@ -1,3 +1,4 @@
+import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
 import { Component, OnInit } from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
@@ -150,7 +151,7 @@ export class BacklogPage implements OnInit {
       component: BlDetailComponent,
       cssClass: 'my-custom-class',
       componentProps: {
-        task,
+        backlogInsertion: task,
       },
     });
     return await modal.present();
@@ -165,28 +166,28 @@ export class BacklogPage implements OnInit {
   /* EDIT */
   editStatus(task, data, type) {
     if (type === 'backlog') {
-      const newTask = _.clone(task);
-      newTask.status = data.data.value;
-      const backlog = _.clone(this.backlog);
-      // backlog.tasks = this.backlog.tasks.map((t) => {
-      //   if (t.id === task.id) {
-      //     return newTask;
-      //   } else {
-      //     return t;
-      //   }
-      // });
+      const newTask = _.cloneDeep(task);
+      newTask.item.status = ItemStatus[data.data.value];
+      const backlog = _.cloneDeep(this.backlog);
+      backlog.insertions = this.backlog.insertions.map((t) => {
+        if (t.id === task.id) {
+          return newTask;
+        } else {
+          return t;
+        }
+      });
       this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
-      const newTask = _.clone(task);
-      newTask.status = data.data.value;
-      const sprint = _.clone(this.sprint);
-      // sprint.tasks = this.sprint.tasks.map((t) => {
-      //   if (t.id === task.id) {
-      //     return newTask;
-      //   } else {
-      //     return t;
-      //   }
-      // });
+      const newTask = _.cloneDeep(task);
+      newTask.status = ItemStatus[data.data.value];
+      const sprint = _.cloneDeep(this.sprint);
+      sprint.insertions = this.sprint.insertions.map((t) => {
+        if (t.id === task.id) {
+          return newTask;
+        } else {
+          return t;
+        }
+      });
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
@@ -202,38 +203,36 @@ export class BacklogPage implements OnInit {
     }
     if (type === 'backlog') {
       if (data.data.value !== undefined) {
-        const newTask = _.clone(task);
-        newTask.weight = parseInt(data.data.value, 10);
-        const backlog = _.clone(this.backlog);
-        // backlog.tasks = this.backlog.tasks.map((t) => {
-        //   if (t.id === task.id) {
-        //     return newTask;
-        //   } else {
-        //     return t;
-        //   }
-        // });
+        const newTask = _.cloneDeep(task);
+        newTask.item.evaluation = parseInt(data.data.value, 10);
+        const backlog = _.cloneDeep(this.backlog);
+        backlog.insertions = this.backlog.insertions.map((t) => {
+          if (t.id === task.id) {
+            return newTask;
+          } else {
+            return t;
+          }
+        });
         this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
       }
     } else if (type === 'sprint') {
       console.log(data.data.value, task);
       if (data.data.value !== undefined) {
-        const newTask = _.clone(task);
+        const newTask = _.cloneDeep(task);
         console.log(data.data.value, task);
-        newTask.weight = parseInt(data.data.value, 10);
-        const sprint = _.clone(this.sprint);
-        // sprint.tasks = this.sprint.tasks.map((t) => {
-        //   if (t.id === task.id) {
-        //     return newTask;
-        //   } else {
-        //     return t;
-        //   }
-        // });
+        newTask.item.evaluation = parseInt(data.data.value, 10);
+        const sprint = _.cloneDeep(this.sprint);
+        sprint.insertions = this.sprint.insertions.map((t) => {
+          if (t.id === task.id) {
+            return newTask;
+          } else {
+            return t;
+          }
+        });
         this.store.dispatch(TaskActions.setSprintAction({ sprint }));
       }
     }
   }
-
-
 
   getFromApi() {
     const that = this;
@@ -277,19 +276,17 @@ export class BacklogPage implements OnInit {
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
 
-    // this.backlogAPIService
-    //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
-    //   .subscribe((response) => {
-    //   });
+    this.backlogAPIService
+      .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .subscribe((response) => {});
 
-    // this.backlog.tasks.forEach((element, index) => {
-    //   this.backlogAPIService.setItems(element).subscribe((response) => {});
-    // });
+    this.backlog.insertions.forEach((element, index) => {
+      this.backlogAPIService.setItems(element).subscribe((response) => {});
+    });
 
-    // this.backlogAPIService
-    // .setBacklog(this.projectId, this.backlogId, this.backlog)
-    // .subscribe((response) => {
-    // });
+    this.backlogAPIService
+    .setBacklog(this.projectId, this.backlogId, this.backlog)
+    .subscribe((response) => {});
   }
 
   createSprint() {
@@ -297,40 +294,40 @@ export class BacklogPage implements OnInit {
     alert('Create sprint');
   }
 
-  async editPesoPopover(ev: any, task, type) {
+  async editPesoPopover(ev: any, item, type) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditWeightPopoversComponent,
       cssClass: 'backlog-edit-weight-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        pesoOriginal: task.weight,
+        pesoOriginal: item.evaluation,
       },
     });
 
     popOver.onDidDismiss().then((data) => {
       if (data.data !== undefined) {
-        this.editWeight(task, data, type);
+        this.editWeight(item, data, type);
       }
     });
 
     return await popOver.present();
   }
 
-  async editStatusPopover(ev: any, task, type) {
+  async editStatusPopover(ev: any, item, type) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
       cssClass: 'backlog-edit-status-popover',
       event: ev,
       translucent: true,
       componentProps: {
-        statusOriginal: task.status,
+        statusOriginal: item.status,
       },
     });
 
     popOver.onDidDismiss().then((data) => {
       if (data.data.value !== undefined) {
-        this.editStatus(task, data, type);
+        this.editStatus(item, data, type);
       }
     });
 

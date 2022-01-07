@@ -48,7 +48,10 @@ export class BacklogAPIService {
     return this.httpService.put<Item>(url, item);
   }
 
-  setBacklog(projectId: number, backlogId: number, backlog: Backlog) {}
+  setBacklog(projectId: number, backlogId: number, backlog: Backlog) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}`;
+    return this.httpService.post<Backlog>(url, backlog);
+  }
 
   setSprint(
     projectId: number,
