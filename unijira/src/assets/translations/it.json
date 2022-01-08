@@ -202,7 +202,7 @@
   "project.settings.roles.info" : "Ogni parte del framework ha uno scopo specifico ed è essenziale per il successo e l'utilizzo di Scrum! Ad ogni ruolo sono assegnati differenti permessi al fine di usufruire delle funzionalità di Unijira.",
   "project.settings.roles.filter" : "Filtri:",
   "project.settings.roles.null.title" : "Sfrutta al massimo le potenzialità di Scrum!",
-  "project.settings.roles.null.subtitle" : "Seleziona con cura i ruoli da assengnare ai membri del tuo Team Scrum, utilizza i nostri suggerimenti per migliorare l'utilizzo di Scrum",
+  "project.settings.roles.null.subtitle" : "Seleziona con cura i ruoli da assengnare ai membri del tuo Team Scrum, utilizza i nostri suggerimenti per migliorare l'utilizzo di Scrum.",
   "project.settings.roles.search" : "Cerca tra i membri",
   "project.settings.roles.mail" : "Indirizzo e-mail",
   "project.settings.roles.status" : "Stato",
@@ -213,7 +213,8 @@
   "project.settings.roles.toast.success" : "I ruoli sono stati assegnati correttemente",
   "project.settings.roles.toast.failed" : "Si è verificato un problema durante la procedura d'assegnamento dei ruoli.",
   "project.settings.roles.update" : "Salva ruoli",
-
+  "project.settings.invitations.null" : "Nessun utente presente con le seguenti caratteristiche",
+  "project.settings.roles.null" : "Nessun utente presente con le seguenti caratteristiche",
   "board.toDoTickets" : "DA COMPLETARE {{value}} TICKET",
   "board.storiesTickets" : "STORIES {{value}} TICKET",
   "board.openedTickets" : "IN CORSO {{value}} TICKET",
@@ -225,5 +226,7 @@
   "board.noSprintActive": "Nessuno sprint avviato",
   "board.epic" : "Epic",
   "board.endSprint" : "Completa sprint",
-  "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}"
+  "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}",
+  "projects.settings.roles.filter.type" : "Seleziona ruolo",
+  "projects.settings.invitations.filter.type" : "Seleziona stato"
 }

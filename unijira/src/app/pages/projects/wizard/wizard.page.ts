@@ -209,6 +209,8 @@ export class WizardPage implements OnInit {
       this.image = e.target.result as string;
     };
 
+    event.target.value = null;
+
   }
 
 }

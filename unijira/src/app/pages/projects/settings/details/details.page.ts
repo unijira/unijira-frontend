@@ -80,6 +80,9 @@ export class DetailsPage implements OnInit {
 
   onFileChanged(event) {
 
+    console.log(this.file);
+    console.log(this.image);
+
     const reader = new FileReader();
 
     this.file = event.target.files[0];
@@ -88,6 +91,8 @@ export class DetailsPage implements OnInit {
     reader.onload = (e) => {
       this.image = e.target.result as string;
     };
+
+    event.target.value = null;
 
   }
 
@@ -111,6 +116,8 @@ export class DetailsPage implements OnInit {
 
                     if(p !== null) {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.success')).then();
+                      this.image = '';
+                      this.file = undefined;
                     } else {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed')).then();
                     }
