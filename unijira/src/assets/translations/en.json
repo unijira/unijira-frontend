@@ -252,7 +252,7 @@
   "profile.firstname" : "First Name",
   "profile.lastname" : "Last Name",
   "profile.birthdate" : "Birthdate",
-  "profile.email" : "Email",
+  "profile.username" : "Username",
   "profile.personal.contacts" : "Contacts and social media",
   "profile.phone.number" : "Phone number",
   "profile.save.and.exit" : "Save and exit",

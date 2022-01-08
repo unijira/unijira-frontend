@@ -25,6 +25,12 @@ export class ProfilePage implements OnInit {
 
   @Input() saved = false;
 
+  preferredTheme='';
+  preferredLanguage='';
+
+  monthAsString='';
+  yearAsString='';
+
   enrolledProjects: Project[] = [];
 
   collaborators: UserInfo[] = [];
@@ -48,11 +54,39 @@ export class ProfilePage implements OnInit {
         this.getCollaborators();
         this.getMemberships();
         this.image = this.user.avatar.toString();
+        if (user.createdAt != null) {
+          this.splitDate(this.user.createdAt.toString());
+        }
+
       });
 
-      console.log(this.user.avatar);
+      this.preferredLanguage ='italian';
+      this.preferredTheme='light';
     });
   }
+
+  splitDate(stringDate) {
+    if(stringDate!=null) {
+      const array = stringDate.split('-');
+      if(array.length > 2) {
+        this.yearAsString = array[0];
+        this.monthAsString =array[1];
+      }
+
+    }
+
+  }
+
+  setPreferredTheme(value) {
+    console.log('Setting preferred theme to '+value);
+    this.preferredTheme = value;
+  }
+
+  setPreferredLanguage(value) {
+    console.log('Setting preferred language to '+value);
+    this.preferredLanguage = value;
+  }
+
 
   copyBack() {
     this.dummy();

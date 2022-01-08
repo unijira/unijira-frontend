@@ -243,7 +243,7 @@
   "projects.settings.permissions.state" : "Stato",
   "profile" : "Profilo",
   "profile.edit.propic" : "Cambia immagine",
-  "on.unijira.since" : "Iscritto dal",
+  "on.unijira.since" : "Iscritto da",
   "carreer": "Carriera",
   "description.placeholder": "Astronauta presso Nasa, autore di Il ritratto di Dorian Gray",
   "carreer.placeholder" : "Amministratore delegato del pianeta terra",
@@ -257,7 +257,7 @@
   "profile.firstname" : "Nome",
   "profile.lastname" : "Cognome",
   "profile.birthdate" : "Data di nascita",
-  "profile.email" : "Email",
+  "profile.username" : "Username",
   "profile.personal.contacts" : "Contatti e social",
   "profile.phone.number" : "Numero di telefono",
   "profile.save.and.exit" : "Salva ed esci",
@@ -272,4 +272,5 @@
   "profile.lang.english": "English",
   "profile.theme.dark": "Scuro",
   "profile.theme.light": "Chiaro"
+
 }
