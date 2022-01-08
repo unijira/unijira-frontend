@@ -248,5 +248,15 @@
   "projects.releases.list.endDate": "Data fine",
   "projects.releases.list.description": "Descrizione",
   "projects.releases.list.empty": "Nessuna versione disponibile",
-  "projects.releases.export": "Esporta CSV"
+  "projects.releases.export": "Esporta CSV",
+  "projects.releases.view.version": "Versione",
+  "projects.releases.view.archive": "Archivia",
+  "projects.releases.view.publish": "Pubblica",
+  "projects.releases.view.status": "Stato",
+  "projects.releases.view.startDate": "Data inizio",
+  "projects.releases.view.endDate": "Data fine",
+  "projects.releases.view.description": "Descrizione",
+  "projects.releases.view.progress.title": "Progresso",
+  "projects.releases.view.progress.release": "Rilascio previsto",
+  "projects.releases.view.save": "Salva"
 }

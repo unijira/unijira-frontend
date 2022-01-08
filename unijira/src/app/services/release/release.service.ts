@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
-import {delay, Observable, of} from 'rxjs';
+import {catchError, delay, Observable, of} from 'rxjs';
 import {Release} from '../../models/releases/Release';
 import {ReleaseStatus} from '../../models/releases/ReleaseStatus';
 
@@ -27,6 +27,17 @@ export class ReleaseService {
       new Release(6, 'v1.1.3', 'Release 6 description', ReleaseStatus.archived, new Date(Date.now()), new Date(Date.now() + 86400000 * 6)),
       new Release(7, 'v2.0.0', 'Release 7 description', ReleaseStatus.archived, new Date(Date.now()), new Date(Date.now() + 86400000 * 7))
     ]).pipe(delay(3000));
+
+  }
+
+  public getRelease(projectId: number, releaseId: number): Observable<Release> {
+
+    return of(
+      new Release(1, 'v1.0.0', 'Release 1 description', ReleaseStatus.draft, new Date(Date.now()), new Date(Date.now() + 86400000)),
+    );
+
+    // return this.httpService.get<Release>(`/projects/${projectId}/releases/${releaseId}`)
+    //   .pipe(catchError(_ => of(null)));
 
   }
 

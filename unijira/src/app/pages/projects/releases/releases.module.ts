@@ -13,14 +13,18 @@ import {ReleaseStatusColorPipe} from './pipes/release-status-color.pipe';
 import {ReleaseStatusPipe} from './pipes/release-status.pipe';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    ReleasesPageRoutingModule,
-    TranslateModule,
-    PipeModule
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        ReleasesPageRoutingModule,
+        TranslateModule,
+        PipeModule
+    ],
+  exports: [
+    ReleaseStatusPipe,
+    ReleaseStatusColorPipe
   ],
-  declarations: [ReleasesPage, ReleaseStatusColorPipe, ReleaseStatusPipe]
+    declarations: [ReleasesPage, ReleaseStatusColorPipe, ReleaseStatusPipe]
 })
 export class ReleasesPageModule {}

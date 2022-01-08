@@ -1,5 +1,5 @@
 export enum ReleaseStatus {
-  draft = 'draft',
-  released = 'released',
-  archived = 'archived',
+  draft = 'DRAFT',
+  released = 'RELEASED',
+  archived = 'ARCHIVED',
 }

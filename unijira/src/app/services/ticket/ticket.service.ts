@@ -41,7 +41,7 @@ export class TicketService {
 
     return this.accountService.me()
       .pipe(map(me => [
-          new Item(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Description 1', null, 1, null, ItemType.epic, ItemStatus.open, me, null, null, [
+          new Item(1, 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.', 'Description 1', null, 1, null, ItemType.epic, ItemStatus.open, me, null, null, [],[
             new ItemAssignment(1, 1, me),
             new ItemAssignment(1, 1, me),
             new ItemAssignment(1, 1, me),
@@ -57,6 +57,13 @@ export class TicketService {
           new Item(9, 'Summary 9', 'Description 9', null, 1, null, ItemType.task, ItemStatus.done, me, null),
           new Item(10, 'Summary 10', 'Description 10', null, 1, null, ItemType.epic, ItemStatus.open, me, null),
         ])).pipe(delay(3000));
+
+  }
+
+  public getTicket(projectId: number, ticketId: number): Observable<Item> {
+
+    return this.http.get<Item>(`/projects/${projectId}/items/${ticketId}`)
+      .pipe(catchError(e => of(null)));
 
   }
 
