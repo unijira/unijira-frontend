@@ -60,7 +60,9 @@ export class BacklogPage implements OnInit {
     private popOverCtrl: PopoverController,
     private route: ActivatedRoute,
     private router: Router
-  ) {}
+  ) {
+
+  }
 
   ngOnInit() {
     const that = this;
@@ -92,12 +94,15 @@ export class BacklogPage implements OnInit {
     });
 
     this.taskService.getBacklog().subscribe((b) => {
+      console.log('----------------- GET BACKLOG -----------------');
       this.backlog = _.cloneDeep(b);
     });
 
     this.taskService.getSprint().subscribe((s) => {
+      console.log('----------------- GET SPRINT -----------------');
       this.sprint = _.cloneDeep(s);
     });
+
   }
 
   editSprint() {
@@ -143,7 +148,7 @@ export class BacklogPage implements OnInit {
     if (type === 'backlog') {
       const newTask = _.cloneDeep(task);
       newTask.item.status = ItemStatus[data.data.value];
-      const backlog = _.cloneDeep(this.backlog);
+      const backlog = this.backlog;
       backlog.insertions = this.backlog.insertions.map((t) => {
         if (t.id === task.id) {
           return newTask;
@@ -154,8 +159,8 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
       const newTask = _.cloneDeep(task);
-      newTask.status = ItemStatus[data.data.value];
-      const sprint = _.cloneDeep(this.sprint);
+      newTask.item.status = ItemStatus[data.data.value];
+      const sprint = this.sprint;
       sprint.insertions = this.sprint.insertions.map((t) => {
         if (t.id === task.id) {
           return newTask;
@@ -163,6 +168,7 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
+
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
@@ -186,7 +192,7 @@ export class BacklogPage implements OnInit {
       if (data.data.value !== undefined) {
         const newTask = _.cloneDeep(task);
         newTask.item.evaluation = parseInt(data.data.value, 10);
-        const backlog = _.cloneDeep(this.backlog);
+        const backlog = this.backlog;
         backlog.insertions = this.backlog.insertions.map((t) => {
           if (t.id === task.id) {
             return newTask;
@@ -194,13 +200,16 @@ export class BacklogPage implements OnInit {
             return t;
           }
         });
+
         this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
       }
     } else if (type === 'sprint') {
       if (data.data.value !== undefined) {
         const newTask = _.cloneDeep(task);
+
         newTask.item.evaluation = parseInt(data.data.value, 10);
-        const sprint = _.cloneDeep(this.sprint);
+
+        const sprint = this.sprint;
         sprint.insertions = this.sprint.insertions.map((t) => {
           if (t.id === task.id) {
             return newTask;
@@ -208,6 +217,8 @@ export class BacklogPage implements OnInit {
             return t;
           }
         });
+
+        console.log('Aggiornamento evaluation ', newTask.item.evaluation);
         this.store.dispatch(TaskActions.setSprintAction({ sprint }));
       }
     }
@@ -274,6 +285,25 @@ export class BacklogPage implements OnInit {
     const itemToRemoveFromBacklog = [];
     const itemToRemoveFromSprint = [];
 
+    const allInsertionsNew = _.compact(_.flatten(_.zip(tmpB.insertions, tmpS.insertions)));
+    const allInsertionsOld = _.compact(_.flatten(_.zip(this.backlogServer.insertions, this.sprintServer.insertions)));
+
+    const allItemsNew = allInsertionsNew.map((item) => item.item);
+    const allItemsOld = allInsertionsOld.map((item) => item.item);
+
+    console.log('allItemsNew', allItemsNew);
+    console.log('allItemsOld', allItemsOld);
+    forEach(allItemsOld, (item) => {
+      const itemNew = _.find(allItemsNew, (i) => i.id === item.id);
+      if (!_.isEqual(item, itemNew)){
+        console.log('itemNew', itemNew);
+        console.log('item diverso', item, itemNew);
+        this.backlogAPIService.setItems(itemNew).subscribe((response) => {});
+      } else {
+        console.log('item uguale');
+      }
+    });
+
     this.backlogServer.insertions.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
         itemToRemoveFromBacklog.push(new SprintInsertion(item.id, this.sprint, item.item, this.sprintId));
@@ -296,35 +326,6 @@ export class BacklogPage implements OnInit {
       this.backlogAPIService.addBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {});
     });
 
-    console.log(itemToRemoveFromBacklog);
-    console.log(itemToRemoveFromSprint);
-
-    // tmpB.insertions.forEach((item, index) => {
-    //   const oldItems = this.backlogServer.insertions.find((i) => i.id === item.id)
-
-    //   if (!oldItems) {
-    //     this.backlogAPIService.addBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {})
-    //   } else {
-
-    //   }
-
-    //   this.backlogAPIService
-    //   .setBakclogInsertion(this.projectId, this.backlogId, item)
-    //   .subscribe((response) => {});
-
-    //   this.backlogAPIService.setItems(item).subscribe((response) => {});
-    // });
-
-    // tmpS.insertions.forEach((item, index) => {
-    //   item.sprint = this.backlog.sprints.find((s) => s.id === this.sprintId);
-    //   delete item.sprintId;
-
-    //   this.backlogAPIService
-    //   .addSprintInsertion(this.projectId, this.backlogId, this.sprintId, item)
-    //   .subscribe((response) => {});
-
-    //   this.backlogAPIService.setItems(item).subscribe((response) => {});
-    // });
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
@@ -346,7 +347,7 @@ export class BacklogPage implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        pesoOriginal: item.evaluation,
+        pesoOriginal: item.item.evaluation,
       },
     });
 
@@ -366,12 +367,13 @@ export class BacklogPage implements OnInit {
       event: ev,
       translucent: true,
       componentProps: {
-        statusOriginal: item.status,
+        statusOriginal: item.item.status,
       },
     });
 
     popOver.onDidDismiss().then((data) => {
       if (data.data.value !== undefined) {
+        console.log('data', data);
         this.editStatus(item, data, type);
       }
     });

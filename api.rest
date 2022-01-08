@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NjU3MTUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjYyMTE1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.IBSADYNcCoPNlZutkfNf84tTwIJq13vwfnFMC3TYBcY
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NzkxOTQsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjc1NTk0LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.i4_H2ZhGpqtcx2m-lO-VGW2eyZWhoSBpFJVjTgY_We8
 
 # @token = {{login.response.body.token}}
 
@@ -241,64 +241,6 @@ Authorization: Bearer {{token}}
 PUT http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/insertions/92
 Authorization: Bearer {{token}}
 
-{
-    "id": 92,
-    "sprintId": 38,
-    "item": {
-      "createdAt": "2022-01-08T18:09:35.097026",
-      "updatedAt": "2022-01-08T18:09:35.097038",
-      "id": 2,
-      "summary": "Summary Epic 0",
-      "description": "Epic 0",
-      "measureUnit": "story-points",
-      "evaluation": 10,
-      "tags": "#tag1#,#tag2#",
-      "type": "epic",
-      "status": "OPEN",
-      "owner": {
-        "id": 1,
-        "username": "paolaguarasci@gmail.com",
-        "activated": false,
-        "disabled": false,
-        "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
-        "createdAt": "2022-01-08T18:09:34.95546",
-        "updatedAt": "2022-01-08T18:09:34.955475"
-      },
-      "fatherId": null,
-      "sons": [
-        {
-          "createdAt": "2022-01-08T18:09:35.124345",
-          "updatedAt": "2022-01-08T18:09:35.124358",
-          "id": 7,
-          "summary": "Summary Story 2",
-          "description": "Story 2",
-          "measureUnit": "Unit",
-          "evaluation": 12,
-          "tags": "#tag1#,#tag2#",
-          "type": "story",
-          "status": "OPEN",
-          "owner": {
-            "id": 1,
-            "username": "paolaguarasci@gmail.com",
-            "activated": false,
-            "disabled": false,
-            "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
-            "createdAt": "2022-01-08T18:09:34.95546",
-            "updatedAt": "2022-01-08T18:09:34.955475"
-          },
-          "fatherId": 2,
-          "sons": [],
-          "notes": [],
-          "assignees": [
-            {
-              "id": 99,
-              "itemId": 7,
-              "assigneeId": 1
-            }
-          ]
-        },
-
-
 ###
 POST  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints
 Authorization: Bearer {{token}}
@@ -451,18 +393,18 @@ Content-Type: application/json
 
 ###
 
-PUT http://localhost:7080/items/3
+PUT http://localhost:7080/items/13
 Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "createdAt": "2022-01-07T19:01:15.588264",
-  "updatedAt": "2022-01-07T19:01:15.588277",
-  "id": 3,
-  "summary": "Summary 1",
-  "description": "Item 1",
+  "createdAt": "2022-01-08T18:09:35.141734",
+  "updatedAt": "2022-01-08T18:09:35.141743",
+  "id": 13,
+  "summary": "Summary 3aa",
+  "description": "Item 3",
   "measureUnit": "Unit",
-  "evaluation": 11,
+  "evaluation": 33,
   "tags": "#tag1#,#tag2#",
   "type": "task",
   "status": "DONE",
@@ -472,24 +414,17 @@ Content-Type: application/json
     "activated": false,
     "disabled": false,
     "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
-    "createdAt": "2022-01-07T19:01:15.455946",
-    "updatedAt": "2022-01-07T19:01:15.455961"
+    "createdAt": "2022-01-08T18:09:34.95546",
+    "updatedAt": "2022-01-08T18:09:34.955475"
   },
-  "father": null,
+  "fatherId": null,
+  "sons": [],
   "notes": [],
   "assignees": [
     {
-      "id": 64,
-      "itemId": 3,
-      "assignee": {
-        "id": 1,
-        "username": "paolaguarasci@gmail.com",
-        "activated": false,
-        "disabled": false,
-        "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
-        "createdAt": "2022-01-07T19:01:15.455946",
-        "updatedAt": "2022-01-07T19:01:15.455961"
-      }
+      "id": 105,
+      "itemId": 13,
+      "assigneeId": 1
     }
   ]
 }

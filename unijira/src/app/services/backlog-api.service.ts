@@ -19,7 +19,6 @@ export class BacklogAPIService {
   ) {}
 
   getFirstBacklog(projectId: number) {
-    console.log('get first backlog');
     const url = `/projects/${projectId}/backlogs`;
     return this.httpService.get<any>(url).pipe(map((res) => res[0]));
   }
@@ -45,8 +44,8 @@ export class BacklogAPIService {
   }
 
   setItems(item) {
-    const url = `/items/${item.item.id}`;
-    return this.httpService.put<Item>(url, item.item);
+    const url = `/items/${item.id}`;
+    return this.httpService.put<Item>(url, item);
   }
   addBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/insertions`;
