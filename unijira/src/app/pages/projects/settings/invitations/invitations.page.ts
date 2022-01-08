@@ -1,16 +1,15 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
-import {AlertController, ToastController} from '@ionic/angular';
-import {ProjectService} from '../../../../services/common/project.service';
+import {AlertController, IonAccordionGroup, ToastController} from '@ionic/angular';
+import {ProjectService} from '../../../../services/project/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
-import {UsersService} from '../../../../services/common/users.service';
+import {UserService} from '../../../../services/user/user.service';
 import {MembershipStatus} from '../../../../models/projects/MembershipStatus';
 import {PageService} from '../../../../services/page.service';
-import { IonAccordionGroup } from '@ionic/angular';
 import {FormControl, Validators} from '@angular/forms';
 import {UserInfo} from '../../../../models/users/UserInfo';
 
@@ -54,7 +53,7 @@ export class InvitationsPage implements OnInit {
               private translateService: TranslateService,
               private router: Router,
               public toastController: ToastController,
-              public usersService: UsersService,
+              public usersService: UserService,
               private pageService: PageService) {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.invitations']);

@@ -9,6 +9,9 @@ import {TicketsPageRoutingModule} from './tickets-routing.module';
 import {TicketsPage} from './tickets.page';
 import {TranslateModule} from '@ngx-translate/core';
 import {PipeModule} from '../../../pipe.module';
+import {TicketStatusPipe} from './pipes/ticket-status.pipe';
+import {TicketStatusColorPipe} from './pipes/ticket-status-color.pipe';
+import {TicketTypePipe} from './pipes/ticket-type.pipe';
 
 @NgModule({
     imports: [
@@ -19,6 +22,6 @@ import {PipeModule} from '../../../pipe.module';
         TranslateModule,
         PipeModule
     ],
-  declarations: [TicketsPage]
+  declarations: [TicketsPage, TicketStatusPipe, TicketStatusColorPipe, TicketTypePipe]
 })
 export class TicketsPageModule {}

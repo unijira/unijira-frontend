@@ -1,21 +1,18 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../store/session.service';
-import {ProjectService} from '../../../services/common/project.service';
-import {UsersService} from '../../../services/common/users.service';
+import {ProjectService} from '../../../services/project/project.service';
+import {UserService} from '../../../services/user/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Sprint} from '../../../models/Sprint';
-import {SprintInsertion} from '../../../models/SprintInsertion';
-import {UserInfo} from '../../../models/users/UserInfo';
 import {Subscription} from 'rxjs';
 import {Project} from '../../../models/projects/Project';
-import {ItemAssignment} from '../../../models/item/ItemAssignment';
 import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {ItemStatus} from '../../../models/item/ItemStatus';
 import {ItemType} from '../../../models/item/ItemType';
 import {Item} from '../../../models/item/Item';
 import {unsubscribeAll} from '../../../util';
-import {BoardService} from '../../../services/common/board.service';
+import {BoardService} from '../../../services/board/board.service';
 
 @Component({
   selector: 'app-board',
@@ -62,7 +59,7 @@ export class BoardPage implements OnInit, OnDestroy {
   constructor(
     private sessionService: SessionService,
     private projectService: ProjectService,
-    private userService: UsersService,
+    private userService: UserService,
     private activatedRoute: ActivatedRoute,
     private boardService: BoardService) {
 
@@ -159,7 +156,6 @@ export class BoardPage implements OnInit, OnDestroy {
     //
     // this.sprint = new Sprint(0, new Date('2021-02-01'), new Date('2021-03-01'), insertion, 0);
     // fine oggetto mock per test
-
 
 
     this.formsSubscription = this.formGroup.statusChanges.subscribe(() => {

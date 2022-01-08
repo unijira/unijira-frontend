@@ -1,0 +1,170 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'projects.releases.title'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'projects.releases.title'"></h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="!filteredReleases || filteredReleases?.length === 0">
+            <ion-icon slot="start" name="create"></ion-icon>
+            <ion-text [translate]="'projects.releases.export'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="primary" expand="block" (click)="create()" [disabled]="!projectId">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-text [translate]="'projects.releases.add'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Filters -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" size-lg="6">
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.releases.search.label'"></small>
+          </ion-text>
+          <ion-searchbar [placeholder]="'projects.releases.search.placeholder' | translate" [(ngModel)]="filterSearch"></ion-searchbar>
+        </ion-col>
+        <ion-col>
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.releases.status.label'"></small>
+          </ion-text>
+          <ion-item>
+            <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.releases.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option [value]="releaseStatus.draft">{{ releaseStatus.draft | releaseStatus | translate }}</ion-select-option>
+              <ion-select-option [value]="releaseStatus.released">{{ releaseStatus.released | releaseStatus | translate }}</ion-select-option>
+              <ion-select-option [value]="releaseStatus.archived">{{ releaseStatus.archived | releaseStatus | translate }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <section class="ion-margin infinte-width">
+    <ion-list class="infinte-width-inner">
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+            <ion-col size="2">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.releases.list.version'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.releases.list.status'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.releases.list.startDate'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.releases.list.endDate'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.releases.list.description'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item *ngFor="let release of filteredReleases" [routerLink]="'/projects/' + projectId + '/releases/' + release.id" [disabled]="!projectId">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-label>
+                <strong [innerHTML]="release.version | filtered:filterSearch"></strong>
+              </ion-label>
+            </ion-col>
+            <ion-col size="2">
+              <ion-badge color="{{ release.status | releaseStatusColor }}">
+                <ion-label>{{ release.status | releaseStatus | translate | titlecase }}</ion-label>
+              </ion-badge>
+            </ion-col>
+            <ion-col size="2">
+              <ion-label>
+                {{ release.startDate | time | async }}
+              </ion-label>
+            </ion-col>
+            <ion-col size="2">
+              <ion-label>
+                {{ release.endDate | date:'dd/MM/YYYY' }}
+              </ion-label>
+            </ion-col>
+            <ion-col>
+              <ion-label>
+                <span [innerHTML]="release.description | filtered:filterSearch"></span>
+              </ion-label>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngIf="!releases">
+      <ion-item *ngFor="let release of [1,2,3,4,5,6]">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="releases?.length === 0" class="ion-text-center ion-margin">
+      <ion-text color="medium">
+        <i [translate]="'projects.releases.list.empty'"></i>
+      </ion-text>
+    </p>
+  </section>
+
+</ion-content>

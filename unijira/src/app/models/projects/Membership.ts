@@ -12,7 +12,7 @@ export class Membership {
     public keyProjectId: number,
     public role: MembershipRoles,
     public status: MembershipStatus,
-    public permissions: MembershipPermission[],
+    public permissions: Set<MembershipPermission>,
   ) { }
 
 }

@@ -1,8 +1,8 @@
-import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
-import {ProjectService} from '../../services/common/project.service';
+import {ProjectService} from '../../services/project/project.service';
 import {Item} from '../../models/item/Item';
-import {TicketService} from '../../services/common/ticket.service';
+import {TicketService} from '../../services/ticket/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
 import {PageService} from '../../services/page.service';
 import {Router} from '@angular/router';
