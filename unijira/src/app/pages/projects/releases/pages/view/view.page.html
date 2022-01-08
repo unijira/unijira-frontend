@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="release && projectId">
 
   <!-- Breadcrumbs -->
   <section class="ion-margin">
@@ -7,8 +7,8 @@
         <ion-icon name="home"></ion-icon>
       </ion-breadcrumb>
       <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
-      <ion-breadcrumb *ngIf="projectId" [routerLink]="['/projects', projectId, 'releases']" [translate]="'projects.releases.title'"></ion-breadcrumb>
-      <ion-breadcrumb *ngIf="release">{{release.version}}</ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/projects', projectId, 'releases']" [translate]="'projects.releases.title'"></ion-breadcrumb>
+      <ion-breadcrumb>{{release.version}}</ion-breadcrumb>
     </ion-breadcrumbs>
   </section>
 
@@ -56,7 +56,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.releases.view.version'"></ion-label>
-            <ion-input  [placeholder]="'projects.releases.view.version.placeholder' | translate" [(ngModel)]="release.version"></ion-input>
+            <ion-input  [placeholder]="'projects.releases.view.version.placeholder' | translate" [(ngModel)]="release.version" maxlength="255"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-lg="6" size="12">
@@ -102,7 +102,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.releases.view.description'"></ion-label>
-            <ion-textarea [(ngModel)]="release.description"></ion-textarea>
+            <ion-textarea [(ngModel)]="release.description" maxlength="8192"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -141,4 +141,12 @@
   </section>
 
 
+</ion-content>
+
+<ion-content *ngIf="!release || !projectId">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-row>
+  </ion-grid>
 </ion-content>

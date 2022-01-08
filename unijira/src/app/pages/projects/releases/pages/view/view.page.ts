@@ -39,8 +39,8 @@ export class ViewPage implements OnInit {
     const dayOfYear = (date: Date): number => Math.floor(date.getFullYear() * 365.25 + date.getMonth() * 30.4375 + date.getDate());
 
     const n = dayOfYear(new Date(Date.now()));
-    const s = dayOfYear(this.release.startDate);
-    const e = dayOfYear(this.release.endDate);
+    const s = dayOfYear(new Date(this.release.startDate));
+    const e = dayOfYear(new Date(this.release.endDate));
 
     return Math.max(0, (n - s) / (e - s));
 
@@ -57,11 +57,11 @@ export class ViewPage implements OnInit {
   }
 
   get endDateMinusOne(): Date {
-    return moment(this.release.endDate).subtract(1, 'days').toDate();
+    return moment(this.release.endDate, 'YYYY-MM-DD').subtract(1, 'days').toDate();
   }
 
   get startDatePlusOne(): Date {
-    return moment(this.release.startDate).add(1, 'days').toDate();
+    return moment(this.release.startDate, 'YYYY-MM-DD').add(1, 'days').toDate();
   }
 
 
@@ -108,8 +108,10 @@ export class ViewPage implements OnInit {
     });
   }
 
-  parseDate(date: string | null): Date {
-    return date ? new Date(date) : new Date();
+  parseDate(date: string | null): string {
+    return date
+      ? new Date(date).toISOString().substring(0, 10)
+      : new Date(Date.now()).toISOString().substring(0, 10);
   }
 
 }
