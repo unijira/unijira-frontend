@@ -23,6 +23,8 @@ export class DetailsPage implements OnInit {
   @Input() project: Project;
   @Input() projectSubscription: Subscription;
 
+  @Input() saved = false;
+
   nameForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
   keyForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
@@ -116,8 +118,7 @@ export class DetailsPage implements OnInit {
 
                     if(p !== null) {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.success')).then();
-                      this.image = '';
-                      this.file = undefined;
+                      this.saved = true;
                     } else {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed')).then();
                     }

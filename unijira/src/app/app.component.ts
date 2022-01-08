@@ -91,9 +91,9 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
 
-      this.project = proj;
+      if (!this.project) {
 
-      if (proj) {
+        this.project = proj;
 
         this.pages = [
           {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},

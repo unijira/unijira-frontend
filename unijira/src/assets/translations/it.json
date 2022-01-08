@@ -215,6 +215,8 @@
   "project.settings.roles.update" : "Salva ruoli",
   "project.settings.invitations.null" : "Nessun utente presente con le seguenti caratteristiche",
   "project.settings.roles.null" : "Nessun utente presente con le seguenti caratteristiche",
+  "projects.settings.roles.filter.type" : "Seleziona ruolo",
+  "projects.settings.invitations.filter.type" : "Seleziona stato",
   "board.toDoTickets" : "DA COMPLETARE {{value}} TICKET",
   "board.storiesTickets" : "STORIES {{value}} TICKET",
   "board.openedTickets" : "IN CORSO {{value}} TICKET",
@@ -227,6 +229,16 @@
   "board.epic" : "Epic",
   "board.endSprint" : "Completa sprint",
   "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}",
-  "projects.settings.roles.filter.type" : "Seleziona ruolo",
-  "projects.settings.invitations.filter.type" : "Seleziona stato"
+  "project.settings.permissions.title" : "Permessi",
+  "project.settings.permissions.subtitle" : "Modifica i permessi dei membri del tuo team",
+  "project.settings.permissions.info" : "Con Unijira è possibile modificare senza nessun costo i permessi di cui gode ogni membro del team. Viene offerta una personalizzazione a grana fine degli stessi al fine andare in contro alle diverse esigenza. Potrai inoltre far riferimento alle maschere create per ogni tipologia di ruolo.",
+  "project.settings.permissions.alert.title" : "Sei sicuro di voler continuare?",
+  "project.settings.permissions.alert.description" : "Gli utenti godranno dei nuovi permessi scelti",
+  "project.settings.permissions.toast.success" : "I permessi sono stati modificati correttemente",
+  "project.settings.permissions.toast.failed" : "Si è verificato un problema durante la procedura d'assegnamento dei permessi.",
+  "project.settings.permissions.update" : "Salva",
+  "projects.settings.permissions.filter.user.type" : "Seleziona utente",
+  "projects.settings.permissions.filter.mask.type" : "Seleziona maschera",
+  "projects.settings.permissions.type" : "Tipo",
+  "projects.settings.permissions.state" : "Stato"
 }
