@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {PageService} from '../../../services/page.service';
 import {ItemType} from '../../../models/item/ItemType';
 import {ItemStatus} from '../../../models/item/ItemStatus';
-import {TicketService} from '../../../services/common/ticket.service';
+import {TicketService} from '../../../services/ticket/ticket.service';
 import {Item} from '../../../models/item/Item';
 import {SessionService} from '../../../store/session.service';
 import {first} from 'rxjs';
@@ -96,7 +96,6 @@ export class TicketsPage implements OnInit {
     a.setAttribute('href', url);
     a.setAttribute('download', 'tickets.csv');
     a.click();
-
 
   }
 

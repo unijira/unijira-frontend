@@ -6,7 +6,7 @@ import {UserInfo} from '../../models/users/UserInfo';
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class UserService {
 
   constructor(private http: HttpService) { }
 
