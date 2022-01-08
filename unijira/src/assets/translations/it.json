@@ -232,5 +232,16 @@
   "profile.email" : "Email",
   "profile.personal.contacts" : "Contatti e social",
   "profile.phone.number" : "Numero di telefono",
-  "profile.save.and.exit" : "Salva ed esci"
+  "profile.save.and.exit" : "Salva ed esci",
+  "profile.device.preferences" : "Impostazioni dispositivo",
+  "profile.security.preferences" : "Impostazioni sicurezza",
+  "profile.preferred.language" : "Lingua preferita",
+  "profile.preferred.theme" : "Tema preferito",
+  "change.password" : "Cambia password",
+  "old.password": "Vecchia Password",
+  "new.password": "Nuova Password",
+  "profile.lang.italian": "Italiano",
+  "profile.lang.english": "English",
+  "profile.theme.dark": "Scuro",
+  "profile.theme.light": "Chiaro"
 }

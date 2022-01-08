@@ -209,5 +209,16 @@
   "profile.email" : "Email",
   "profile.personal.contacts" : "Contacts and social media",
   "profile.phone.number" : "Phone number",
-  "profile.save.and.exit" : "Save and exit"
+  "profile.save.and.exit" : "Save and exit",
+  "profile.device.preferences" : "Device settings",
+  "profile.security.preferences" : "Security settings",
+  "profile.preferred.language" : "Preferred language",
+  "profile.preferred.theme" : "Preferred theme",
+  "change.password" : "Change password",
+  "old.password": "Old Password",
+  "new.password": "New Password",
+  "profile.lang.italian": "Italiano",
+  "profile.lang.english": "English",
+  "profile.theme.dark": "Dark",
+  "profile.theme.light": "Light"
 }

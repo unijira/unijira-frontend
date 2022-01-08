@@ -12,7 +12,7 @@
             <ion-breadcrumb [routerLink]="['/']">
               <ion-icon name="home"></ion-icon>
             </ion-breadcrumb>
-              <ion-breadcrumb> <ion-icon name="person"></ion-icon></ion-breadcrumb>
+              <ion-breadcrumb> <ion-icon name="person"></ion-icon><ion-text>{{user?.username}}</ion-text></ion-breadcrumb>
           </ion-breadcrumbs>
         </section>
       </div>
@@ -56,7 +56,7 @@
               <ion-card-title class="ion-justify-content-center"><ion-input placeholder="{{'carreer.placeholder' | translate}}" [(ngModel)]="user.role"></ion-input></ion-card-title>
             </ion-card-header>
             <ion-card-content>
-              <ion-input placeholder="{{'description.placeholder' | translate}}"></ion-input>
+              <ion-input placeholder="{{'description.placeholder' | translate}}" [(ngModel)]="user.description"></ion-input>
             </ion-card-content>
           </ion-card>
         </ion-col>
@@ -173,11 +173,98 @@
 
     </ion-row>
 
+    <ion-row>
+      <ion-col>
+        <ion-card class="ion-justify-content-center">
+          <ion-card-header>
+            <ion-card-subtitle><ion-icon name="desktop"></ion-icon>
+              {{'profile.device.preferences'| translate}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item lines="full">
+                    <ion-list>
+                      <ion-radio-group value="biff">
+                        <ion-list-header>
+                          <ion-icon name="logo-github"></ion-icon>{{'profile.preferred.language' | translate}}
+                        </ion-list-header>
+                        <ion-item>
+                          <ion-label>Biff</ion-label>
+                          <ion-radio slot="start" value="biff"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                          <ion-label>Griff</ion-label>
+                          <ion-radio slot="start" value="griff"></ion-radio>
+                        </ion-item>
+                      </ion-radio-group>
+                    </ion-list>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item lines="full">
+                    <ion-list>
+                      <ion-radio-group value="biff">
+                        <ion-list-header>
+                          <ion-icon name="logo-github"></ion-icon>{{'profile.preferred.theme' | translate}}
+                        </ion-list-header>
+                        <ion-item>
+                          <ion-label>Biff</ion-label>
+                          <ion-radio slot="start" value="biff"></ion-radio>
+                        </ion-item>
+                        <ion-item>
+                          <ion-label>Griff</ion-label>
+                          <ion-radio slot="start" value="griff"></ion-radio>
+                        </ion-item>
+                      </ion-radio-group>
+                    </ion-list>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card>
+          <ion-card-header>
+            <ion-card-subtitle><ion-icon name="key"></ion-icon>
+              {{'profile.security.preferences'| translate}}</ion-card-subtitle>
+            <ion-card-title>
+              {{'change.password' | translate}}
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-label position="floating">{{'old.password'|translate}}</ion-label>
+                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-label position="floating">{{'new.password'|translate}}</ion-label>
+                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-button (click)="changePassword()">{{'change.password'|translate}}</ion-button>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+
+    </ion-row>
+
   </ion-grid>
   <ion-grid class="center">
     <ion-row>
       <ion-col>
-        <ion-button (click)="copyBack()">{{'profile.save.and.exit'|translate}}</ion-button>
+        <ion-button (click)="update()" [routerLink]="['/']">{{'profile.save.and.exit'|translate}}</ion-button>
       </ion-col>
     </ion-row>
   </ion-grid>
