@@ -1,11 +1,14 @@
 {
   "app.title": "Unijira",
   "error.title": "Error",
+  "error.buttons.ok": "OK",
   "error.auth.unexpected": "There was an unexpected error while trying to authenticate you",
   "error.auth.invalid": "Username or password is invalid",
   "error.auth.missing": "Username or password is missing",
   "error.auth.expired": "Session has expired",
   "error.api.default": "There was an unexpected error while trying to communicate with the server",
+  "error.projects.releases.create": "There was an unexpected error while trying to create a release",
+  "error.projects.releases.view.save": "There was an unexpected error while trying to save the release",
   "login.signIn": "Sign in",
   "login.signUp": "Sign up",
   "login.rememberMe": "Remember me",
@@ -244,5 +247,15 @@
   "projects.releases.list.endDate": "End Date",
   "projects.releases.list.description": "Description",
   "projects.releases.list.empty": "No releases found",
-  "projects.releases.export": "Export CSV"
+  "projects.releases.export": "Export CSV",
+  "projects.releases.view.version": "Version",
+  "projects.releases.view.archive": "Archive",
+  "projects.releases.view.publish": "Publish",
+  "projects.releases.view.status": "Status",
+  "projects.releases.view.startDate": "Start Date",
+  "projects.releases.view.endDate": "End Date",
+  "projects.releases.view.description": "Description",
+  "projects.releases.view.progress.title": "Progress",
+  "projects.releases.view.progress.release": "Expected release",
+  "projects.releases.view.save": "Save"
 }
