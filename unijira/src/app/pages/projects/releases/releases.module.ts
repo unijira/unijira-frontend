@@ -1,20 +1,26 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { ReleasePageRoutingModule } from './releases-routing.module';
+import {ReleasesPageRoutingModule} from './releases-routing.module';
 
-import { ReleasesPage } from './releases-page.component';
+import {ReleasesPage} from './releases-page';
+import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../../pipe.module';
+import {ReleaseStatusColorPipe} from './pipes/release-status-color.pipe';
+import {ReleaseStatusPipe} from './pipes/release-status.pipe';
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    ReleasePageRoutingModule
+    ReleasesPageRoutingModule,
+    TranslateModule,
+    PipeModule
   ],
-  declarations: [ReleasesPage]
+  declarations: [ReleasesPage, ReleaseStatusColorPipe, ReleaseStatusPipe]
 })
-export class ReleasePageModule {}
+export class ReleasesPageModule {}

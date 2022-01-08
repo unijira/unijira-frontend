@@ -2,10 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PageService} from '../../../../services/page.service';
 import {SessionService} from '../../../../store/session.service';
 import {AlertController, ToastController} from '@ionic/angular';
-import {ProjectService} from '../../../../services/common/project.service';
+import {ProjectService} from '../../../../services/project/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {UsersService} from '../../../../services/common/users.service';
+import {UserService} from '../../../../services/user/user.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
@@ -51,7 +51,7 @@ export class RolesPage implements OnInit {
               private translateService: TranslateService,
               private router: Router,
               public toastController: ToastController,
-              public usersService: UsersService,
+              public usersService: UserService,
               private pageService: PageService) {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.roles']);
@@ -68,7 +68,6 @@ export class RolesPage implements OnInit {
 
           this.projectService.getMemberships(p.id).subscribe(
             members => {
-
 
               this.memberships = members;
 

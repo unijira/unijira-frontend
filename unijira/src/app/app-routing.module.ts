@@ -53,7 +53,7 @@ const routes: Routes = [
   {
     path: 'projects/:id/releases',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/releases/releases.module').then(m => m.ReleasePageModule)
+    loadChildren: () => import('./pages/projects/releases/releases.module').then(m => m.ReleasesPageModule)
   },
   {
     path: 'projects/:id/invite',

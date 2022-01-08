@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../store/session.service';
-import {ProjectService} from '../../../services/common/project.service';
-import {UsersService} from '../../../services/common/users.service';
+import {ProjectService} from '../../../services/project/project.service';
+import {UserService} from '../../../services/user/user.service';
 import {ActivatedRoute} from '@angular/router';
 import {Sprint} from '../../../models/Sprint';
 import {SprintInsertion} from '../../../models/SprintInsertion';
@@ -61,7 +61,7 @@ export class BoardPage implements OnInit, OnDestroy {
   constructor(
     private sessionService: SessionService,
     private projectService: ProjectService,
-    private userService: UsersService,
+    private userService: UserService,
     private activatedRoute: ActivatedRoute) {
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));

@@ -52,8 +52,8 @@
           </ion-text>
           <ion-item>
             <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
-              <ion-select-option [value]="itemStatus.open">{{ 'projects.tickets.status.open' | translate }}</ion-select-option>
-              <ion-select-option [value]="itemStatus.done">{{ 'projects.tickets.status.done' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+              <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -63,10 +63,10 @@
           </ion-text>
           <ion-item>
             <ion-select [(ngModel)]="filterType" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
-              <ion-select-option [value]="itemType.epic">{{ 'projects.tickets.type.epic' | translate }}</ion-select-option>
-              <ion-select-option [value]="itemType.story">{{ 'projects.tickets.type.story' | translate }}</ion-select-option>
-              <ion-select-option [value]="itemType.task">{{ 'projects.tickets.type.task' | translate }}</ion-select-option>
-              <ion-select-option [value]="itemType.issue">{{ 'projects.tickets.type.issue' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.epic"> {{ itemType.epic  | ticketType | translate | titlecase }}</ion-select-option>
+              <ion-select-option [value]="itemType.story">{{ itemType.story | ticketType | translate | titlecase }}</ion-select-option>
+              <ion-select-option [value]="itemType.task"> {{ itemType.task  | ticketType | translate | titlecase }}</ion-select-option>
+              <ion-select-option [value]="itemType.issue">{{ itemType.issue | ticketType | translate | titlecase }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -178,8 +178,8 @@
               </ion-row>
             </ion-col>
             <ion-col>
-              <ion-badge [color]="getBadgeColor(ticket.status)">
-                {{ ticket.status }}
+              <ion-badge [color]="ticket.status | ticketStatusColor">
+                <ion-label>{{ ticket.status | ticketStatus | translate | titlecase }}</ion-label>
               </ion-badge>
             </ion-col>
             <ion-col>

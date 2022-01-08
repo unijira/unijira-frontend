@@ -176,6 +176,7 @@
   "projects.tickets.type.epic": "Epic",
   "projects.tickets.type.task": "Task",
   "projects.tickets.type.issue": "Issue",
+  "projects.tickets.type.unknown": "Sconosciuto",
   "projects.tickets.list.type": "Tipo",
   "projects.tickets.list.id": "ID",
   "projects.tickets.list.summary": "Riepilogo",
@@ -232,6 +233,20 @@
   "projects.settings.roles.filter.type" : "Seleziona ruolo",
   "projects.settings.invitations.filter.type" : "Seleziona stato",
   "projects.releases.title" : "Rilasci",
-  "projects.releases.add": "Crea versione"
-
+  "projects.releases.add": "Crea versione",
+  "projects.releases.status.draft": "Anteprima",
+  "projects.releases.status.released": "Rilasciato",
+  "projects.releases.status.archived": "Archiviato",
+  "projects.releases.status.unknown": "Sconosciuto",
+  "projects.releases.status.label": "Stato",
+  "projects.releases.status.placeholder": "Seleziona stato",
+  "projects.releases.search.placeholder": "Cerca versione",
+  "projects.releases.search.label": "Ricerca",
+  "projects.releases.list.version": "Versione",
+  "projects.releases.list.status": "Stato",
+  "projects.releases.list.startDate": "Data inizio",
+  "projects.releases.list.endDate": "Data fine",
+  "projects.releases.list.description": "Descrizione",
+  "projects.releases.list.empty": "Nessuna versione disponibile",
+  "projects.releases.export": "Esporta CSV"
 }
