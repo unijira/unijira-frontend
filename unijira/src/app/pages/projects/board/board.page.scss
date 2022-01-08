@@ -1,9 +1,5 @@
-ion-content {
-  --padding-top: 80px !important;
-}
-
 .main-card {
-  background-color: var(--ion-color-light-shade);
+  background-color: var(--ion-color-light);
   margin-right: 5px;
   margin-left: 5px;
 }
@@ -21,14 +17,7 @@ ion-content {
 .board-card-content {
   padding: 0;
   overflow-y: scroll;
-  max-height: 560px;
-}
-
-.outline {
-  border-color: var(--ion-color-primary);
-  border-width: thin;
-  border-style: solid;
-  border-radius: 10px;
+  max-height: 33rem;
 }
 
 .sprint-date {

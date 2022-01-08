@@ -9,12 +9,13 @@ import {UserInfo} from '../../../models/users/UserInfo';
 import {Subscription} from 'rxjs';
 import {Project} from '../../../models/projects/Project';
 import {ItemAssignment} from '../../../models/item/ItemAssignment';
-import {FormArray, FormControl, FormGroup} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {ItemStatus} from '../../../models/item/ItemStatus';
 import {ItemType} from '../../../models/item/ItemType';
 import {Item} from '../../../models/item/Item';
 import {unsubscribeAll} from '../../../util';
+import {BoardService} from '../../../services/common/board.service';
 
 @Component({
   selector: 'app-board',
@@ -62,77 +63,104 @@ export class BoardPage implements OnInit, OnDestroy {
     private sessionService: SessionService,
     private projectService: ProjectService,
     private userService: UsersService,
-    private activatedRoute: ActivatedRoute) {
+    private activatedRoute: ActivatedRoute,
+    private boardService: BoardService) {
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
 
       this.project = p;
+      if (p) {
+
+        this.boardService.getActiveSprint(this.project.id).subscribe(s => {
+          if (s) {
+            this.sprint = s;
+
+            this.sprint.insertions.forEach(ins => {
+              this.boardService.getFatherById(ins.item.fatherId).subscribe(father => ins.item.father = father);
+            });
+
+            // preprocessing data per displaying da inserire nella subscription della chiamata REST
+            this.sprint.insertions.forEach(ins => {
+              const splitted = ins.item.tags && ins.item.tags !== '' && ins.item.tags.split(';');
+              this.tags = this.tags.concat(splitted);
+              this.types.push(ins.item.type);
+              if (ins.item.type === ItemType.story) {
+                this.stories.push(ins.item);
+                this.storiesToShow.push(ins.item);
+              }
+
+              if (ins.item.type === ItemType.epic) {
+                this.epics.push(ins.item);
+              }
+
+              if (ins.item.type === ItemType.issue || ins.item.type === ItemType.task) {
+                switch (ins.item.status) {
+                  case ItemStatus.done:
+                    this.doneItems.push(ins.item);
+                    this.doneItemsToShow.push(ins.item);
+                    break;
+                  case ItemStatus.open:
+                    this.openedItems.push(ins.item);
+                    this.openedItemsToShow.push(ins.item);
+                    break;
+                  case ItemStatus.todo:
+                    this.toDoItems.push(ins.item);
+                    this.toDoItemsToShow.push(ins.item);
+                }
+              }
+            });
+
+            this.tags = [...new Set(this.tags)];
+            this.tags = this.tags.filter(t => t !== '');
+            this.epics = [...new Set(this.epics)];
+
+            // fine preprocessing da inserire nella subscription
+          }
+        });
+      }
 
     });
 
     // Oggetto mock per test
-    const insertion = [
-      new SprintInsertion(0, 1, new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null)),
-      new SprintInsertion(0, 1, new Item(0, '', 'item 0', '', 1,
-        'backend', ItemType.task, ItemStatus.open,
-        new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, new Date(), new Date(),null, null, null, null, null, null, null, null),
-        null, null, null,)),
-      new SprintInsertion(1, 1, new Item(1, '',
-        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan ipsum nec volutpat imperdiet. Nam felis nunc, tempus non dignissim.', '', 1,
-        'frontend', ItemType.story, ItemStatus.open,
-        new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, new Date(), new Date(), null, null, null, null, null, null, null, null),
-        new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, [new ItemAssignment(0, null,
-          new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, new Date(), new Date(),null, null, null, null, null, null, null, null),),
-          new ItemAssignment(0, null,
-            new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, new Date(), new Date(),null, null, null, null, null, null, null, null),)])),
-
-      new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
-        'backend;frontend', ItemType.issue, ItemStatus.done,
-        new UserInfo(0, 'user0', null, true, false, new Date(), new Date(),null, null, null, null, null, null, null, null),
-        new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
-    ];
-
-    this.sprint = new Sprint(0, new Date('2021-02-01'), new Date('2021-03-01'), insertion, 0);
+    // const insertion = [
+    //   new SprintInsertion(0, 1, new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null)),
+    //   new SprintInsertion(0, 1, new Item(0, '', 'item 0', '', 1,
+    //     'backend', ItemType.task, ItemStatus.open,
+    //     new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, '', ''),
+    //     null, null, null)),
+    //   new SprintInsertion(1, 1, new Item(1, '',
+    //     'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut accumsan ipsum nec volutpat imperdiet. Nam felis nunc, tempus non dignissim.', '', 1,
+    //     'frontend', ItemType.story, ItemStatus.open,
+    //     new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"), true, false, '', ''),
+    //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, [new ItemAssignment(0, null,
+    //       new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),),
+    //       new ItemAssignment(0, null,
+    //         new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),)])),
+    //
+    //   new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
+    //     'backend;frontend', ItemType.issue, ItemStatus.done,
+    //     new UserInfo(0, 'user0', null, true, false, '', ''),
+    //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
+    //   new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
+    //     'backend;frontend;altro;template', ItemType.issue, ItemStatus.done,
+    //     new UserInfo(0, 'user0', null, true, false, '', ''),
+    //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
+    //   new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
+    //     'backend;frontend', ItemType.issue, ItemStatus.done,
+    //     new UserInfo(0, 'user0', null, true, false, '', ''),
+    //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
+    //   new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
+    //     'backend;frontend', ItemType.issue, ItemStatus.done,
+    //     new UserInfo(0, 'user0', null, true, false, '', ''),
+    //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
+    // ];
+    //
+    // this.sprint = new Sprint(0, new Date('2021-02-01'), new Date('2021-03-01'), insertion, 0);
     // fine oggetto mock per test
 
-    // preprocessing data per displaying da inserire nella subscription della chiamata REST
-    this.sprint.insertions.forEach(ins => {
-      const splitted = ins.item.tags && ins.item.tags !== '' && ins.item.tags.split(';');
-      this.tags = this.tags.concat(splitted);
-      this.types.push(ins.item.type);
-      if (ins.item.type === ItemType.story) {
-        this.stories.push(ins.item);
-        this.storiesToShow.push(ins.item);
-      }
 
-      if (ins.item.type === ItemType.epic) {
-        this.epics.push(ins.item);
-      }
-
-      if (ins.item.type === ItemType.issue || ins.item.type === ItemType.task) {
-        switch (ins.item.status) {
-          case ItemStatus.done:
-            this.doneItems.push(ins.item);
-            this.doneItemsToShow.push(ins.item)
-            break;
-          case ItemStatus.open:
-            this.openedItems.push(ins.item);
-            this.openedItemsToShow.push(ins.item)
-            break;
-          default:
-            this.toDoItems.push(ins.item);
-            this.toDoItemsToShow.push(ins.item)
-        }
-      }
-    });
-
-    this.tags = [...new Set(this.tags)];
-    this.tags = this.tags.filter(t => t !== '');
-    this.epics = [...new Set(this.epics)];
-
-    // fine preprocessing da inserire nella subscription
 
     this.formsSubscription = this.formGroup.statusChanges.subscribe(() => {
       this.filterItems();
