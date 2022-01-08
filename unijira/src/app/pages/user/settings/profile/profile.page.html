@@ -23,16 +23,24 @@
       <ion-row>
         <ion-col>
           <div class="round-image">
-            <ion-img [src]="user?.avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+            <ion-img [src]="image || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
           </div>
         </ion-col>
       </ion-row>
     </ion-grid>
     <ion-grid class="center">
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="dummy()">{{'profile.edit.propic' | translate}}</ion-button>
-        </ion-col>
+      <ion-row class="ion-justify-content-center">
+        <input
+          style="display: none"
+          type="file" (change)="onFileChanged($event)"
+          id="input"
+          #fileInput>
+        <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+        <div class="ion-align-self-center ion-padding-start">
+          <ion-button type="reset" *ngIf="image !== '' && !saved" color="light" (click)="image = ''; file = undefined; this.saved = false;" >
+            <ion-icon name="trash-outline"></ion-icon>
+          </ion-button>
+        </div>
       </ion-row>
     </ion-grid>
 
@@ -241,13 +249,13 @@
               <ion-row>
                 <ion-col>
                   <ion-label position="floating">{{'old.password'|translate}}</ion-label>
-                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="oldPassword"></ion-input>
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col>
                   <ion-label position="floating">{{'new.password'|translate}}</ion-label>
-                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="newPassword"></ion-input>
                 </ion-col>
               </ion-row>
               <ion-row>

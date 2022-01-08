@@ -4,6 +4,8 @@ import {AccountService} from '../../../../services/account.service';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {Project} from '../../../../models/projects/Project';
 import {UsersService} from '../../../../services/common/users.service';
+import {BasePath, FileUploadService} from '../../../../services/common/file-upload.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +16,15 @@ export class ProfilePage implements OnInit {
 
   @Input() user: UserInfo;
 
+  @Input() oldPassword: string;
+  @Input() newPassword: string;
+
+
+  @Input() file: File;
+  @Input() image: string;
+
+  @Input() saved = false;
+
   enrolledProjects: Project[] = [];
 
   collaborators: UserInfo[] = [];
@@ -22,17 +33,25 @@ export class ProfilePage implements OnInit {
   constructor(
     private http: HttpService,
     private accountService: AccountService,
-    private usersService: UsersService
-  ) { }
+    private usersService: UsersService,
+    private uploadService: FileUploadService
+  ) {
+  }
 
   ngOnInit() {
-    this.user = new UserInfo(null,null,null,null,null,null,
-      null,null,null,null,null,null,null, null,
+    this.user = new UserInfo(null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
       null);
     this.accountService.me().subscribe(value => {
-          this.user = value;
-          this.getCollaborators();
-          this.getMemberships();});
+      this.usersService.getUser(value.id).subscribe(user => {
+        this.user = user;
+        this.getCollaborators();
+        this.getMemberships();
+        this.image = this.user.avatar.toString();
+      });
+
+      console.log(this.user.avatar);
+    });
   }
 
   copyBack() {
@@ -57,7 +76,29 @@ export class ProfilePage implements OnInit {
   }
 
   update() {
-    this.usersService.updateUser(this.user.id, this.user).subscribe(value =>{console.log(value);});
+    this.uploadImage();
+  }
+
+  uploadImage() {
+    if(this.file !== undefined) {
+      console.log(this.file);
+      this.uploadService.upload(this.user.id, 'avatar', this.file, BasePath.user).subscribe(
+        url => {
+          console.log(url);
+          this.user.avatar = new URL(url);
+          console.log(this.user);
+          this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
+            console.log(value);
+          });
+        }
+          );
+    }
+    else {
+        console.log(this.user);
+        this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
+          console.log(value);
+      });
+    }
 
   }
 
@@ -65,4 +106,17 @@ export class ProfilePage implements OnInit {
     console.log('OK');
   }
 
+  onFileChanged(event) {
+    const reader = new FileReader();
+
+    this.file = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
+    this.user.avatar =  event.target.files[0];
+    reader.onload = (e) => {
+      this.image = e.target.result as string;
+    };
+
+
+
+  }
 }
