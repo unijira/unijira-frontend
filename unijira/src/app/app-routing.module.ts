@@ -60,11 +60,6 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/settings/details/details.module').then(m => m.DetailsPageModule)
   },
   {
-    path: 'projects/:id/settings/notifications',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/notifications/notifications.module').then(m => m.NotificationsPageModule)
-  },
-  {
     path: 'projects/:id/settings/roles',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/settings/roles/roles.module').then(m => m.RolesPageModule)
