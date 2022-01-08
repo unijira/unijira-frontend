@@ -4,7 +4,7 @@ import {AlertController, IonSlides, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
-import {FileUploadService} from '../../../services/common/file-upload.service';
+import {BasePath, FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {PageService} from '../../../services/page.service';
 import {Subscription} from 'rxjs';
@@ -110,7 +110,7 @@ export class WizardPage implements OnInit {
 
                   if(this.file !== undefined) {
 
-                    this.uploadService.upload(project.id, 'icon', this.file).subscribe(
+                    this.uploadService.upload(project.id, 'icon', this.file, BasePath.project).subscribe(
                       url => {
 
                         this.projectService.updateProject(project.id, project.name, project.key, project.ownerId, new URL(url)).subscribe(

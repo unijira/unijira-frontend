@@ -7,7 +7,7 @@ import {FormControl, Validators} from '@angular/forms';
 import {AlertController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {FileUploadService} from '../../../../services/common/file-upload.service';
+import {BasePath, FileUploadService} from '../../../../services/common/file-upload.service';
 import {PageService} from '../../../../services/page.service';
 
 @Component({
@@ -110,7 +110,7 @@ export class DetailsPage implements OnInit {
 
           if(this.file !== undefined) {
 
-            this.uploadService.upload(this.project.id, 'icon', this.file).subscribe(
+            this.uploadService.upload(this.project.id, 'icon', this.file, BasePath.project).subscribe(
               url => {
                 this.projectService.updateProject(this.project.id, this.nameForm.value, this.keyForm.value,
                   this.project.ownerId, new URL(url)).subscribe(
