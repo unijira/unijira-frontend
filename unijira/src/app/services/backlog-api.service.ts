@@ -48,17 +48,31 @@ export class BacklogAPIService {
     const url = `/items/${item.item.id}`;
     return this.httpService.put<Item>(url, item.item);
   }
-  setBakclogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions/${backlogInsertion.id}`;
+  addBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions`;
     console.log('set backlog insertion', backlogInsertion);
-    return this.httpService.put<BacklogInsertion>(url, backlogInsertion);
+    return this.httpService.post<BacklogInsertion>(url, backlogInsertion);
   }
   setBacklog(projectId: number, backlogId: number, backlog: Backlog) {
     const url = `/projects/${projectId}/backlogs/${backlogId}`;
     return this.httpService.put<Backlog>(url, backlog);
   }
 
+  addSprintInsertion(projectId: number, backlogId: number, sprintId: number, sprintInsertion: SprintInsertion) {
+    console.log('add sprint insertion', sprintInsertion);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions`;
+    return this.httpService.post<SprintInsertion>(url, sprintInsertion);
+  }
 
+  deleteBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions/${backlogInsertion.id}`;
+    return this.httpService.delete<BacklogInsertion>(url);
+  }
+
+  deleteSprintInsertion(projectId: number, backlogId: number, sprintId: number, sprintInsertion: SprintInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions/${sprintInsertion.id}`;
+    return this.httpService.delete<SprintInsertion>(url);
+  }
 
   newSprint(projectId: number, backlogId: number) {
     const sprint = {

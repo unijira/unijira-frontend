@@ -18,14 +18,12 @@ export const taskReducer = createReducer(
   initialState,
 
   on(TaskActions.setBacklogAction, (state, { backlog }) => {
-    console.log('setBacklogAction', backlog);
     const nb = _.cloneDeep(backlog);
     return {...state, nb};
   }),
 
 
   on(TaskActions.setSprintAction, (state, { sprint }) => {
-    console.log('setSprintAction', sprint);
     const ns = _.cloneDeep(sprint);
     return {...state, ns };
   })

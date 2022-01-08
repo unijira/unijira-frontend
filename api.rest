@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NTk1MTEsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjU1OTExLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.igyjeQGxwJRKBE0eCS0nTtGQVawFPSQFvwRQtdYDQ68
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NjU3MTUsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjYyMTE1LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.IBSADYNcCoPNlZutkfNf84tTwIJq13vwfnFMC3TYBcY
 
 # @token = {{login.response.body.token}}
 
@@ -229,6 +229,74 @@ Authorization: Bearer {{token}}
 ###
 GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/
 Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/insertions
+Authorization: Bearer {{token}}
+
+
+
+
+###
+PUT http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/insertions/92
+Authorization: Bearer {{token}}
+
+{
+    "id": 92,
+    "sprintId": 38,
+    "item": {
+      "createdAt": "2022-01-08T18:09:35.097026",
+      "updatedAt": "2022-01-08T18:09:35.097038",
+      "id": 2,
+      "summary": "Summary Epic 0",
+      "description": "Epic 0",
+      "measureUnit": "story-points",
+      "evaluation": 10,
+      "tags": "#tag1#,#tag2#",
+      "type": "epic",
+      "status": "OPEN",
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "activated": false,
+        "disabled": false,
+        "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+        "createdAt": "2022-01-08T18:09:34.95546",
+        "updatedAt": "2022-01-08T18:09:34.955475"
+      },
+      "fatherId": null,
+      "sons": [
+        {
+          "createdAt": "2022-01-08T18:09:35.124345",
+          "updatedAt": "2022-01-08T18:09:35.124358",
+          "id": 7,
+          "summary": "Summary Story 2",
+          "description": "Story 2",
+          "measureUnit": "Unit",
+          "evaluation": 12,
+          "tags": "#tag1#,#tag2#",
+          "type": "story",
+          "status": "OPEN",
+          "owner": {
+            "id": 1,
+            "username": "paolaguarasci@gmail.com",
+            "activated": false,
+            "disabled": false,
+            "avatar": "https://eu.ui-avatars.com/api/?background=0D8ABC&color=fff&name=P+G",
+            "createdAt": "2022-01-08T18:09:34.95546",
+            "updatedAt": "2022-01-08T18:09:34.955475"
+          },
+          "fatherId": 2,
+          "sons": [],
+          "notes": [],
+          "assignees": [
+            {
+              "id": 99,
+              "itemId": 7,
+              "assigneeId": 1
+            }
+          ]
+        },
 
 
 ###
