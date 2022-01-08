@@ -19,7 +19,7 @@
             <h1 translate>project.pages.board</h1>
           </ion-text>
         </ion-row>
-        <ion-row>
+        <ion-row *ngIf="sprint">
           <ion-text>
             <h6 class="sprint-date" translate
                 [translateParams]="{d1: sprint.startingDate.toLocaleDateString('it-IT'),
@@ -69,60 +69,60 @@
         </ion-col>
       </ion-row>
     </section>
-    <section class="ion-margin">
-    <ion-row>
-      <ion-col size="3">
-        <ion-card class="main-card">
-          <ion-card-header>
-            <ion-card-subtitle translate [translateParams]="{value: storiesToShow.length}">board.storiesTickets</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content class="scrollbars board-card-content">
-            <ion-list style="background-color: var(--ion-color-light)">
-              <app-board-card [itemsToShow]="storiesToShow" [searchedText]="searchFC.value"></app-board-card>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+    <section class="ion-margin" *ngIf="sprint">
+      <ion-row>
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: storiesToShow.length}">board.storiesTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="storiesToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-      <ion-col size="3">
-        <ion-card class="main-card">
-          <ion-card-header>
-            <ion-card-subtitle translate [translateParams]="{value: toDoItemsToShow.length}">board.toDoTickets</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content class="scrollbars board-card-content">
-            <ion-list style="background-color: var(--ion-color-light)">
-              <app-board-card [itemsToShow]="toDoItemsToShow" [searchedText]="searchFC.value"></app-board-card>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: toDoItemsToShow.length}">board.toDoTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="toDoItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-      <ion-col size="3">
-        <ion-card class="main-card">
-          <ion-card-header>
-            <ion-card-subtitle translate [translateParams]="{value: openedItemsToShow.length}">board.openedTickets</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content class="scrollbars board-card-content">
-            <ion-list style="background-color: var(--ion-color-light)">
-              <app-board-card [itemsToShow]="openedItemsToShow" [searchedText]="searchFC.value"></app-board-card>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: openedItemsToShow.length}">board.openedTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="openedItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
 
-      <ion-col size="3">
-        <ion-card class="main-card">
-          <ion-card-header>
-            <ion-card-subtitle translate [translateParams]="{value: doneItemsToShow.length}">board.doneTickets</ion-card-subtitle>
-          </ion-card-header>
-          <ion-card-content class="scrollbars board-card-content">
-            <ion-list style="background-color: var(--ion-color-light)">
-              <app-board-card [itemsToShow]="doneItemsToShow" [searchedText]="searchFC.value"></app-board-card>
-            </ion-list>
-          </ion-card-content>
-        </ion-card>
-      </ion-col>
-    </ion-row>
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: doneItemsToShow.length}">board.doneTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="doneItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
     </section>
   <div *ngIf="!sprint">
     <ion-row class="ion-justify-content-center">
