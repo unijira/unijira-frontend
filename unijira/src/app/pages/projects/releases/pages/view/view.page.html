@@ -108,7 +108,7 @@
       </ion-row>
       <ion-row class="ion-justify-content-end">
         <ion-col size="auto">
-          <ion-button color="primary" [disabled]="!dirty">
+          <ion-button color="primary" (click)="save()" [disabled]="!dirty">
             <ion-icon slot="start" name="save"></ion-icon>
             <ion-text [translate]="'projects.releases.view.save'"></ion-text>
           </ion-button>

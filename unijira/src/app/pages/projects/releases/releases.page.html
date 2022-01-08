@@ -27,7 +27,7 @@
           </ion-button>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block" [routerLink]="'/projects/' + projectId + '/releases/add'" [disabled]="!projectId">
+          <ion-button color="primary" expand="block" (click)="create()" [disabled]="!projectId">
             <ion-icon slot="start" name="add"></ion-icon>
             <ion-text [translate]="'projects.releases.add'"></ion-text>
           </ion-button>

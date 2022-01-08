@@ -22,4 +22,8 @@ export class Release {
     this.updatedAt = new Date(Date.now());
   }
 
+  static empty(): Release {
+    return new Release(undefined, 'v1.0.0', '', ReleaseStatus.draft, new Date(Date.now()), new Date(Date.now() + 86400000));
+  }
+
 }

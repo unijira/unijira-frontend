@@ -41,4 +41,14 @@ export class ReleaseService {
 
   }
 
+  public updateRelease(projectId: number, release: Release): Observable<Release> {
+    return this.httpService.put<Release>(`/projects/${projectId}/releases/${release.id}`, release)
+      .pipe(catchError(_ => of(null)));
+  }
+
+  public createRelease(projectId: number): Observable<Release> {
+    return this.httpService.post<Release>(`/projects/${projectId}/releases`, Release.empty())
+      .pipe(catchError(_ => of(null)));
+  }
+
 }

@@ -1,10 +1,12 @@
 import {Component, OnInit} from '@angular/core';
 import {PageService} from '../../../services/page.service';
 import {SessionService} from '../../../store/session.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ReleaseStatus} from '../../../models/releases/ReleaseStatus';
 import {ReleaseService} from '../../../services/release/release.service';
 import {Release} from '../../../models/releases/Release';
+import {AlertController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-releases',
@@ -27,6 +29,9 @@ export class ReleasesPage implements OnInit {
     private sessionService: SessionService,
     private releaseService: ReleaseService,
     private activatedRoute: ActivatedRoute,
+    private alertController: AlertController,
+    private translateService: TranslateService,
+    private router: Router
   ) {
 
     pageService.setTitle('projects.releases.title');
@@ -78,6 +83,20 @@ export class ReleasesPage implements OnInit {
     a.setAttribute('download', 'releases.csv');
     a.click();
 
+  }
+
+  create() {
+    this.releaseService.createRelease(this.projectId).subscribe(release => {
+      if(release && release.id) {
+        this.router.navigate(['/projects', this.projectId, 'releases', release.id]).then();
+      } else {
+        this.alertController.create({
+          header: this.translateService.instant('error.title'),
+          message: this.translateService.instant('error.projects.releases.create'),
+          buttons: [this.translateService.instant('error.buttons.ok')]
+        }).then(alert => alert.present());
+      }
+    });
   }
 
 }

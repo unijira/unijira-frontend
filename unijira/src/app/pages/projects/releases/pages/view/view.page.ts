@@ -6,6 +6,8 @@ import {ReleaseService} from '../../../../../services/release/release.service';
 import {Release} from '../../../../../models/releases/Release';
 import {ReleaseStatus} from '../../../../../models/releases/ReleaseStatus';
 import * as moment from 'moment';
+import {AlertController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view',
@@ -24,6 +26,8 @@ export class ViewPage implements OnInit {
     private sessionService: SessionService,
     private releaseService: ReleaseService,
     private activatedRoute: ActivatedRoute,
+    private translateService: TranslateService,
+    private alertController: AlertController
   ) { }
 
   get dirty(): boolean {
@@ -87,6 +91,21 @@ export class ViewPage implements OnInit {
 
   publish() {
     this.release.status = ReleaseStatus.released;
+  }
+
+  save() {
+    this.releaseService.updateRelease(this.projectId, this.release).subscribe(release => {
+      if(release) {
+        this.initialRelease = JSON.stringify(release);
+        this.release = release;
+      } else {
+        this.alertController.create({
+          header: this.translateService.instant('error.title'),
+          message: this.translateService.instant('error.projects.releases.view.save'),
+          buttons: [this.translateService.instant('error.buttons.ok')]
+        }).then(alert => alert.present());
+      }
+    });
   }
 
   parseDate(date: string | null): Date {
