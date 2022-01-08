@@ -1,10 +1,10 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE1OTA3MzEsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNTg3MTMxLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.WnoDKGtAPwIK9n8LVlGyC8KClvTbzBz8A98-GOLJMj4
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NTk1MTEsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjU1OTExLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.igyjeQGxwJRKBE0eCS0nTtGQVawFPSQFvwRQtdYDQ68
 
 # @token = {{login.response.body.token}}
 
-@projectid = 12
-@backlogid = 13
-@sprintid = 30
+@projectid = 20
+@backlogid = 21
+@sprintid = 38
 ############## AUTH #############
 
 
@@ -237,11 +237,21 @@ Authorization: Bearer {{token}}
 Content-Type: application/json
 
 {
-  "name": "Sprint 2",
-  "startingDate": "2022-01-16",
-  "endingDate": "2022-01-31"
+  "name": "Sprint",
+  "startingDate": null,
+  "endingDate": null
 }
 
+### Start spirnt (cioe' set con le date)
+PUT  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "name": "Sprint",
+  "startingDate": "2022-01-01",
+  "endingDate": "2022-01-31"
+}
 
 ###
 PUT  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}
@@ -256,7 +266,6 @@ Content-Type: application/json
 }
 
 #### Item (Sprint) #####################################
-
 
 
 ###

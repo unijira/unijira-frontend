@@ -43,7 +43,7 @@ export class BacklogPage implements OnInit {
   minDate: string;
 
   // TODO Scablare
-  projectId = 12;
+  projectId = 20;
   backlogId = 0;
   sprintId = 0;
 
@@ -60,35 +60,24 @@ export class BacklogPage implements OnInit {
     private popOverCtrl: PopoverController,
     private route: ActivatedRoute,
     private router: Router
-  ) {
+  ) {}
+
+  ngOnInit() {
     const that = this;
 
-    this.backlogAPIService.getFirstBacklog(this.projectId).subscribe((res) => {
-      that.backlogId = res.id;
-      that.sprintId = res.sprints[0].id;
-      // this.getFromApi();
+    this.route.paramMap.subscribe((params: ParamMap) => {
+      this.filterP$ = parseInt(params.get('id'), 10);
     });
 
-    this.backlogAPIService
-      .getSprintInfo(this.projectId, this.backlogId, this.sprintId)
-      .subscribe((response) => {
-        // that.sprintInfo = response;
-        // that.startSprintDate = new Date(response.startingDate);
-        // that.endSprintDate = new Date(response.enddingDate);
-        // that.minDate = new Date(response.startDate).toISOString().split("T")[0];
-        // that.startSpring = new Date(response.startDate).toISOString().split("T")[0];
-        // that.endSpring = new Date(response.endDate).toISOString().split("T")[0];
-        // that.sprintIsStarted = response.isStarted;
-        this.sprintInfo = response;
-      });
+    this.projectId = this.filterP$;
 
-    this.minDate = new Date().toISOString().split('T')[0];
-    this.startSpring = this.minDate;
-    this.endSpring = this.minDate;
+    this.backlogAPIService.getFirstBacklog(this.projectId).subscribe((res) => {
+      console.log('BACKLOG ID:', that.backlogId);
+      that.backlogId = res.id;
+      that.sprintId = res.sprints[0].id;
+      this.getFromApi();
+    });
 
-    // if (this.sprint.start) {
-    //   this.sprintIsStarted = true;
-    // }
     this.dragulaService.destroy('bag');
 
     this.dragulaService.drop('bag').subscribe(({ name, el, source }) => {
@@ -109,20 +98,6 @@ export class BacklogPage implements OnInit {
     this.taskService.getSprint().subscribe((s) => {
       this.sprint = _.cloneDeep(s);
     });
-  }
-
-  ngOnInit() {
-    this.route.paramMap.subscribe((params: ParamMap) => {
-      this.filterP$ = parseInt(params.get('id'), 10);
-      // this.filterB$ = parseInt(params.get('bid'));
-      // this.filterS$ = parseInt(params.get('sid'));
-    });
-
-    this.projectId = this.filterP$;
-    // this.backlogId = this.filterB$;
-    // this.sprintId = this.filterS$;
-
-    this.getFromApi();
   }
 
   editSprint() {
@@ -191,7 +166,13 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
-
+  avviaSprint() {
+    this.backlogAPIService
+      .startSprint(this.projectId, this.backlogId, this.sprintId, this.startSprintDate, this.endSprintDate)
+      .subscribe((response) => {
+        this.sprintIsStarted = true;
+      });
+  }
   editWeight(task, data, type) {
     if (
       data.data.value === '' ||
@@ -235,11 +216,11 @@ export class BacklogPage implements OnInit {
   getFromApi() {
     const that = this;
 
-
-
-    this.backlogAPIService.getBacklog(this.projectId, this.backlogId).subscribe((response) => {
-      that.backlog = response;
-    });
+    this.backlogAPIService
+      .getBacklog(this.projectId, this.backlogId)
+      .subscribe((response) => {
+        that.backlog = response;
+      });
 
     this.backlogAPIService
       .getBacklogItems(this.projectId, this.backlogId)
@@ -249,10 +230,8 @@ export class BacklogPage implements OnInit {
           this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
         });
         this.backlog.insertions.sort((a, b) => a.priority - b.priority);
-
         const tmpB = _.cloneDeep(that.backlog);
         that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
-
       });
 
     this.backlogAPIService
@@ -283,7 +262,6 @@ export class BacklogPage implements OnInit {
     const tmpS = _.cloneDeep(this.sprint);
     const tmpB = _.cloneDeep(this.backlog);
 
-
     // this.backlogAPIService
     //   .setSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
     //   .subscribe((response) => {});
@@ -292,7 +270,9 @@ export class BacklogPage implements OnInit {
       item.priority = index;
     });
     tmpB.insertions.forEach((element, index) => {
-      this.backlogAPIService.setBakclogInsertion(this.projectId, this.backlogId, element).subscribe((response) => {});
+      this.backlogAPIService
+        .setBakclogInsertion(this.projectId, this.backlogId, element)
+        .subscribe((response) => {});
       this.backlogAPIService.setItems(element).subscribe((response) => {});
     });
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
@@ -304,8 +284,12 @@ export class BacklogPage implements OnInit {
   }
 
   createSprint() {
-    // TODO
-    alert('Create sprint');
+    this.backlogAPIService
+      .newSprint(this.projectId, this.backlogId)
+      .subscribe((response) => {
+        this.sprintId = response.id;
+        this.getFromApi();
+      });
   }
 
   async editPesoPopover(ev: any, item, type) {

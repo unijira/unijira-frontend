@@ -19,6 +19,7 @@ export class BacklogAPIService {
   ) {}
 
   getFirstBacklog(projectId: number) {
+    console.log('get first backlog');
     const url = `/projects/${projectId}/backlogs`;
     return this.httpService.get<any>(url).pipe(map((res) => res[0]));
   }
@@ -55,6 +56,35 @@ export class BacklogAPIService {
   setBacklog(projectId: number, backlogId: number, backlog: Backlog) {
     const url = `/projects/${projectId}/backlogs/${backlogId}`;
     return this.httpService.put<Backlog>(url, backlog);
+  }
+
+
+
+  newSprint(projectId: number, backlogId: number) {
+    const sprint = {
+      name: 'Sprint',
+      startingDate: null,
+      endingDate: null
+    };
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
+    return this.httpService.post<any>(url, sprint);
+  }
+  startSprint(projectId: number, backlogId: number, sprintId: number, startDate: Date, endDate: Date) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    const sprintInfo = {
+      name: 'Sprint',
+      startingDate: startDate,
+      endingDate: endDate
+    };
+    return this.httpService.put<any>(url, sprintInfo);
+  }
+  updateSprint(projectId: number, backlogId: number, sprint: Sprint) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprint.id}`;
+    return this.httpService.put<any>(url, sprint);
+  }
+  deleteSprint(projectId: number, backlogId: number, sprintId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.delete<any>(url);
   }
 
   setSprint(
