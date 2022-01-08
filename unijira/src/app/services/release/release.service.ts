@@ -1,8 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
-import {catchError, delay, Observable, of} from 'rxjs';
+import {catchError, Observable, of} from 'rxjs';
 import {Release} from '../../models/releases/Release';
-import {ReleaseStatus} from '../../models/releases/ReleaseStatus';
 
 @Injectable({
   providedIn: 'root'
