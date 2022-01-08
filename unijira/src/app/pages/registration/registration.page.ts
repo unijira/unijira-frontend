@@ -1,12 +1,12 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AccountService} from '../../services/account.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
-import {Subscription} from 'rxjs';
-import {getTranslation, presentAlertConfirm, unsubscribeAll, validateConfirmPassword} from '../../util';
-import {AlertController} from '@ionic/angular';
+import {validateConfirmPassword} from '../../util';
+import {IonSlides} from '@ionic/angular';
+import { ToastController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registration',
@@ -14,6 +14,8 @@ import {AlertController} from '@ionic/angular';
   styleUrls: ['./registration.page.scss'],
 })
 export class RegistrationPage implements OnInit, OnDestroy {
+
+  @ViewChild('registrationSlider') slides: IonSlides;
 
   emailFC: FormControl = new FormControl('', [
     Validators.required,
@@ -30,35 +32,81 @@ export class RegistrationPage implements OnInit, OnDestroy {
     Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'),
   ]);
 
+  index: number = 0;
 
-  serverResponseOk: string = null;
-  serverResponseErr: string = null;
-  error = '';
+  emailFG: FormGroup = new FormGroup({
+   email: this.emailFC
+  });
 
-  registrationFG: FormGroup = new FormGroup({
-    email: this.emailFC,
+  passwordFG: FormGroup = new FormGroup({
     password1: this.passwordFC1,
     password2: this.passwordFC2,
   }, (g: FormGroup) => validateConfirmPassword(g));
-  registrationFGSubscription: Subscription;
+
 
   constructor(
     private router: Router,
     private sessionService: SessionService,
     private accountService: AccountService,
-    private translateService: TranslateService,
-    private alertController: AlertController
-  ) {
-    this.registrationFGSubscription = this.registrationFG.statusChanges.subscribe(() => this.error = '');
-  }
+    public translateService: TranslateService,
+    private toastController: ToastController
+  ) {}
 
   ngOnInit() {}
 
+  ionViewWillEnter() {
+    this.resetForms();
+  }
+
+  ionViewWillLeave() {
+    this.resetForms();
+  }
+
+  resetForms() {
+    this.emailFG.reset();
+    this.passwordFG.reset();
+    this.index = 0;
+    this.slides.slideTo(this.index).then();
+  }
+
+  onEmailConfirm() {
+    this.emailFG.updateValueAndValidity();
+    if(this.emailFG.valid) {
+      this.accountService.isUserAvailable(this.emailFC.value).subscribe({
+        next: () => {
+          this.index = 1;
+          this.slides.slideTo(this.index).then();
+        },
+        error: (error) => {
+          this.presentToast(
+            this.translateService.instant(
+              error.status === 409 ?
+                'register.error.userNotAvailable' :
+                'error.api.default'
+            ),
+            true
+          ).then();
+
+          if(error.status === 409)
+            this.emailFC.setErrors({'incorrect': true});
+        }});
+    }
+  }
+
   onSubmit() {
-    this.registrationFG.updateValueAndValidity();
-    this.checkError();
-    if (
-      this.registrationFG.valid &&
+    this.emailFG.updateValueAndValidity();
+    this.passwordFG.updateValueAndValidity();
+    let error: string = this.checkError();
+
+    if (error !== null) {
+      this.presentToast(
+        this.translateService.instant(error),
+        true
+      ).then();
+    }
+    else if (
+      this.emailFG.valid &&
+      this.passwordFG.valid &&
       this.passwordFC1.value === this.passwordFC2.value
     ) {
       const user = {
@@ -66,42 +114,73 @@ export class RegistrationPage implements OnInit, OnDestroy {
         password: this.passwordFC1.value,
       };
 
-      this.accountService.register(user).subscribe(
-        (response) => {
-          this.router.navigate(['/login']);
-          presentAlertConfirm(this.alertController,
-            getTranslation(this.translateService, 'welcome'),
-            getTranslation(this.translateService, 'register.registrationDone')).then();
-          // this.serverResponseOk = 'OK';
-          // this.serverResponseErr = '';
-          // this.registrationFG.reset();
+      this.accountService.register(user).subscribe({
+        next: () => {
+          this.router.navigate(['/login'], {replaceUrl: true}).then();
+
+          this.presentToast(
+            this.translateService.instant(
+              'register.registrationDone'
+            ),
+            false
+          ).then();
         },
-        (error) => {
-          this.serverResponseOk = '';
-          this.serverResponseErr = 'error.title';
-        }
-      );
+        error: () => {
+          this.presentToast(
+            this.translateService.instant('error.api.default'),
+            true
+          ).then();
+          this.emailFC.setErrors({'incorrect': true});
+        }});
     }
   }
 
-  checkError() {
+  checkError() : string {
     if (this.emailFC.hasError('required')){
-      this.error = 'register.error.emptyEmail';
+      return 'register.error.emptyEmail';
     } else if (this.passwordFC1.hasError('required')) {
-      this.error = 'register.error.emptyPassword';
+      return 'register.error.emptyPassword';
     } else if (this.passwordFC1.hasError('pattern') || this.passwordFC1.hasError('minLength')) {
-      this.error = 'register.error.wrongPassword';
+      return 'register.error.wrongPassword';
     } else if (this.passwordFC1.value !== this.passwordFC2.value) {
-      this.error = 'register.error.differentPasswords';
+      return 'register.error.differentPasswords';
+    }
+
+    return null;
+  }
+
+  ngOnDestroy() {}
+
+  checkEmail(): boolean {
+    return this.emailFG.valid;
+  }
+
+  checkPsw(): boolean {
+    return this.passwordFG.valid;
+  }
+
+  goBack() {
+    this.passwordFG.reset();
+    this.index = 0;
+    this.slides.slideTo(this.index).then();
+  }
+
+  switchLanguage() {
+    if (this.translateService.currentLang === 'it') {
+      this.translateService.use('en');
+    } else {
+      this.translateService.use('it');
     }
   }
 
-  ngOnDestroy() {
-    unsubscribeAll(this.registrationFGSubscription);
+  async presentToast(message: string, error: boolean) {
+    const toast = await this.toastController.create({
+      message: message,
+      icon: error ? 'close-circle' : 'checkmark-circle',
+      color: error ? 'danger' : 'primary',
+      position: 'top',
+      duration: 2000
+    });
+    await toast.present();
   }
-
-  check(): boolean {
-    return this.registrationFG.valid;
-  }
-
 }

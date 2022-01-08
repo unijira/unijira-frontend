@@ -32,16 +32,11 @@
             <ion-row class="ion-align-items-center ion-justify-content-start">
               <ion-col size="auto" class="ion-margin-end ion-padding-end">
                 <ion-button type="submit" color="primary"  [translate]="'login.signIn'" [disabled]="!check()"></ion-button>
-                <ion-text *ngIf="areWrongCredential" color="danger">
-                  <p class="ion-text-center">
-                    {{'login.wrongCredential' | translate}}
-                  </p>
-                </ion-text>
               </ion-col>
               <ion-col class="ion-align-items-center">
                 <ion-list lines="none">
                   <ion-item class="ion-no-padding">
-                    <ion-toggle checked="false" style="padding-inline-start: 2px"></ion-toggle>
+                    <ion-toggle checked="false" style="padding-inline-start: 2px" [formControl]="rememberMeFC"></ion-toggle>
                     <ion-text color="dark" [translate]="'login.rememberMe'"></ion-text>
                   </ion-item>
                 </ion-list>

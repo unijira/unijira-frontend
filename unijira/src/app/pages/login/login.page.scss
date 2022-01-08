@@ -3,19 +3,18 @@ ion-content {
 }
 
 ion-buttons ion-button {
-  --background: #eaeaea;
-  --color: #424242;
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
 }
 
-.auth-form {
-  max-width: 350px;
+input.native-input {
+  -webkit-background-clip: text!important;
 }
 
-ion-input::part(native) {
-  --padding-end: 0;
+ion-item {
+  --background: var(--ion-background-color);
 }
 
-.native-input {
-  align-items: end;
-  padding: 6px 0;
+ion-list {
+  background: var(--ion-background-color);
 }
