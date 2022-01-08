@@ -39,7 +39,6 @@ export class Item {
     sons?: Item[],
     notes?: Note[],
     assignees?: ItemAssignment[],
-    sons?: Item[],
     )
   {
     // per fare questi assegnamenti è meno verboso scrivere direttamente "public field: type" nel costruttore
