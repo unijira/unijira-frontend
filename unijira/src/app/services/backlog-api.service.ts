@@ -106,6 +106,11 @@ export class BacklogAPIService {
     return this.httpService.delete<any>(url);
   }
 
+  getItem(itemId: number) {
+    const url = `/items/${itemId}`;
+    return this.httpService.get<Item>(url);
+  }
+
   setSprint(
     projectId: number,
     backlogId: number,

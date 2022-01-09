@@ -5,15 +5,17 @@ import { FormsModule } from '@angular/forms';
 import { IonicModule } from '@ionic/angular';
 
 import { SingoloitemPageRoutingModule } from './singoloitem-routing.module';
-
+import {TranslateModule} from '@ngx-translate/core';
 import { SingoloitemPage } from './singoloitem.page';
-
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
     IonicModule,
-    SingoloitemPageRoutingModule
+    SingoloitemPageRoutingModule,
+    FontAwesomeModule,
+    TranslateModule
   ],
   declarations: [SingoloitemPage]
 })
