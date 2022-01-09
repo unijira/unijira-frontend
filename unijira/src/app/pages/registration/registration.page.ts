@@ -8,7 +8,7 @@ import {validateConfirmPassword, switchLanguage, presentToast, unsubscribeAll, s
 import {IonSlides} from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { PageService } from 'src/app/services/page.service';
-import {Subscription} from "rxjs";
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -34,7 +34,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
     Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}'),
   ]);
 
-  index: number = 0;
+  index = 0;
 
   emailFG: FormGroup = new FormGroup({
    email: this.emailFC
@@ -64,6 +64,10 @@ export class RegistrationPage implements OnInit, OnDestroy {
         this.redirect();
       }
     });
+  }
+
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
   }
 
   ngOnInit() {}
@@ -103,7 +107,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
           ).then();
 
           if(error.status === 409)
-            this.emailFC.setErrors({'incorrect': true});
+            {this.emailFC.setErrors({incorrect: true});}
         }});
     }
   }
@@ -111,7 +115,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
   onSubmit() {
     this.emailFG.updateValueAndValidity();
     this.passwordFG.updateValueAndValidity();
-    let error: string = this.checkError();
+    const error: string = this.checkError();
 
     if (error !== null) {
       presentToast(
@@ -148,12 +152,12 @@ export class RegistrationPage implements OnInit, OnDestroy {
             this.translateService.instant('error.api.default'),
             true
           ).then();
-          this.emailFC.setErrors({'incorrect': true});
+          this.emailFC.setErrors({incorrect: true});
         }});
     }
   }
 
-  checkError() : string {
+  checkError(): string {
     if (this.emailFC.hasError('required')){
       return 'register.error.emptyEmail';
     } else if (this.passwordFC1.hasError('required')) {
@@ -185,6 +189,14 @@ export class RegistrationPage implements OnInit, OnDestroy {
     this.slides.slideTo(this.index).then();
   }
 
+  switchLanguage() {
+    switchLanguage(this.translateService);
+  }
+
+  onToggleColorTheme(event) {
+    switchColorTheme(event.detail.checked);
+  }
+
   private redirect() {
     if(this.route.snapshot.paramMap.has('idp')) {
       this.router.navigate([this.route.snapshot.paramMap.get('idp')], {replaceUrl: true}).then();
@@ -193,15 +205,4 @@ export class RegistrationPage implements OnInit, OnDestroy {
     }
   }
 
-  switchLanguage() {
-    switchLanguage(this.translateService);
-  }
-
-  get currentColorTheme() {
-    return document.body.getAttribute('color-theme');
-  }
-
-  onToggleColorTheme(event) {
-    switchColorTheme(event.detail.checked);
-  }
 }
