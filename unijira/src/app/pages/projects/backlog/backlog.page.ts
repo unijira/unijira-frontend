@@ -165,6 +165,10 @@ export class BacklogPage implements OnInit {
     const modal = await this.modalController.create({
       component: NewItemComponent,
       cssClass: 'my-custom-class',
+      componentProps: {
+        pid: this.projectId,
+        bid: this.backlogId,
+      }
     });
     return await modal.present();
   }

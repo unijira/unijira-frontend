@@ -202,7 +202,7 @@
                         <ion-thumbnail
 
                           class="avatar"
-                          *ngIf="insertion.item.assignees"
+                          *ngIf="insertion.item.assignees?.length > 0"
                         >
                           <img
                             class="avatar-img"
@@ -347,7 +347,7 @@
                       <ion-col size="auto" class="ion-align-self-center">
                         <ion-thumbnail
                           class="avatar"
-                          *ngIf="insertion.item.assignees"
+                          *ngIf="insertion.item.assignees?.length > 0"
                         >
                           <img
                             class="avatar-img"
