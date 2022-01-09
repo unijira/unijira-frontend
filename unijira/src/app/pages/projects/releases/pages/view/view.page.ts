@@ -8,6 +8,7 @@ import {ReleaseStatus} from '../../../../../models/releases/ReleaseStatus';
 import * as moment from 'moment';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
+import {Item} from '../../../../../models/item/Item';
 
 @Component({
   selector: 'app-view',
@@ -20,6 +21,7 @@ export class ViewPage implements OnInit {
   initialRelease: string = null;
   release: Release = null;
   releaseStatus = ReleaseStatus;
+  tickets: Item[] = null;
 
   constructor(
     private pageService: PageService,
@@ -75,9 +77,15 @@ export class ViewPage implements OnInit {
       this.sessionService.loadProject(params.id);
 
       this.releaseService.getRelease(this.projectId, params.release).subscribe(release => {
+
         this.pageService.setTitle(['projects.releases.title' , `${release.version}`]);
         this.initialRelease = JSON.stringify(release);
         this.release = release;
+
+        this.releaseService.getTickets(this.projectId, this.release.id).subscribe(tickets => {
+          this.tickets = tickets ?? [];
+        });
+
       });
 
     });

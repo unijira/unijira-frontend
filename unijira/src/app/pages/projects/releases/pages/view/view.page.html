@@ -141,6 +141,23 @@
   </section>
 
 
+  <!-- Release Tickets -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <h2>{{'projects.releases.view.tickets.title' | translate}}</h2>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+         <app-ticket-data-table [tickets]="tickets" [projectId]="projectId"></app-ticket-data-table>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+
 </ion-content>
 
 <ion-content *ngIf="!release || !projectId">
