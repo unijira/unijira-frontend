@@ -3,8 +3,8 @@ import {HttpService} from '../../../../services/http-service.service';
 import {AccountService} from '../../../../services/account.service';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {Project} from '../../../../models/projects/Project';
-import {UsersService} from '../../../../services/common/users.service';
-import {BasePath, FileUploadService} from '../../../../services/common/file-upload.service';
+import {UserService} from '../../../../services/user/user.service';
+import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
 
 
 @Component({
@@ -39,7 +39,7 @@ export class ProfilePage implements OnInit {
   constructor(
     private http: HttpService,
     private accountService: AccountService,
-    private usersService: UsersService,
+    private usersService: UserService,
     private uploadService: FileUploadService
   ) {
   }

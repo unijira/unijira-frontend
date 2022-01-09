@@ -3,9 +3,10 @@ import {UserInfo} from '../../../models/users/UserInfo';
 import {Project} from '../../../models/projects/Project';
 import {HttpService} from '../../../services/http-service.service';
 import {AccountService} from '../../../services/account.service';
-import {UsersService} from '../../../services/common/users.service';
-import {FileUploadService} from '../../../services/common/file-upload.service';
 import {ActivatedRoute} from '@angular/router';
+import {UserService} from '../../../services/user/user.service';
+import {FileUploadService} from '../../../services/file-upload/file-upload.service';
+
 
 @Component({
   selector: 'app-profile-overview',
@@ -39,7 +40,7 @@ export class ProfileOverviewPage implements OnInit {
   constructor(
     private http: HttpService,
     private accountService: AccountService,
-    private usersService: UsersService,
+    private usersService: UserService,
     private uploadService: FileUploadService,
     private route: ActivatedRoute,
   ) {
