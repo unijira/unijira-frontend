@@ -5,247 +5,279 @@
         <ion-col>
           <h2>Progetto {{projectId}}</h2>
         </ion-col>
-
+        <ion-col> </ion-col>
       </ion-row>
       <!-- /ion-row PROGETTO-->
-      <ion-row class="ion-align-items-center ion-justify-content-start">
-        <ion-col size="2" class="ion-align-self-center">
-          <h1>Sprint {{sprintId}}</h1>
-        </ion-col>
-        <ion-col size="2">
-          <span *ngIf="sprintIsStarted">
-            {{this.startSprintDate}} <br> {{this.endSprintDate}}
-          </span>
-        </ion-col>
-        <ion-col size="2" class="ion-align-self-end">
-          <ion-button color="primary" *ngIf="sprintIsStarted" (click)="stopSprint()">
-            Stop Sprint
-          </ion-button>
-          <ion-button color="primary" id="open-modal" *ngIf="!sprintIsStarted">
-            Avvia Sprint
-          </ion-button>
-          <ion-modal trigger="open-modal">
-            <ng-template>
-              <ion-content>
-                <ion-datetime min="2022" presentation="date" showDefaultButtons (ionChange)="avviaSprint($event)"></ion-datetime>
-              </ion-content>
-            </ng-template>
-          </ion-modal>
-        </ion-col>
-        <ion-col size="2" class="ion-align-self-end">
-          <ion-button (click)="createSprint()" color="primary">
-            Crea Sprint
-          </ion-button>
-        </ion-col>
-        <ion-col size="2" class="ion-align-self-end">
-          <app-sprintlist
-            [projectId]="projectId"
-            [backlogId]="backlogId"
-            (sprintSelected)="changeSprint($event)"
-          ></app-sprintlist>
-        </ion-col>
-      </ion-row>
-      <!-- /ion-row SPRINT Titolo-->
-
-      <ion-row>
-        <ion-col>
-          <div class="sprint">
-            <div *ngIf="!sprint || !sprint.insertions">
-              <p [translate]="'backlog.sprint.empty'">Sprint vuoto</p>
-            </div>
-            <div *ngIf="sprint && sprint.insertions">
-              <ion-list
-                dragula="bag"
-                [(dragulaModel)]="sprint.insertions"
-                lines="none"
-                class="light-gray-bg"
+      <ion-accordion-group>
+        <ion-accordion value="sprintsss" toggle-icon="arrow-down-circle" expanded>
+          <ion-row
+            class="ion-align-items-center ion-justify-content-start"
+            slot="header"
+          >
+            <ion-col size="2" class="ion-align-self-center">
+              <h1>Sprint {{sprintId}}</h1>
+            </ion-col>
+            <ion-col size="2">
+              <span *ngIf="sprintIsStarted">
+                {{this.startSprintDate}} <br />
+                {{this.endSprintDate}}
+              </span>
+            </ion-col>
+            <ion-col size="2" class="ion-align-self-end">
+              <ion-button
+                color="primary"
+                *ngIf="sprintIsStarted"
+                (click)="stopSprint()"
               >
-                <ion-row
-                  *ngFor="let insertion of sprint.insertions"
-                  class="ion-align-items-end task-item white-bg"
-                >
-                  <ion-col>
-                    <ion-item>
-                      <ion-avatar slot="start">
-                        <ion-img
-                          [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
-                        ></ion-img>
-                      </ion-avatar>
-                      <span class="task-name">
-                        {{ insertion.item.summary }}
-                      </span>
-                    </ion-item>
-                  </ion-col>
-
-                  <ion-col class="ion-justify-content-end" class="icon-area">
-                    <div *ngIf="insertion.item.father">
-                      <fa-icon
-                        [icon]="['fas', 'network-wired']"
-                        class="childicon"
-                      >
-                      </fa-icon>
-                    </div>
-
-                    <div (click)="editPesoPopover($event, insertion, 'sprint')">
-                      <ion-badge
-                        class="weight-badge"
-                        color="light"
-                        (save)="editWeight($event, insertion, 'backlog')"
-                      >
-                        <span>{{ insertion.item.evaluation }}</span>
-                      </ion-badge>
-                    </div>
-
-                    <div
-                      (click)="editStatusPopover($event, insertion, 'sprint')"
-                      class="status-badge-div"
+                Stop Sprint
+              </ion-button>
+              <ion-button
+                color="primary"
+                id="open-modal"
+                *ngIf="!sprintIsStarted"
+              >
+                Avvia Sprint
+              </ion-button>
+              <ion-modal trigger="open-modal">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime
+                      min="2022"
+                      presentation="date"
+                      showDefaultButtons
+                      (ionChange)="avviaSprint($event)"
+                    ></ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+            <ion-col size="2" class="ion-align-self-end">
+              <ion-button (click)="createSprint()" color="primary">
+                Crea Sprint
+              </ion-button>
+            </ion-col>
+            <ion-col size="2" class="ion-align-self-end">
+              <app-sprintlist
+                [projectId]="projectId"
+                [backlogId]="backlogId"
+                (sprintSelected)="changeSprint($event)"
+              ></app-sprintlist>
+            </ion-col>
+          </ion-row>
+          <!-- /ion-row SPRINT Titolo-->
+          <ion-row slot="content">
+            <ion-col>
+              <div class="sprint">
+                <div *ngIf="!sprint || !sprint.insertions">
+                  <p [translate]="'backlog.sprint.empty'">Sprint vuoto</p>
+                </div>
+                <div *ngIf="sprint && sprint.insertions">
+                  <ion-list
+                    dragula="bag"
+                    [(dragulaModel)]="sprint.insertions"
+                    lines="none"
+                    class="light-gray-bg"
+                  >
+                    <ion-row
+                      *ngFor="let insertion of sprint.insertions"
+                      class="ion-align-items-end task-item white-bg"
                     >
-                      <ion-badge
-                        *ngIf="insertion.item.status === 'OPEN' "
-                        color="medium"
-                        class="status-badge"
-                        >{{ insertion.item.status }}</ion-badge
-                      >
-                      <ion-badge
-                        *ngIf="insertion.item.status === 'DONE' "
-                        color="success"
-                        class="status-badge"
-                        >{{ insertion.item.status }}</ion-badge
-                      >
-                    </div>
+                      <ion-col>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-img
+                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                            ></ion-img>
+                          </ion-avatar>
+                          <span class="task-name">
+                            {{ insertion.item.summary }}
+                          </span>
+                        </ion-item>
+                      </ion-col>
 
-                    <ion-thumbnail
-                      class="avatar"
-                      *ngIf="insertion.item.assignees"
-                    >
-                      <img
-                        class="avatar-img"
-                        [src]="insertion.item.assignees[0].assignee.avatar"
-                      />
-                    </ion-thumbnail>
-                    <ion-button
-                      class="action-btn"
-                      size="small"
-                      color="light"
-                      (click)="presentModal(insertion)"
-                    >
-                      <fa-icon
-                        [icon]="['fas', 'ellipsis-h']"
-                        class="childicon"
-                      ></fa-icon>
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-list>
-            </div>
-          </div>
-        </ion-col>
-      </ion-row>
+                      <ion-col
+                        class="ion-justify-content-end"
+                        class="icon-area"
+                      >
+                        <div *ngIf="insertion.item.father">
+                          <fa-icon
+                            [icon]="['fas', 'network-wired']"
+                            class="childicon"
+                          >
+                          </fa-icon>
+                        </div>
+
+                        <div
+                          (click)="editPesoPopover($event, insertion, 'sprint')"
+                        >
+                          <ion-badge
+                            class="weight-badge"
+                            color="light"
+                            (save)="editWeight($event, insertion, 'backlog')"
+                          >
+                            <span>{{ insertion.item.evaluation }}</span>
+                          </ion-badge>
+                        </div>
+
+                        <div
+                          (click)="editStatusPopover($event, insertion, 'sprint')"
+                          class="status-badge-div"
+                        >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'OPEN' "
+                            color="medium"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'DONE' "
+                            color="success"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+                        </div>
+
+                        <ion-thumbnail
+                          class="avatar"
+                          *ngIf="insertion.item.assignees"
+                        >
+                          <img
+                            class="avatar-img"
+                            [src]="insertion.item.assignees[0].assignee.avatar"
+                          />
+                        </ion-thumbnail>
+                        <ion-button
+                          class="action-btn"
+                          size="small"
+                          color="light"
+                          (click)="presentModal(insertion)"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis-h']"
+                            class="childicon"
+                          ></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-list>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-accordion>
+      </ion-accordion-group>
       <!-- /ion-row SPRINT BOARD-->
-      <ion-row>
-        <ion-col>
-          <h1>Backlog {{ backlogId }}</h1>
-        </ion-col>
-      </ion-row>
-      <ion-row>
-        <ion-col>
-          <div class="backlog">
-            <div *ngIf="!backlog || !backlog.insertions">
-              <p [translate]="'backlog.empty'"></p>
-            </div>
-            <div *ngIf="backlog && backlog.insertions">
-              <ion-list
-                dragula="bag"
-                lines="none"
-                class="light-gray-bg"
-                [(dragulaModel)]="backlog.insertions"
-              >
-                <ion-row
-                  *ngFor="let insertion of backlog.insertions"
-                  class="ion-align-items-end task-item white-bg"
-                >
-                  <ion-col>
-                    <ion-item>
-                      <ion-avatar slot="start">
-                        <ion-img
-                          [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
-                        ></ion-img>
-                      </ion-avatar>
-                      <span class="task-name">
-                        {{ insertion.item.summary }}
-                      </span>
-                    </ion-item>
-                  </ion-col>
 
-                  <ion-col class="ion-justify-content-end" class="icon-area">
-                    <div *ngIf="insertion.item.father">
-                      <fa-icon
-                        [icon]="['fas', 'network-wired']"
-                        class="childicon"
-                      >
-                      </fa-icon>
-                    </div>
-
-                    <div
-                      (click)="editPesoPopover($event, insertion, 'backlog')"
+      <ion-accordion-group>
+        <ion-accordion value="backlogssss" toggle-icon="arrow-down-circle">
+          <ion-row slot="header">
+            <ion-col>
+              <h1>Backlog {{ backlogId }}</h1>
+            </ion-col>
+          </ion-row>
+          <ion-row slot="content">
+            <ion-col>
+              <div class="backlog">
+                <div *ngIf="!backlog || !backlog.insertions">
+                  <p [translate]="'backlog.empty'"></p>
+                </div>
+                <div *ngIf="backlog && backlog.insertions">
+                  <ion-list
+                    dragula="bag"
+                    lines="none"
+                    class="light-gray-bg"
+                    [(dragulaModel)]="backlog.insertions"
+                  >
+                    <ion-row
+                      *ngFor="let insertion of backlog.insertions"
+                      class="ion-align-items-end task-item white-bg"
                     >
-                      <ion-badge
-                        class="weight-badge"
-                        color="light"
-                        (save)="editWeight($event, insertion, 'backlog')"
-                      >
-                        <span>{{ insertion.item.evaluation }}</span>
-                      </ion-badge>
-                    </div>
+                      <ion-col>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-img
+                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                            ></ion-img>
+                          </ion-avatar>
+                          <span class="task-name">
+                            {{ insertion.item.summary }}
+                          </span>
+                        </ion-item>
+                      </ion-col>
 
-                    <div
-                      (click)="editStatusPopover($event, insertion, 'backlog')"
-                      class="status-badge-div"
-                    >
-                      <ion-badge
-                        *ngIf="insertion.item.status === 'OPEN' "
-                        color="medium"
-                        class="status-badge"
-                        >{{ insertion.item.status }}</ion-badge
+                      <ion-col
+                        class="ion-justify-content-end"
+                        class="icon-area"
                       >
-                      <ion-badge
-                        *ngIf="insertion.item.status === 'DONE' "
-                        color="success"
-                        class="status-badge"
-                        >{{ insertion.item.status }}</ion-badge
-                      >
-                    </div>
+                        <div *ngIf="insertion.item.father">
+                          <fa-icon
+                            [icon]="['fas', 'network-wired']"
+                            class="childicon"
+                          >
+                          </fa-icon>
+                        </div>
 
-                    <ion-thumbnail
-                      class="avatar"
-                      *ngIf="insertion.item.assignees"
-                    >
-                      <img
-                        class="avatar-img"
-                        [src]="insertion.item.assignees[0].assignee.avatar"
-                      />
-                    </ion-thumbnail>
-                    <ion-button
-                      class="action-btn"
-                      size="small"
-                      color="light"
-                      (click)="presentModal(insertion)"
-                    >
-                      <fa-icon
-                        [icon]="['fas', 'ellipsis-h']"
-                        class="childicon"
-                      ></fa-icon>
-                    </ion-button>
-                  </ion-col>
-                </ion-row>
-              </ion-list>
-            </div>
-            <!-- backlog.insertions -->
-          </div>
-          <!-- backlog -->
-        </ion-col>
-      </ion-row>
+                        <div
+                          (click)="editPesoPopover($event, insertion, 'backlog')"
+                        >
+                          <ion-badge
+                            class="weight-badge"
+                            color="light"
+                            (save)="editWeight($event, insertion, 'backlog')"
+                          >
+                            <span>{{ insertion.item.evaluation }}</span>
+                          </ion-badge>
+                        </div>
 
+                        <div
+                          (click)="editStatusPopover($event, insertion, 'backlog')"
+                          class="status-badge-div"
+                        >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'OPEN' "
+                            color="medium"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'DONE' "
+                            color="success"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+                        </div>
+
+                        <ion-thumbnail
+                          class="avatar"
+                          *ngIf="insertion.item.assignees"
+                        >
+                          <img
+                            class="avatar-img"
+                            [src]="insertion.item.assignees[0].assignee.avatar"
+                          />
+                        </ion-thumbnail>
+                        <ion-button
+                          class="action-btn"
+                          size="small"
+                          color="light"
+                          (click)="presentModal(insertion)"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis-h']"
+                            class="childicon"
+                          ></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-list>
+                </div>
+                <!-- backlog.insertions -->
+              </div>
+              <!-- backlog -->
+            </ion-col>
+          </ion-row>
+        </ion-accordion>
+      </ion-accordion-group>
       <ion-row>
         <ion-col>
           <ion-button

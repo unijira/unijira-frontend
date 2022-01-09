@@ -1,7 +1,7 @@
 import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../../../store/task.service';
@@ -23,12 +23,14 @@ import { BacklogInsertion } from '../../../models/BacklogInsertion';
 import { SprintInsertion } from '../../../models/SprintInsertion';
 import { forEach } from 'lodash';
 import { SprintStatus } from '../../../models/SprintStatus';
+import { IonAccordionGroup } from '@ionic/angular';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
   styleUrls: ['./backlog.page.scss'],
 })
 export class BacklogPage implements OnInit {
+  @ViewChild(IonAccordionGroup, { static: true }) accordionGroup: IonAccordionGroup;
   sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive);
   backlog: Backlog = new Backlog(0, null, null, []);
 
@@ -66,7 +68,6 @@ export class BacklogPage implements OnInit {
 
   ngOnInit() {
     const that = this;
-
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.filterP$ = parseInt(params.get('id'), 10);
     });
@@ -104,7 +105,13 @@ export class BacklogPage implements OnInit {
     });
 
   }
+  logAccordionValue() {
+    console.log(this.accordionGroup.value);
+  }
 
+  closeAccordion() {
+    this.accordionGroup.value = undefined;
+  }
   editSprint() {
     const datetoSend1 = new Date(this.startSprintDate)
       .toISOString()
