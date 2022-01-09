@@ -65,10 +65,11 @@
               </ion-text>
             </ion-col>
             <ion-col size="auto" class="ion-align-self-end">
-              <span *ngIf="sprintIsStarted">
-                {{this.startSprintDate}} - {{this.endSprintDate}}
-              </span>
-              ({{this.sprint.insertions.length}} tickets)
+              <ion-text color="dark">
+                <p *ngIf="sprintIsStarted">
+                  {{this.startSprintDate}} - {{this.endSprintDate}}
+                </p>
+              </ion-text>
             </ion-col>
             <ion-col size="auto" class="ion-align-self-end">
               <ion-badge color="light">{{ totalNonAvviatos }}</ion-badge>
