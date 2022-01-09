@@ -1,13 +1,13 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
-import {FormsModule} from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
 import {PermissionsPageRoutingModule} from './permissions-routing.module';
 
 import {PermissionsPage} from './permissions.page';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
     imports: [
@@ -15,7 +15,8 @@ import {TranslateModule} from "@ngx-translate/core";
         FormsModule,
         IonicModule,
         PermissionsPageRoutingModule,
-        TranslateModule
+        TranslateModule,
+        ReactiveFormsModule
     ],
   declarations: [PermissionsPage]
 })

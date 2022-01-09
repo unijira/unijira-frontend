@@ -1,11 +1,14 @@
 {
   "app.title": "Unijira",
   "error.title": "Error",
+  "error.buttons.ok": "OK",
   "error.auth.unexpected": "There was an unexpected error while trying to authenticate you",
   "error.auth.invalid": "Username or password is invalid",
   "error.auth.missing": "Username or password is missing",
   "error.auth.expired": "Session has expired",
   "error.api.default": "There was an unexpected error while trying to communicate with the server",
+  "error.projects.releases.create": "There was an unexpected error while trying to create a release",
+  "error.projects.releases.view.save": "There was an unexpected error while trying to save the release",
   "login.signIn": "Sign in",
   "login.signUp": "Sign up",
   "login.rememberMe": "Remember me",
@@ -297,5 +300,15 @@
   "profile.lang.italian": "Italiano",
   "profile.lang.english": "English",
   "profile.theme.dark": "Dark",
-  "profile.theme.light": "Light"
+  "profile.theme.light": "Light",
+  "project.settings.permissions.admin.title": "Administrator",
+  "project.settings.permissions.admin.description": "If enabled, the user will be able to manage permissions for the entire project, ban members, and delete the project.",
+  "project.settings.permissions.details.title": "Access to details",
+  "project.settings.permissions.details.description": "Allows access to general project information and modification thereof.",
+  "project.settings.permissions.invitations.title": "Access to invitations",
+  "project.settings.permissions.invitations.description": "Allows the user to invite new team members.",
+  "project.settings.permissions.roles.title": "Access to roles",
+  "project.settings.permissions.roles.description": "If enabled, the user will be able to change roles within the project.",
+  "project.settings.permissions.null.title": "Manage the permissions of your Scrum Project!",
+  "project.settings.permissions.null.subtitle": "Assign project members specific permissions based on their role in the project."
 }

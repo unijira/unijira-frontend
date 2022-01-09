@@ -1,6 +1,7 @@
 {
   "app.title": "Unijira",
   "error.title": "Errore",
+  "error.buttons.ok": "OK",
   "error.auth.unexpected": "Si è verificato un errore imprevisto, impossibile accedere al sistema",
   "error.auth.invalid": "Username o password non validi",
   "error.auth.missing": "Username o password mancanti",
@@ -134,6 +135,7 @@
   "project.pages.board": "Board",
   "project.pages.backlog": "Backlog",
   "project.pages.roadmap": "Roadmap",
+  "project.pages.releases": "Rilasci",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
   "project.settings.details.toast.update.success" : "I dettagli del progetto sono stati modificati correttamente.",
@@ -272,8 +274,16 @@
   "profile.lang.english": "English",
   "profile.theme.dark": "Scuro",
   "profile.theme.light": "Chiaro",
-  "projects.settings.roles.filter.type" : "Seleziona ruolo",
-  "projects.settings.invitations.filter.type" : "Seleziona stato",
+  "project.settings.permissions.admin.title" : "Amministratore",
+  "project.settings.permissions.admin.description" : "Se attivo, l'utente potrà gestire i permessi per l'intero progetto, espellere i membri, ed eliminare il progetto.",
+  "project.settings.permissions.details.title" : "Accesso ai dettagli",
+  "project.settings.permissions.details.description" : "Permette l'accesso alle informazioni generali del progetto e alla modifica degli stessi.",
+  "project.settings.permissions.invitations.title" : "Accesso agli inviti",
+  "project.settings.permissions.invitations.description" : "Permette all'utente di invitare nuovi membri del team.",
+  "project.settings.permissions.roles.title" : "Accesso ai ruoli",
+  "project.settings.permissions.roles.description" : "Se attivo, l'utente potrà modificare i ruoli all'interno del progetto.",
+  "project.settings.permissions.null.title" : "Gestisci i permessi del tuo Progetto Scrum!",
+  "project.settings.permissions.null.subtitle" : "Assegna ai membri del progetto dei permessi specifici in base al ruolo che ricoprono all'interno del progetto.",
   "projects.releases.title" : "Rilasci",
   "projects.releases.add": "Crea versione",
   "projects.releases.status.draft": "Anteprima",
@@ -300,5 +310,7 @@
   "projects.releases.view.description": "Descrizione",
   "projects.releases.view.progress.title": "Progresso",
   "projects.releases.view.progress.release": "Rilascio previsto",
-  "projects.releases.view.save": "Salva"
+  "projects.releases.view.save": "Salva",
+  "error.projects.releases.create": "Si è verificato un errore durante la creazione di un rilascio",
+  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
 }
