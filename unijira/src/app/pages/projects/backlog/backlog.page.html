@@ -58,19 +58,17 @@
               <ion-text color="dark">
                 <p>
                   Sprint {{ sprintId }}
+                  <ion-text *ngIf="sprintIsStarted" color="primary">
+                      {{formatDate(this.startSprintDate)}} - {{formatDate(this.endSprintDate)}}
+
+                  </ion-text>
                   <ion-text color="primary">
                     ({{this.sprint?.insertions?.length}} tickets)</ion-text
                   >
                 </p>
               </ion-text>
             </ion-col>
-            <ion-col size="auto" class="ion-align-self-end">
-              <ion-text color="dark">
-                <p *ngIf="sprintIsStarted">
-                  {{this.startSprintDate}} - {{this.endSprintDate}}
-                </p>
-              </ion-text>
-            </ion-col>
+
             <ion-col size="auto" class="ion-align-self-end">
               <ion-badge color="light">{{ totalNonAvviatos }}</ion-badge>
             </ion-col>

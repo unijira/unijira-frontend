@@ -24,6 +24,7 @@ import { SprintInsertion } from '../../../models/SprintInsertion';
 import { forEach } from 'lodash';
 import { SprintStatus } from '../../../models/SprintStatus';
 import { IonAccordionGroup } from '@ionic/angular';
+import * as Moment from 'moment';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -61,6 +62,8 @@ export class BacklogPage implements OnInit {
 
   startSprintDate: string;
   endSprintDate: string;
+
+
 
   minDate: string;
 
@@ -172,6 +175,17 @@ export class BacklogPage implements OnInit {
       dismissed: true,
     });
   }
+
+formatDate(date) {
+  const dateFormat = Moment(date);
+  const dateNow = Moment();
+  const diff = dateNow.diff(dateFormat, 'years');
+  if (diff > 0) {
+    return dateFormat.format('DD MM YYYY');
+  } else {
+    return dateFormat.format('DD MMM');
+  }
+}
 
   /* EDIT */
   editStatus(task, data, type) {
