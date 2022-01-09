@@ -2,13 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {SessionService} from '../../../../store/session.service';
-import {ProjectService} from '../../../../services/project/project.service';
 import {FormControl, Validators} from '@angular/forms';
 import {AlertController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {FileUploadService} from '../../../../services/file-upload/file-upload.service';
 import {PageService} from '../../../../services/page.service';
+import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
+import {ProjectService} from '../../../../services/project/project.service';
 
 @Component({
   selector: 'app-details',
@@ -22,6 +22,8 @@ export class DetailsPage implements OnInit {
 
   @Input() project: Project;
   @Input() projectSubscription: Subscription;
+
+  @Input() saved = false;
 
   nameForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
   keyForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
@@ -80,9 +82,6 @@ export class DetailsPage implements OnInit {
 
   onFileChanged(event) {
 
-    console.log(this.file);
-    console.log(this.image);
-
     const reader = new FileReader();
 
     this.file = event.target.files[0];
@@ -108,7 +107,7 @@ export class DetailsPage implements OnInit {
 
           if(this.file !== undefined) {
 
-            this.uploadService.upload(this.project.id, 'icon', this.file).subscribe(
+            this.uploadService.upload(this.project.id, 'icon', this.file, BasePath.project).subscribe(
               url => {
                 this.projectService.updateProject(this.project.id, this.nameForm.value, this.keyForm.value,
                   this.project.ownerId, new URL(url)).subscribe(
@@ -116,8 +115,7 @@ export class DetailsPage implements OnInit {
 
                     if(p !== null) {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.success')).then();
-                      this.image = '';
-                      this.file = undefined;
+                      this.saved = true;
                     } else {
                       this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed')).then();
                     }

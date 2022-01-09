@@ -68,33 +68,11 @@ export class AppComponent implements OnInit, OnDestroy {
       moment.locale(translateService.currentLang);
     });
 
-    moment.locale('it');
-
-    this.pages.push({name: 'backlog', url: '/backlog'});
-  }
-
-
-  get currentColorTheme() {
-    return document.body.getAttribute('color-theme');
-  }
-
-
-
-  ngOnInit() {
-    this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
-      this.isLogged = log;
-      if (!log){
-        //this.router.navigate(['/login']);
-      } else {
-        this.sessionService.loadUserInfo();
-      }
-    });
-
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
 
-      this.project = proj;
+      if (this.project !== proj && proj) {
 
-      if (proj) {
+        this.project = proj;
 
         this.pages = [
           {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
@@ -112,6 +90,28 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
         ];
 
+      }
+    });
+
+    moment.locale('it');
+
+  }
+
+
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
+
+
+
+  ngOnInit() {
+
+    this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
+      this.isLogged = log;
+      if (!log){
+        //this.router.navigate(['/login']);
+      } else {
+        this.sessionService.loadUserInfo();
       }
     });
 
