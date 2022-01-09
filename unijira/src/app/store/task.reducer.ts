@@ -5,13 +5,14 @@ import {BacklogInsertion} from '../models/BacklogInsertion';
 import {SprintInsertion} from '../models/SprintInsertion';
 import * as TaskActions from './task.action';
 import * as _ from 'lodash';
+import { SprintStatus } from '../models/SprintStatus';
 export interface TaskState {
   backlog: Backlog;
   sprint: Sprint;
 }
 export const initialState: TaskState = {
   backlog: new Backlog(0, null, null, []),
-  sprint: new Sprint(0, new Date(), new Date(), [], 0),
+  sprint: new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive),
 };
 
 export const taskReducer = createReducer(

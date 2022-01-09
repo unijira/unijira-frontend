@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2NzkxOTQsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjc1NTk0LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.i4_H2ZhGpqtcx2m-lO-VGW2eyZWhoSBpFJVjTgY_We8
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2ODY4MDAsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjgzMjAwLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.6hs6LVB56bM9S65V1OJFVGg3jwMNAy0wZmGdpWYuEhA
 
 # @token = {{login.response.body.token}}
 
@@ -253,7 +253,7 @@ Content-Type: application/json
 }
 
 ### Start spirnt (cioe' set con le date)
-PUT  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}/
+PUT  http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/sprints/{{sprintid}}
 Authorization: Bearer {{token}}
 Content-Type: application/json
 

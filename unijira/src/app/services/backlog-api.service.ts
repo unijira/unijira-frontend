@@ -82,14 +82,9 @@ export class BacklogAPIService {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
     return this.httpService.post<any>(url, sprint);
   }
-  startSprint(projectId: number, backlogId: number, sprintId: number, startDate: Date, endDate: Date) {
+  startSprint(projectId: number, backlogId: number, sprintId: number, sprint: Sprint) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
-    const sprintInfo = {
-      name: 'Sprint',
-      startingDate: startDate,
-      endingDate: endDate
-    };
-    return this.httpService.put<any>(url, sprintInfo);
+    return this.httpService.put<Sprint>(url, sprint);
   }
   updateSprint(projectId: number, backlogId: number, sprint: Sprint) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprint.id}`;

@@ -5,35 +5,45 @@
         <ion-col>
           <h2>Progetto {{projectId}}</h2>
         </ion-col>
-        <ion-col *ngIf="sprintIsStarted">
-          <ion-button (click)="editSprint()">
-            <ion-icon name="play"></ion-icon>
-          </ion-button>
-        </ion-col>
+
       </ion-row>
       <!-- /ion-row PROGETTO-->
       <ion-row class="ion-align-items-center ion-justify-content-start">
         <ion-col size="2" class="ion-align-self-center">
           <h1>Sprint {{sprintId}}</h1>
         </ion-col>
+        <ion-col size="2">
+          <span *ngIf="sprintIsStarted">
+            {{this.startSprintDate}} <br> {{this.endSprintDate}}
+          </span>
+        </ion-col>
         <ion-col size="2" class="ion-align-self-end">
-          <ion-button (click)="avviaSprint()" color="primary">
+          <ion-button color="primary" *ngIf="sprintIsStarted" (click)="stopSprint()">
+            Stop Sprint
+          </ion-button>
+          <ion-button color="primary" id="open-modal" *ngIf="!sprintIsStarted">
             Avvia Sprint
           </ion-button>
+          <ion-modal trigger="open-modal">
+            <ng-template>
+              <ion-content>
+                <ion-datetime min="2022" presentation="date" showDefaultButtons (ionChange)="avviaSprint($event)"></ion-datetime>
+              </ion-content>
+            </ng-template>
+          </ion-modal>
         </ion-col>
-        <ion-col  size="2" class="ion-align-self-end">
+        <ion-col size="2" class="ion-align-self-end">
           <ion-button (click)="createSprint()" color="primary">
             Crea Sprint
           </ion-button>
         </ion-col>
-        <ion-col  size="2" class="ion-align-self-end">
+        <ion-col size="2" class="ion-align-self-end">
           <app-sprintlist
             [projectId]="projectId"
             [backlogId]="backlogId"
             (sprintSelected)="changeSprint($event)"
           ></app-sprintlist>
         </ion-col>
-
       </ion-row>
       <!-- /ion-row SPRINT Titolo-->
 
@@ -108,7 +118,10 @@
                       class="avatar"
                       *ngIf="insertion.item.assignees"
                     >
-                      <!-- <img class="avatar-img" [src]="insertion.item.assignees[0].assignee.avatar" /> -->
+                      <img
+                        class="avatar-img"
+                        [src]="insertion.item.assignees[0].assignee.avatar"
+                      />
                     </ion-thumbnail>
                     <ion-button
                       class="action-btn"
@@ -207,7 +220,10 @@
                       class="avatar"
                       *ngIf="insertion.item.assignees"
                     >
-                      <!-- <img class="avatar-img" [src]="insertion.item.assignees[0].assignee.avatar" /> -->
+                      <img
+                        class="avatar-img"
+                        [src]="insertion.item.assignees[0].assignee.avatar"
+                      />
                     </ion-thumbnail>
                     <ion-button
                       class="action-btn"

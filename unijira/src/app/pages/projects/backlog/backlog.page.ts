@@ -1,7 +1,7 @@
 import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../../../store/task.service';
@@ -22,23 +22,23 @@ import { Backlog } from '../../../models/Backlog';
 import { BacklogInsertion } from '../../../models/BacklogInsertion';
 import { SprintInsertion } from '../../../models/SprintInsertion';
 import { forEach } from 'lodash';
-import { Item } from '../../../models/item/Item';
+import { SprintStatus } from '../../../models/SprintStatus';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
   styleUrls: ['./backlog.page.scss'],
 })
 export class BacklogPage implements OnInit {
-  sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
+  sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive);
   backlog: Backlog = new Backlog(0, null, null, []);
 
-  sprintServer: Sprint = new Sprint(0, new Date(), new Date(), [], 0);
+  sprintServer: Sprint = new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive);
   backlogServer: Backlog = new Backlog(0, null, null, []);
 
   filterP$: number;
 
-  startSprintDate: Date;
-  endSprintDate: Date;
+  startSprintDate: string;
+  endSprintDate: string;
 
   minDate: string;
 
@@ -137,6 +137,8 @@ export class BacklogPage implements OnInit {
     return await modal.present();
   }
 
+
+
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,
@@ -172,13 +174,21 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
-  avviaSprint() {
+ avviaSprint($event) {
+    console.log('AVVIA SPRINT', $event.detail.value);
+    this.sprint.startingDate = new Date().toISOString().split('T')[0];
+    this.sprint.endingDate = new Date($event.detail.value).toISOString().split('T')[0];
     this.backlogAPIService
-      .startSprint(this.projectId, this.backlogId, this.sprintId, this.startSprintDate, this.endSprintDate)
-      .subscribe((response) => {
-        this.sprintIsStarted = true;
+    .startSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+    .subscribe((response) => {
+      this.getFromApi();
       });
   }
+
+  stopSprint() {
+    alert('stop');
+  }
+
   editWeight(task, data, type) {
     if (
       data.data.value === '' ||
@@ -234,7 +244,17 @@ export class BacklogPage implements OnInit {
       .getBacklog(this.projectId, this.backlogId)
       .subscribe((response) => {
         that.backlog = response;
+        this.sprint = response.sprints.find((s) => s.id === that.sprintId);
+        console.log('start date ', this.sprint.startingDate, response.sprints[0].startingDate);
+        if(this.sprint.startingDate != null) {
+          this.startSprintDate = new Date(this.sprint.startingDate).toISOString().split('T')[0];
+        }
+        if (this.sprint.endingDate != null) {
+          this.endSprintDate = new Date(this.sprint.endingDate).toISOString().split('T')[0];
+        }
+        this.sprintIsStarted = this.startSprintDate ? true : false;
       });
+
 
     this.backlogAPIService
       .getBacklogItems(this.projectId, this.backlogId)
