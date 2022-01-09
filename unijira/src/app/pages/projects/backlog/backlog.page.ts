@@ -407,4 +407,11 @@ export class BacklogPage implements OnInit {
 
     return await popOver.present();
   }
+
+
+
+
+  addItem() {
+    alert('add item');
+  }
 }

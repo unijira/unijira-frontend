@@ -4,7 +4,6 @@ import { HttpService } from './http-service.service';
 import { SessionService } from '../store/session.service';
 import { Sprint } from '../models/Sprint';
 import { Item } from '../models/item/Item';
-import { User } from '../models/User';
 import { map } from 'rxjs/operators';
 import { Backlog } from '../models/Backlog';
 import { BacklogInsertion } from '../models/BacklogInsertion';

@@ -1,15 +1,38 @@
 <ion-content>
   <div class="page">
     <ion-grid>
-      <ion-row>
-        <ion-col>
+      <ion-row class="ion-align-items-center ion-justify-content-center">
+        <ion-col class="ion-align-self-start">
           <h2>Progetto {{projectId}}</h2>
         </ion-col>
-        <ion-col> </ion-col>
+        <ion-col class="ion-align-self-end">
+          <ion-button
+            (click)="getFromApi()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.get'"
+          >
+          </ion-button>
+        </ion-col>
+        <ion-col class="ion-align-self-end">
+          <ion-button
+            (click)="saveToAPI()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.save'"
+          >
+          </ion-button>
+        </ion-col>
       </ion-row>
       <!-- /ion-row PROGETTO-->
       <ion-accordion-group>
-        <ion-accordion value="sprintsss" toggle-icon="arrow-down-circle" expanded>
+        <ion-accordion
+          value="sprintsss"
+          toggle-icon="arrow-down-circle"
+          expanded
+        >
           <ion-row
             class="ion-align-items-center ion-justify-content-start"
             slot="header"
@@ -96,8 +119,7 @@
                       </ion-col>
 
                       <ion-col
-                        class="ion-justify-content-end"
-                        class="icon-area"
+                        class="ion-justify-content-end ion-align-self-center"
                       >
                         <div *ngIf="insertion.item.father">
                           <fa-icon
@@ -106,7 +128,8 @@
                           >
                           </fa-icon>
                         </div>
-
+                      </ion-col>
+                      <ion-col size="1" class="ion-align-self-center">
                         <div
                           (click)="editPesoPopover($event, insertion, 'sprint')"
                         >
@@ -118,7 +141,8 @@
                             <span>{{ insertion.item.evaluation }}</span>
                           </ion-badge>
                         </div>
-
+                      </ion-col>
+                      <ion-col size="1" class="ion-align-self-center">
                         <div
                           (click)="editStatusPopover($event, insertion, 'sprint')"
                           class="status-badge-div"
@@ -136,7 +160,8 @@
                             >{{ insertion.item.status }}</ion-badge
                           >
                         </div>
-
+                      </ion-col>
+                      <ion-col size="1" class="ion-align-self-center">
                         <ion-thumbnail
                           class="avatar"
                           *ngIf="insertion.item.assignees"
@@ -146,6 +171,9 @@
                             [src]="insertion.item.assignees[0].assignee.avatar"
                           />
                         </ion-thumbnail>
+                      </ion-col>
+
+                      <ion-col size="1" class="ion-align-self-center">
                         <ion-button
                           class="action-btn"
                           size="small"
@@ -190,7 +218,7 @@
                   >
                     <ion-row
                       *ngFor="let insertion of backlog.insertions"
-                      class="ion-align-items-end task-item white-bg"
+                      class="ion-align-items-end ion-justify-content-center task-item white-bg"
                     >
                       <ion-col>
                         <ion-item>
@@ -205,10 +233,7 @@
                         </ion-item>
                       </ion-col>
 
-                      <ion-col
-                        class="ion-justify-content-end"
-                        class="icon-area"
-                      >
+                      <ion-col size="1" class="ion-align-self-center">
                         <div *ngIf="insertion.item.father">
                           <fa-icon
                             [icon]="['fas', 'network-wired']"
@@ -216,7 +241,8 @@
                           >
                           </fa-icon>
                         </div>
-
+                      </ion-col>
+                      <ion-col size="1" class="ion-align-self-center">
                         <div
                           (click)="editPesoPopover($event, insertion, 'backlog')"
                         >
@@ -228,7 +254,9 @@
                             <span>{{ insertion.item.evaluation }}</span>
                           </ion-badge>
                         </div>
+                      </ion-col>
 
+                      <ion-col size="1" class="ion-align-self-center">
                         <div
                           (click)="editStatusPopover($event, insertion, 'backlog')"
                           class="status-badge-div"
@@ -246,7 +274,9 @@
                             >{{ insertion.item.status }}</ion-badge
                           >
                         </div>
+                      </ion-col>
 
+                      <ion-col size="1" class="ion-align-self-center">
                         <ion-thumbnail
                           class="avatar"
                           *ngIf="insertion.item.assignees"
@@ -256,6 +286,8 @@
                             [src]="insertion.item.assignees[0].assignee.avatar"
                           />
                         </ion-thumbnail>
+                      </ion-col>
+                      <ion-col size="1" class="ion-align-self-center">
                         <ion-button
                           class="action-btn"
                           size="small"
@@ -281,21 +313,11 @@
       <ion-row>
         <ion-col>
           <ion-button
-            (click)="getFromApi()"
+            (click)="addItem()"
             expand="block"
-            color="primary"
+            color="light"
             class="add-task-button"
-            [translate]="'backlog.server.get'"
-          >
-          </ion-button>
-        </ion-col>
-        <ion-col>
-          <ion-button
-            (click)="saveToAPI()"
-            expand="block"
-            color="primary"
-            class="add-task-button"
-            [translate]="'backlog.server.save'"
+            [translate]="'backlog.server.additem'"
           >
           </ion-button>
         </ion-col>

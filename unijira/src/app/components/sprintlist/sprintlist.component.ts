@@ -1,8 +1,4 @@
 import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { Sprint } from '../../models/Sprint';
-// import { Task } from '../../models/';
-import { Item } from '../../models/item/Item';
-import { User } from '../../models/User';
 import { BacklogAPIService } from 'src/app/services/backlog-api.service';
 @Component({
   selector: 'app-sprintlist',
