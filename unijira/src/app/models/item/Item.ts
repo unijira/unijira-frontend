@@ -16,11 +16,13 @@ export class Item {
   public type: ItemType;
   public status: ItemStatus;
   public owner: UserInfo;
-  public father: Item;
+  public fatherId: number;
+  public sons: Item[];
   public notes: Note[];
   public assignees: ItemAssignment[];
   public createdAt: number;
   public updatedAt: number;
+  public father: Item;
 
 
   constructor(
@@ -33,7 +35,8 @@ export class Item {
     type: ItemType,
     status: ItemStatus,
     owner: UserInfo,
-    father: Item,
+    fatherId: number,
+    sons?: Item[],
     notes?: Note[],
     assignees?: ItemAssignment[])
   {
@@ -47,7 +50,8 @@ export class Item {
     this.type = type;
     this.status = status;
     this.owner = owner;
-    this.father = father;
+    this.fatherId = fatherId;
+    this.sons = sons || [];
     this.assignees = assignees || [];
     this.notes = notes || [];
     this.createdAt = Date.now();

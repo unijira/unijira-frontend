@@ -11,7 +11,7 @@
             <ion-breadcrumb [routerLink]="['/']">
               <ion-icon name="home"></ion-icon>
             </ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.home' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
           </ion-breadcrumbs>
         </section>
@@ -30,7 +30,7 @@
               </ion-text>
             </ion-col>
 
-            <!-- UpdateRoles -->
+            <!-- Update Roles -->
             <ion-col>
               <ion-row class="ion-justify-content-end">
                 <ion-button id="update-roles" [disabled]="!updates" (click)="updateRoles()">
@@ -83,13 +83,13 @@
             </ion-col>
 
             <!-- Roles Filter -->
-            <ion-col *ngFor="let entry of filters" size="auto" class="ion-align-self-center">
-              <ion-list lines="none">
-                <ion-item>
-                  <ion-label>{{entry.translate | translate}}</ion-label>
-                  <ion-checkbox slot="end" [(ngModel)]="entry.active"></ion-checkbox>
-                </ion-item>
-              </ion-list>
+            <ion-col size="3">
+              <ion-item lines="none">
+                <ion-label position="floating">{{'project.settings.roles.filter' | translate}}</ion-label>
+                <ion-select [(ngModel)]="filterType" [placeholder]="'projects.settings.roles.filter.type' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option *ngFor="let entry of filters" [value]="entry.value">{{entry.translate | translate}}</ion-select-option>
+                </ion-select>
+              </ion-item>
             </ion-col>
 
           </ion-row>
@@ -116,17 +116,15 @@
 
                 <!-- Profile Image -->
                 <div *ngIf="membership?.userInfo">
-                  <ion-avatar slot="start" *ngIf="membership?.userInfo.avatar !== null">
-                    <ion-img [src]="membership.userInfo.avatar" class="ion-no-margin"></ion-img>
-                  </ion-avatar>
-                </div>
-
-                <div class="ion-margin" *ngIf="membership?.userInfo">
-                  <ion-icon class="profile-icon" size="large" name="person-circle-outline" *ngIf="membership.userInfo.avatar === null"></ion-icon>
+                  <ion-col class="ion-padding">
+                    <ion-avatar class="row-icon">
+                      <ion-img [src]="membership?.userInfo.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                    </ion-avatar>
+                  </ion-col>
                 </div>
 
                 <!-- Profile Mail -->
-                <ion-label *ngIf="membership?.userInfo">
+                <ion-label class="ion-padding" *ngIf="membership?.userInfo">
                   <h2 [innerHTML]="membership.userInfo.username | filtered:searchTerm"></h2>
                 </ion-label>
 
@@ -136,7 +134,7 @@
 
                 <!-- Profile Membership Role -->
                 <ion-item slot="end" lines="none">
-                  <ion-select value='{{membership?.role}}' interface="popover" [(ngModel)]="membership.role" (ionChange)="this.updates = true">
+                  <ion-select value='{{membership?.role}}' interface="popover" [(ngModel)]="membership.role" (ionChange)="updateChange($event,membership?.keyUserId)">
                     <ion-select-option value="{{MembershipRoles.member}}">{{ 'project.settings.roles.member' | translate }}</ion-select-option>
                     <ion-select-option value="{{MembershipRoles.productOwner}}">{{ 'project.settings.roles.product.owner' | translate }}</ion-select-option>
                     <ion-select-option value="{{MembershipRoles.scrumMaster}}">{{ 'project.settings.roles.scrum.master' | translate }}</ion-select-option>
@@ -149,20 +147,28 @@
               </ion-item>
             </ion-list>
 
-            <ion-list *ngIf="memberships === null">
-              <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
+            <ion-list *ngIf="!memberships">
+              <ion-item *ngFor="let i of [1, 2]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated style="width: 50%; height: 50%"></ion-skeleton-text>
+                </ion-thumbnail>
                 <ion-label>
                   <ion-skeleton-text animated></ion-skeleton-text>
-                  <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-label>
-                <ion-skeleton-text animated></ion-skeleton-text>
               </ion-item>
             </ion-list>
 
             <br>
 
+            <!-- Settings No Users -->
+            <ion-grid *ngIf="filteredMemberships?.length === 0 && memberships">
+              <ion-row class="ion-justify-content-center ion-margin">
+                <span><i class="ion-color-medium">{{'project.settings.roles.null' | translate}}</i></span>
+              </ion-row>
+            </ion-grid>
+
             <!-- Settings Roles Footer -->
-            <ion-grid *ngIf="memberships?.length <= 1">
+            <ion-grid *ngIf="memberships?.length <= 1 && memberships">
               <ion-row class="ion-justify-content-center ion-margin">
                 <img src="/assets/img/projects/settings-roles.webp" class="project-settings-invitations-image" alt="">
               </ion-row>

@@ -1,0 +1,15 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb *ngIf="projectId" [routerLink]="['/projects', projectId, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
+      <ion-breadcrumb *ngIf="ticket">#{{ticket.id}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+</ion-content>

@@ -2,10 +2,10 @@ import {Component, Input, OnInit} from '@angular/core';
 import {PageService} from '../../../../services/page.service';
 import {SessionService} from '../../../../store/session.service';
 import {AlertController, ToastController} from '@ionic/angular';
-import {ProjectService} from '../../../../services/common/project.service';
+import {ProjectService} from '../../../../services/project/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {UsersService} from '../../../../services/common/users.service';
+import {UserService} from '../../../../services/user/user.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
@@ -26,14 +26,16 @@ export class RolesPage implements OnInit {
   @Input() updates = false;
 
   @Input() filters = [
-    { value: MembershipRoles.member,  translate: 'project.settings.roles.member',  active: true },
-    { value: MembershipRoles.productOwner,  translate: 'project.settings.roles.product.owner',  active: true },
-    { value: MembershipRoles.scrumMaster, translate: 'project.settings.roles.scrum.master', active: true },
-    { value: MembershipRoles.manager, translate: 'project.settings.roles.manager', active: true },
-    { value: MembershipRoles.stakeholder, translate: 'project.settings.roles.stakeholder', active: true }
+    { value: MembershipRoles.member,  translate: 'project.settings.roles.member'},
+    { value: MembershipRoles.productOwner,  translate: 'project.settings.roles.product.owner'},
+    { value: MembershipRoles.scrumMaster, translate: 'project.settings.roles.scrum.master'},
+    { value: MembershipRoles.manager, translate: 'project.settings.roles.manager'},
+    { value: MembershipRoles.stakeholder, translate: 'project.settings.roles.stakeholder'}
   ];
 
-  @Input() users = [];
+  @Input() filterType: string[] = [];
+  @Input() currentRoles: any = [];
+  @Input() initialRoles: any = [];
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MembershipRoles = MembershipRoles;
@@ -49,41 +51,51 @@ export class RolesPage implements OnInit {
               private translateService: TranslateService,
               private router: Router,
               public toastController: ToastController,
-              public usersService: UsersService,
+              public usersService: UserService,
               private pageService: PageService) {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.roles']);
 
-    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => {
 
-    this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
-
-      this.project = p;
-
-      if(p) {
-
-        this.projectService.getMemberships(p.id).subscribe(
-          members => {
-
-            this.memberships = members;
-
-            console.log(this.memberships);
-
-            members.forEach(member => {
-                this.usersService.getUser(member.keyUserId).subscribe(user => {
-                  member.userInfo = user;
-                });
-              }
-            );
-
-          }
-        );
-
+      if(!this.userInfo) {
+        this.userInfo = info;
       }
 
     });
 
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.activatedRoute.params.subscribe(params => {
+
+      this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
+
+        this.project = p;
+
+        if(p) {
+
+          this.projectService.getMemberships(p.id).subscribe(
+            members => {
+
+              this.memberships = members;
+
+              members.forEach(member => {
+
+                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+                    member.userInfo = user;
+                  });
+
+                  this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+                  this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+                }
+              );
+
+            }
+          );
+
+        }
+
+      });
+
+    });
 
   }
 
@@ -97,16 +109,13 @@ export class RolesPage implements OnInit {
 
     this.filters.forEach(f => {
 
-        if(f.active) {
+        this.memberships.forEach(membership => {
 
-          this.memberships.forEach(membership => {
+          if (membership.role === f.value && !(this.filterType.includes(f.value))) {
+            filtered.push(membership);
+          }
 
-            if (membership.role === f.value) {
-              filtered.push(membership);
-            }
-
-          });
-        }
+        });
 
       }
     );
@@ -123,7 +132,6 @@ export class RolesPage implements OnInit {
   }
 
   updateRoles() {
-
 
     this.showAlert(this.translateService.instant('project.settings.roles.alert.title'),
       this.translateService.instant('project.settings.roles.alert.description'),
@@ -143,13 +151,21 @@ export class RolesPage implements OnInit {
 
                 this.projectService.getMemberships(this.project.id).subscribe(
                   members => {
+
                     this.memberships = members;
+
                     members.forEach(m => {
                         this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
                       }
                     );
+
+                    this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+                    this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+
                   }
                 );
+
+                this.updates = false;
 
               } else {
 
@@ -206,6 +222,38 @@ export class RolesPage implements OnInit {
       await alert.present();
 
     });
+  }
+
+  updateChange($event: any, keyUserId: number | undefined) {
+
+    let modify = false;
+
+    this.currentRoles.forEach(item => {
+
+      if(item.keyUserId === keyUserId) {
+        item.role = $event.detail.value;
+      }
+
+    });
+
+
+    this.currentRoles.forEach(i => {
+      this.initialRoles.forEach(j => {
+
+        if(i.keyUserId === j.keyUserId) {
+          if(i.role !== j.role) {
+            this.updates = true;
+            modify = true;
+          }
+        }
+
+      });
+    });
+
+    if(!modify) {
+      this.updates = false;
+    }
+
   }
 
 }

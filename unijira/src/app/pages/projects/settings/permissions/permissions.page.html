@@ -1,9 +1,164 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>permissions</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content>
+
+  <!-- Project Settings Permissions -->
+  <ion-row class="ion-justify-content-center ion-margin-vertical">
+    <ion-col size="auto">
+      <div class="container-main-inner">
+
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
+
+        <!-- Permissions Header -->
+        <ion-grid>
+
+          <br>
+
+          <ion-row>
+
+            <!-- Permissions Title -->
+            <ion-col>
+              <ion-text>
+                <h1 [translate]="'project.settings.permissions.title'"></h1>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+
+          <ion-row>
+
+            <!-- Permissions Subtitle -->
+            <ion-col>
+              <ion-text>
+                <h4 [translate]="'project.settings.permissions.subtitle'"></h4>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+
+            <!-- Permissions Information's Icon -->
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-icon size="large" name="information-circle" class="info-icon"></ion-icon>
+            </ion-col>
+
+            <!-- Permissions Information's -->
+            <ion-col class="ion-align-self-center">
+              <ion-text>
+                <h5 class="info-text" [translate]="'project.settings.permissions.info'"></h5>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <br>
+          <br>
+
+          <ion-row>
+
+            <!-- Permissions User -->
+            <ion-col size="8" class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">{{'projects.settings.permissions.filter.user.type' | translate}}</ion-label>
+                <ion-select interface="popover" #userSelect (ionChange)="onChangeUser($event)">
+                  <ion-select-option *ngFor="let membership of memberships || []" value='{{membership?.userInfo?.username}}'>
+                    <ion-item>
+                      {{ membership?.userInfo?.username }}
+                    </ion-item>
+                  </ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+            <!-- Permissions Masks -->
+            <ion-col size="4" class="ion-align-self-center">
+              <ion-item>
+                <ion-label position="floating">{{'projects.settings.permissions.filter.mask.type' | translate}}</ion-label>
+                <ion-select interface="popover" #maskSelect (ionChange)="onChangeMask($event)">
+                  <ion-select-option *ngFor="let mask of masks" value='{{mask.role}}'>{{ mask.translate | translate }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+
+          <div class="ion-margin" *ngIf="this.selectedMembership !== null">
+
+            <!-- Permission List -->
+
+            <ion-list-header>
+
+              <ion-col>
+                <ion-label [translate]="'projects.settings.permissions.type'"></ion-label>
+              </ion-col>
+              <ion-col size="auto">
+                <ion-label [translate]="'projects.settings.permissions.state'"></ion-label>
+              </ion-col>
+
+            </ion-list-header>
+
+
+            <ion-list>
+              <ion-item *ngFor="let permission of permissions" class="roles-item">
+
+                <!-- Permission -->
+                <ion-label class="ion-padding">
+                  <h2>{{permission.title | translate}}</h2>
+                  <p>{{permission.description | translate}}</p>
+                </ion-label>
+
+                <!-- Status -->
+                <ion-checkbox [(ngModel)]="permission.value" mode="ios" slot="end"></ion-checkbox>
+
+              </ion-item>
+            </ion-list>
+
+          </div>
+
+          <br>
+          <br>
+
+          <!-- Update Permissions -->
+          <ion-col>
+            <ion-row *ngIf="this.selectedMembership !== null" class="ion-justify-content-end">
+              <ion-button id="restore-permissions" color="light" (click)="restorePermissions()">
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+              &nbsp;&nbsp;&nbsp;
+              <ion-button id="update-permissions" [disabled]="!check()" (click)="updatePermissions()">
+                <ion-icon slot="start" name="key-outline"></ion-icon>
+                <span [translate]="'project.settings.permissions.update'"></span>
+              </ion-button>
+            </ion-row>
+          </ion-col>
+
+        </ion-grid>
+
+        <!-- Settings Roles Footer -->
+        <ion-grid *ngIf="this.selectedMembership === null">
+          <ion-row class="ion-justify-content-center">
+            <img src="/assets/img/projects/settings-permissions.png" class="project-settings-invitations-image" alt="">
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <h1 class="ion-color-medium">{{'project.settings.permissions.null.title' | translate}}</h1>
+          </ion-row>
+          <ion-row class="ion-justify-content-center ion-text-center">
+            <div class="text-limit"><span class="ion-color-medium"><i>{{'project.settings.permissions.null.subtitle' | translate}}</i></span></div>
+          </ion-row>
+        </ion-grid>
+
+      </div>
+    </ion-col>
+  </ion-row>
 
 </ion-content>

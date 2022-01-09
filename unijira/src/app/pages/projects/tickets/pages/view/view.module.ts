@@ -4,9 +4,9 @@ import {FormsModule} from '@angular/forms';
 
 import {IonicModule} from '@ionic/angular';
 
-import {NotificationsPageRoutingModule} from './notifications-routing.module';
+import {ViewPageRoutingModule} from './view-routing.module';
 
-import {NotificationsPage} from './notifications.page';
+import {ViewPage} from './view.page';
 import {TranslateModule} from '@ngx-translate/core';
 
 @NgModule({
@@ -14,9 +14,9 @@ import {TranslateModule} from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    NotificationsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    ViewPageRoutingModule
   ],
-  declarations: [NotificationsPage]
+  declarations: [ViewPage]
 })
-export class NotificationsPageModule {}
+export class ViewPageModule {}

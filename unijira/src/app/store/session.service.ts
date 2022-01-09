@@ -15,7 +15,7 @@ import {
   wrongCredentialAction
 } from './session.action';
 import {UserInfo} from '../models/users/UserInfo';
-import {ProjectService} from '../services/common/project.service';
+import {ProjectService} from '../services/project/project.service';
 import {Project} from '../models/projects/Project';
 
 

@@ -11,7 +11,7 @@
             <ion-breadcrumb [routerLink]="['/']">
               <ion-icon name="home"></ion-icon>
             </ion-breadcrumb>
-            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.home' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
             <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
           </ion-breadcrumbs>
         </section>
@@ -65,10 +65,12 @@
 
           <!-- Project Icon -->
           <ion-row class="ion-justify-content-center">
+
             <div class="project-image">
               <ion-img *ngIf="image === ''" [src]="project?.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
               <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
             </div>
+
           </ion-row>
 
           <br>
@@ -78,8 +80,14 @@
             <input
               style="display: none"
               type="file" (change)="onFileChanged($event)"
+              id="input"
               #fileInput>
             <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+            <div class="ion-align-self-center ion-padding-start">
+              <ion-button type="reset" *ngIf="image !== '' && !saved" color="light" (click)="image = ''; file = undefined; this.saved = false;" >
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
           </ion-row>
 
           <br>
@@ -115,10 +123,12 @@
 
           <!-- Save Details -->
           <ion-row class="ion-justify-content-center">
+
             <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
               <ion-icon slot="start" name="save-outline"></ion-icon>
               <span [translate]="'project.settings.details.save'"></span>
             </ion-button>
+
           </ion-row>
 
         </ion-grid>

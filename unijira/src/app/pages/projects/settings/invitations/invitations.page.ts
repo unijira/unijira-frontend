@@ -1,16 +1,15 @@
 import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
-import {AlertController, ToastController} from '@ionic/angular';
-import {ProjectService} from '../../../../services/common/project.service';
+import {AlertController, IonAccordionGroup, ToastController} from '@ionic/angular';
+import {ProjectService} from '../../../../services/project/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
-import {UsersService} from '../../../../services/common/users.service';
+import {UserService} from '../../../../services/user/user.service';
 import {MembershipStatus} from '../../../../models/projects/MembershipStatus';
 import {PageService} from '../../../../services/page.service';
-import { IonAccordionGroup } from '@ionic/angular';
 import {FormControl, Validators} from '@angular/forms';
 import {UserInfo} from '../../../../models/users/UserInfo';
 
@@ -30,10 +29,12 @@ export class InvitationsPage implements OnInit {
 
   @Input() invites: string[] = [];
   @Input() filters = [
-    { value: MembershipStatus.pending,  translate: 'project.settings.invitations.pending',  active: true },
-    { value: MembershipStatus.enabled,  translate: 'project.settings.invitations.enabled',  active: true },
-    { value: MembershipStatus.disabled, translate: 'project.settings.invitations.disabled', active: true }
+    { value: MembershipStatus.pending,  translate: 'project.settings.invitations.pending'},
+    { value: MembershipStatus.enabled,  translate: 'project.settings.invitations.enabled'},
+    { value: MembershipStatus.disabled, translate: 'project.settings.invitations.disabled'}
   ];
+
+  filterType: string[] = [];
 
   // eslint-disable-next-line @typescript-eslint/naming-convention
   MembershipStatus = MembershipStatus;
@@ -52,40 +53,48 @@ export class InvitationsPage implements OnInit {
               private translateService: TranslateService,
               private router: Router,
               public toastController: ToastController,
-              public usersService: UsersService,
+              public usersService: UserService,
               private pageService: PageService) {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.invitations']);
 
-    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => {
 
-    this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
-
-      this.project = p;
-
-      if(p) {
-
-        this.projectService.getMemberships(p.id).subscribe(
-          members => {
-
-            this.memberships = members;
-
-            members.forEach(member => {
-                this.usersService.getUser(member.keyUserId).subscribe(user => {
-                  member.userInfo = user;
-                  this.users.push(user.username);
-                });
-              }
-            );
-
-          }
-        );
-
+      if(!this.userInfo) {
+        this.userInfo = info;
       }
 
     });
 
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.activatedRoute.params.subscribe(params => {
+
+      this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
+
+        this.project = p;
+
+        if(p) {
+
+          this.projectService.getMemberships(p.id).subscribe(
+            members => {
+
+              this.memberships = members;
+
+              members.forEach(member => {
+                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+                    member.userInfo = user;
+                    this.users.push(user.username);
+                  });
+                }
+              );
+
+            }
+          );
+
+        }
+
+      });
+
+    });
 
   }
 
@@ -99,16 +108,13 @@ export class InvitationsPage implements OnInit {
 
     this.filters.forEach(f => {
 
-        if(f.active) {
+        this.memberships.forEach(membership => {
 
-          this.memberships.forEach(membership => {
+          if (membership.status === f.value && !(this.filterType.includes(f.value))) {
+            filtered.push(membership);
+          }
 
-            if (membership.status === f.value) {
-              filtered.push(membership);
-            }
-
-          });
-        }
+        });
 
       }
     );
