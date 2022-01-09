@@ -6,9 +6,9 @@
         </ion-button>
       </ion-buttons>
     </ion-row>
-    <ion-row class="ion-justify-content-center ion-align-items-center ion-padding" style="min-height: 75vh">
+    <ion-row class="ion-justify-content-center ion-align-items-center ion-padding main-container">
       <ion-col size="5" size-lg="auto">
-        <ion-img src="/assets/logo.webp" alt="" style="max-width: 250px; margin:auto"></ion-img>
+        <ion-img src="/assets/logo.webp" alt=""></ion-img>
       </ion-col>
       <ion-col class="auth-form" size="10" size-lg="4" offset-lg="1">
         <ion-text>
@@ -36,7 +36,7 @@
               <ion-col class="ion-align-items-center">
                 <ion-list lines="none">
                   <ion-item class="ion-no-padding">
-                    <ion-toggle checked="false" style="padding-inline-start: 2px" [formControl]="rememberMeFC"></ion-toggle>
+                    <ion-toggle checked="false" [formControl]="rememberMeFC"></ion-toggle>
                     <ion-text color="dark" [translate]="'login.rememberMe'"></ion-text>
                   </ion-item>
                 </ion-list>

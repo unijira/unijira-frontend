@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
-import {validateConfirmPassword} from '../../util';
+import {validateConfirmPassword, switchLanguage, presentToast} from '../../util';
 import {IonSlides} from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 
@@ -78,7 +78,8 @@ export class RegistrationPage implements OnInit, OnDestroy {
           this.slides.slideTo(this.index).then();
         },
         error: (error) => {
-          this.presentToast(
+          presentToast(
+            this.toastController,
             this.translateService.instant(
               error.status === 409 ?
                 'register.error.userNotAvailable' :
@@ -99,7 +100,8 @@ export class RegistrationPage implements OnInit, OnDestroy {
     let error: string = this.checkError();
 
     if (error !== null) {
-      this.presentToast(
+      presentToast(
+        this.toastController,
         this.translateService.instant(error),
         true
       ).then();
@@ -118,7 +120,8 @@ export class RegistrationPage implements OnInit, OnDestroy {
         next: () => {
           this.router.navigate(['/login'], {replaceUrl: true}).then();
 
-          this.presentToast(
+          presentToast(
+            this.toastController,
             this.translateService.instant(
               'register.registrationDone'
             ),
@@ -126,7 +129,8 @@ export class RegistrationPage implements OnInit, OnDestroy {
           ).then();
         },
         error: () => {
-          this.presentToast(
+          presentToast(
+            this.toastController,
             this.translateService.instant('error.api.default'),
             true
           ).then();
@@ -166,21 +170,7 @@ export class RegistrationPage implements OnInit, OnDestroy {
   }
 
   switchLanguage() {
-    if (this.translateService.currentLang === 'it') {
-      this.translateService.use('en');
-    } else {
-      this.translateService.use('it');
-    }
+    switchLanguage(this.translateService);
   }
 
-  async presentToast(message: string, error: boolean) {
-    const toast = await this.toastController.create({
-      message: message,
-      icon: error ? 'close-circle' : 'checkmark-circle',
-      color: error ? 'danger' : 'primary',
-      position: 'top',
-      duration: 2000
-    });
-    await toast.present();
-  }
 }

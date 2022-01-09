@@ -1,7 +1,7 @@
 import {Subscription} from 'rxjs';
 import {TranslateService} from '@ngx-translate/core';
 import {FormGroup} from '@angular/forms';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ToastController} from '@ionic/angular';
 
 export const unsubscribeAll = (...subs: Subscription[]) => {
   (subs || []).forEach(s => s.unsubscribe());
@@ -37,3 +37,22 @@ export const presentAlertConfirm = async (alertController: AlertController, head
   await alert.present();
 
 };
+
+export const switchLanguage = (translateService: TranslateService) => {
+  if (translateService.currentLang === 'it') {
+    translateService.use('en');
+  } else {
+    translateService.use('it');
+  }
+}
+
+export const presentToast = async (toastController: ToastController, message: string, error: boolean) => {
+  const toast = await toastController.create({
+    message: message,
+    icon: error ? 'close-circle' : 'checkmark-circle',
+    color: error ? 'danger' : 'primary',
+    position: 'top',
+    duration: 2000
+  });
+  await toast.present();
+}

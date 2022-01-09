@@ -22,3 +22,16 @@ ion-item {
 ion-list {
   background: var(--ion-background-color);
 }
+
+.main-container {
+  min-height: 75vh;
+}
+
+ion-img {
+  max-width: 250px;
+  margin: auto;
+}
+
+ion-slide, form {
+  width: 100%;
+}

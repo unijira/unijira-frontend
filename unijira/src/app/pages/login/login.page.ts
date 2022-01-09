@@ -3,10 +3,10 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../../util';
+import {unsubscribeAll, switchLanguage, presentToast} from '../../util';
 import {PageService} from '../../services/page.service';
 import {TranslateService} from "@ngx-translate/core";
-import { ToastController } from '@ionic/angular';
+import {ToastController} from '@ionic/angular';
 
 
 @Component({
@@ -53,12 +53,13 @@ export class LoginPage implements OnInit, OnDestroy {
     this.wrongCredentialSubscription = this.sessionService.getWrongCredential()
       .subscribe(wrong => {
         if(wrong) {
-          this.presentToast(
+          presentToast(
+            this.toastController,
             this.translateService.instant(
               'login.wrongCredential'
             ),
             true
-          ).then();
+          ).then(() => this.sessionService.setWrongCredential(false));
         }
       });
 
@@ -107,21 +108,6 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   switchLanguage() {
-    if (this.translateService.currentLang === 'it') {
-      this.translateService.use('en');
-    } else {
-      this.translateService.use('it');
-    }
-  }
-
-  async presentToast(message: string, error: boolean) {
-    const toast = await this.toastController.create({
-      message: message,
-      icon: error ? 'close-circle' : 'checkmark-circle',
-      color: error ? 'danger' : 'primary',
-      position: 'top',
-      duration: 2000
-    });
-    await toast.present();
+    switchLanguage(this.translateService);
   }
 }

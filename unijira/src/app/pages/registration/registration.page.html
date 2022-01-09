@@ -6,9 +6,9 @@
       </ion-button>
     </ion-buttons>
   </ion-row>
-  <ion-row class="ion-justify-content-center ion-align-items-center ion-padding" style="min-height: 75vh">
+  <ion-row class="ion-justify-content-center ion-align-items-center ion-padding main-container">
     <ion-col size="5" size-lg="auto">
-      <ion-img src="/assets/logo.webp" alt="" style="max-width: 250px; margin:auto"></ion-img>
+      <ion-img src="/assets/logo.webp" alt=""></ion-img>
     </ion-col>
     <ion-col class="auth-form" size="10" size-lg="4" offset-lg="1">
       <ion-text>
@@ -36,8 +36,8 @@
         </ion-row>
       </ion-grid>
       <ion-slides pager="false" class="swiper-no-swiping ion-margin-vertical" #registrationSlider>
-        <ion-slide style="width: 100%">
-          <form *ngIf="index === 0" [formGroup]="emailFG" (ngSubmit)="onEmailConfirm()" style="width: 100%">
+        <ion-slide>
+          <form *ngIf="index === 0" [formGroup]="emailFG" (ngSubmit)="onEmailConfirm()">
 
             <ion-item lines="full" class="ion-no-padding">
               <ion-label position="floating">{{'register.email' | translate}}</ion-label>
@@ -57,7 +57,7 @@
           </form>
         </ion-slide>
         <ion-slide>
-          <form *ngIf="index === 1" [formGroup]="passwordFG" (ngSubmit)="onSubmit()" style="width: 100%">
+          <form *ngIf="index === 1" [formGroup]="passwordFG" (ngSubmit)="onSubmit()">
             <ion-item lines="full" class="ion-no-padding">
               <ion-label position="floating">{{'register.password' | translate}}</ion-label>
               <ion-input name="password" type="password" autocomplete="password" [formControl]="passwordFC1"></ion-input>
