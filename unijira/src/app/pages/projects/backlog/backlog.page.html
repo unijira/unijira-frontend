@@ -359,6 +359,7 @@
                           class="action-btn"
                           size="small"
                           color="light"
+                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
                         >
                           <fa-icon
                             [icon]="['fas', 'ellipsis-h']"
