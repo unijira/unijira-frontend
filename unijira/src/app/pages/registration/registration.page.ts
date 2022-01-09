@@ -1,12 +1,14 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {AccountService} from '../../services/account.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
 import {validateConfirmPassword, switchLanguage, presentToast} from '../../util';
 import {IonSlides} from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
+import { PageService } from 'src/app/services/page.service';
+import {Subscription} from "rxjs";
 
 @Component({
   selector: 'app-registration',
@@ -43,14 +45,26 @@ export class RegistrationPage implements OnInit, OnDestroy {
     password2: this.passwordFC2,
   }, (g: FormGroup) => validateConfirmPassword(g));
 
+  loggedSubscription: Subscription;
+
 
   constructor(
     private router: Router,
+    private route: ActivatedRoute,
     private sessionService: SessionService,
     private accountService: AccountService,
     public translateService: TranslateService,
-    private toastController: ToastController
-  ) {}
+    private toastController: ToastController,
+    private pageService: PageService
+  ) {
+    this.pageService.setTitle('register.title');
+
+    this.loggedSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
+      if (logged === true) {
+        this.redirect();
+      }
+    });
+  }
 
   ngOnInit() {}
 
@@ -167,6 +181,14 @@ export class RegistrationPage implements OnInit, OnDestroy {
     this.passwordFG.reset();
     this.index = 0;
     this.slides.slideTo(this.index).then();
+  }
+
+  private redirect() {
+    if(this.route.snapshot.paramMap.has('idp')) {
+      this.router.navigate([this.route.snapshot.paramMap.get('idp')], {replaceUrl: true}).then();
+    } else {
+      this.router.navigate(['/home'], {replaceUrl: true}).then();
+    }
   }
 
   switchLanguage() {

@@ -162,4 +162,9 @@ export class AppComponent implements OnInit, OnDestroy {
     return /\/projects\/\d/.test(this.router.url) && !(this.router.url.includes('invite'));
   }
 
+  isPageWithoutHeader() {
+    return /\/login/.test(this.router.url) ||
+      /\/registration/.test(this.router.url) ||
+      /\/activate/.test(this.router.url);
+  }
 }
