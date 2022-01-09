@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import {PageService} from '../../../../../services/page.service';
 import {SessionService} from '../../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
@@ -15,7 +15,7 @@ import {Item} from '../../../../../models/item/Item';
   templateUrl: './view.page.html',
   styleUrls: ['./view.page.scss'],
 })
-export class ViewPage implements OnInit {
+export class ViewPage implements AfterViewInit {
 
   projectId: number = null;
   initialRelease: string = null;
@@ -33,7 +33,7 @@ export class ViewPage implements OnInit {
   ) { }
 
   get dirty(): boolean {
-    return JSON.stringify(this.release) !== this.initialRelease;
+    return JSON.stringify(this.release || {}) !== this.initialRelease;
   }
 
   get progress(): number {
@@ -41,8 +41,8 @@ export class ViewPage implements OnInit {
     const dayOfYear = (date: Date): number => Math.floor(date.getFullYear() * 365.25 + date.getMonth() * 30.4375 + date.getDate());
 
     const n = dayOfYear(new Date(Date.now()));
-    const s = dayOfYear(new Date(this.release.startDate));
-    const e = dayOfYear(new Date(this.release.endDate));
+    const s = dayOfYear(new Date(this.release?.startDate));
+    const e = dayOfYear(new Date(this.release?.endDate));
 
     return Math.max(0, (n - s) / (e - s));
 
@@ -59,15 +59,15 @@ export class ViewPage implements OnInit {
   }
 
   get endDateMinusOne(): Date {
-    return moment(this.release.endDate, 'YYYY-MM-DD').subtract(1, 'days').toDate();
+    return moment(this.release?.endDate, 'YYYY-MM-DD').subtract(1, 'days').toDate();
   }
 
   get startDatePlusOne(): Date {
-    return moment(this.release.startDate, 'YYYY-MM-DD').add(1, 'days').toDate();
+    return moment(this.release?.startDate, 'YYYY-MM-DD').add(1, 'days').toDate();
   }
 
 
-  ngOnInit() {
+  ngAfterViewInit() {
 
     this.pageService.setTitle('projects.releases.title');
 
