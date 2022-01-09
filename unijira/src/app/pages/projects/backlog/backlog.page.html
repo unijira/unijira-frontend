@@ -1,4 +1,18 @@
 <ion-content>
+
+  <ion-row>
+    <section class="ion-margin">
+      <ion-breadcrumbs>
+        <ion-breadcrumb routerLink="/">
+          <ion-icon name="home"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+        <ion-breadcrumb [translate]="'backlog.pages.backlog'"></ion-breadcrumb>
+      </ion-breadcrumbs>
+    </section>
+  </ion-row>
+
+
   <div class="page">
     <ion-grid>
       <ion-row class="ion-align-items-center ion-justify-content-center">
@@ -40,6 +54,12 @@
             <ion-col class="ion-align-self-center">
               <h4>Sprint {{sprintId}}</h4>
             </ion-col>
+            <ion-col size="auto">
+              <span *ngIf="sprintIsStarted">
+                {{this.startSprintDate}} <br />
+                {{this.endSprintDate}}
+              </span>
+            </ion-col>
             <ion-col size="auto" class="ion-align-self-end">
               <ion-badge color="light">{{ totalNonAvviatos }}</ion-badge>
             </ion-col>
@@ -48,12 +68,6 @@
             </ion-col>
             <ion-col size="auto" class="ion-align-self-end">
               <ion-badge color="success">{{ totalDones }}</ion-badge>
-            </ion-col>
-            <ion-col size="2">
-              <span *ngIf="sprintIsStarted">
-                {{this.startSprintDate}} <br />
-                {{this.endSprintDate}}
-              </span>
             </ion-col>
             <ion-col size="2" class="ion-align-self-end">
               <ion-button

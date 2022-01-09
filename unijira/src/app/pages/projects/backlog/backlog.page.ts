@@ -186,6 +186,7 @@ export class BacklogPage implements OnInit {
           return t;
         }
       });
+
       this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
       const newTask = _.cloneDeep(task);
@@ -201,6 +202,8 @@ export class BacklogPage implements OnInit {
 
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
+
+    this.countElement();
   }
   avviaSprint($event) {
     console.log('AVVIA SPRINT', $event.detail.value);
