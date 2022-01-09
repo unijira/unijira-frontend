@@ -206,6 +206,4 @@ export class RegistrationPage implements OnInit, OnDestroy {
       this.router.navigate(['/home'], {replaceUrl: true}).then();
     }
   }
-
-
 }
