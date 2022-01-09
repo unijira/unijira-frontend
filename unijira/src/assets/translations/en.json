@@ -267,6 +267,7 @@
   "projects.releases.view.progress.title": "Progress",
   "projects.releases.view.progress.release": "Expected release",
   "projects.releases.view.save": "Save",
+  "projects.releases.view.tickets.title": "Tickets",
   "project.settings.permissions.title": "Permissions",
   "project.settings.permissions.subtitle": "Change the permissions of your team members",
   "project.settings.permissions.info": "With Unijira it is possible to modify the permissions enjoyed by each member of the team at no cost. A fine-grained customization of the permissions is offered in order to meet the different needs. reference to the masks created for each type of role.",

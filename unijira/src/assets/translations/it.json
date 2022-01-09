@@ -191,6 +191,7 @@
   "projects.tickets.list.createdAt": "Data di creazione",
   "projects.tickets.list.updatedAt": "Data di aggiornamento",
   "projects.tickets.list.empty": "Nessun ticket trovato",
+  "projects.tickets.list.unassigned": "Non assegnato",
   "project.pages.invite.title" : "Patecipa ad un progetto",
   "project.settings.invitations.confirm" : "Invita",
   "project.settings.invitations.alert.title" : "Sei sicuro di voler continuare?",
@@ -316,6 +317,7 @@
   "projects.releases.view.progress.title": "Progresso",
   "projects.releases.view.progress.release": "Rilascio previsto",
   "projects.releases.view.save": "Salva",
+  "projects.releases.view.tickets.title": "Ticket",
   "error.projects.releases.create": "Si è verificato un errore durante la creazione di un rilascio",
   "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
 }
