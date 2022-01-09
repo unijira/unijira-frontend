@@ -33,7 +33,7 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
+import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
 
@@ -45,7 +45,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     BacklogEditWeightPopoversComponent,
     BacklogEditStatusPopoversComponent,
     NotificationsComponent,
-    BlDetailComponent
+    BlDetailComponent,
+    NewItemComponent
   ],
   entryComponents: [],
   imports: [

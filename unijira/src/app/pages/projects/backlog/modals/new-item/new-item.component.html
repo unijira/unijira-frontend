@@ -1,0 +1,88 @@
+<ion-content>
+  {{ description }}
+
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Description</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="description"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Summary</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="summary"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Tags</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="tags"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Evaluation</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input type="number" min="0" [(ngModel)]="evaluation"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Status</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="status"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Measure Unit</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="measureunit"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Type</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="type"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col>
+        <ion-button color="danger"> reset </ion-button>
+        <ion-button color="success"> save </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

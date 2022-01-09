@@ -15,6 +15,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 import {TranslateModule} from '@ngx-translate/core';
 
+
 @NgModule({
   imports: [
     CommonModule,

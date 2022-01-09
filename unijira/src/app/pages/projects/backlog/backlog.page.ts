@@ -25,6 +25,8 @@ import { forEach } from 'lodash';
 import { SprintStatus } from '../../../models/SprintStatus';
 import { IonAccordionGroup } from '@ionic/angular';
 import * as Moment from 'moment';
+import { NewItemComponent } from './modals/new-item/new-item.component';
+
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -159,13 +161,10 @@ export class BacklogPage implements OnInit {
 
   onDateChangeEnd(ev) {}
   /* MODAL */
-  async presentModal(task) {
+  async newItemModal(task) {
     const modal = await this.modalController.create({
-      component: BlDetailComponent,
+      component: NewItemComponent,
       cssClass: 'my-custom-class',
-      componentProps: {
-        backlogInsertion: task,
-      },
     });
     return await modal.present();
   }
@@ -175,6 +174,8 @@ export class BacklogPage implements OnInit {
       dismissed: true,
     });
   }
+
+
 
 formatDate(date) {
   const dateFormat = Moment(date);

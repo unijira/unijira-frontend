@@ -9,7 +9,7 @@ const routes: Routes = [
     component: BacklogPage,
   },
   {
-    path: 'singoloitem',
+    path: 'items/:id',
     loadChildren: () => import('./pages/singoloitem/singoloitem.module').then( m => m.SingoloitemPageModule)
   },
 ];

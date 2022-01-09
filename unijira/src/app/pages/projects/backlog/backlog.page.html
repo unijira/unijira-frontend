@@ -215,7 +215,7 @@
                           class="action-btn"
                           size="small"
                           color="light"
-                          (click)="presentModal(insertion)"
+                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
                         >
                           <fa-icon
                             [icon]="['fas', 'ellipsis-h']"
@@ -359,7 +359,6 @@
                           class="action-btn"
                           size="small"
                           color="light"
-                          (click)="presentModal(insertion)"
                         >
                           <fa-icon
                             [icon]="['fas', 'ellipsis-h']"
@@ -380,7 +379,7 @@
       <ion-row>
         <ion-col>
           <ion-button
-            (click)="addItem()"
+            (click)="newItemModal()"
             expand="block"
             color="light"
             class="add-task-button"

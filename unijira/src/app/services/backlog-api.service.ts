@@ -42,6 +42,11 @@ export class BacklogAPIService {
     return this.httpService.get<Sprint>(url);
   }
 
+  addItem(item) {
+    const url = `/items`;
+    return this.httpService.post<Item>(url, item);
+  }
+
   setItems(item) {
     const url = `/items/${item.id}`;
     return this.httpService.put<Item>(url, item);
