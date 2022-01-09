@@ -277,12 +277,27 @@ export class BacklogPage implements OnInit {
       .getBacklog(this.projectId, this.backlogId)
       .subscribe((response) => {
         that.backlog = response;
-        this.sprint = response.sprints.find((s) => s.id === that.sprintId);
-        console.log(
-          'start date ',
-          this.sprint.startingDate,
-          response.sprints[0].startingDate
-        );
+        this.backlogAPIService
+          .getBacklogItems(this.projectId, this.backlogId)
+          .subscribe((response1) => {
+            this.backlog.insertions = [];
+            forEach(response1, (item) => {
+              this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
+            });
+            this.backlog.insertions.sort((a, b) => a.priority - b.priority);
+            const tmpB = _.cloneDeep(that.backlog);
+            this.backlogServer = _.cloneDeep(that.backlog);
+            this.countElementsB();
+            that.store.dispatch(
+              TaskActions.setBacklogAction({ backlog: tmpB })
+            );
+          });
+      });
+
+    this.backlogAPIService
+      .getSprint(this.projectId, this.backlogId, this.sprintId)
+      .subscribe((response) => {
+        that.sprint = response;
         if (this.sprint.startingDate != null) {
           this.startSprintDate = new Date(this.sprint.startingDate)
             .toISOString()
@@ -294,33 +309,18 @@ export class BacklogPage implements OnInit {
             .split('T')[0];
         }
         this.sprintIsStarted = this.startSprintDate ? true : false;
-      });
-
-    this.backlogAPIService
-      .getBacklogItems(this.projectId, this.backlogId)
-      .subscribe((response) => {
-        this.backlog.insertions = [];
-        forEach(response, (item) => {
-          this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
-        });
-        this.backlog.insertions.sort((a, b) => a.priority - b.priority);
-        const tmpB = _.cloneDeep(that.backlog);
-        this.backlogServer = _.cloneDeep(that.backlog);
-        this.countElementsB();
-        that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
-      });
-
-    this.backlogAPIService
-      .getSprintItems(this.projectId, this.backlogId, this.sprintId)
-      .subscribe((response) => {
-        this.sprint.insertions = [];
-        forEach(response, (item) => {
-          this.sprint.insertions.push(JSON.parse(JSON.stringify(item)));
-        });
-        const tmpS = _.cloneDeep(that.sprint);
-        this.sprintServer = _.cloneDeep(that.sprint);
-        this.countElementsS();
-        that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+        this.backlogAPIService
+          .getSprintItems(this.projectId, this.backlogId, this.sprintId)
+          .subscribe((response1) => {
+            this.sprint.insertions = [];
+            forEach(response1, (item) => {
+              this.sprint.insertions.push(JSON.parse(JSON.stringify(item)));
+            });
+            const tmpS = _.cloneDeep(that.sprint);
+            this.sprintServer = _.cloneDeep(that.sprint);
+            this.countElementsS();
+            that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+          });
       });
   }
   changeBacklog(ev) {
@@ -469,7 +469,7 @@ export class BacklogPage implements OnInit {
     alert('add item');
   }
 
-  countElement(){
+  countElement() {
     this.countElementsB();
     this.countElementsS();
   }
