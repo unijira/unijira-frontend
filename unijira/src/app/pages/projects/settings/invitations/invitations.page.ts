@@ -58,7 +58,13 @@ export class InvitationsPage implements OnInit {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.invitations']);
 
-    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => {
+
+      if(!this.userInfo) {
+        this.userInfo = info;
+      }
+
+    });
 
     this.activatedRoute.params.subscribe(params => {
 

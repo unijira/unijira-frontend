@@ -84,7 +84,7 @@
               #fileInput>
             <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
             <div class="ion-align-self-center ion-padding-start">
-              <ion-button type="reset" *ngIf="image !== ''" color="light" (click)="image = ''; file = undefined;" >
+              <ion-button type="reset" *ngIf="image !== '' && !saved" color="light" (click)="image = ''; file = undefined; this.saved = false;" >
                 <ion-icon name="trash-outline"></ion-icon>
               </ion-button>
             </div>

@@ -75,7 +75,7 @@ export class ProjectService {
 
   }
 
-  updateMemberships(keyProjectId: number, keyUserId: number, role: MembershipRoles, status: MembershipStatus, permissions: Set<MembershipPermission>): Observable<Membership> {
+  updateMemberships(keyProjectId: number, keyUserId: number, role: MembershipRoles, status: MembershipStatus, permissions: MembershipPermission[]): Observable<Membership> {
 
     return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyProjectId, keyUserId, role, status, permissions})
       .pipe(catchError(() => of(null)));
