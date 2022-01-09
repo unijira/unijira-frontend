@@ -36,13 +36,13 @@
         </ion-col>
       </ion-row>
 
-      <ion-row *ngIf="backlogInsertion.item.father">
+      <ion-row *ngIf="backlogInsertion.item.sons.length > 0">
         <ion-col size="12">
-<!--          <h5>{{'backlog.detail.childTickets' | translate}} ({{ backlogInsertion.item.children.length }})</h5> -->
+          <h5>{{'backlog.detail.childTickets' | translate}} ({{ backlogInsertion.item.sons.length }})</h5>
           <ul class="lista-children">
-<!--            <li *ngFor="let t of backlogInsertion.item.father"> -->
-<!--              <b>{{ t.name }}</b> | {{ t.description }} | {{ backlogInsertion.item.evaluation }} -->
-<!--            </li> -->
+            <li *ngFor="let t of backlogInsertion.item.sons">
+              <b>{{ t.name }}</b> | {{ t.description }} | {{ backlogInsertion.item.evaluation }}
+            </li>
           </ul>
         </ion-col>
       </ion-row>
