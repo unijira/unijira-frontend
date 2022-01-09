@@ -2,13 +2,13 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {SessionService} from '../../../../store/session.service';
-import {ProjectService} from '../../../../services/common/project.service';
 import {FormControl, Validators} from '@angular/forms';
 import {AlertController, ToastController} from '@ionic/angular';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
-import {BasePath, FileUploadService} from '../../../../services/common/file-upload.service';
 import {PageService} from '../../../../services/page.service';
+import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
+import {ProjectService} from '../../../../services/project/project.service';
 
 @Component({
   selector: 'app-details',
@@ -81,9 +81,6 @@ export class DetailsPage implements OnInit {
   }
 
   onFileChanged(event) {
-
-    console.log(this.file);
-    console.log(this.image);
 
     const reader = new FileReader();
 

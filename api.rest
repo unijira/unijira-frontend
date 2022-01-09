@@ -41,7 +41,7 @@ Content-Type: application/json
 POST http://localhost:7080/auth/authenticate
 
 ###
-GET http://localhost:7080/auth/active
+GET http://localhost:7080/activate
 
 ###
 POST http://localhost:7080/auth/authenticate

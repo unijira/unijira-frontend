@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { ProfileOverviewPage } from './profile-overview.page';
+import {ProfileOverviewPage} from './profile-overview.page';
 
 describe('ProfileOverviewPage', () => {
   let component: ProfileOverviewPage;

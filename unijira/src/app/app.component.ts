@@ -68,6 +68,31 @@ export class AppComponent implements OnInit, OnDestroy {
       moment.locale(translateService.currentLang);
     });
 
+    this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
+
+      if (this.project !== proj && proj) {
+
+        this.project = proj;
+
+        this.pages = [
+          {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
+          {name: 'project.pages.backlog', url: `/projects/${proj.id}/backlog`, icon: 'albums-outline'},
+          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap`, icon: 'map-outline'},
+          {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
+          {name: 'project.pages.releases', url: `/projects/${proj.id}/releases`, icon: 'cube-outline'},
+          {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
+        ];
+
+        this.settings = [
+          {name: 'project.pages.settings.details', url: `/projects/${proj.id}/settings/details`, icon: 'information-outline'},
+          {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
+          {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
+          {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
+        ];
+
+      }
+    });
+
     moment.locale('it');
 
   }
@@ -80,36 +105,13 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   ngOnInit() {
+
     this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
       if (!log){
         //this.router.navigate(['/login']);
       } else {
         this.sessionService.loadUserInfo();
-      }
-    });
-
-    this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
-
-      if (!this.project) {
-
-        this.project = proj;
-
-        this.pages = [
-          {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
-          {name: 'project.pages.backlog', url: `/projects/${proj.id}/backlog`, icon: 'albums-outline'},
-          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap`, icon: 'map-outline'},
-          {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
-          {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
-        ];
-
-        this.settings = [
-          {name: 'project.pages.settings.details', url: `/projects/${proj.id}/settings/details`, icon: 'information-outline'},
-          {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
-          {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
-          {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
-        ];
-
       }
     });
 

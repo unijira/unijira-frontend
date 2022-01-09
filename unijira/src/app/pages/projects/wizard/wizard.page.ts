@@ -2,14 +2,14 @@ import {Component, Input, OnInit, ViewChild} from '@angular/core';
 import {FormControl, Validators} from '@angular/forms';
 import {AlertController, IonSlides, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
-import {ProjectService} from '../../../services/common/project.service';
 import {Router} from '@angular/router';
-import {BasePath, FileUploadService} from '../../../services/common/file-upload.service';
 import {AngularFireDatabase} from '@angular/fire/database';
 import {PageService} from '../../../services/page.service';
 import {Subscription} from 'rxjs';
 import {UserInfo} from '../../../models/users/UserInfo';
 import {SessionService} from '../../../store/session.service';
+import {ProjectService} from '../../../services/project/project.service';
+import {BasePath, FileUploadService} from '../../../services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-wizard',
