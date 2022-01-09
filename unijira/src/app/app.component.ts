@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
-import {unsubscribeAll, switchLanguage} from './util';
+import {unsubscribeAll, switchLanguage, switchColorTheme} from './util';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -63,6 +63,7 @@ export class AppComponent implements OnInit, OnDestroy {
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
     this.configLang();
+    this.configTheme();
 
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
 
@@ -96,8 +97,8 @@ export class AppComponent implements OnInit, OnDestroy {
     return document.body.getAttribute('color-theme');
   }
 
-  configLang() {
 
+  configLang() {
     this.translateService.onLangChange.subscribe(() => {
       moment.locale(this.translateService.currentLang);
     });
@@ -111,8 +112,16 @@ export class AppComponent implements OnInit, OnDestroy {
     else {
       this.translateService.use('it');
     }
-
   }
+
+
+  configTheme() {
+    let deviceTheme = localStorage.getItem('colorTheme');
+
+    if(deviceTheme)
+      document.body.setAttribute('color-theme', deviceTheme);
+  }
+
 
   ngOnInit() {
 
@@ -128,11 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onToggleColorTheme(event) {
-    if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark');
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-    }
+    switchColorTheme(event.detail.checked);
   }
 
   toggleLoading(toggle: boolean) {

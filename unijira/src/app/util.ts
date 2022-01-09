@@ -48,6 +48,16 @@ export const switchLanguage = (translateService: TranslateService) => {
   }
 }
 
+export const switchColorTheme = (enableDark: boolean) => {
+  if (enableDark) {
+    document.body.setAttribute('color-theme', 'dark');
+    localStorage.setItem('colorTheme', 'dark');
+  } else {
+    document.body.setAttribute('color-theme', 'light');
+    localStorage.setItem('colorTheme', 'light');
+  }
+}
+
 export const presentToast = async (toastController: ToastController, message: string, error: boolean) => {
   const toast = await toastController.create({
     message: message,

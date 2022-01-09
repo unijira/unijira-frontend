@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll, switchLanguage, presentToast} from '../../util';
+import {unsubscribeAll, switchLanguage, presentToast, switchColorTheme} from '../../util';
 import {PageService} from '../../services/page.service';
 import {TranslateService} from "@ngx-translate/core";
 import {ToastController} from '@ionic/angular';
@@ -109,5 +109,13 @@ export class LoginPage implements OnInit, OnDestroy {
 
   switchLanguage() {
     switchLanguage(this.translateService);
+  }
+
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
+
+  onToggleColorTheme(event) {
+    switchColorTheme(event.detail.checked);
   }
 }

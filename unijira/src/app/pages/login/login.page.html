@@ -1,6 +1,8 @@
 <ion-content>
     <ion-row class="ion-justify-content-end">
       <ion-buttons class="ion-float-right ion-padding">
+        <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
         <ion-button class="ion-padding-horizontal" (click)="switchLanguage()" fill="solid">
           <span>{{translateService.currentLang}}</span>
         </ion-button>

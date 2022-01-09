@@ -4,7 +4,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
-import {validateConfirmPassword, switchLanguage, presentToast, unsubscribeAll} from '../../util';
+import {validateConfirmPassword, switchLanguage, presentToast, unsubscribeAll, switchColorTheme} from '../../util';
 import {IonSlides} from '@ionic/angular';
 import { ToastController } from '@ionic/angular';
 import { PageService } from 'src/app/services/page.service';
@@ -197,4 +197,11 @@ export class RegistrationPage implements OnInit, OnDestroy {
     switchLanguage(this.translateService);
   }
 
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
+
+  onToggleColorTheme(event) {
+    switchColorTheme(event.detail.checked);
+  }
 }
