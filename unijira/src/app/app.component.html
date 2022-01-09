@@ -1,11 +1,11 @@
 <ion-app>
   <app-loading *ngIf="loading"></app-loading>
-  <ion-header *ngIf="isLogged">
+  <ion-header *ngIf="isLogged && !isPageWithoutHeader()">
     <ion-toolbar>
       <ion-buttons slot="primary">
 
         <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
-        <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
 
         <ion-button (click)="showNotifications($event)">
           <ion-icon name="notifications"></ion-icon>
