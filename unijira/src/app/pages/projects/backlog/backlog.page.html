@@ -59,7 +59,7 @@
                 <p>
                   Sprint {{ sprintId }}
                   <ion-text color="primary">
-                    ({{this.sprint.insertions.length}} tickets)</ion-text
+                    ({{this.sprint?.insertions?.length}} tickets)</ion-text
                   >
                 </p>
               </ion-text>
@@ -243,7 +243,7 @@
                 <p>
                   Backlog {{ backlogId }}
                   <ion-text color="primary">
-                    ({{this.backlog.insertions.length}} tickets)</ion-text
+                    ({{this.backlog?.insertions?.length}} tickets)</ion-text
                   >
                 </p>
               </ion-text>

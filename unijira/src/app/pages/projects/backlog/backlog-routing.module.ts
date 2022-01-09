@@ -8,6 +8,10 @@ const routes: Routes = [
     path: '',
     component: BacklogPage,
   },
+  {
+    path: 'singoloitem',
+    loadChildren: () => import('./pages/singoloitem/singoloitem.module').then( m => m.SingoloitemPageModule)
+  },
 ];
 
 @NgModule({

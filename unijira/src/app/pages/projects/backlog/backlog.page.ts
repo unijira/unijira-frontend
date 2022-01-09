@@ -284,7 +284,11 @@ export class BacklogPage implements OnInit {
             forEach(response1, (item) => {
               this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
             });
-            this.backlog.insertions.sort((a, b) => a.priority - b.priority);
+
+            this.backlog.insertions = this.backlog.insertions.sort((a, b) => a.priority - b.priority);
+            this.backlog.insertions.forEach((item) => {
+              console.log('item priority', item.priority);
+            });
             const tmpB = _.cloneDeep(that.backlog);
             this.backlogServer = _.cloneDeep(that.backlog);
             this.countElementsB();
@@ -298,6 +302,7 @@ export class BacklogPage implements OnInit {
       .getSprint(this.projectId, this.backlogId, this.sprintId)
       .subscribe((response) => {
         that.sprint = response;
+ console.log('that.sprint ', that.sprint);
         if (this.sprint.startingDate != null) {
           this.startSprintDate = new Date(this.sprint.startingDate)
             .toISOString()
@@ -312,12 +317,14 @@ export class BacklogPage implements OnInit {
         this.backlogAPIService
           .getSprintItems(this.projectId, this.backlogId, this.sprintId)
           .subscribe((response1) => {
+            console.log('Get Sprint insertion ', response1);
             this.sprint.insertions = [];
             forEach(response1, (item) => {
               this.sprint.insertions.push(JSON.parse(JSON.stringify(item)));
             });
             const tmpS = _.cloneDeep(that.sprint);
             this.sprintServer = _.cloneDeep(that.sprint);
+            console.log(this.sprintServer, this.sprint);
             this.countElementsS();
             that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
           });
@@ -340,9 +347,9 @@ export class BacklogPage implements OnInit {
     const tmpS = _.cloneDeep(this.sprint);
     const tmpB = _.cloneDeep(this.backlog);
 
-    // backlog insertions per modificare la priority e gli elementi che ci sono o non ci sono
-    // sprint insertions per modificare la priority e gli elementi che ci sono o non ci sono
-    // modifica diretta dell'item per modificare peso, stato e altre cose specifiche dell'item
+    tmpB.insertions.forEach((item, index) => {
+      item.priority = index;
+    });
 
     const itemToRemoveFromBacklog = [];
     const itemToRemoveFromSprint = [];
@@ -350,17 +357,17 @@ export class BacklogPage implements OnInit {
     const allInsertionsNew = _.compact(
       _.flatten(_.zip(tmpB.insertions, tmpS.insertions))
     );
+
     const allInsertionsOld = _.compact(
       _.flatten(
         _.zip(this.backlogServer.insertions, this.sprintServer.insertions)
       )
     );
-
     const allItemsNew = allInsertionsNew.map((item) => item.item);
     const allItemsOld = allInsertionsOld.map((item) => item.item);
+    console.log('Lenght tmpS tmpB', tmpS.insertions?.length, tmpB.insertions?.length);
+    console.log(allItemsNew.length, allItemsOld.length);
 
-    console.log('allItemsNew', allItemsNew);
-    console.log('allItemsOld', allItemsOld);
     forEach(allItemsOld, (item) => {
       const itemNew = _.find(allItemsNew, (i) => i.id === item.id);
       if (!_.isEqual(item, itemNew)) {
@@ -372,18 +379,25 @@ export class BacklogPage implements OnInit {
       }
     });
 
-    this.backlogServer.insertions.forEach((item) => {
+    this.backlogServer.insertions?.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
+
         itemToRemoveFromBacklog.push(
           new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
         );
       }
     });
 
-    this.sprintServer.insertions.forEach((item) => {
+    const itemRimastiNelBacklog = _.differenceBy(this.backlogServer.insertions, itemToRemoveFromBacklog, 'id');
+    console.log('itemRimastiNelBacklog', itemRimastiNelBacklog);
+    itemRimastiNelBacklog.forEach((item, index) => {
+      item.priority = index;
+      this.backlogAPIService.updateBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {});
+    });
+    this.sprintServer.insertions?.forEach((item, index) => {
       if (tmpS.insertions.find((i) => i.id === item.id) === undefined) {
         itemToRemoveFromSprint.push(
-          new BacklogInsertion(item.id, item.item, this.backlog, 1)
+          new BacklogInsertion(item.id, item.item, this.backlog, index)
         );
       }
     });
@@ -410,6 +424,8 @@ export class BacklogPage implements OnInit {
         .addBacklogInsertion(this.projectId, this.backlogId, item)
         .subscribe((response) => {});
     });
+
+
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
