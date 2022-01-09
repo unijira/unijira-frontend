@@ -1,0 +1,23 @@
+.row-icon {
+  height: 1.5rem;
+  width: 1.5rem;
+}
+
+.row-icon:hover {
+  transform: scale(1.2);
+}
+
+
+.infinte-width-inner {
+  min-width: 64rem;
+}
+
+.infinte-width {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-scrolling: touch;
+}
+
+.infinte-width::-webkit-scrollbar {
+  display: none;
+}
