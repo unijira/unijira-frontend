@@ -33,7 +33,9 @@ export class HttpService {
       if (s.sessionReducer.token) {
         this.opt.headers = this.opt.headers.set('Authorization', 'Bearer ' + s.sessionReducer.token);
       }
-
+      else {
+        this.opt.headers = this.opt.headers.delete('Authorization');
+      }
     });
 
   }
