@@ -1,6 +1,6 @@
 import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 import {Notify} from '../../models/Notify';
-import {NotifyService} from '../../services/common/notify.service';
+import {NotifyService} from '../../services/notification/notify.service';
 import {PopoverController} from '@ionic/angular';
 
 @Component({

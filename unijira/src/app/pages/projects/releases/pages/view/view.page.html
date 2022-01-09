@@ -1,0 +1,152 @@
+<ion-content *ngIf="release && projectId">
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/projects', projectId, 'releases']" [translate]="'projects.releases.title'"></ion-breadcrumb>
+      <ion-breadcrumb>{{release.version}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="auto">
+          <ion-badge [color]="release.status | releaseStatusColor">
+            <ion-label>
+              {{release.status | releaseStatus | translate | titlecase}}
+            </ion-label>
+          </ion-badge>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text *ngIf="release">
+            <h1 class="ion-no-margin">
+              {{'projects.releases.view.version' | translate}}
+              <strong>{{release.version}}</strong>
+            </h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button [disabled]="!release || release.status === releaseStatus.archived" color="secondary" expand="block" (click)="archive()">
+            <ion-icon slot="start" name="archive"></ion-icon>
+            <ion-text [translate]="'projects.releases.view.archive'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button [disabled]="release && release.status === releaseStatus.released" color="primary" expand="block" (click)="publish()">
+            <ion-icon slot="start" name="checkmark"></ion-icon>
+            <ion-text [translate]="'projects.releases.view.publish'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Release Details -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.releases.view.version'"></ion-label>
+            <ion-input  [placeholder]="'projects.releases.view.version.placeholder' | translate" [(ngModel)]="release.version" maxlength="255"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.releases.view.status'"></ion-label>
+            <ion-select [(ngModel)]="release.status" [placeholder]="'projects.releases.view.status.placeholder' | translate" interface="popover" >
+              <ion-select-option value="{{releaseStatus.draft}}">{{releaseStatus.draft | releaseStatus | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{releaseStatus.archived}}">{{releaseStatus.archived | releaseStatus | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{releaseStatus.released}}">{{releaseStatus.released | releaseStatus | translate | titlecase}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item class="ion-align-items-center">
+            <ion-label position="floating" [translate]="'projects.releases.view.startDate'"></ion-label>
+            <ion-input [value]="release.startDate | date:'dd/MM/YYYY'"></ion-input>
+            <ion-button slot="end" fill="clear" id="open-start-date">
+              <ion-icon icon="calendar"></ion-icon>
+            </ion-button>
+            <ion-popover trigger="open-start-date" show-backdrop="false">
+              <ng-template>
+                <ion-datetime [max]="endDateMinusOne | date:'YYYY-MM-dd'" #popoverStartDate presentation="date" (ionChange)="release.startDate = parseDate(popoverStartDate.value)"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item class="ion-align-items-center">
+            <ion-label position="floating" [translate]="'projects.releases.view.endDate'"></ion-label>
+            <ion-input [value]="release.endDate | date:'dd/MM/YYYY'"></ion-input>
+            <ion-button slot="end" fill="clear" id="open-end-date">
+              <ion-icon icon="calendar"></ion-icon>
+            </ion-button>
+            <ion-popover trigger="open-end-date" show-backdrop="false">
+              <ng-template>
+                <ion-datetime [min]="startDatePlusOne | date:'YYYY-MM-dd'" #popoverEndDate presentation="date" (ionChange)="release.endDate = parseDate(popoverEndDate.value)"></ion-datetime>
+              </ng-template>
+            </ion-popover>
+          </ion-item>
+        </ion-col>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.releases.view.description'"></ion-label>
+            <ion-textarea [(ngModel)]="release.description" maxlength="8192"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-justify-content-end">
+        <ion-col size="auto">
+          <ion-button color="primary" (click)="save()" [disabled]="!dirty">
+            <ion-icon slot="start" name="save"></ion-icon>
+            <ion-text [translate]="'projects.releases.view.save'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Release Progress -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <h2>{{'projects.releases.view.progress.title' | translate}}</h2>
+        </ion-col>
+        <ion-col size="12">
+          <ion-text color="medium">
+            {{'projects.releases.view.progress.release' | translate}}: <strong>{{release.endDate | time | async}}</strong>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item class="ion-no-padding">
+            <ion-progress-bar [value]="progress" [buffer]="progress + 0.1" [color]="progressColor"></ion-progress-bar>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+
+</ion-content>
+
+<ion-content *ngIf="!release || !projectId">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-row>
+  </ion-grid>
+</ion-content>

@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ProjectService} from '../../../services/common/project.service';
+import {ProjectService} from '../../../services/project/project.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
