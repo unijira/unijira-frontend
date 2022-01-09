@@ -148,6 +148,15 @@
                           </fa-icon>
                         </div>
                       </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center" *ngIf="insertion.item.sons.length > 0">
+                        <ion-button
+                          color="light"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'network-wired']"
+                          ></fa-icon>
+                        </ion-button>
+                        </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
                         <div
                           (click)="editPesoPopover($event, insertion, 'sprint')"
@@ -179,6 +188,8 @@
                           >
                         </div>
                       </ion-col>
+
+
                       <ion-col size="auto" class="ion-align-self-center">
                         <ion-thumbnail
                           class="avatar"
@@ -274,6 +285,16 @@
                           </fa-icon>
                         </div>
                       </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center" *ngIf="insertion.item.sons.length > 0">
+                        <ion-button
+                          color="light"
+                          size="small"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'network-wired']"
+                          ></fa-icon>
+                        </ion-button>
+                        </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
                         <div
                           (click)="editPesoPopover($event, insertion, 'backlog')"
