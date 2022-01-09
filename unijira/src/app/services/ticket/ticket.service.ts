@@ -3,6 +3,7 @@ import {HttpParams} from '@angular/common/http';
 import {catchError, Observable, of} from 'rxjs';
 import {Item} from '../../models/item/Item';
 import {HttpService} from '../http-service.service';
+import {AccountService} from '../account.service';
 
 @Injectable({
   providedIn: 'root'
@@ -11,6 +12,7 @@ export class TicketService {
 
   constructor(
     private http: HttpService,
+    private accountService: AccountService
   ) { }
 
 
