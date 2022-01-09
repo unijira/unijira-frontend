@@ -1,4 +1,4 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE2ODY4MDAsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNjgzMjAwLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.6hs6LVB56bM9S65V1OJFVGg3jwMNAy0wZmGdpWYuEhA
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE3NTE4OTAsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNzQ4MjkwLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.xQf8fc73E-HP3CrgHONmN87Vpc59qOPQljbnrCE7_T8
 
 # @token = {{login.response.body.token}}
 
@@ -37,6 +37,10 @@ Authorization: Bearer {{token}}
 
 ###
 GET http://localhost:7080/projects
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/sprint
 Authorization: Bearer {{token}}
 
 ###

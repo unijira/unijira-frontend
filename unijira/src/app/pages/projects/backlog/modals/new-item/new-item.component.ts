@@ -30,7 +30,7 @@ export class NewItemComponent implements OnInit {
   measureunit: string;
   evaluation: number;
   status: ItemStatus;
-
+  type: ItemType;
 
   constructor(
     private sessionService: SessionService,

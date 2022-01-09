@@ -4,32 +4,31 @@
       <ion-col size="8">
         <ion-row>
           <ion-col
-            ><ion-badge color="light">{{
-              item.father?.id
-            }}</ion-badge>
+            ><ion-badge color="light">{{ item.father?.id }}</ion-badge>
             /</ion-col
           >
         </ion-row>
 
         <ion-row>
-          <ion-col size="12"
-            ><h1>{{ item.summary }}</h1></ion-col
-          >
+          <ion-col size="12"><h1>{{ item.summary }}</h1></ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="12">
-            <ion-button size="small" color="light" (click)="allega()">
+            <ion-button color="light" (click)="allega()">
               <fa-icon [icon]="['fas', 'paperclip']"> </fa-icon>
+              <ion-text
+                [translate]="'backlog.detail.button.attachment'"
+              ></ion-text>
             </ion-button>
-            <ion-button size="small" color="light" (click)="addChildren()">
+            <ion-button color="light" (click)="addChildren()">
               <fa-icon [icon]="['fas', 'network-wired']"> </fa-icon>
+              <ion-text
+                [translate]="'backlog.detail.button.children'"
+              ></ion-text>
             </ion-button>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="editLinkPopover($event)"
-            >
+            <ion-button color="light" (click)="editLinkPopover($event)">
               <fa-icon [icon]="['fas', 'link']"> </fa-icon>
+              <ion-text [translate]="'backlog.detail.button.link'"></ion-text>
             </ion-button>
           </ion-col>
         </ion-row>
@@ -44,18 +43,24 @@
           <ion-col size="12">
             <h5>
               {{ "backlog.detail.childTickets" | translate }} ({{
-                item.sons.length
-              }})
+              item.sons.length }})
             </h5>
-            <ul class="lista-children">
-              <li *ngFor="let t of item.sons">
-                <b>{{ t.name }}</b> | {{ t.description }} |
-                {{ item.evaluation }}
-              </li>
-            </ul>
+            <div class="lista-children">
+              <ion-card *ngFor="let t of item.sons">
+                <ion-item>
+                  <ion-icon name="pin" slot="start"></ion-icon>
+                  <ion-label>{{ t.summary }}</ion-label>
+                  <ion-button
+                    fill="outline"
+                    slot="end"
+                    [routerLink]="['..',t.id]"
+                    >View</ion-button
+                  >
+                </ion-item>
+              </ion-card>
+            </div>
           </ion-col>
         </ion-row>
-
         <ion-row>
           <ion-col size="12">
             <h5 [translate]="'backlog.detail.activity'"></h5>
@@ -71,51 +76,33 @@
       <ion-col size="4">
         <ion-row>
           <ion-col>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="editLockPopover($event)"
-            >
+            <ion-button color="light" (click)="editLockPopover($event)">
               <fa-icon [icon]="['fas', 'unlock-alt']" alt="ccc"></fa-icon>
+              <ion-text [translate]="'backlog.detail.button.lock'"></ion-text>
             </ion-button>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="editVisibilityPopover($event)"
-            >
+            <ion-button color="light" (click)="editVisibilityPopover($event)">
               <fa-icon [icon]="['fas', 'eye']"></fa-icon>
+              <ion-text
+                [translate]="'backlog.detail.button.visibility'"
+              ></ion-text>
             </ion-button>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="editLikePopover($event)"
-            >
+            <ion-button color="light" (click)="editLikePopover($event)">
               <fa-icon [icon]="['far', 'thumbs-up']"></fa-icon>
+              <ion-text [translate]="'backlog.detail.button.like'"></ion-text>
             </ion-button>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="editSharePopover($event)"
-            >
+            <ion-button color="light" (click)="editSharePopover($event)">
               <fa-icon [icon]="['fas', 'share-alt']"></fa-icon>
+              <ion-text [translate]="'backlog.detail.button.share'"></ion-text>
             </ion-button>
-            <ion-button
-              size="small"
-              color="light"
-              (click)="actionsPopover($event)"
-            >
+            <ion-button color="light" (click)="actionsPopover($event)">
               <fa-icon [icon]="['fas', 'ellipsis-h']"></fa-icon>
-            </ion-button>
-            <ion-button size="small" color="light" (click)="close()">
-              <fa-icon [icon]="['fas', 'times']"></fa-icon>
+              <ion-text [translate]="'backlog.detail.button.action'"></ion-text>
             </ion-button>
           </ion-col>
         </ion-row>
         <ion-row>
           <ion-col size="8">
-            <div
-              (click)="editStatusPopover($event,  'backlog')"
-            >
+            <div (click)="editStatusPopover($event,  'backlog')">
               <ion-badge
                 *ngIf="item.status === 'OPEN'"
                 color="medium"
@@ -131,10 +118,7 @@
             </div>
           </ion-col>
 
-          <ion-col
-            size="4"
-            *ng-if="item.status === 'completata'"
-          >
+          <ion-col size="4" *ng-if="item.status === 'completata'">
             <fa-icon [icon]="['fas', 'check']"></fa-icon>
             {{ "backlog.detail.item.complete" | translate }}
           </ion-col>
@@ -152,18 +136,17 @@
               <ion-col size="12">
                 <div (click)="editAssegnatario()">
                   <h5 [translate]="'backlog.detail.task.assignee'"></h5>
-                  <ion-thumbnail class="icon-avatar">
-                    <img
-                      class="avatar-img"
-                      [src]="item.assignees[0].assignee.avatar"
-                    />
-                  </ion-thumbnail>
+                  <div *ngFor="let a of item.assignees">
+                    <ion-thumbnail class="icon-avatar">
+                      <img class="avatar-img" [src]="a.assignee.avatar" />
+                    </ion-thumbnail>
+                  </div>
                 </div>
                 <div>
                   <h5 [translate]="'backlog.detail.task.tags'"></h5>
-                  <ion-badge color="light" *ngFor="let tag of tags">{{
-                    tag
-                  }}</ion-badge>
+                  <ion-badge color="primary" *ngFor="let tag of tags"
+                    >{{ tag }}</ion-badge
+                  >
                 </div>
 
                 <div>
@@ -183,20 +166,16 @@
                   </div>
                 </div>
                 <div class="dettRow">
-                  <h5>Sviluppo</h5>
+                  <h5 [translate]="'backlog.detail.task.develop'"></h5>
                   <div class="grupposuggestion">
                     <ion-input [value]="gitSuggestion" readonly></ion-input>
-                    <ion-button
-                      size="small"
-                      color="light"
-                      (click)="copyToClipboard($event)"
-                    >
+                    <ion-button color="light" (click)="copyToClipboard($event)">
                       <fa-icon [icon]="['fas', 'clipboard-list']"></fa-icon>
                     </ion-button>
                   </div>
                 </div>
                 <div class="dettRow">
-                  <h5>Reporter</h5>
+                  <h5 [translate]="'backlog.detail.task.reporter'"></h5>
 
                   <ion-thumbnail class="icon-avatar">
                     <img [src]="item.owner.avatar" />

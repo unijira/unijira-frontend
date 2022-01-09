@@ -116,7 +116,7 @@
             </ion-col>
           </ion-row>
           <!-- /ion-row SPRINT Titolo-->
-          <ion-row slot="content">
+          <ion-row slot="content" class="ion-no-padding ion-no-margin">
             <ion-col>
               <div class="sprint">
                 <div *ngIf="!sprint || !sprint.insertions">
@@ -131,7 +131,7 @@
                   >
                     <ion-row
                       *ngFor="let insertion of sprint.insertions"
-                      class="ion-align-items-end task-item white-bg"
+                      class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
                     >
                       <ion-col>
                         <ion-item>
@@ -200,6 +200,7 @@
 
                       <ion-col size="auto" class="ion-align-self-center">
                         <ion-thumbnail
+
                           class="avatar"
                           *ngIf="insertion.item.assignees"
                         >
