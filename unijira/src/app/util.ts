@@ -46,7 +46,7 @@ export const switchLanguage = (translateService: TranslateService) => {
     translateService.use('it');
     localStorage.setItem('currentLang', 'it');
   }
-}
+};
 
 export const switchColorTheme = (enableDark: boolean) => {
   if (enableDark) {
@@ -56,15 +56,15 @@ export const switchColorTheme = (enableDark: boolean) => {
     document.body.setAttribute('color-theme', 'light');
     localStorage.setItem('colorTheme', 'light');
   }
-}
+};
 
 export const presentToast = async (toastController: ToastController, message: string, error: boolean) => {
   const toast = await toastController.create({
-    message: message,
+    message,
     icon: error ? 'close-circle' : 'checkmark-circle',
     color: error ? 'danger' : 'primary',
     position: 'top',
     duration: 2000
   });
   await toast.present();
-}
+};
