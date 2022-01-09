@@ -41,8 +41,10 @@ export const presentAlertConfirm = async (alertController: AlertController, head
 export const switchLanguage = (translateService: TranslateService) => {
   if (translateService.currentLang === 'it') {
     translateService.use('en');
+    localStorage.setItem('currentLang', 'en');
   } else {
     translateService.use('it');
+    localStorage.setItem('currentLang', 'it');
   }
 }
 
