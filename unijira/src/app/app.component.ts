@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
-import {unsubscribeAll} from './util';
+import {unsubscribeAll, switchLanguage, switchColorTheme} from './util';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -62,11 +62,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
-    translateService.setDefaultLang('it');
-    translateService.use('it');
-    translateService.onLangChange.subscribe(() => {
-      moment.locale(translateService.currentLang);
-    });
+    this.configLang();
+    this.configTheme();
 
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
 
@@ -93,8 +90,6 @@ export class AppComponent implements OnInit, OnDestroy {
       }
     });
 
-    moment.locale('it');
-
   }
 
 
@@ -102,6 +97,30 @@ export class AppComponent implements OnInit, OnDestroy {
     return document.body.getAttribute('color-theme');
   }
 
+
+  configLang() {
+    this.translateService.onLangChange.subscribe(() => {
+      moment.locale(this.translateService.currentLang);
+    });
+
+    this.translateService.setDefaultLang('it');
+
+    let deviceLang = localStorage.getItem('currentLang');
+
+    if(deviceLang)
+      this.translateService.use(deviceLang);
+    else {
+      this.translateService.use('it');
+    }
+  }
+
+
+  configTheme() {
+    let deviceTheme = localStorage.getItem('colorTheme');
+
+    if(deviceTheme)
+      document.body.setAttribute('color-theme', deviceTheme);
+  }
 
 
   ngOnInit() {
@@ -118,11 +137,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onToggleColorTheme(event) {
-    if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark');
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-    }
+    switchColorTheme(event.detail.checked);
   }
 
   toggleLoading(toggle: boolean) {
@@ -130,11 +145,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   switchLanguage() {
-    if (this.translateService.currentLang === 'it') {
-      this.translateService.use('en');
-    } else {
-      this.translateService.use('it');
-    }
+    switchLanguage(this.translateService);
   }
 
   ngOnDestroy() {
@@ -162,4 +173,9 @@ export class AppComponent implements OnInit, OnDestroy {
     return /\/projects\/\d/.test(this.router.url) && !(this.router.url.includes('invite'));
   }
 
+  isPageWithoutHeader() {
+    return /\/login/.test(this.router.url) ||
+      /\/registration/.test(this.router.url) ||
+      /\/activate/.test(this.router.url);
+  }
 }
