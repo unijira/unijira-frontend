@@ -30,11 +30,31 @@ import { IonAccordionGroup } from '@ionic/angular';
   styleUrls: ['./backlog.page.scss'],
 })
 export class BacklogPage implements OnInit {
-  @ViewChild(IonAccordionGroup, { static: true }) accordionGroup: IonAccordionGroup;
-  sprint: Sprint = new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive);
+  @ViewChild(IonAccordionGroup, { static: true })
+  accordionGroup: IonAccordionGroup;
+  sprint: Sprint = new Sprint(
+    0,
+    new Date(),
+    new Date(),
+    [],
+    0,
+    SprintStatus.inactive
+  );
   backlog: Backlog = new Backlog(0, null, null, []);
-
-  sprintServer: Sprint = new Sprint(0, new Date(), new Date(), [], 0, SprintStatus.inactive);
+  totalNonAvviatos: number;
+  totalOpens: number;
+  totalDones: number;
+  totalNonAvviatob: number;
+  totalOpenb: number;
+  totalDoneb: number;
+  sprintServer: Sprint = new Sprint(
+    0,
+    new Date(),
+    new Date(),
+    [],
+    0,
+    SprintStatus.inactive
+  );
   backlogServer: Backlog = new Backlog(0, null, null, []);
 
   filterP$: number;
@@ -62,12 +82,16 @@ export class BacklogPage implements OnInit {
     private popOverCtrl: PopoverController,
     private route: ActivatedRoute,
     private router: Router
-  ) {
-
-  }
+  ) {}
 
   ngOnInit() {
     const that = this;
+    this.totalDones = 0;
+    this.totalNonAvviatos = 0;
+    this.totalOpens = 0;
+    this.totalDoneb = 0;
+    this.totalNonAvviatob = 0;
+    this.totalOpenb = 0;
     this.route.paramMap.subscribe((params: ParamMap) => {
       this.filterP$ = parseInt(params.get('id'), 10);
     });
@@ -103,7 +127,6 @@ export class BacklogPage implements OnInit {
       console.log('----------------- GET SPRINT -----------------');
       this.sprint = _.cloneDeep(s);
     });
-
   }
   logAccordionValue() {
     console.log(this.accordionGroup.value);
@@ -144,8 +167,6 @@ export class BacklogPage implements OnInit {
     return await modal.present();
   }
 
-
-
   dismiss() {
     this.modalController.dismiss({
       dismissed: true,
@@ -181,14 +202,16 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setSprintAction({ sprint }));
     }
   }
- avviaSprint($event) {
+  avviaSprint($event) {
     console.log('AVVIA SPRINT', $event.detail.value);
     this.sprint.startingDate = new Date().toISOString().split('T')[0];
-    this.sprint.endingDate = new Date($event.detail.value).toISOString().split('T')[0];
+    this.sprint.endingDate = new Date($event.detail.value)
+      .toISOString()
+      .split('T')[0];
     this.backlogAPIService
-    .startSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
-    .subscribe((response) => {
-      this.getFromApi();
+      .startSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .subscribe((response) => {
+        this.getFromApi();
       });
   }
 
@@ -252,16 +275,23 @@ export class BacklogPage implements OnInit {
       .subscribe((response) => {
         that.backlog = response;
         this.sprint = response.sprints.find((s) => s.id === that.sprintId);
-        console.log('start date ', this.sprint.startingDate, response.sprints[0].startingDate);
-        if(this.sprint.startingDate != null) {
-          this.startSprintDate = new Date(this.sprint.startingDate).toISOString().split('T')[0];
+        console.log(
+          'start date ',
+          this.sprint.startingDate,
+          response.sprints[0].startingDate
+        );
+        if (this.sprint.startingDate != null) {
+          this.startSprintDate = new Date(this.sprint.startingDate)
+            .toISOString()
+            .split('T')[0];
         }
         if (this.sprint.endingDate != null) {
-          this.endSprintDate = new Date(this.sprint.endingDate).toISOString().split('T')[0];
+          this.endSprintDate = new Date(this.sprint.endingDate)
+            .toISOString()
+            .split('T')[0];
         }
         this.sprintIsStarted = this.startSprintDate ? true : false;
       });
-
 
     this.backlogAPIService
       .getBacklogItems(this.projectId, this.backlogId)
@@ -273,6 +303,7 @@ export class BacklogPage implements OnInit {
         this.backlog.insertions.sort((a, b) => a.priority - b.priority);
         const tmpB = _.cloneDeep(that.backlog);
         this.backlogServer = _.cloneDeep(that.backlog);
+        this.countElementsB();
         that.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
       });
 
@@ -285,6 +316,7 @@ export class BacklogPage implements OnInit {
         });
         const tmpS = _.cloneDeep(that.sprint);
         this.sprintServer = _.cloneDeep(that.sprint);
+        this.countElementsS();
         that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
       });
   }
@@ -312,8 +344,14 @@ export class BacklogPage implements OnInit {
     const itemToRemoveFromBacklog = [];
     const itemToRemoveFromSprint = [];
 
-    const allInsertionsNew = _.compact(_.flatten(_.zip(tmpB.insertions, tmpS.insertions)));
-    const allInsertionsOld = _.compact(_.flatten(_.zip(this.backlogServer.insertions, this.sprintServer.insertions)));
+    const allInsertionsNew = _.compact(
+      _.flatten(_.zip(tmpB.insertions, tmpS.insertions))
+    );
+    const allInsertionsOld = _.compact(
+      _.flatten(
+        _.zip(this.backlogServer.insertions, this.sprintServer.insertions)
+      )
+    );
 
     const allItemsNew = allInsertionsNew.map((item) => item.item);
     const allItemsOld = allInsertionsOld.map((item) => item.item);
@@ -322,7 +360,7 @@ export class BacklogPage implements OnInit {
     console.log('allItemsOld', allItemsOld);
     forEach(allItemsOld, (item) => {
       const itemNew = _.find(allItemsNew, (i) => i.id === item.id);
-      if (!_.isEqual(item, itemNew)){
+      if (!_.isEqual(item, itemNew)) {
         console.log('itemNew', itemNew);
         console.log('item diverso', item, itemNew);
         this.backlogAPIService.setItems(itemNew).subscribe((response) => {});
@@ -333,26 +371,42 @@ export class BacklogPage implements OnInit {
 
     this.backlogServer.insertions.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
-        itemToRemoveFromBacklog.push(new SprintInsertion(item.id, this.sprint, item.item, this.sprintId));
+        itemToRemoveFromBacklog.push(
+          new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
+        );
       }
     });
 
     this.sprintServer.insertions.forEach((item) => {
       if (tmpS.insertions.find((i) => i.id === item.id) === undefined) {
-        itemToRemoveFromSprint.push(new BacklogInsertion(item.id, item.item, this.backlog, 1));
+        itemToRemoveFromSprint.push(
+          new BacklogInsertion(item.id, item.item, this.backlog, 1)
+        );
       }
     });
 
     itemToRemoveFromBacklog.forEach((item) => {
-      this.backlogAPIService.deleteBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {});
-      this.backlogAPIService.addSprintInsertion(this.projectId, this.backlogId, this.sprintId, item).subscribe((response) => {});
+      this.backlogAPIService
+        .deleteBacklogInsertion(this.projectId, this.backlogId, item)
+        .subscribe((response) => {});
+      this.backlogAPIService
+        .addSprintInsertion(this.projectId, this.backlogId, this.sprintId, item)
+        .subscribe((response) => {});
     });
 
     itemToRemoveFromSprint.forEach((item) => {
-      this.backlogAPIService.deleteSprintInsertion(this.projectId, this.backlogId, this.sprintId, item).subscribe((response) => {});
-      this.backlogAPIService.addBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {});
+      this.backlogAPIService
+        .deleteSprintInsertion(
+          this.projectId,
+          this.backlogId,
+          this.sprintId,
+          item
+        )
+        .subscribe((response) => {});
+      this.backlogAPIService
+        .addBacklogInsertion(this.projectId, this.backlogId, item)
+        .subscribe((response) => {});
     });
-
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
@@ -408,10 +462,46 @@ export class BacklogPage implements OnInit {
     return await popOver.present();
   }
 
-
-
-
   addItem() {
     alert('add item');
+  }
+
+  countElement(){
+    this.countElementsB();
+    this.countElementsS();
+  }
+
+  countElementsB() {
+    this.totalDoneb = 0;
+    this.totalOpenb = 0;
+    this.totalNonAvviatob = 0;
+    this.backlog.insertions.forEach((item) => {
+      if (item.item.status === ItemStatus.done) {
+        this.totalDoneb++;
+      } else if (item.item.status === ItemStatus.open) {
+        this.totalOpenb++;
+      } else {
+        this.totalNonAvviatob++;
+      }
+    });
+    console.log('totalDoneb', this.totalDoneb);
+    console.log('totalOpenb', this.totalOpenb);
+    console.log('totalNonAvviatob', this.totalNonAvviatob);
+  }
+
+  countElementsS() {
+    this.totalDones = 0;
+    this.totalOpens = 0;
+    this.totalNonAvviatos = 0;
+
+    this.sprint.insertions.forEach((item) => {
+      if (item.item.status === ItemStatus.done) {
+        this.totalDones++;
+      } else if (item.item.status === ItemStatus.open) {
+        this.totalOpens++;
+      } else {
+        this.totalNonAvviatos++;
+      }
+    });
   }
 }
