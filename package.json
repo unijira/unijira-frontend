@@ -1,6 +1,0 @@
-{
-  "dependencies": {
-    "@syncfusion/ej2-angular-gantt": "^19.4.40",
-    "ts": "^0.2.2"
-  }
-}
