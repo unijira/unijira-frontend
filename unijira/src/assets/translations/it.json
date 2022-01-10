@@ -282,10 +282,10 @@
   "projects.releases.view.tickets.title": "Ticket",
   "profile" : "Profilo",
   "profile.edit.propic" : "Cambia immagine",
-  "on.unijira.since" : "Iscritto dal",
+  "on.unijira.since" : "Iscritto da",
   "carreer": "Carriera",
-  "description.placeholder": "Astronauta presso Nasa, autore di Il ritratto di Dorian Gray",
-  "carreer.placeholder" : "Amministratore delegato del pianeta terra",
+  "description.placeholder": "Descrizione delle tue mansioni: ad esempio, Astronauta presso Nasa, autore di Il ritratto di Dorian Gray",
+  "carreer.placeholder" : "La tua posizione lavorativa: ad esempio, Amministratore delegato del pianeta terra",
   "team" : "Team",
   "works.with": "Collabora con",
   "projects" : "Progetti",
@@ -296,7 +296,7 @@
   "profile.firstname" : "Nome",
   "profile.lastname" : "Cognome",
   "profile.birthdate" : "Data di nascita",
-  "profile.email" : "Email",
+  "profile.username" : "Username",
   "profile.personal.contacts" : "Contatti e social",
   "profile.phone.number" : "Numero di telefono",
   "profile.save.and.exit" : "Salva ed esci",
@@ -325,4 +325,6 @@
   "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
   "project.invite.toast.success" : "La registrazione è stata completata correttamente",
   "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
+  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
+
 }

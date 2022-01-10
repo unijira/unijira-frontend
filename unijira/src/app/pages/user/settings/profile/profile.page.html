@@ -1,5 +1,3 @@
-
-
 <ion-content>
   <!-- Breadcrumb -->
   <ion-row class="ion-margin-vertical">
@@ -12,79 +10,101 @@
             <ion-breadcrumb [routerLink]="['/']">
               <ion-icon name="home"></ion-icon>
             </ion-breadcrumb>
-              <ion-breadcrumb> <ion-icon name="person"></ion-icon><ion-text>{{user?.username}}</ion-text></ion-breadcrumb>
+            <ion-breadcrumb>
+              <ion-icon name="person"></ion-icon>
+              <ion-text>{{user?.username}}</ion-text>
+            </ion-breadcrumb>
           </ion-breadcrumbs>
         </section>
       </div>
     </ion-col>
   </ion-row>
   <!-- Fine Breadcrumb -->
-    <ion-grid class="center">
-      <ion-row>
-        <ion-col>
-          <div class="round-image">
-            <ion-img [src]="user?.avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
-          </div>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
-    <ion-grid class="center">
-      <ion-row>
-        <ion-col>
-          <ion-button (click)="dummy()">{{'profile.edit.propic' | translate}}</ion-button>
-        </ion-col>
-      </ion-row>
-    </ion-grid>
+  <ion-grid class="center">
+    <ion-row>
+      <ion-col>
+        <div class="round-image">
+          <ion-img [src]="image || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+        </div>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+  <ion-grid class="center">
+    <ion-row class="ion-justify-content-center">
+      <input
+        style="display: none"
+        type="file" (change)="onFileChanged($event)"
+        id="input"
+        #fileInput>
+      <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+      <div class="ion-align-self-center ion-padding-start">
+        <ion-button type="reset" *ngIf="image !== '' && !saved" color="light"
+                    (click)="image = ''; file = undefined; this.saved = false;">
+          <ion-icon name="trash-outline"></ion-icon>
+        </ion-button>
+      </div>
+    </ion-row>
+  </ion-grid>
 
 
   <ion-grid>
     <ion-row class="ion-justify-content-center">
       <ion-col>
-          <ion-card class="ion-justify-content-center">
-            <ion-card-header>
-              <ion-card-title class="ion-justify-content-center">{{(user?.firstName || "") + " " +  (user?.lastName || "")}}</ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <div>
-                <ion-text>{{'on.unijira.since' | translate}}{{user?.createdAt || ""}}</ion-text>
-              </div>
-            </ion-card-content>
-          </ion-card>
-          <ion-card class="ion-justify-content-center">
-            <ion-card-header>
-              <ion-card-subtitle><ion-icon name="hammer"></ion-icon> {{'carreer' | translate}}</ion-card-subtitle>
-              <ion-card-title class="ion-justify-content-center"><ion-input placeholder="{{'carreer.placeholder' | translate}}" [(ngModel)]="user.role"></ion-input></ion-card-title>
-            </ion-card-header>
-            <ion-card-content>
-              <ion-input placeholder="{{'description.placeholder' | translate}}" [(ngModel)]="user.description"></ion-input>
-            </ion-card-content>
-          </ion-card>
-        </ion-col>
-      <ion-col>
         <ion-card class="ion-justify-content-center">
           <ion-card-header>
-            <ion-card-subtitle><ion-icon name="person"></ion-icon> {{'team' | translate}} </ion-card-subtitle>
-            <ion-card-title class="ion-justify-content-center">{{'works.with' | translate}}</ion-card-title>
+            <ion-card-title
+              class="ion-justify-content-center">{{(user?.firstName || "") + " " + (user?.lastName || "")}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-chip *ngFor="let collab of collaborators;">
-                <ion-avatar>
-                  <ion-img [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
-                </ion-avatar>
-                <ion-label>{{collab.firstName + " "+collab.lastName}}</ion-label>
-              </ion-chip>
+            <div>
+              <ion-text>{{'on.unijira.since' | translate}} {{monthAsString + "/" + yearAsString}}</ion-text>
+
+            </div>
           </ion-card-content>
         </ion-card>
         <ion-card class="ion-justify-content-center">
           <ion-card-header>
-            <ion-card-subtitle><ion-icon name="person"></ion-icon>
+            <ion-card-subtitle>
+              <ion-icon name="hammer"></ion-icon>
+              {{'carreer' | translate}}</ion-card-subtitle>
+            <ion-card-title class="ion-justify-content-center">
+              <ion-input placeholder="{{'carreer.placeholder' | translate}}" [(ngModel)]="user.role"></ion-input>
+            </ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-input placeholder="{{'description.placeholder' | translate}}"
+                       [(ngModel)]="user.description"></ion-input>
+          </ion-card-content>
+        </ion-card>
+      </ion-col>
+      <ion-col>
+        <ion-card class="ion-justify-content-center">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="people"></ion-icon>
+              {{'team' | translate}} </ion-card-subtitle>
+            <ion-card-title class="ion-justify-content-center">{{'works.with' | translate}}</ion-card-title>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-chip *ngFor="let collab of collaborators;">
+              <ion-avatar>
+                <ion-img [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              </ion-avatar>
+              <ion-label>{{collab.firstName + " " + collab.lastName}}</ion-label>
+            </ion-chip>
+          </ion-card-content>
+        </ion-card>
+        <ion-card class="ion-justify-content-center">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="rocket"></ion-icon>
               {{'projects' | translate}} </ion-card-subtitle>
             <ion-card-title class="ion-justify-content-center">{{'enrolled.in' | translate}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
             <ion-chip *ngFor="let project of enrolledProjects;">
               <ion-avatar>
-                <ion-img src="/assets/logo.webp" alt=""></ion-img>
+                <ion-img [src]="project.icon" alt=""></ion-img>
               </ion-avatar>
               <ion-label>{{project.name}}</ion-label>
             </ion-chip>
@@ -94,43 +114,48 @@
     </ion-row>
     <ion-row>
       <ion-col>
-      <ion-card class="ion-justify-content-center">
-        <ion-card-header>
-          <ion-card-subtitle><ion-icon name="person"></ion-icon>
-            {{'basic.personal.data'|translate}}</ion-card-subtitle>
-        </ion-card-header>
-        <ion-card-content>
-          <ion-grid>
-            <ion-row>
-              <ion-col>
-                <ion-item lines="full">
-                  <ion-label position="floating">{{'profile.firstname'|translate}}</ion-label>
-                  <ion-input type="text" value="{{user?.firstName}}" placeholder="{{'profile.placeholder.firstname' | translate}}" [(ngModel)]="user.firstName"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item lines="full">
-                  <ion-label position="floating">{{'profile.lastname'|translate}}</ion-label>
-                  <ion-input type="text" value="{{user?.lastName}}" placeholder="{{'profile.placeholder.lastname' | translate}}" [(ngModel)]="user.lastName"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
-                <ion-item lines="full">
-                  <ion-label position="floating">{{'profile.email'|translate}}</ion-label>
-                  <ion-input type="email" value="{{user?.username}}" placeholder="{{user?.username || 'xxxx@xmail.com'}}" [(ngModel)]="user.username"></ion-input>
-                </ion-item>
-              </ion-col>
-              <ion-col>
-                <ion-item lines="full">
-                  <ion-label position="floating">{{'profile.birthdate'|translate}}</ion-label>
-                  <ion-input type="text" placeholder="DD/MM/YYYY" [(ngModel)]="user.birthDate"></ion-input>
-                </ion-item>
-              </ion-col>
-            </ion-row>
-          </ion-grid>
-        </ion-card-content>
+        <ion-card class="ion-justify-content-center">
+          <ion-card-header>
+            <ion-card-subtitle>
+              <ion-icon name="person"></ion-icon>
+              {{'basic.personal.data'|translate}}</ion-card-subtitle>
+          </ion-card-header>
+          <ion-card-content>
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <ion-item lines="full">
+                    <ion-label position="floating">{{'profile.firstname'|translate}}</ion-label>
+                    <ion-input type="text" value="{{user?.firstName}}"
+                               placeholder="{{'profile.placeholder.firstname' | translate}}"
+                               [(ngModel)]="user.firstName"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <ion-item lines="full">
+                    <ion-label position="floating">{{'profile.lastname'|translate}}</ion-label>
+                    <ion-input type="text" value="{{user?.lastName}}"
+                               placeholder="{{'profile.placeholder.lastname' | translate}}"
+                               [(ngModel)]="user.lastName"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-item lines="full">
+                    <ion-label position="floating">{{'profile.username'|translate}}</ion-label>
+                    <ion-input type="email" value="{{user?.username}}" [readonly]="true"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col>
+                  <!--<ion-item lines="full">
+                    <ion-label position="floating">{{'profile.birthdate'|translate}}</ion-label>
+                    <ion-input type="text" placeholder="DD/MM/YYYY" [(ngModel)]="user.birthDate"></ion-input>
+                  </ion-item>-->
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </ion-card-content>
         </ion-card>
       </ion-col>
 
@@ -139,7 +164,8 @@
       <ion-col>
         <ion-card class="ion-justify-content-center">
           <ion-card-header>
-            <ion-card-subtitle><ion-icon name="call"></ion-icon>
+            <ion-card-subtitle>
+              <ion-icon name="call"></ion-icon>
               {{'profile.personal.contacts'| translate}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
@@ -147,13 +173,15 @@
               <ion-row>
                 <ion-col>
                   <ion-item lines="full">
-                    <ion-icon name="logo-github"></ion-icon><ion-label position="floating">Github</ion-label>
-                    <ion-input type="text"  placeholder="github.com/xxxxxx" [(ngModel)]="user.github"></ion-input>
+                    <ion-icon name="logo-github"></ion-icon>
+                    <ion-label position="floating">Github</ion-label>
+                    <ion-input type="text" placeholder="github.com/xxxxxx" [(ngModel)]="user.github"></ion-input>
                   </ion-item>
                 </ion-col>
                 <ion-col>
                   <ion-item lines="full">
-                    <ion-icon name="logo-linkedin"></ion-icon><ion-label position="floating">Linkedin</ion-label>
+                    <ion-icon name="logo-linkedin"></ion-icon>
+                    <ion-label position="floating">Linkedin</ion-label>
                     <ion-input type="text" placeholder="linkedin.com/xxxxxx" [(ngModel)]="user.linkedin"></ion-input>
                   </ion-item>
                 </ion-col>
@@ -161,9 +189,13 @@
               <ion-row>
                 <ion-col>
                   <ion-item lines="full">
-                    <ion-icon name="call"></ion-icon><ion-label position="floating">{{'profile.phone.number'|translate}}</ion-label>
+                    <ion-icon name="call"></ion-icon>
+                    <ion-label position="floating">{{'profile.phone.number'|translate}}</ion-label>
                     <ion-input type="email" placeholder="+00-000 0000000" [(ngModel)]="user.phoneNumber"></ion-input>
                   </ion-item>
+                </ion-col>
+                <ion-col>
+
                 </ion-col>
               </ion-row>
             </ion-grid>
@@ -177,7 +209,8 @@
       <ion-col>
         <ion-card class="ion-justify-content-center">
           <ion-card-header>
-            <ion-card-subtitle><ion-icon name="desktop"></ion-icon>
+            <ion-card-subtitle>
+              <ion-icon name="desktop"></ion-icon>
               {{'profile.device.preferences'| translate}}</ion-card-subtitle>
           </ion-card-header>
           <ion-card-content>
@@ -186,17 +219,19 @@
                 <ion-col>
                   <ion-item lines="full">
                     <ion-list>
-                      <ion-radio-group value="biff">
+                      <ion-radio-group value="{{this.preferredLanguage}}" >
                         <ion-list-header>
-                          <ion-icon name="logo-github"></ion-icon>{{'profile.preferred.language' | translate}}
+                          <ion-icon name="earth"></ion-icon>
+                          {{'profile.preferred.language' | translate}}
                         </ion-list-header>
                         <ion-item>
-                          <ion-label>Biff</ion-label>
-                          <ion-radio slot="start" value="biff"></ion-radio>
+                          <ion-label>{{'profile.lang.italian' | translate}}</ion-label>
+                          <ion-radio  (click)="setPreferredLanguage('italian')" slot="start" value="italian"></ion-radio>
                         </ion-item>
                         <ion-item>
-                          <ion-label>Griff</ion-label>
-                          <ion-radio slot="start" value="griff"></ion-radio>
+                          <ion-label>{{'profile.lang.english' | translate}}</ion-label>
+                          <ion-radio slot="start" value="english"
+                                     (click)="setPreferredLanguage('english')"></ion-radio>
                         </ion-item>
                       </ion-radio-group>
                     </ion-list>
@@ -205,17 +240,18 @@
                 <ion-col>
                   <ion-item lines="full">
                     <ion-list>
-                      <ion-radio-group value="biff">
+                      <ion-radio-group value="{{this.preferredTheme}}">
                         <ion-list-header>
-                          <ion-icon name="logo-github"></ion-icon>{{'profile.preferred.theme' | translate}}
+                          <ion-icon name="brush"></ion-icon>
+                          {{'profile.preferred.theme' | translate}}
                         </ion-list-header>
                         <ion-item>
-                          <ion-label>Biff</ion-label>
-                          <ion-radio slot="start" value="biff"></ion-radio>
+                          <ion-label>{{'profile.theme.dark' | translate}}</ion-label>
+                          <ion-radio slot="start" value="dark" (click)="setPreferredTheme('dark')"></ion-radio>
                         </ion-item>
                         <ion-item>
-                          <ion-label>Griff</ion-label>
-                          <ion-radio slot="start" value="griff"></ion-radio>
+                          <ion-label>{{'profile.theme.light' | translate}}</ion-label>
+                          <ion-radio slot="start" value="light" (click)="setPreferredTheme('light')"></ion-radio>
                         </ion-item>
                       </ion-radio-group>
                     </ion-list>
@@ -229,38 +265,45 @@
       <ion-col>
         <ion-card>
           <ion-card-header>
-            <ion-card-subtitle><ion-icon name="key"></ion-icon>
+            <ion-card-subtitle>
+              <ion-icon name="key"></ion-icon>
               {{'profile.security.preferences'| translate}}</ion-card-subtitle>
             <ion-card-title>
               {{'change.password' | translate}}
             </ion-card-title>
           </ion-card-header>
           <ion-card-content>
-
             <ion-grid>
               <ion-row>
                 <ion-col>
+                  <ion-item lines="full">
+                    <ion-label position="floating">{{'profile.username'|translate}}</ion-label>
+                    <ion-input type="email" value="{{user?.username}}" [readonly]="true"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
                   <ion-label position="floating">{{'old.password'|translate}}</ion-label>
-                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                  <ion-input type="password" [(ngModel)]="oldPassword"></ion-input>
                 </ion-col>
               </ion-row>
               <ion-row>
                 <ion-col>
                   <ion-label position="floating">{{'new.password'|translate}}</ion-label>
-                  <ion-input type="password" value="{{user?.firstName}}" [(ngModel)]="user.firstName"></ion-input>
+                  <ion-input type="password" [(ngModel)]="newPassword"></ion-input>
                 </ion-col>
               </ion-row>
               <ion-row>
-                <ion-button (click)="changePassword()">{{'change.password'|translate}}</ion-button>
+                <ion-button color="light" (click)="changePassword()">{{'change.password'|translate}}</ion-button>
               </ion-row>
             </ion-grid>
           </ion-card-content>
         </ion-card>
       </ion-col>
-
     </ion-row>
-
   </ion-grid>
+
   <ion-grid class="center">
     <ion-row>
       <ion-col>
