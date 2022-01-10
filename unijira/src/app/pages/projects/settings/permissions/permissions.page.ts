@@ -83,7 +83,6 @@ export class PermissionsPage implements OnInit {
   MembershipPermission = MembershipPermission;
   selectedMembership: Membership = null;
   memberships: Array<Membership>;
-  initialMemberships: Array<Membership>;
 
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
@@ -110,6 +109,8 @@ export class PermissionsPage implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
 
+      this.sessionService.loadProject(params.id);
+
       this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
 
         this.project = p;
@@ -120,7 +121,6 @@ export class PermissionsPage implements OnInit {
             members => {
 
               this.memberships = members;
-              this.initialMemberships = this.memberships;
 
               members.forEach(member => {
 
@@ -191,7 +191,6 @@ export class PermissionsPage implements OnInit {
                 members => {
 
                   this.memberships = members;
-                  this.initialMemberships = this.memberships;
 
                   members.forEach(member => {
 
@@ -399,8 +398,6 @@ export class PermissionsPage implements OnInit {
   }
 
   restorePermissions() {
-
-    this.memberships = this.initialMemberships;
 
     this.permissions.forEach(j => {
       j.value = false;

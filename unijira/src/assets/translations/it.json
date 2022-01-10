@@ -8,6 +8,7 @@
   "error.auth.expired": "Sessione scaduta",
   "error.api.default": "Si è verificato un errore. Per favore riprova più tardi",
   "login.title": "Accedi",
+  "login.altTitle": "Benvenuto",
   "login.signIn": "Accedi",
   "login.signUp": "Registrati",
   "login.rememberMe": "Ricordami",
@@ -22,14 +23,18 @@
   "welcome": "Benvenuto in UniJira",
   "register.title": "Registrati",
   "register.email": "Email",
+  "register.next": "Avanti",
   "register.password": "Password",
   "register.password.confirm": "Conferma password",
   "register.signIn": "Accedi",
   "register.signUp": "Registrati",
+  "register.back": "Indietro",
+  "register.finished": "Finito",
   "register.error.emptyEmail": "Il campo email non può essere vuoto",
   "register.error.emptyPassword": "Il campo password non può essere vuoto",
   "register.error.wrongPassword": "La password deve lunga almeno 8 caratteri ed avere maiuscole, minuscole e numeri",
   "register.error.differentPasswords": "I campi password devono essere uguali",
+  "register.error.userNotAvailable": "Questa email è stata già utilizzata da un altro utente",
   "register.registrationDone": "Registrazione effettuata, ora puoi effettuare il login",
   "register.alreadyHaveAccount": "Hai già un account?",
   "activation.title": "Attivazione Account",
@@ -314,6 +319,11 @@
   "projects.releases.view.save": "Salva",
   "projects.releases.view.tickets.title": "Ticket",
   "error.projects.releases.create": "Si è verificato un errore durante la creazione di un rilascio",
+  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio",
+  "invite.change.password.title" : "Completa la procedura di registrazione",
+  "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
+  "project.invite.toast.success" : "La registrazione è stata completata correttamente",
+  "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
   "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
 
 }

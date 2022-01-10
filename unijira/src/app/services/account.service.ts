@@ -30,5 +30,7 @@ export class AccountService {
     return this.httpService.get<UserInfo>('/auth/me');
   }
 
-
+  isUserAvailable(username: string): Observable<boolean> {
+    return this.httpService.get<boolean>('/auth/available', new HttpParams().set('username', username));
+  }
 }

@@ -3,8 +3,11 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../../util';
+import {presentToast, switchColorTheme, switchLanguage, unsubscribeAll} from '../../util';
 import {PageService} from '../../services/page.service';
+import {TranslateService} from '@ngx-translate/core';
+import {ToastController} from '@ionic/angular';
+
 
 @Component({
   selector: 'app-login',
@@ -19,23 +22,24 @@ export class LoginPage implements OnInit, OnDestroy {
     Validators.minLength(8),
     Validators.pattern('(?=[^A-Z]*[A-Z])(?=[^a-z]*[a-z])(?=[^0-9]*[0-9]).{8,}')]
   );
+  rememberMeFC: FormControl = new FormControl();
 
   loginSubscription: Subscription;
 
   wrongCredentialSubscription: Subscription;
-  areWrongCredential = false;
 
   loginFG: FormGroup = new FormGroup({
     email: this.emailFC,
     password: this.passwordFC
   });
-  formControlSubscription: Subscription;
 
   constructor(
     private router: Router,
     private route: ActivatedRoute,
     private sessionService: SessionService,
-    private pageService: PageService
+    private pageService: PageService,
+    public translateService: TranslateService,
+    private toastController: ToastController
   ) {
 
     this.pageService.setTitle('login.title');
@@ -47,13 +51,39 @@ export class LoginPage implements OnInit, OnDestroy {
     });
 
     this.wrongCredentialSubscription = this.sessionService.getWrongCredential()
-      .subscribe(wrong => this.areWrongCredential = wrong);
+      .subscribe(wrong => {
+        if(wrong) {
+          presentToast(
+            this.toastController,
+            this.translateService.instant(
+              'login.wrongCredential'
+            ),
+            true
+          ).then(() => this.sessionService.setWrongCredential(false));
+        }
+      });
 
-    this.formControlSubscription = this.loginFG.statusChanges.subscribe(() => this.sessionService.setWrongCredential(false));
   }
 
+  get currentColorTheme() {
+    return document.body.getAttribute('color-theme');
+  }
 
-  ngOnInit() {
+  @HostListener('document:keydown.enter', ['$event'])
+  handleKeyDown(_event: KeyboardEvent) {
+    this.logIn();
+  }
+
+  ngOnInit() {}
+
+  ionViewWillEnter() {
+    this.loginFG.reset();
+    this.rememberMeFC.reset();
+  }
+
+  ionViewWillLeave() {
+    this.loginFG.reset();
+    this.rememberMeFC.reset();
   }
 
   logIn() {
@@ -65,7 +95,7 @@ export class LoginPage implements OnInit, OnDestroy {
   }
 
   ngOnDestroy(): void {
-    unsubscribeAll(this.formControlSubscription, this.loginSubscription, this.wrongCredentialSubscription);
+    unsubscribeAll(this.loginSubscription, this.wrongCredentialSubscription);
   }
 
 
@@ -73,17 +103,20 @@ export class LoginPage implements OnInit, OnDestroy {
     return this.emailFC.valid && this.passwordFC.valid;
   }
 
-  private redirect() {
-    if(this.route.snapshot.paramMap.has('idp')) {
-      this.router.navigate([this.route.snapshot.paramMap.get('idp')]).then();
-    } else {
-      this.router.navigate(['/home']).then();
-    }
+  switchLanguage() {
+    switchLanguage(this.translateService);
   }
 
-  @HostListener('document:keydown.enter', ['$event'])
-  handleKeyDown(event: KeyboardEvent) {
-    this.logIn();
+  onToggleColorTheme(event) {
+    switchColorTheme(event.detail.checked);
+  }
+
+  private redirect() {
+    if(this.route.snapshot.paramMap.has('idp')) {
+      this.router.navigate([this.route.snapshot.paramMap.get('idp')], {replaceUrl: true}).then();
+    } else {
+      this.router.navigate(['/home'], {replaceUrl: true}).then();
+    }
   }
 
 }

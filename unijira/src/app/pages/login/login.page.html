@@ -1,49 +1,53 @@
 <ion-content>
+    <ion-row class="ion-justify-content-end">
+      <ion-buttons class="ion-float-right ion-padding">
+        <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+        <ion-button class="ion-padding-horizontal" (click)="switchLanguage()" fill="solid">
+          <span>{{translateService.currentLang}}</span>
+        </ion-button>
+      </ion-buttons>
+    </ion-row>
+    <ion-row class="ion-justify-content-center ion-align-items-center ion-padding main-container">
+      <ion-col size="5" size-lg="auto">
+        <ion-img src="/assets/logo.webp" alt=""></ion-img>
+      </ion-col>
+      <ion-col class="auth-form" size="10" size-lg="4" offset-lg="1">
+        <ion-text>
+          <h1 [translate]="'login.altTitle'"></h1>
+        </ion-text>
+        <form class="ion-margin-vertical" [formGroup]="loginFG" (ngSubmit)="logIn()">
 
-  <div class="ion-margin">
-
-    <ion-row class="ion-justify-content-center">
-      <ion-col class="auth-form">
-
-        <ion-img src="/assets/logo.webp" alt="" ></ion-img>
-
-        <form [formGroup]="loginFG" (ngSubmit)="logIn()">
-
-          <ion-item lines="full">
+          <ion-item lines="full" class="ion-no-padding">
             <ion-label position="floating" [translate]="'login.email'"></ion-label>
             <ion-input name="username" type="email" [formControl]="emailFC" autocomplete="username"></ion-input>
           </ion-item>
 
-          <ion-item lines="full">
+          <ion-item lines="full" class="ion-no-padding">
             <ion-label position="floating" [translate]="'login.password'"></ion-label>
             <ion-input name="password" type="password" [formControl]="passwordFC" autocomplete="password"></ion-input>
           </ion-item>
 
           <br>
 
-          <ion-grid class="ion-align-items-baseline">
-            <ion-row>
-              <ion-col>
-                <ion-button type="submit" color="primary" expand="block" [translate]="'login.signIn'" [disabled]="!check()"></ion-button>
-                <ion-text *ngIf="areWrongCredential" color="danger">
-                  <p class="ion-text-center">
-                    {{'login.wrongCredential' | translate}}
-                  </p>
-                </ion-text>
+          <ion-grid class="ion-align-items-baseline ion-no-padding">
+            <ion-row class="ion-align-items-center ion-justify-content-start">
+              <ion-col size="auto" class="ion-margin-end ion-padding-end">
+                <ion-button type="submit" color="primary"  [translate]="'login.signIn'" [disabled]="!check()"></ion-button>
               </ion-col>
-            </ion-row>
-            <ion-row>
-              <ion-col>
+              <ion-col class="ion-align-items-center">
                 <ion-list lines="none">
-                  <ion-item>
-                    <ion-toggle checked="false"></ion-toggle>
+                  <ion-item class="ion-no-padding">
+                    <ion-toggle checked="false" [formControl]="rememberMeFC"></ion-toggle>
                     <ion-text color="dark" [translate]="'login.rememberMe'"></ion-text>
                   </ion-item>
                 </ion-list>
               </ion-col>
+            </ion-row>
+            <ion-row>
               <ion-col size="auto">
                 <ion-list lines="none">
-                  <ion-item>
+                  <ion-item class="ion-no-padding">
                     <a routerLink="/forgot-password" [translate]="'login.forgotPassword'"></a>
                   </ion-item>
                 </ion-list>
@@ -51,25 +55,19 @@
             </ion-row>
           </ion-grid>
 
-
-          <ion-item-divider class="ion-margin"></ion-item-divider>
-
-
-          <div class="ion-padding-vertical ion-text-center">
-            <ion-text color="medium">
-              <span [translate]="'login.noAccount'"></span>
-            </ion-text>
-            <br>
-            <br>
-            <ion-button type="button" color="primary" [routerLink]="['/registration']" [translate]="'login.signUp'"></ion-button>
-          </div>
-
-
         </form>
 
       </ion-col>
     </ion-row>
 
-
-  </div>
+    <ion-row class="ion-margin-vertical">
+      <ion-col>
+        <div class="ion-text-center">
+          <ion-text color="medium">
+            <span [translate]="'login.noAccount'"></span>
+          </ion-text>
+          <a class="ion-margin-start" [routerLink]="['/registration']" [translate]="'login.signUp'"></a>
+        </div>
+      </ion-col>
+    </ion-row>
 </ion-content>

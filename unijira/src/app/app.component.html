@@ -1,14 +1,14 @@
 <ion-app>
   <app-loading *ngIf="loading"></app-loading>
-  <ion-header *ngIf="isLogged">
+  <ion-header *ngIf="isLogged && !isPageWithoutHeader()">
     <ion-toolbar>
-      <ion-buttons slot="start">
+      <ion-buttons slot="start" *ngIf="isLogged && checkUrl()">
         <ion-menu-button></ion-menu-button>
       </ion-buttons>
       <ion-buttons slot="primary">
 
         <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
-        <ion-toggle (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
 
         <ion-button (click)="showNotifications($event)">
           <ion-icon name="notifications"></ion-icon>
@@ -34,7 +34,7 @@
               <ion-img src="/assets/logo-navbar.webp" class="main-icon ion-margin-start"></ion-img>
             </a>
           </ion-col>
-          <ion-col>
+          <ion-col class="ion-hide-md-down">
               <ion-title><b>{{'app.title' | translate | titlecase}}</b></ion-title>
           </ion-col>
         </ion-row>
@@ -55,7 +55,7 @@
           <div *ngIf="this.router.url.includes('settings')">
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection="root" [routerLink]="['/projects/' + project?.id]"
-                      lines="none" detail="false" routerLinkActive="selected" >
+                      lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
               <ion-icon name="arrow-back-circle"></ion-icon>
               <ion-label class="ion-align-self-center ion-padding-start" [translate]="'project.pages.settings.back'"></ion-label>
             </ion-item>
@@ -66,7 +66,7 @@
 
           <ion-menu-toggle auto-hide="false" *ngFor="let element of (this.router.url.includes('settings') ? settings : pages)">
             <ion-item routerDirection="root" [routerLink]="[element?.url]"
-                      lines="none" detail="false" routerLinkActive="selected">
+                      lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
               <ion-icon name="{{element?.icon}}"></ion-icon>
               <ion-label class="ion-align-self-center ion-padding-start" [translate]="element?.name"></ion-label>
             </ion-item>
