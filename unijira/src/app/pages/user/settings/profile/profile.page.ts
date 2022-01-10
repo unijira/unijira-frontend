@@ -110,30 +110,22 @@ export class ProfilePage implements OnInit {
 
   uploadImage() {
     if(this.file !== undefined) {
-      console.log(this.file);
       this.uploadService.upload(this.user.id, 'avatar', this.file, BasePath.user).subscribe(
         url => {
-          console.log(url);
           this.user.avatar = new URL(url);
-          console.log(this.user);
           this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-            console.log(value);
           });
         }
           );
     }
     else {
-        console.log(this.user);
         this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-          console.log(value);
       });
     }
 
   }
 
-  changePassword() {
-    console.log('OK');
-  }
+  changePassword() {}
 
   onFileChanged(event) {
     const reader = new FileReader();
