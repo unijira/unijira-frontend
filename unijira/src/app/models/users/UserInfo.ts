@@ -1,10 +1,12 @@
+import {UserStatus} from './UserStatus';
+
 export class UserInfo {
 
   constructor(
     public id: number,
     public username: string,
     public avatar: URL,
-    public activated: boolean,
+    public status: UserStatus,
     public disabled: boolean,
     public createdAt: Date,
     public updatedAt: Date,
