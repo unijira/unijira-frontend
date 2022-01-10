@@ -26,13 +26,6 @@ export class TicketsPage implements OnInit {
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute) {
 
-    this.activatedRoute.params
-      .pipe(first())
-      .subscribe(params => {
-        this.sessionService.loadProject(params.id);
-        this.projectId = params.id;
-      });
-
     this.pageService.setTitle('projects.tickets.title');
 
   }
@@ -44,9 +37,17 @@ export class TicketsPage implements OnInit {
 
   ngOnInit() {
 
-    this.ticketService.getTickets(1).subscribe(tickets => {
-      this.tickets = tickets;
-    });
+    this.activatedRoute.params
+      .subscribe(params => {
+
+        this.sessionService.loadProject(params.id);
+        this.projectId = params.id;
+
+        this.ticketService.getTickets(this.projectId).subscribe(tickets => {
+          this.tickets = tickets;
+        });
+
+      });
 
   }
 
