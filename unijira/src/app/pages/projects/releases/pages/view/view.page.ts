@@ -95,10 +95,12 @@ export class ViewPage implements AfterViewInit {
 
   archive() {
     this.release.status = ReleaseStatus.archived;
+    this.save();
   }
 
   publish() {
     this.release.status = ReleaseStatus.released;
+    this.save();
   }
 
   save() {

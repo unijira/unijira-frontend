@@ -134,7 +134,7 @@
           <ion-text translate>board.noSprintActive</ion-text>
         </ion-row>
         <ion-row class="ion-justify-content-center">
-          <ion-button color="primary" translate [routerLink]="'/projects/'+project?.id+'/backlog'">board.startSprint</ion-button>
+          <ion-button *ngIf="project" color="primary" translate [routerLink]="'/projects/'+project.id+'/backlog'">board.startSprint</ion-button>
         </ion-row>
       </ion-col>
     </ion-row>

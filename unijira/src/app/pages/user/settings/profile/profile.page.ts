@@ -44,7 +44,7 @@ export class ProfilePage implements OnInit {
     private uploadService: FileUploadService,
     private pageService: PageService
   ) {
-    this.pageService.setTitle('Profile');
+    this.pageService.setTitle('profile');
   }
 
   ngOnInit() {
@@ -56,11 +56,11 @@ export class ProfilePage implements OnInit {
         this.user = user;
         this.getCollaborators();
         this.getMemberships();
-        this.image = this.user.avatar.toString();
+        this.image = this.user.avatar?.toString() || '';
         if (user.createdAt != null) {
-          this.splitDate(this.user.createdAt.toString());
+          this.splitDate(this.user.createdAt?.toString());
         }
-        this.pageService.setTitle(this.user.username + '- Profile');
+        this.pageService.setTitle(['profile', this.user.username]);
       });
 
       this.preferredLanguage ='italian';
