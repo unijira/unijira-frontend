@@ -68,6 +68,8 @@ export class InvitationsPage implements OnInit {
 
     this.activatedRoute.params.subscribe(params => {
 
+      this.sessionService.loadProject(params.id);
+
       this.projectSubscription = this.projectService.getProject(params.id).subscribe((p) => {
 
         this.project = p;

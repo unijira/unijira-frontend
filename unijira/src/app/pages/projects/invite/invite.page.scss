@@ -6,10 +6,44 @@
   width: 100%;
 }
 
-h1 {
-  font-size: 36px;
+.text {
+  color: lightslategray;
 }
 
-h3 {
-  color: #5f6368;
+ion-content {
+  --padding-top: 10px!important;
+}
+
+ion-buttons ion-button {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
+}
+
+input.native-input {
+  -webkit-background-clip: text!important;
+}
+
+ion-chip {
+  pointer-events: none;
+}
+
+ion-item {
+  --background: var(--ion-background-color);
+}
+
+ion-list {
+  background: var(--ion-background-color);
+}
+
+.main-container {
+  min-height: 75vh;
+}
+
+ion-img {
+  max-width: 250px;
+  margin: auto;
+}
+
+ion-slide, form {
+  width: 100%;
 }

@@ -1,8 +1,9 @@
 import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
-import {Observable} from 'rxjs';
+import {catchError, map, Observable, of} from 'rxjs';
 import {UserInfo} from '../../models/users/UserInfo';
 import {Project} from '../../models/projects/Project';
+import {UserPasswordReset} from "../../models/users/UserPasswordReset";
 
 @Injectable({
   providedIn: 'root'
@@ -25,6 +26,12 @@ export class UserService {
 
   updateUser(idUser: number, user: UserInfo): Observable<UserInfo> {
     return this.http.put<UserInfo>('/users/'+idUser, user);
+  }
+
+  resetPasswordWithToken(user: UserPasswordReset): Observable<boolean> {
+    return this.http.post<boolean>('/auth/password-reset-with-token', user)
+      .pipe(map(_ => true))
+      .pipe(catchError(_ => of(false)));
   }
 
 }

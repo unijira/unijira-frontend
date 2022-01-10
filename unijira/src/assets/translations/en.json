@@ -320,5 +320,9 @@
   "project.settings.permissions.roles.title": "Access to roles",
   "project.settings.permissions.roles.description": "If enabled, the user will be able to change roles within the project.",
   "project.settings.permissions.null.title": "Manage the permissions of your Scrum Project!",
-  "project.settings.permissions.null.subtitle": "Assign project members specific permissions based on their role in the project."
+  "project.settings.permissions.null.subtitle": "Assign project members specific permissions based on their role in the project.",
+  "invite.change.password.title": "Complete the registration process",
+  "invite.change.password.subtitle": "You must have a Unijira account in order to become a member of a project!",
+  "project.invite.toast.success": "Registration was completed successfully",
+  "project.invite.toast.failed": "An error occurred while completing registration"
 }

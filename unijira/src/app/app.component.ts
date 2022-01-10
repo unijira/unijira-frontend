@@ -176,6 +176,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isPageWithoutHeader() {
     return /\/login/.test(this.router.url) ||
       /\/registration/.test(this.router.url) ||
-      /\/activate/.test(this.router.url);
+      /\/activate/.test(this.router.url) ||
+      /\/invite/.test(this.router.url);
   }
 }
