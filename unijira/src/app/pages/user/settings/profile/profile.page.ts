@@ -3,7 +3,10 @@ import {HttpService} from '../../../../services/http-service.service';
 import {AccountService} from '../../../../services/account.service';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {Project} from '../../../../models/projects/Project';
-import {UsersService} from '../../../../services/common/users.service';
+import {UserService} from '../../../../services/user/user.service';
+import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
+import {PageService} from '../../../../services/page.service';
+
 
 @Component({
   selector: 'app-profile',
@@ -14,6 +17,21 @@ export class ProfilePage implements OnInit {
 
   @Input() user: UserInfo;
 
+  @Input() oldPassword: string;
+  @Input() newPassword: string;
+
+
+  @Input() file: File;
+  @Input() image: string;
+
+  @Input() saved = false;
+
+  preferredTheme='';
+  preferredLanguage='';
+
+  monthAsString='';
+  yearAsString='';
+
   enrolledProjects: Project[] = [];
 
   collaborators: UserInfo[] = [];
@@ -22,26 +40,56 @@ export class ProfilePage implements OnInit {
   constructor(
     private http: HttpService,
     private accountService: AccountService,
-    private usersService: UsersService
-  ) { }
+    private usersService: UserService,
+    private uploadService: FileUploadService,
+    private pageService: PageService
+  ) {
+    this.pageService.setTitle('Profile');
+  }
 
   ngOnInit() {
-    this.user = new UserInfo(null,null,null,null,null,null,
-      null,null,null,null,null,null,null, null,
+    this.user = new UserInfo(null, null, null, null, null, null,
+      null, null, null, null, null, null, null, null,
       null);
     this.accountService.me().subscribe(value => {
-          this.user = value;
-          this.getCollaborators();
-          this.getMemberships();});
+      this.usersService.getUser(value.id).subscribe(user => {
+        this.user = user;
+        this.getCollaborators();
+        this.getMemberships();
+        this.image = this.user.avatar.toString();
+        if (user.createdAt != null) {
+          this.splitDate(this.user.createdAt.toString());
+        }
+        this.pageService.setTitle(this.user.username + '- Profile');
+      });
+
+      this.preferredLanguage ='italian';
+      this.preferredTheme='light';
+
+    });
   }
 
-  copyBack() {
-    this.dummy();
-  }// Just print object
+  splitDate(stringDate) {
+    if(stringDate!=null) {
+      const array = stringDate.split('-');
+      if(array.length > 2) {
+        this.yearAsString = array[0];
+        this.monthAsString =array[1];
+      }
 
-  dummy() {
-    console.log(this.user);
+    }
+
   }
+
+  setPreferredTheme(value) {
+
+    this.preferredTheme = value;
+  }
+
+  setPreferredLanguage(value) {
+    this.preferredLanguage = value;
+  }
+
 
   getCollaborators() {
     this.usersService.getCollaborators(this.user.id).subscribe(value => {
@@ -57,12 +105,39 @@ export class ProfilePage implements OnInit {
   }
 
   update() {
-    this.usersService.updateUser(this.user.id, this.user).subscribe(value =>{console.log(value);});
+    this.uploadImage();
+  }
+
+  uploadImage() {
+    if(this.file !== undefined) {
+      this.uploadService.upload(this.user.id, 'avatar', this.file, BasePath.user).subscribe(
+        url => {
+          this.user.avatar = new URL(url);
+          this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
+          });
+        }
+          );
+    }
+    else {
+        this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
+      });
+    }
 
   }
 
-  changePassword() {
-    console.log('OK');
-  }
+  changePassword() {}
 
+  onFileChanged(event) {
+    const reader = new FileReader();
+
+    this.file = event.target.files[0];
+    reader.readAsDataURL(event.target.files[0]);
+    this.user.avatar =  event.target.files[0];
+    reader.onload = (e) => {
+      this.image = e.target.result as string;
+    };
+
+
+
+  }
 }

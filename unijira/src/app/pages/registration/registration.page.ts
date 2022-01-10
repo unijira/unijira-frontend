@@ -4,10 +4,9 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {TranslateService} from '@ngx-translate/core';
-import {validateConfirmPassword, switchLanguage, presentToast, unsubscribeAll, switchColorTheme} from '../../util';
-import {IonSlides} from '@ionic/angular';
-import { ToastController } from '@ionic/angular';
-import { PageService } from 'src/app/services/page.service';
+import {presentToast, switchColorTheme, switchLanguage, unsubscribeAll, validateConfirmPassword} from '../../util';
+import {IonSlides, ToastController} from '@ionic/angular';
+import {PageService} from 'src/app/services/page.service';
 import {Subscription} from 'rxjs';
 
 @Component({
@@ -68,17 +67,6 @@ export class RegistrationPage implements OnInit, OnDestroy {
   get currentColorTheme() {
     return document.body.getAttribute('color-theme');
   }
-
-  switchLanguage() {
-    switchLanguage(this.translateService);
-  }
-
-
-  onToggleColorTheme(event) {
-    switchColorTheme(event.detail.checked);
-  }
-
-
 
   ngOnInit() {}
 
@@ -197,6 +185,14 @@ export class RegistrationPage implements OnInit, OnDestroy {
     this.passwordFG.reset();
     this.index = 0;
     this.slides.slideTo(this.index).then();
+  }
+
+  switchLanguage() {
+    switchLanguage(this.translateService);
+  }
+
+  onToggleColorTheme(event) {
+    switchColorTheme(event.detail.checked);
   }
 
   private redirect() {

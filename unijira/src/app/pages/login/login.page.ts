@@ -3,7 +3,7 @@ import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll, switchLanguage, presentToast, switchColorTheme} from '../../util';
+import {presentToast, switchColorTheme, switchLanguage, unsubscribeAll} from '../../util';
 import {PageService} from '../../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastController} from '@ionic/angular';
@@ -105,9 +105,14 @@ export class LoginPage implements OnInit, OnDestroy {
     switchLanguage(this.translateService);
   }
 
+  switchLanguage() {
+    switchLanguage(this.translateService);
+  }
+
   onToggleColorTheme(event) {
     switchColorTheme(event.detail.checked);
   }
+
   private redirect() {
     if(this.route.snapshot.paramMap.has('idp')) {
       this.router.navigate([this.route.snapshot.paramMap.get('idp')], {replaceUrl: true}).then();
@@ -115,10 +120,5 @@ export class LoginPage implements OnInit, OnDestroy {
       this.router.navigate(['/home'], {replaceUrl: true}).then();
     }
   }
-
-
-
-
-
 
 }

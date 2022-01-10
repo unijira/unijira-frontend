@@ -35,7 +35,17 @@ const routes: Routes = [
     path: 'projects',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
-  }
+  },
+  {
+    path: 'profile',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/user/settings/profile/profile.module').then( m => m.ProfilePageModule)
+},
+{
+    path: 'users/:id/overview',
+    canActivate: [AuthGuard],
+  loadChildren: () => import('./pages/user/profile-overview/profile-overview.module').then( m => m.ProfileOverviewPageModule)
+}
 ];
 
 @NgModule({

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
-import {unsubscribeAll, switchLanguage, switchColorTheme} from './util';
+import {switchColorTheme, switchLanguage, unsubscribeAll} from './util';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -176,6 +176,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isPageWithoutHeader() {
     return /\/login/.test(this.router.url) ||
       /\/registration/.test(this.router.url) ||
-      /\/activate/.test(this.router.url);
+      /\/activate/.test(this.router.url) ||
+      /\/invite/.test(this.router.url);
   }
 }
