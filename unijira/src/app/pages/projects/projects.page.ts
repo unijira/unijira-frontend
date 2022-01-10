@@ -1,6 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
-import {ProjectService} from '../../services/common/project.service';
+import {ProjectService} from '../../services/project/project.service';
 import {PageService} from 'src/app/services/page.service';
 
 @Component({
@@ -39,6 +39,11 @@ export class ProjectsPage implements OnInit {
         this.projects = this.projects ? this.projects.concat(projects) : projects;
       }
     );
+  }
+
+  navigateToProjectHome(id: number) {
+    // this.sessionService.loadProject(id);
+    // this.router.navigate(['/project-home']);
   }
 
 }

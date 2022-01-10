@@ -1,5 +1,5 @@
 import {NgModule} from '@angular/core';
-import {PreloadAllModules, RouterModule, Routes} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {AuthGuard} from './classes/auth-guard';
 
 const routes: Routes = [
@@ -23,11 +23,8 @@ const routes: Routes = [
       import('./pages/projects/backlog/backlog.module').then((m) => m.BacklogPageModule),
   },
   {
-    path: 'auth/active',
-    loadChildren: () =>
-      import('./pages/activate/activate.module').then(
-        (m) => m.ActivatePageModule
-      ),
+    path: 'activate',
+    loadChildren: () => import('./pages/activate/activate.module').then(m => m.ActivatePageModule)
   },
   {
     path: 'home',
@@ -40,59 +37,27 @@ const routes: Routes = [
     loadChildren: () => import('./pages/projects/projects.module').then( m => m.ProjectsPageModule)
   },
   {
-    path: 'projects/wizard',
+    path: 'profile',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/wizard/wizard.module').then(m => m.WizardPageModule)
+    loadChildren: () => import('./pages/user/settings/profile/profile.module').then( m => m.ProfilePageModule)
   },
   {
-    path: 'projects/:id/invite',
+    path: 'users/:id',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
-  },
-  {
-    path: 'projects/:id',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/home/project-home.module').then(m => m.ProjectHomePageModule)
-  },
-  {
-    path: 'projects/:id/settings/details',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/details/details.module').then(m => m.DetailsPageModule)
-  },
-  {
-    path: 'projects/:id/settings/notifications',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/notifications/notifications.module').then(m => m.NotificationsPageModule)
-  },
-  {
-    path: 'projects/:id/settings/roles',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/roles/roles.module').then(m => m.RolesPageModule)
-  },
-  {
-    path: 'projects/:id/settings/invitations',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/invitations/invitations.module').then(m => m.InvitationsPageModule)
-  },
-  {
-    path: 'projects/:id/settings/permissions',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/projects/settings/permissions/permissions.module').then(m => m.PermissionsPageModule)
+    loadChildren: () => import('./pages/user/profile-overview/profile-overview.module').then( m => m.ProfileOverviewPageModule)
   },
   {
     path: 'projects/:id/roadmap',
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
   },
-
-
-
-
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, {
+      onSameUrlNavigation: 'reload',
+    })
   ],
   providers: [AuthGuard],
   exports: [RouterModule]

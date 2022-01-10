@@ -1,0 +1,28 @@
+.main-card {
+  background-color: var(--ion-color-light);
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.scrollbars::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.scrollbars {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
+
+.board-card-content {
+  padding: 0;
+  overflow-y: scroll;
+  max-height: 33rem;
+}
+
+.sprint-date {
+  margin: 0;
+  color: var(--ion-color-medium);
+}
+
+

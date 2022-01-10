@@ -5,12 +5,14 @@ import {Sprint} from '../../../../models/Sprint';
 import {Observable} from 'rxjs';
 import {BacklogState} from './backlog.reducer';
 import {saveBacklogAction, saveSprintAction} from './backlog.action';
-
+import {Backlog} from '../../../../models/Backlog';
+import {BacklogInsertion} from '../../../../models/BacklogInsertion';
+import {SprintInsertion} from '../../../../models/SprintInsertion';
 @Injectable()
 export class BacklogService {
   constructor(private store: Store) {}
 
-  public getBacklog(): Observable<Sprint> {
+  public getBacklog(): Observable<Backlog> {
     const tmp = createSelector(
       createFeatureSelector<BacklogState>('backlogReducer'),
       (state) => state.backlog
@@ -18,7 +20,7 @@ export class BacklogService {
     return this.store.select(tmp);
   }
 
-  public setBacklog(backlog: Sprint): void {
+  public setBacklog(backlog: Backlog): void {
     this.store.dispatch(saveBacklogAction({ backlog }));
   }
 

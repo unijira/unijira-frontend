@@ -5,32 +5,20 @@
     <ion-col size="auto">
       <div class="container-main-inner">
 
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
+
         <!-- Invitations Header -->
         <ion-grid>
-
-          <!-- Breadcrumb -->
-          <ion-row>
-
-            <ion-chip [routerLink]="['/home/']">
-              <ion-icon name="home-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.home'"></ion-label>
-            </ion-chip>
-
-            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
-
-            <ion-chip [routerLink]="['/home/projects/']">
-              <ion-icon name="briefcase-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.projects'"></ion-label>
-            </ion-chip>
-
-            <ion-icon class="ion-align-self-center" name="chevron-forward-outline"></ion-icon>
-
-            <ion-chip [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">
-              <ion-icon name="settings-outline"></ion-icon>
-              <ion-label [translate]="'project.settings.details.settings'"></ion-label>
-            </ion-chip>
-
-          </ion-row>
 
           <br>
 
@@ -46,7 +34,7 @@
             <!-- Add Members -->
             <ion-col>
               <ion-row class="ion-justify-content-end">
-                <ion-button>
+                <ion-button id="invite-members" (click)="open()">
                   <ion-icon slot="start" name="people-outline"></ion-icon>
                   <span [translate]="'project.settings.invitations.add'"></span>
                 </ion-button>
@@ -54,6 +42,82 @@
             </ion-col>
 
           </ion-row>
+
+
+          <!-- Accordion -->
+          <ion-accordion-group>
+
+            <ion-accordion toggle-icon="" value="invitations">
+
+              <ion-list slot="content">
+
+                <!-- Accordion Image -->
+                <ion-grid>
+                  <ion-row class="ion-justify-content-center ion-margin">
+                    <img src="/assets/img/mail.webp" class="project-settings-invitations-image" alt="">
+                  </ion-row>
+                </ion-grid>
+
+                <br>
+
+                <!-- Invite Member -->
+                <form (ngSubmit)="invite()">
+                  <ion-row class="ion-justify-content-center">
+
+                    <ion-item lines="full">
+                      <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
+                      <ion-input id="mailForm" type="text" [formControl]="mailForm"></ion-input>
+                    </ion-item>
+
+                    <div class="ion-align-self-center ion-padding-start" >
+                      <ion-button [disabled]="this.mailForm.value === this.userInfo?.username ||
+                      this.users.includes(this.mailForm.value)" type="submit" color="light" (click)="invite()" >
+                        <ion-icon name="arrow-forward-outline" ></ion-icon>
+                      </ion-button>
+                    </div>
+
+                    <div class="ion-align-self-center ion-padding-start">
+                      <ion-button type="reset" *ngIf="invites.length > 0" color="light" (click)="invites = []" >
+                        <ion-icon name="trash-outline"></ion-icon>
+                      </ion-button>
+                    </div>
+
+                  </ion-row>
+                </form>
+
+                <br>
+                <br>
+
+
+                <!-- All invitations -->
+
+                <ion-row class="ion-justify-content-center wizard-invite-mail">
+
+                  <ion-chip *ngFor="let invite of invites">
+                    <ion-icon name="mail-outline"></ion-icon>
+                    <ion-label>{{invite}}</ion-label>
+                    <ion-icon name="close-circle-outline" (click)="delete(invite)"></ion-icon>
+                  </ion-chip>
+
+                </ion-row>
+
+                <br>
+                <br>
+
+                <!-- Send Invites -->
+                <ion-row class="ion-justify-content-center">
+                  <ion-button [disabled]="this.invites.length === 0" (click)="sendInvitations()">
+                    <ion-icon  slot="start" name="person-add-outline"></ion-icon>
+                    <span [translate]="'project.settings.invitations.confirm'"></span>
+                  </ion-button>
+                </ion-row>
+
+              </ion-list>
+
+            </ion-accordion>
+
+          </ion-accordion-group>
+
 
           <ion-row>
 
@@ -96,13 +160,13 @@
               </ion-col>
 
               <!-- Invitations Filter -->
-              <ion-col *ngFor="let entry of filters" size="auto" class="ion-align-self-center">
-                <ion-list lines="none">
-                  <ion-item>
-                    <ion-label>{{entry.translate | translate}}</ion-label>
-                    <ion-checkbox slot="end" [(ngModel)]="entry.active"></ion-checkbox>
-                  </ion-item>
-                </ion-list>
+              <ion-col size="3">
+                <ion-item lines="none">
+                  <ion-label position="floating">{{'project.settings.roles.filter' | translate}}</ion-label>
+                  <ion-select [(ngModel)]="filterType" [placeholder]="'projects.settings.invitations.filter.type' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                    <ion-select-option *ngFor="let entry of filters" [value]="entry.value">{{entry.translate | translate}}</ion-select-option>
+                  </ion-select>
+                </ion-item>
               </ion-col>
 
             </ion-row>
@@ -131,20 +195,21 @@
               <ion-item *ngFor="let membership of filteredMemberships">
 
 
+                <!-- Profile Image -->
                 <div *ngIf="membership?.userInfo">
-                  <ion-avatar slot="start" *ngIf="membership?.userInfo.avatar !== null">
-                    <ion-img [src]="membership.userInfo.avatar" class="ion-no-margin"></ion-img>
-                  </ion-avatar>
+                  <ion-col class="ion-padding">
+                    <ion-avatar class="row-icon">
+                      <ion-img [src]="membership?.userInfo.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                    </ion-avatar>
+                  </ion-col>
                 </div>
 
-                <div class="ion-margin" *ngIf="membership?.userInfo">
-                  <ion-icon class="profile-icon" size="large" name="person-circle-outline" *ngIf="membership.userInfo.avatar === null"></ion-icon>
-                </div>
-
-                <ion-label *ngIf="membership?.userInfo">
+                <!-- Profile Mail -->
+                <ion-label class="ion-padding" *ngIf="membership?.userInfo">
                   <h2 [innerHTML]="membership.userInfo.username | filtered:searchTerm"></h2>
                 </ion-label>
 
+                <!-- Profile Update -->
                 <ion-label *ngIf="membership?.userInfo">
                   <p>{{ membership.userInfo.updatedAt | time | async }}</p>
                 </ion-label>
@@ -153,7 +218,7 @@
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-label>
 
-
+                <!-- Profile Status -->
                 <ion-badge *ngIf="membership?.status === MembershipStatus.enabled" slot="end" color="success">{{ 'project.settings.invitations.enabled' | translate }}</ion-badge>
                 <ion-badge *ngIf="membership?.status === MembershipStatus.disabled" slot="end" color="danger">{{ 'project.settings.invitations.disabled' | translate }}</ion-badge>
                 <ion-badge *ngIf="membership?.status === MembershipStatus.pending" slot="end" color="medium">{{ 'project.settings.invitations.pending' | translate }}</ion-badge>
@@ -161,19 +226,29 @@
               </ion-item>
             </ion-list>
 
-            <ion-list *ngIf="memberships === null">
-              <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
+
+            <ion-list *ngIf="!memberships">
+              <ion-item *ngFor="let i of [1, 2]">
+                <ion-thumbnail slot="start">
+                  <ion-skeleton-text animated style="width: 50%; height: 50%"></ion-skeleton-text>
+                </ion-thumbnail>
                 <ion-label>
                   <ion-skeleton-text animated></ion-skeleton-text>
-                  <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-label>
-                <ion-skeleton-text animated></ion-skeleton-text>
               </ion-item>
             </ion-list>
 
             <br>
 
-            <ion-grid *ngIf="memberships?.length === 1">
+            <!-- Settings No Users -->
+            <ion-grid *ngIf="filteredMemberships?.length === 0 && memberships">
+              <ion-row class="ion-justify-content-center ion-margin">
+                <span><i class="ion-color-medium">{{'project.settings.roles.null' | translate}}</i></span>
+              </ion-row>
+            </ion-grid>
+
+            <!-- Settings Roles Footer -->
+            <ion-grid *ngIf="(memberships?.length <= 1 && this.accordionGroup.value !== 'invitations') && memberships">
               <ion-row class="ion-justify-content-center ion-margin">
                 <img src="/assets/img/projects/settings-invitations.svg" class="project-settings-invitations-image" alt="">
               </ion-row>

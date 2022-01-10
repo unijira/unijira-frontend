@@ -1,0 +1,33 @@
+<ion-card *ngFor="let item of itemsToShow">
+  <ion-card-content>
+    <ion-row>
+      <ion-text [innerHTML]="item.description | filtered:searchedText">>{{item.description}}</ion-text>
+    </ion-row>
+    <ion-row *ngIf="item.father && item.father.type === 'epic'">
+      <ion-chip class="ion-no-margin ion-margin-top" color="danger">{{item.father.description}}</ion-chip>
+    </ion-row>
+    <ion-row>
+      <ion-col size="5" class="ion-p">
+        <ion-row>
+          <ion-img *ngIf="item.type===itemType.story" src="/assets/img/tickets/story.svg" [title]="itemType.story"></ion-img>
+          <ion-img *ngIf="item.type===itemType.issue" src="/assets/img/tickets/issue.svg" [title]="itemType.issue"></ion-img>
+          <ion-img *ngIf="item.type===itemType.task" src="/assets/img/tickets/task.svg" [title]="itemType.task"></ion-img>
+          <ion-label class="item-id ion-align-self-center">{{item.id}}</ion-label>
+        </ion-row>
+      </ion-col>
+      <ion-col *ngIf="item.assignees && item.assignees.length>0">
+        <div style="float: right">
+          <ion-row>
+            <ion-avatar class="assignee-img" [title]="item.assignees[0].assignee.username">
+              <ion-img [src]="item.assignees[0].assignee.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            </ion-avatar>
+            <ion-label class="other-assignees" *ngIf="item.assignees.length > 1">+{{item.assignees.length-1}}</ion-label>
+          </ion-row>
+        </div>
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="item.tags">
+      <ion-chip class="ion-no-margin ion-margin-end ion-margin-top" color="primary" *ngFor="let tag of item.tags.split(';')">{{tag}}</ion-chip>
+    </ion-row>
+  </ion-card-content>
+</ion-card>

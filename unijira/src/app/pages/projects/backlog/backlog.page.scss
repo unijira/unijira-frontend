@@ -43,10 +43,10 @@ ion-input {
 .sprint,
 .backlog {
   padding: 3px;
-  border: 1px solid #666;
+  // border: 1px solid #666;
   border-radius: 5px;
   margin: 10px 0;
-  background-color: #ececec;
+  background-color: var(--ion-color-light);
 }
 
 .light-gray-bg {
@@ -60,7 +60,7 @@ ion-input {
 }
 
 .backlog {
-  border: 1px solid #666;
+  // border: 1px solid #666;
 }
 
 .q1,
@@ -111,7 +111,7 @@ ion-input {
   // padding: 5px;
   margin: 5px;
   border-radius: 3px;
-  border: 1px solid #666;
+  // border: 1px solid #666;
   // box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
@@ -131,15 +131,15 @@ ion-input {
   border: 1px solid darkslategrey;
 }
 
-.avatar {
-  width: 20px;
-  height: 20px;
-  min-height: 20px;
-  min-width: 20px;
-}
+// .avatar {
+//   width: 20px;
+//   height: 20px;
+//   min-height: 20px;
+//   min-width: 20px;
+// }
 .task-item,
 .task-item > * {
-  height: 30px !important;
+  // height: 30px !important;
   padding-top: 0;
   padding-bottom: 0;
 }
@@ -178,7 +178,7 @@ label {
 }
 
 ion-badge {
-  font-size: 8px;
+  // font-size: 10px;
 }
 
 // ion-button {
@@ -200,18 +200,25 @@ ion-button.action-btn {
 .weight-badge > span {
   font-weight: bold;
   font-size: 10px;
-  color: #555;
+  color: var(--ion-color-light-contrast);
 }
 .weight-badge {
   border-radius: 50%;
   width: 18px;
-  background-color: #ccc;
+  background-color: var(--ion-color-light);
 }
 
 .status-badge-div {
   width: 75px;
 }
 
-ion-content {
-  --padding-top: 60px !important;
+ion-thumbnail {
+  height: 30px;
+  width: 30px;
 }
+
+ion-avatar, ion-img{
+  width: 15px;
+  height: 15px;
+}
+

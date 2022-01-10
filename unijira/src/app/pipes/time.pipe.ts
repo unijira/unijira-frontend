@@ -10,7 +10,7 @@ export class TimePipe implements PipeTransform {
 
   constructor(private translateService: TranslateService) { }
 
-  transform(value: string): Observable<string> {
+  transform(value: number | string | Date): Observable<string> {
     return merge(
       of(moment(value).fromNow()),
       this.translateService.onLangChange.pipe(map(() => moment(value).fromNow()))

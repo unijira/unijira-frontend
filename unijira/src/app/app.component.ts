@@ -2,7 +2,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
-import {unsubscribeAll} from './util';
+import {switchColorTheme, switchLanguage, unsubscribeAll} from './util';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -17,29 +17,19 @@ import {far} from '@fortawesome/free-regular-svg-icons';
 import {fab} from '@fortawesome/free-brands-svg-icons';
 import {NotificationsComponent} from './components/notifications/notifications.component';
 import {Project} from './models/projects/Project';
-import {animate, style, transition, trigger} from '@angular/animations';
 
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
   styleUrls: ['app.component.scss'],
-  animations:[
-    trigger('fadeAnimation', [
-      transition(':enter', [
-        style({ opacity: 0 }), animate('300ms', style({ opacity: 1 }))]
-      ),
-      transition(':leave',
-        [style({ opacity: 1 }), animate('300ms', style({ opacity: 0 }))]
-      )
-    ])
-]})
+})
 
 export class AppComponent implements OnInit, OnDestroy {
 
   @ViewChild('notifications') notificationsComponent: NotificationsComponent;
 
   unreadNotificationsCount = 0;
-  public pages = [];
+  pages: any[] = [];
 
   loadingSubscription: Subscription;
   loading = false;
@@ -73,37 +63,33 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => this.userInfo = info);
 
-    translateService.setDefaultLang('it');
-    translateService.use('it');
-    translateService.onLangChange.subscribe(() => {
-      moment.locale(translateService.currentLang);
-    });
+    this.configLang();
+    this.configTheme();
 
     this.projectSubscription = this.sessionService.getProject().subscribe((proj) => {
 
-      this.project = proj;
+      if (this.project !== proj && proj) {
 
-      if (proj) {
+        this.project = proj;
 
         this.pages = [
           {name: 'project.pages.board', url: `/projects/${proj.id}`, icon: 'clipboard-outline'},
           {name: 'project.pages.backlog', url: `/projects/${proj.id}/backlog`, icon: 'albums-outline'},
-          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap` , icon: 'map-outline'},
+          {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap`, icon: 'map-outline'},
+          {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
+          {name: 'project.pages.releases', url: `/projects/${proj.id}/releases`, icon: 'cube-outline'},
           {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 
         this.settings = [
           {name: 'project.pages.settings.details', url: `/projects/${proj.id}/settings/details`, icon: 'information-outline'},
-          {name: 'project.pages.settings.notifications', url: `/projects/${proj.id}/settings/notifications`, icon: 'notifications-outline'},
-          {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
           {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
+          {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
           {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
         ];
 
       }
     });
-
-    moment.locale('it');
 
   }
 
@@ -113,8 +99,33 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
 
+  configLang() {
+    this.translateService.onLangChange.subscribe(() => {
+      moment.locale(this.translateService.currentLang);
+    });
+
+    this.translateService.setDefaultLang('it');
+
+    const deviceLang = localStorage.getItem('currentLang');
+
+    if(deviceLang)
+      {this.translateService.use(deviceLang);}
+    else {
+      this.translateService.use('it');
+    }
+  }
+
+
+  configTheme() {
+    const deviceTheme = localStorage.getItem('colorTheme');
+
+    if(deviceTheme)
+      {document.body.setAttribute('color-theme', deviceTheme);}
+  }
+
 
   ngOnInit() {
+
     this.isLoggedSubscription = this.sessionService.getIsUserLogged().subscribe(log => {
       this.isLogged = log;
       if (!log){
@@ -127,12 +138,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   onToggleColorTheme(event) {
-    if (event.detail.checked) {
-      document.body.setAttribute('color-theme', 'dark');
-
-    } else {
-      document.body.setAttribute('color-theme', 'light');
-    }
+    switchColorTheme(event.detail.checked);
   }
 
   toggleLoading(toggle: boolean) {
@@ -140,11 +146,7 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   switchLanguage() {
-    if (this.translateService.currentLang === 'it') {
-      this.translateService.use('en');
-    } else {
-      this.translateService.use('it');
-    }
+    switchLanguage(this.translateService);
   }
 
   ngOnDestroy() {
@@ -169,7 +171,13 @@ export class AppComponent implements OnInit, OnDestroy {
   }
 
   checkUrl() {
-    return /\/projects\/\d/.test(this.router.url);
+    return /\/projects\/\d/.test(this.router.url) && !(this.router.url.includes('invite'));
   }
 
+  isPageWithoutHeader() {
+    return /\/login/.test(this.router.url) ||
+      /\/registration/.test(this.router.url) ||
+      /\/activate/.test(this.router.url) ||
+      /\/invite/.test(this.router.url);
+  }
 }

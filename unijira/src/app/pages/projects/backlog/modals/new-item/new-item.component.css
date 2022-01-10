@@ -1,0 +1,15 @@
+.creaitemcontent {
+padding: 0;
+margin: 0;
+}
+
+ion-content {
+  margin: 0 !important;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+ion-grid {
+  padding: -70px !important;
+  margin: 0 !important;
+}

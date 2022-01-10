@@ -10,8 +10,8 @@
       ],
       "parserOptions": {
         "project": [
-          "/tsconfig.json",
-          "/e2e/tsconfig.json"
+          "unijira/tsconfig.json",
+          "unijira/e2e/tsconfig.json"
         ],
         "createDefaultProgram": true
       },

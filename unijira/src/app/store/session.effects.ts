@@ -15,7 +15,7 @@ export class SessionEffects {
 
   public logOutEffect = createEffect(() => this.actions.pipe(
     ofType(logOutAction), tap(() => {
-      this.router.navigate(['/login']).then();
+      this.router.navigate(['/login'], {replaceUrl: true}).then();
     })
   ), {dispatch: false});
 
