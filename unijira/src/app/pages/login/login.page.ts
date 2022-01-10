@@ -105,9 +105,7 @@ export class LoginPage implements OnInit, OnDestroy {
     switchLanguage(this.translateService);
   }
 
-  switchLanguage() {
-    switchLanguage(this.translateService);
-  }
+
 
   onToggleColorTheme(event) {
     switchColorTheme(event.detail.checked);
