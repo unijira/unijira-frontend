@@ -73,6 +73,10 @@ export class BoardPage implements OnInit, OnDestroy {
         this.boardService.getActiveSprint(this.project.id).subscribe(s => {
           if (s) {
             this.sprint = s;
+            this.searchFC.enable();
+            this.typesCheckedFC.enable();
+            this.epicsCheckedFC.enable();
+            this.tagsCheckedFC.enable();
 
             this.sprint.insertions.forEach(ins => {
               this.boardService.getFatherById(ins.item.fatherId).subscribe(father => ins.item.father = father);
@@ -114,6 +118,11 @@ export class BoardPage implements OnInit, OnDestroy {
             this.epics = [...new Set(this.epics)];
 
             // fine preprocessing da inserire nella subscription
+          } else {
+            this.searchFC.disable();
+            this.typesCheckedFC.disable();
+            this.epicsCheckedFC.disable();
+            this.tagsCheckedFC.disable();
           }
         });
       }
