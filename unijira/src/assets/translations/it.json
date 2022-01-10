@@ -134,6 +134,7 @@
   "backlog.sprint.empty": "Sprint vuoto",
   "backlog.server.get": "Get",
   "backlog.server.save": "Salva",
+  "backlog.page.title": "Backlog",
   "backlog.server.additem": "Crea item",
   "backlog.detail.description": "Descrizione",
   "backlog.detail.childTickets": "Ticket figli",
