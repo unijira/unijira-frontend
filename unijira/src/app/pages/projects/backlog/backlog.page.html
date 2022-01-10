@@ -16,7 +16,7 @@
 
   <div class="page">
     <ion-grid>
-      <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-row class="ion-align-items-center ion-justify-content-end">
         <ion-col class="ion-align-self-start">
           <ion-text color="dark">
             <h4>Progetto {{projectId}}</h4>
@@ -108,7 +108,7 @@
             <ion-col size="auto" class="ion-align-self-center">
               <ion-badge color="success">{{ totalDones }}</ion-badge>
             </ion-col>
-            <ion-col size="2" class="ion-align-self-center">
+            <ion-col size="auto" class="ion-align-self-center">
               <ion-button
                 color="light"
                 *ngIf="sprintIsStarted"
@@ -267,7 +267,7 @@
       <ion-accordion-group>
         <ion-accordion value="backlogssss" toggle-icon="arrow-down-circle">
           <ion-row slot="header">
-            <ion-col class="ion-align-self-center">
+            <ion-col class="ion-align-items-center ion-justify-content-end">
               <ion-text color="dark">
                 <p>
                   Backlog {{ backlogId }}
@@ -317,7 +317,7 @@
             <ion-col size="auto" class="ion-align-self-center">
               <ion-badge color="success">{{ totalDoneb }}</ion-badge>
             </ion-col>
-            <ion-col size="2" class="ion-align-self-center">
+            <ion-col size="auto" class="ion-align-self-center">
               <ion-button (click)="createSprint()" color="light">
                 Crea Sprint
               </ion-button>
