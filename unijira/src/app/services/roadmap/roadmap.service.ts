@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
+import { ItemRoadmap } from 'src/app/models/item/ItemRoadmap';
 import { Roadmap } from 'src/app/models/projects/Roadmap';
 import { HttpService } from '../http-service.service';
 
@@ -16,6 +17,9 @@ export class RoadmapService {
   getRoadmap(idProject: number, idBacklog: number): Observable<any>{
     return this.http.get<AnyCatcher>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps')
   .pipe(catchError(e => of([])));
+  }
+  addItem(item: ItemRoadmap){
+    return this.http.post<any>('/items').pipe(catchError(e => of([])));
   }
   addItemToRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap): Observable<any>{
     return this.http.post<AnyCatcher>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps/'+idRoadmap+'/insertions',roadmap);

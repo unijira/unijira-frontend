@@ -1,9 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-
 import { IonicModule } from '@ionic/angular';
-
 import { RoadmapPageRoutingModule } from './roadmap-routing.module';
 import { DialogModule} from '@syncfusion/ej2-angular-popups';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
@@ -21,10 +19,10 @@ import {TranslateModule} from '@ngx-translate/core';
     CommonModule,
     FormsModule,
     IonicModule,
-    RoadmapPageRoutingModule,GanttAllModule,DialogModule,TextBoxModule,DatePickerModule,TranslateModule
+    RoadmapPageRoutingModule,GanttAllModule,DialogModule,TextBoxModule,DatePickerModule,DropDownListModule,TranslateModule
   ],
   declarations: [RoadmapPage],
-  providers: [EditService , FilterService, SortService, SelectionService, RowDDService,ToolbarService,DayMarkersService,GanttComponent
+  providers: [EditService , FilterService, SortService, SelectionService, RowDDService,ToolbarService,DayMarkersService,GanttComponent,
     ]
 })
 export class RoadmapPageModule {}

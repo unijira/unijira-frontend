@@ -195,7 +195,6 @@
   "project.settings.invitations.mail" : "Indirizzo e-mail",
   "project.settings.invitations.date" : "Tempo d'invito",
   "project.settings.invitations.status" : "Stato",
-<<<<<<< HEAD
   "project.roadmap.taskName":"Nome Item",
   "project.roadmap.startDate": "Data inizio",
   "project.roadmap.endDate": "Data fine",
@@ -203,10 +202,7 @@
   "project.roadmap.type": "Tipo",
   "project.roadmap.addNewItem.title": "Aggiungi un nuovo item",
   "project.roadmap.selectFather": "Seleziona un padre",
-  "project.roadmap.status": "Stato"
-
-
-=======
+  "project.roadmap.status": "Stato",
   "projects.tickets.title": "Ticket",
   "projects.tickets.export": "Esporta CSV",
   "projects.tickets.add": "Aggiungi ticket",
@@ -366,5 +362,4 @@
   "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
   "project.invite.toast.success" : "La registrazione è stata completata correttamente",
   "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
->>>>>>> 3674121e20e46ef8d5166dad8b996a983d1fec17
 }

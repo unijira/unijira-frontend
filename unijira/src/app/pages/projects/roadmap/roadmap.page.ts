@@ -17,7 +17,11 @@
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { loadCldr } from "@syncfusion/ej2-base";
-
+import {
+  ToolbarItem,
+  EditSettingsModel,
+  EditDialogFieldDirective,
+} from '@syncfusion/ej2-angular-gantt';
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { DialogUtility } from '@syncfusion/ej2-popups';
@@ -29,7 +33,6 @@ import { ItemRoadmap } from 'src/app/models/item/ItemRoadmap';
 import { Roadmap } from 'src/app/models/projects/Roadmap';
 import { PageService } from 'src/app/services/page.service';
 import { RoadmapService } from 'src/app/services/roadmap/roadmap.service';
-import { EditDialogFieldDirective } from '@syncfusion/ej2-angular-gantt';
 declare var require: any;
   L10n.load({
         'it': {
@@ -97,8 +100,8 @@ export class RoadmapPage {
   private subTasksEpic: any[]=[];
   private subtasksTmpStory: any[]= [];
   public taskSettings: object;
-  public editSettings={};
-  public toolbar={};
+  public editSettings: EditSettingsModel;
+  public toolbar: ToolbarItem[];
   public editDialogFields: EditDialogFieldDirective;
   public columns: object[];
   public sortSettings: object;
@@ -117,7 +120,7 @@ export class RoadmapPage {
   public startingDate: Date= new Date();
   public endingDate: Date= new Date();
   public itemRoadmap: ItemRoadmap= new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
-  public roadmap: Roadmap = new Roadmap(null,null,null,null);
+  public roadmap : Roadmap = new Roadmap(null,null,null,null);
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -135,7 +138,7 @@ export class RoadmapPage {
   ) {    this.pageService.setTitle('Roadmap');
 
     this.activatedRoute.params.subscribe((params) =>{
-      this.sessionService.loadProject(params['id']);
+      this.sessionService.loadProject(params['id'])
       this.projectId=params['id'];
     });
     if(translateService.currentLang === 'it'){
@@ -549,8 +552,6 @@ public openDialogAlertEqualTypeAndFather = function(): void {
   }
   addItemRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap ){
     this.roadmapService.addItemToRoadmap(idProject,idBacklog,idRoadmap,roadmap).subscribe(data => {
-    });
+    })
   }
 }
-
-

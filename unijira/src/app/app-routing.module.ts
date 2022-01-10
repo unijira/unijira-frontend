@@ -49,7 +49,7 @@ const routes: Routes = [
   {
     path: 'projects/:id/roadmap',
     canActivate: [AuthGuard],
-    loadChildren: () => import('./pages/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
+    loadChildren: () => import('./pages/projects/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
   },
 ];
 
