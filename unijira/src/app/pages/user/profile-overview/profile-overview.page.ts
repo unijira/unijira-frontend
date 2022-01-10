@@ -6,6 +6,7 @@ import {AccountService} from '../../../services/account.service';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../../../services/user/user.service';
 import {FileUploadService} from '../../../services/file-upload/file-upload.service';
+import {PageService} from '../../../services/page.service';
 
 
 @Component({
@@ -43,7 +44,9 @@ export class ProfileOverviewPage implements OnInit {
     private usersService: UserService,
     private uploadService: FileUploadService,
     private route: ActivatedRoute,
+    private pageService: PageService
   ) {
+    this.pageService.setTitle('Profile');
   }
 
   ngOnInit() {
@@ -62,7 +65,11 @@ export class ProfileOverviewPage implements OnInit {
         if (user.createdAt != null) {
           this.splitDate(this.user.createdAt.toString());
         }
+        this.pageService.setTitle(this.user.username + '- Profile');
+
       });
+
+
 
 
     });

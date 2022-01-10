@@ -57,7 +57,7 @@
           </ion-card-header>
           <ion-card-content>
             <div>
-              <ion-text>{{'on.unijira.since' | translate}} {{monthAsString + "/" + yearAsString}}</ion-text>
+              <ion-text *ngIf="monthAsString && yearAsString">{{'on.unijira.since' | translate}} {{monthAsString + "/" + yearAsString}}</ion-text>
 
             </div>
           </ion-card-content>

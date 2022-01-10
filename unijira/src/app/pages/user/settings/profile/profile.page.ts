@@ -5,6 +5,7 @@ import {UserInfo} from '../../../../models/users/UserInfo';
 import {Project} from '../../../../models/projects/Project';
 import {UserService} from '../../../../services/user/user.service';
 import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
+import {PageService} from '../../../../services/page.service';
 
 
 @Component({
@@ -40,8 +41,10 @@ export class ProfilePage implements OnInit {
     private http: HttpService,
     private accountService: AccountService,
     private usersService: UserService,
-    private uploadService: FileUploadService
+    private uploadService: FileUploadService,
+    private pageService: PageService
   ) {
+    this.pageService.setTitle('Profile');
   }
 
   ngOnInit() {
@@ -57,11 +60,12 @@ export class ProfilePage implements OnInit {
         if (user.createdAt != null) {
           this.splitDate(this.user.createdAt.toString());
         }
-
+        this.pageService.setTitle(this.user.username + '- Profile');
       });
 
       this.preferredLanguage ='italian';
       this.preferredTheme='light';
+
     });
   }
 
