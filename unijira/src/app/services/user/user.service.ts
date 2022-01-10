@@ -3,7 +3,7 @@ import {HttpService} from '../http-service.service';
 import {catchError, map, Observable, of} from 'rxjs';
 import {UserInfo} from '../../models/users/UserInfo';
 import {Project} from '../../models/projects/Project';
-import {UserPasswordReset} from "../../models/users/UserPasswordReset";
+import {UserPasswordReset} from '../../models/users/UserPasswordReset';
 
 @Injectable({
   providedIn: 'root'

@@ -1,4 +1,4 @@
-import {UserStatus} from "./UserStatus";
+import {UserStatus} from './UserStatus';
 
 export class UserInfo {
 

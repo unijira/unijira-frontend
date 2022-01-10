@@ -5,7 +5,7 @@ import {AlertController, IonSlides, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../../services/page.service';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {validateConfirmPassword, switchLanguage, switchColorTheme} from '../../../util';
+import {switchColorTheme, switchLanguage, validateConfirmPassword} from '../../../util';
 import {UserService} from '../../../services/user/user.service';
 import {UserPasswordReset} from '../../../models/users/UserPasswordReset';
 import {SessionService} from '../../../store/session.service';
