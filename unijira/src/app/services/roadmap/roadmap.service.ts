@@ -19,7 +19,7 @@ export class RoadmapService {
   .pipe(catchError(e => of([])));
   }
   addItem(item: ItemRoadmap){
-    return this.http.post<any>('/items').pipe(catchError(e => of([])));
+    return this.http.post<ItemRoadmap>('/items',item);
   }
   addItemToRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap): Observable<any>{
     return this.http.post<AnyCatcher>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps/'+idRoadmap+'/insertions',roadmap);

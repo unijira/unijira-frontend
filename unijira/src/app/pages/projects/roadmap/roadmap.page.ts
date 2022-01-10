@@ -119,6 +119,7 @@ export class RoadmapPage {
   public roadmapId: number;
   public startingDate: Date= new Date();
   public endingDate: Date= new Date();
+  public returnedItem: ItemRoadmap=new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
   public itemRoadmap: ItemRoadmap= new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
   public roadmap : Roadmap = new Roadmap(null,null,null,null);
   public animationSettingsDialog: Object = {
@@ -247,11 +248,14 @@ export class RoadmapPage {
       this.itemRoadmap.description= tasknameObj.value;
       this.itemRoadmap.summary= tasknameObj.value ;
       this.itemRoadmap.type= itemType.value;
-      this.roadmap.item= this.itemRoadmap;
       this.roadmap.startingDate= this.startingDate;
       this.roadmap.endingDate= this.endingDate;
       this.roadmap.roadmapId= this.roadmapId;
-      //this.addItemRoadmap(this.projectId,this.backlogId,this.roadmapId,this.roadmap);
+      this.addItem(this.itemRoadmap);
+      setTimeout(()=> {
+      this.roadmap.item=this.returnedItem;
+      this.addItemRoadmap(this.projectId,this.backlogId,this.roadmapId,this.roadmap);
+      }, 600);
       if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,
@@ -550,8 +554,15 @@ public openDialogAlertEqualTypeAndFather = function(): void {
         this.dataDropDown = [this.itemTypeEnum.epic, this.itemTypeEnum.story, this.itemTypeEnum.task, this.itemTypeEnum.issue];
       }
   }
+  addItem(item: ItemRoadmap)
+  {
+    this.roadmapService.addItem(item).subscribe(data => {
+      this.returnedItem=data;
+    })
+  }
   addItemRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap ){
     this.roadmapService.addItemToRoadmap(idProject,idBacklog,idRoadmap,roadmap).subscribe(data => {
+      console.log(data);
     })
   }
 }

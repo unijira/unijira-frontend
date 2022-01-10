@@ -203,6 +203,7 @@
   "project.roadmap.addNewItem.title": "Aggiungi un nuovo item",
   "project.roadmap.selectFather": "Seleziona un padre",
   "project.roadmap.status": "Stato",
+  "projects.roadmap.addItem": "Aggiungi Item",
   "projects.tickets.title": "Ticket",
   "projects.tickets.export": "Esporta CSV",
   "projects.tickets.add": "Aggiungi ticket",
