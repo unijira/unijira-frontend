@@ -43,6 +43,7 @@
           </ion-button>
         </ion-col>
       </ion-row>
+
       <!-- /ion-row PROGETTO-->
       <ion-accordion-group>
         <ion-accordion
@@ -68,7 +69,36 @@
                 </p>
               </ion-text>
             </ion-col>
-
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.search.label'"></small>
+              </ion-text>
+              <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchS"></ion-searchbar>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.status.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterStatusS" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.type.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterTypeS" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemType.epic"> {{ itemType.epic  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.story">{{ itemType.story | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.task"> {{ itemType.task  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.issue">{{ itemType.issue | ticketType | translate | titlecase }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
             <ion-col size="auto" class="ion-align-self-center">
               <ion-badge color="light">{{ totalNonAvviatos }}</ion-badge>
             </ion-col>
@@ -130,7 +160,7 @@
                     class="light-gray-bg"
                   >
                     <ion-row
-                      *ngFor="let insertion of sprint.insertions"
+                      *ngFor="let insertion of filteredTicketsS"
                       class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
                     >
                       <ion-col>
@@ -247,6 +277,36 @@
                 </p>
               </ion-text>
             </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.search.label'"></small>
+              </ion-text>
+              <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchB"></ion-searchbar>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.status.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterStatusB" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.type.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterTypeB" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemType.epic"> {{ itemType.epic  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.story">{{ itemType.story | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.task"> {{ itemType.task  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.issue">{{ itemType.issue | ticketType | translate | titlecase }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
             <ion-col size="auto" class="ion-align-self-center"> </ion-col>
             <ion-col size="auto" class="ion-align-self-center">
               <ion-badge color="light">{{ totalNonAvviatob }}</ion-badge>
@@ -277,7 +337,7 @@
                     [(dragulaModel)]="backlog.insertions"
                   >
                     <ion-row
-                      *ngFor="let insertion of backlog.insertions"
+                      *ngFor="let insertion of filteredTicketsB"
                       class="ion-align-items-end ion-justify-content-center task-item white-bg"
                     >
                       <ion-col>

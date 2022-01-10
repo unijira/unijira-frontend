@@ -1,7 +1,7 @@
 import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../../../store/task.service';
@@ -27,7 +27,8 @@ import { IonAccordionGroup } from '@ionic/angular';
 import * as Moment from 'moment';
 import { NewItemComponent } from './modals/new-item/new-item.component';
 import { SessionService } from 'src/app/store/session.service';
-import {PageService} from '../../../services/page.service';
+import { PageService } from '../../../services/page.service';
+import { ItemType } from 'src/app/models/item/ItemType';
 
 @Component({
   selector: 'app-backlog',
@@ -37,6 +38,15 @@ import {PageService} from '../../../services/page.service';
 export class BacklogPage implements OnInit {
   @ViewChild(IonAccordionGroup, { static: true })
   accordionGroup: IonAccordionGroup;
+
+  filterSearchS;
+  filterStatusS: string[];
+  filterTypeS: string[];
+  filterSearchB;
+  filterStatusB: string[];
+  filterTypeB: string[];
+  itemType = ItemType;
+  itemStatus = ItemStatus;
   sprint: Sprint = new Sprint(
     0,
     new Date(),
@@ -67,8 +77,6 @@ export class BacklogPage implements OnInit {
   startSprintDate: string;
   endSprintDate: string;
 
-
-
   minDate: string;
 
   // TODO Scablare
@@ -93,12 +101,55 @@ export class BacklogPage implements OnInit {
     private pageService: PageService
   ) {
 
-    this.route.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.filterTypeS = [
+      ItemType.epic,
+      ItemType.story,
+      ItemType.task,
+      ItemType.issue,
+    ];
+
+    this.filterStatusS = [ItemStatus.open, ItemStatus.done];
+
+    this.filterSearchS = '';
+
+
+    this.filterTypeB = [
+      ItemType.epic,
+      ItemType.story,
+      ItemType.task,
+      ItemType.issue,
+    ];
+
+    this.filterStatusB = [ItemStatus.open, ItemStatus.done];
+    this.filterSearchB = '';
+
+
+    this.route.params.subscribe((params) =>
+      this.sessionService.loadProject(params.id)
+    );
 
     this.pageService.setTitle('backlog.page.title');
   }
 
+  get filteredTicketsS() {
+    return this.sprint.insertions?.filter(ticket => (
+      (this.filterSearchS === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchS.toLowerCase())) &&
+      (this.filterStatusS?.length === 0  || this.filterStatusS?.includes(ticket.item.status)) &&
+      (this.filterTypeS?.length === 0    || this.filterTypeS?.includes(ticket.item.type))
+    )) || [];
+  }
+
+  get filteredTicketsB() {
+    return this.backlog.insertions?.filter(ticket => (
+      (this.filterSearchB === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchB.toLowerCase())) &&
+      (this.filterStatusB?.length === 0  || this.filterStatusB?.includes(ticket.item.status)) &&
+      (this.filterTypeB?.length === 0    || this.filterTypeB?.includes(ticket.item.type))
+    )) || [];
+  }
+
   ngOnInit() {
+
+
     const that = this;
     this.totalDones = 0;
     this.totalNonAvviatos = 0;
@@ -170,14 +221,14 @@ export class BacklogPage implements OnInit {
 
   onDateChangeEnd(ev) {}
   /* MODAL */
-  async newItemModal(task) {
+  async newItemModal() {
     const modal = await this.modalController.create({
       component: NewItemComponent,
       cssClass: 'my-custom-class',
       componentProps: {
         pid: this.projectId,
         bid: this.backlogId,
-      }
+      },
     });
     return await modal.present();
   }
@@ -188,18 +239,16 @@ export class BacklogPage implements OnInit {
     });
   }
 
-
-
-formatDate(date) {
-  const dateFormat = Moment(date);
-  const dateNow = Moment();
-  const diff = dateNow.diff(dateFormat, 'years');
-  if (diff > 0) {
-    return dateFormat.format('DD MM YYYY');
-  } else {
-    return dateFormat.format('DD MMM');
+  formatDate(date) {
+    const dateFormat = Moment(date);
+    const dateNow = Moment();
+    const diff = dateNow.diff(dateFormat, 'years');
+    if (diff > 0) {
+      return dateFormat.format('DD MM YYYY');
+    } else {
+      return dateFormat.format('DD MMM');
+    }
   }
-}
 
   /* EDIT */
   editStatus(task, data, type) {
@@ -313,7 +362,9 @@ formatDate(date) {
               this.backlog.insertions.push(JSON.parse(JSON.stringify(item)));
             });
 
-            this.backlog.insertions = this.backlog.insertions.sort((a, b) => a.priority - b.priority);
+            this.backlog.insertions = this.backlog.insertions.sort(
+              (a, b) => a.priority - b.priority
+            );
             this.backlog.insertions.forEach((item) => {
               console.log('item priority', item.priority);
             });
@@ -330,7 +381,7 @@ formatDate(date) {
       .getSprint(this.projectId, this.backlogId, this.sprintId)
       .subscribe((response) => {
         that.sprint = response;
- console.log('that.sprint ', that.sprint);
+        console.log('that.sprint ', that.sprint);
         if (this.sprint.startingDate != null) {
           this.startSprintDate = new Date(this.sprint.startingDate)
             .toISOString()
@@ -393,7 +444,11 @@ formatDate(date) {
     );
     const allItemsNew = allInsertionsNew.map((item) => item.item);
     const allItemsOld = allInsertionsOld.map((item) => item.item);
-    console.log('Lenght tmpS tmpB', tmpS.insertions?.length, tmpB.insertions?.length);
+    console.log(
+      'Lenght tmpS tmpB',
+      tmpS.insertions?.length,
+      tmpB.insertions?.length
+    );
     console.log(allItemsNew.length, allItemsOld.length);
 
     forEach(allItemsOld, (item) => {
@@ -409,18 +464,23 @@ formatDate(date) {
 
     this.backlogServer.insertions?.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
-
         itemToRemoveFromBacklog.push(
           new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
         );
       }
     });
 
-    const itemRimastiNelBacklog = _.differenceBy(this.backlogServer.insertions, itemToRemoveFromBacklog, 'id');
+    const itemRimastiNelBacklog = _.differenceBy(
+      this.backlogServer.insertions,
+      itemToRemoveFromBacklog,
+      'id'
+    );
     console.log('itemRimastiNelBacklog', itemRimastiNelBacklog);
     itemRimastiNelBacklog.forEach((item, index) => {
       item.priority = index;
-      this.backlogAPIService.updateBacklogInsertion(this.projectId, this.backlogId, item).subscribe((response) => {});
+      this.backlogAPIService
+        .updateBacklogInsertion(this.projectId, this.backlogId, item)
+        .subscribe((response) => {});
     });
     this.sprintServer.insertions?.forEach((item, index) => {
       if (tmpS.insertions.find((i) => i.id === item.id) === undefined) {
@@ -452,8 +512,6 @@ formatDate(date) {
         .addBacklogInsertion(this.projectId, this.backlogId, item)
         .subscribe((response) => {});
     });
-
-
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));

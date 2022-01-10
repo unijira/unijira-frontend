@@ -7,7 +7,9 @@ import {FormsModule} from '@angular/forms';
 import {IonicModule} from '@ionic/angular';
 
 import {BacklogPageRoutingModule} from './backlog-routing.module';
-
+import {TicketStatusPipe} from './pipes/ticket-status.pipe';
+import {TicketStatusColorPipe} from './pipes/ticket-status-color.pipe';
+import {TicketTypePipe} from './pipes/ticket-type.pipe';
 import {BacklogPage} from './backlog.page';
 import {DragulaModule} from 'ng2-dragula';
 import {TaskService} from '../../../store/task.service';
@@ -15,7 +17,7 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 
 import {TranslateModule} from '@ngx-translate/core';
 
-
+import {PipeModule} from '../../../pipe.module';
 @NgModule({
   imports: [
     CommonModule,
@@ -24,9 +26,10 @@ import {TranslateModule} from '@ngx-translate/core';
     FontAwesomeModule,
     BacklogPageRoutingModule,
     DragulaModule.forRoot(),
-    TranslateModule
+    TranslateModule,
+    PipeModule
   ],
-  declarations: [BacklogPage, BackloglistComponent, SprintlistComponent],
+  declarations: [BacklogPage, BackloglistComponent, SprintlistComponent , TicketStatusPipe, TicketStatusColorPipe, TicketTypePipe],
   providers: [TaskService],
 })
 export class BacklogPageModule {}
