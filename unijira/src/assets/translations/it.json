@@ -238,6 +238,7 @@
   "board.epic" : "Epic",
   "board.endSprint" : "Completa sprint",
   "board.sprintDate" : "Sprint dal {{d1}} al {{d2}}",
+  "board.startSprint" : "Avvia sprint",
   "projects.settings.roles.filter.type" : "Seleziona ruolo",
   "projects.settings.invitations.filter.type" : "Seleziona stato",
   "project.settings.permissions.title" : "Permessi",

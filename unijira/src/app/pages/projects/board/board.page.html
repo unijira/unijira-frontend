@@ -36,7 +36,7 @@
       </ion-col>
     </ion-row>
   </section>
-    <section class="ion-margin" *ngIf="sprint">
+    <section class="ion-margin">
       <ion-row>
         <ion-col size="3">
           <ion-searchbar [placeholder]="'board.searchText' | translate" formControlName="search"></ion-searchbar>
@@ -129,7 +129,14 @@
       <ion-img src="/assets/img/projects/board-no-sprint.webp" class="wizard-invite-header-image" alt="" style="height: 300px"></ion-img>
     </ion-row>
     <ion-row class="ion-justify-content-center">
-      <ion-text translate>board.noSprintActive</ion-text>
+      <ion-col>
+        <ion-row class="ion-justify-content-center">
+          <ion-text translate>board.noSprintActive</ion-text>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-button color="primary" translate [routerLink]="'/projects/'+project?.id+'/backlog'">board.startSprint</ion-button>
+        </ion-row>
+      </ion-col>
     </ion-row>
   </div>
 </ion-content>
