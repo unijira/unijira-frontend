@@ -46,7 +46,7 @@ export class ProfileOverviewPage implements OnInit {
     private route: ActivatedRoute,
     private pageService: PageService
   ) {
-    this.pageService.setTitle('Profile');
+    this.pageService.setTitle('profile');
   }
 
   ngOnInit() {
@@ -63,8 +63,7 @@ export class ProfileOverviewPage implements OnInit {
         if (user.createdAt != null) {
           this.splitDate(this.user.createdAt.toString());
         }
-        this.pageService.setTitle(this.user.username + '- Profile');
-
+        this.pageService.setTitle(['profile', this.user.username]);
       });
 
 
