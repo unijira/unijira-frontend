@@ -325,6 +325,4 @@
   "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
   "project.invite.toast.success" : "La registrazione è stata completata correttamente",
   "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
-  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
-
 }
