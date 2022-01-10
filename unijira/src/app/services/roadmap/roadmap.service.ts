@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { catchError, Observable, of } from 'rxjs';
 import { AnyCatcher } from 'rxjs/internal/AnyCatcher';
-import { Roadmap } from '../models/projects/Roadmap';
-import { HttpService } from './http-service.service';
+import { Roadmap } from 'src/app/models/projects/Roadmap';
+import { HttpService } from '../http-service.service';
 
 @Injectable({
   providedIn: 'root'

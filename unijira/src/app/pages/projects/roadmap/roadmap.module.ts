@@ -24,7 +24,7 @@ import {TranslateModule} from '@ngx-translate/core';
     RoadmapPageRoutingModule,GanttAllModule,DialogModule,TextBoxModule,DatePickerModule,TranslateModule
   ],
   declarations: [RoadmapPage],
-  providers: [EditService , FilterService, SortService, SelectionService, RowDDService,ToolbarService,DayMarkersService,GanttComponent,
+  providers: [EditService , FilterService, SortService, SelectionService, RowDDService,ToolbarService,DayMarkersService,GanttComponent
     ]
 })
 export class RoadmapPageModule {}

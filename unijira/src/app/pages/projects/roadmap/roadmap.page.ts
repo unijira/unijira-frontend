@@ -13,25 +13,27 @@
 /* eslint-disable @typescript-eslint/member-ordering */
 /* eslint-disable @typescript-eslint/naming-convention */
 /* eslint-disable @typescript-eslint/quotes */
+
 import { Component, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { loadCldr } from "@syncfusion/ej2-base";
-import {
-  ToolbarItem,
-  EditSettingsModel,
-  EditDialogFieldDirective,
-} from '@syncfusion/ej2-angular-gantt';
+
 import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { DialogUtility } from '@syncfusion/ej2-popups';
 import { SessionService } from 'src/app/store/session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
-import { ItemType } from 'src/app/models/projects/ItemsType';
+import { ItemType } from 'src/app/models/item/ItemType';
+import { ItemRoadmap } from 'src/app/models/item/ItemRoadmap';
+import { Roadmap } from 'src/app/models/projects/Roadmap';
+import { PageService } from 'src/app/services/page.service';
+import { RoadmapService } from 'src/app/services/roadmap/roadmap.service';
+import { EditDialogFieldDirective } from '@syncfusion/ej2-angular-gantt';
 declare var require: any;
   L10n.load({
         'it': {
-          'gantt': {
+          gantt: {
                   "id": "id",
                   "name": "Nome",
                   "startDate": "Data inizio",
@@ -86,19 +88,18 @@ export class RoadmapPage {
   @ViewChild('adddialog', { static: true }) adddialog: DialogComponent;
   // Data for Gantt
   public data: any[] = [];
-  public itemTypeEnum= ItemType;
+  private itemTypeEnum= ItemType;
   public dataDropDown: string[] = []; //DataDropDown
-  public dataFathersDropDown: any[] = [];
+  public dataFathersDropDown: any[] = []; //DataDropDownFathers
   public enabled = false; //To show the Father select on the add item dialog
-  public dataTmp: any[] = [];
-  public subtasksTmp: any[] = [];
-  public subTasksEpic: any[]=[];
-  public subtasksTmpStory: any[]= [];
+  private dataTmp: any[] = [];
+  private subtasksTmp: any[] = [];
+  private subTasksEpic: any[]=[];
+  private subtasksTmpStory: any[]= [];
   public taskSettings: object;
-  public editSettings: EditSettingsModel;
-  public toolbar: ToolbarItem[];
+  public editSettings={};
+  public toolbar={};
   public editDialogFields: EditDialogFieldDirective;
-  public rowData: any;
   public columns: object[];
   public sortSettings: object;
   public visible: Boolean = false;
@@ -107,9 +108,16 @@ export class RoadmapPage {
   public alert = false;
   public itemAdded= false;
   public todayDate: Date= new Date();
-  public minStartDate : object= new Date(this.todayDate);
-  public minEndDate : object= new Date(this.todayDate);
-  public Status = 'Aperto';
+  public minStartDate: object= new Date(this.todayDate);
+  public minEndDate: object= new Date(this.todayDate);
+  public Status = 'Open';
+  public projectId: number;
+  public backlogId: number;
+  public roadmapId: number;
+  public startingDate: Date= new Date();
+  public endingDate: Date= new Date();
+  public itemRoadmap: ItemRoadmap= new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
+  public roadmap: Roadmap = new Roadmap(null,null,null,null);
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -120,12 +128,16 @@ export class RoadmapPage {
   constructor(
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private roadmapService: RoadmapService,
+    private pageService: PageService
 
-  ) {
-    this.activatedRoute.params.subscribe((params) =>
-      this.sessionService.loadProject(params['id'])
-    );
+  ) {    this.pageService.setTitle('Roadmap');
+
+    this.activatedRoute.params.subscribe((params) =>{
+      this.sessionService.loadProject(params['id']);
+      this.projectId=params['id'];
+    });
     if(translateService.currentLang === 'it'){
     setCulture('it');
       loadCldr(
@@ -148,14 +160,21 @@ export class RoadmapPage {
       );
     }
     else {
-      this.Status='Open'
       setCulture('en');
 
     }
   });
 }
   public ngOnInit(): void {
-    this.initGantt();
+      this.roadmapService.getBacklog(this.projectId).subscribe(backlog =>{
+          this.backlogId=backlog[0].id;
+      });
+      setTimeout(()=> {
+        this.roadmapService.getRoadmap(this.projectId,this.backlogId).subscribe( roadmap => {
+          this.roadmapId= roadmap[0].id;
+        });
+      }, 200);
+     this.initGantt();
   }
 
   public initGantt(){
@@ -168,7 +187,6 @@ export class RoadmapPage {
       startDate: 'StartDate',
       endDate: 'EndDate',
       duration: 'Duration',
-      dependency: '',
       child: 'subtasks',
       mode: 'Dialog',
     };
@@ -221,6 +239,16 @@ export class RoadmapPage {
     let record: object = {};
     // If epic add like father
     if (this.alert === false) {
+      this.startingDate= taskStartDate.value.toISOString().split('T')[0];
+      this.endingDate=taskEndDate.value.toISOString().split('T')[0];
+      this.itemRoadmap.description= tasknameObj.value;
+      this.itemRoadmap.summary= tasknameObj.value ;
+      this.itemRoadmap.type= itemType.value;
+      this.roadmap.item= this.itemRoadmap;
+      this.roadmap.startingDate= this.startingDate;
+      this.roadmap.endingDate= this.endingDate;
+      this.roadmap.roadmapId= this.roadmapId;
+      //this.addItemRoadmap(this.projectId,this.backlogId,this.roadmapId,this.roadmap);
       if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,
@@ -429,8 +457,7 @@ export class RoadmapPage {
   ];
 
   public onActionComplete(args: any): void {
-    if (args.action === 'add' && args.requestType === 'add') {
-    }
+
   }
 
 
@@ -452,6 +479,7 @@ export class RoadmapPage {
     }
   }
   onLoad(args: any) {
+
   }
   queryTaskbarInfo(args: any) {
  if (args.data.ItemType === this.itemTypeEnum.epic) {
@@ -493,5 +521,36 @@ public openDialogAlertEqualTypeAndFather = function(): void {
       animationSettings: { effect: 'Zoom' },
     });
   };
+  export() {
 
+    /**let csv = '';
+    csv += Object.keys(this.tickets[0]).join(';') + '\n';
+    csv += Object.values(this.filteredTickets).map(ticket => Object.values(ticket).join(';')).join('\n');
+
+    const blob = new Blob([csv], {type: 'text/csv'});
+    const url = window.URL.createObjectURL(blob);
+    const a = document.createElement('a');
+
+    a.setAttribute('hidden', '');
+    a.setAttribute('href', url);
+    a.setAttribute('download', 'tickets.csv');
+    a.click();
+    */
+
+  }
+  CreaItem(){
+    this.adddialog.show();
+     this.enabled=false;
+      if (this.dataDropDown.length === 0) {
+        this.dataDropDown = [this.itemTypeEnum.epic];
+      } else {
+        this.dataDropDown = [this.itemTypeEnum.epic, this.itemTypeEnum.story, this.itemTypeEnum.task, this.itemTypeEnum.issue];
+      }
+  }
+  addItemRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap ){
+    this.roadmapService.addItemToRoadmap(idProject,idBacklog,idRoadmap,roadmap).subscribe(data => {
+    });
+  }
 }
+
+

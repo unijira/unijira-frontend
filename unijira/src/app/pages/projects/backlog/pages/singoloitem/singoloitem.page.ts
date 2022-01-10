@@ -11,7 +11,7 @@ import { BacklogEditVisibilityPopoversComponent } from '../../popovers/backlog-e
 import { BacklogEditSubmenuPopoversComponent } from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
 import { BacklogEditLinkPopoversComponent } from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
 import { BacklogEditLockPopoversComponent } from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
-//import { ClipboardService } from 'ngx-clipboard';
+import { ClipboardService } from 'ngx-clipboard';
 
 
 
@@ -31,7 +31,7 @@ export class SingoloitemPage implements OnInit {
     private modalCtrl: ModalController,
     private router: ActivatedRoute,
     private backlogApi: BacklogAPIService,
-  //  private clipboardService: ClipboardService
+    private clipboardService: ClipboardService
   ) {
     this.itemId = parseInt(this.router.snapshot.paramMap.get('id'), 10);
     this.backlogApi.getItem(this.itemId).subscribe((item) => {
@@ -101,7 +101,7 @@ export class SingoloitemPage implements OnInit {
   }
 
   copyToClipboard(ev) {
-    //this.clipboardService.copy(this.gitSuggestion.toString());
+    this.clipboardService.copy(this.gitSuggestion.toString());
   }
 
   async editLockPopover(ev: any) {
