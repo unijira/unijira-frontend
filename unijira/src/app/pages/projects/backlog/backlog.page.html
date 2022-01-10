@@ -179,13 +179,16 @@
                       <ion-col
                         class="ion-justify-content-end ion-align-self-center"
                       >
+                      <ion-item>
+
                         <div *ngIf="insertion.item.father">
                           <fa-icon
-                            [icon]="['fas', 'network-wired']"
-                            class="childicon"
+                          [icon]="['fas', 'network-wired']"
+                          class="childicon"
                           >
-                          </fa-icon>
-                        </div>
+                        </fa-icon>
+                      </div>
+                    </ion-item>
                       </ion-col>
                       <ion-col
                         size="auto"
@@ -215,7 +218,7 @@
                         >
                           <ion-badge
                             *ngIf="insertion.item.status === 'OPEN' "
-                            color="medium"
+                            color="primary"
                             class="status-badge"
                             >{{ insertion.item.status }}</ion-badge
                           >
@@ -225,6 +228,13 @@
                             class="status-badge"
                             >{{ insertion.item.status }}</ion-badge
                           >
+
+                          <ion-badge
+                          *ngIf="insertion.item.status === 'TODO' "
+                          color="light"
+                          class="status-badge"
+                          >{{ insertion.item.status }}</ion-badge
+                        >
                         </div>
                       </ion-col>
 
@@ -389,18 +399,25 @@
                         <div
                           (click)="editStatusPopover($event, insertion, 'backlog')"
                         >
-                          <ion-badge
-                            *ngIf="insertion.item.status === 'OPEN' "
-                            color="medium"
-                            class="status-badge"
-                            >{{ insertion.item.status }}</ion-badge
-                          >
-                          <ion-badge
-                            *ngIf="insertion.item.status === 'DONE' "
-                            color="success"
-                            class="status-badge"
-                            >{{ insertion.item.status }}</ion-badge
-                          >
+                        <ion-badge
+                        *ngIf="insertion.item.status === 'OPEN' "
+                        color="primary"
+                        class="status-badge"
+                        >{{ insertion.item.status }}</ion-badge
+                      >
+                      <ion-badge
+                        *ngIf="insertion.item.status === 'DONE' "
+                        color="success"
+                        class="status-badge"
+                        >{{ insertion.item.status }}</ion-badge
+                      >
+
+                      <ion-badge
+                      *ngIf="insertion.item.status === 'TODO' "
+                      color="light"
+                      class="status-badge"
+                      >{{ insertion.item.status }}</ion-badge
+                    >
                         </div>
                       </ion-col>
 
