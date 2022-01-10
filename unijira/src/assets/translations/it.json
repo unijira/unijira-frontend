@@ -319,5 +319,9 @@
   "projects.releases.view.save": "Salva",
   "projects.releases.view.tickets.title": "Ticket",
   "error.projects.releases.create": "Si è verificato un errore durante la creazione di un rilascio",
-  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio"
+  "error.projects.releases.view.save": "Si è verificato un errore durante il salvataggio del rilascio",
+  "invite.change.password.title" : "Completa la procedura di registrazione",
+  "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
+  "project.invite.toast.success" : "La registrazione è stata completata correttamente",
+  "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
 }

@@ -1,7 +1,7 @@
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
-import {unsubscribeAll, switchLanguage, switchColorTheme} from './util';
+import {switchColorTheme, switchLanguage, unsubscribeAll} from './util';
 import {Router} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import * as moment from 'moment';
@@ -105,10 +105,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
     this.translateService.setDefaultLang('it');
 
-    let deviceLang = localStorage.getItem('currentLang');
+    const deviceLang = localStorage.getItem('currentLang');
 
     if(deviceLang)
-      this.translateService.use(deviceLang);
+      {this.translateService.use(deviceLang);}
     else {
       this.translateService.use('it');
     }
@@ -116,10 +116,10 @@ export class AppComponent implements OnInit, OnDestroy {
 
 
   configTheme() {
-    let deviceTheme = localStorage.getItem('colorTheme');
+    const deviceTheme = localStorage.getItem('colorTheme');
 
     if(deviceTheme)
-      document.body.setAttribute('color-theme', deviceTheme);
+      {document.body.setAttribute('color-theme', deviceTheme);}
   }
 
 
@@ -176,6 +176,7 @@ export class AppComponent implements OnInit, OnDestroy {
   isPageWithoutHeader() {
     return /\/login/.test(this.router.url) ||
       /\/registration/.test(this.router.url) ||
-      /\/activate/.test(this.router.url);
+      /\/activate/.test(this.router.url) ||
+      /\/invite/.test(this.router.url);
   }
 }
