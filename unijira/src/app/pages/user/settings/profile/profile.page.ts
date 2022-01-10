@@ -82,23 +82,14 @@ export class ProfilePage implements OnInit {
   }
 
   setPreferredTheme(value) {
-    console.log('Setting preferred theme to '+value);
+
     this.preferredTheme = value;
   }
 
   setPreferredLanguage(value) {
-    console.log('Setting preferred language to '+value);
     this.preferredLanguage = value;
   }
 
-
-  copyBack() {
-    this.dummy();
-  }// Just print object
-
-  dummy() {
-    console.log(this.user);
-  }
 
   getCollaborators() {
     this.usersService.getCollaborators(this.user.id).subscribe(value => {
@@ -119,30 +110,22 @@ export class ProfilePage implements OnInit {
 
   uploadImage() {
     if(this.file !== undefined) {
-      console.log(this.file);
       this.uploadService.upload(this.user.id, 'avatar', this.file, BasePath.user).subscribe(
         url => {
-          console.log(url);
           this.user.avatar = new URL(url);
-          console.log(this.user);
           this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-            console.log(value);
           });
         }
           );
     }
     else {
-        console.log(this.user);
         this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-          console.log(value);
       });
     }
 
   }
 
-  changePassword() {
-    console.log('OK');
-  }
+  changePassword() {}
 
   onFileChanged(event) {
     const reader = new FileReader();
