@@ -46,7 +46,6 @@ export class RegistrationPage implements OnInit, OnDestroy {
 
   loggedSubscription: Subscription;
 
-
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -203,5 +202,4 @@ export class RegistrationPage implements OnInit, OnDestroy {
       this.router.navigate(['/home'], {replaceUrl: true}).then();
     }
   }
-
 }

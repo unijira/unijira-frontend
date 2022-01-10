@@ -13,16 +13,17 @@ export class BacklogEditWeightPopoversComponent implements OnInit {
   constructor(private popoverCtrl: PopoverController) {}
 
   ngOnInit() {
+    console.log('Peso originale', this.pesoOriginal);
     this.pesomodificato = this.pesoOriginal;
   }
 
   save() {
-    console.log(this.pesomodificato);
+    console.log('save', this.pesomodificato);
     this.popoverCtrl.dismiss({value: this.pesomodificato}).then();
   }
 
   dismiss() {
-    console.log('dismiss');
+    console.log('Dismiss', this.pesomodificato);
     this.popoverCtrl.dismiss({value: undefined}).then();
   }
 }

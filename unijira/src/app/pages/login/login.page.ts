@@ -15,8 +15,10 @@ import {ToastController} from '@ionic/angular';
   styleUrls: ['./login.page.scss'],
 })
 export class LoginPage implements OnInit, OnDestroy {
-
-  emailFC: FormControl = new FormControl('', [Validators.required, Validators.email]);
+  emailFC: FormControl = new FormControl('', [
+    Validators.required,
+    Validators.email,
+  ]);
   passwordFC: FormControl = new FormControl('', [
     Validators.required,
     Validators.minLength(8),
@@ -30,7 +32,7 @@ export class LoginPage implements OnInit, OnDestroy {
 
   loginFG: FormGroup = new FormGroup({
     email: this.emailFC,
-    password: this.passwordFC
+    password: this.passwordFC,
   });
 
   constructor(
@@ -41,14 +43,15 @@ export class LoginPage implements OnInit, OnDestroy {
     public translateService: TranslateService,
     private toastController: ToastController
   ) {
-
     this.pageService.setTitle('login.title');
 
-    this.loginSubscription = this.sessionService.getIsUserLogged().subscribe(logged => {
-      if (logged === true) {
-        this.redirect();
-      }
-    });
+    this.loginSubscription = this.sessionService
+      .getIsUserLogged()
+      .subscribe((logged) => {
+        if (logged === true) {
+          this.redirect();
+        }
+      });
 
     this.wrongCredentialSubscription = this.sessionService.getWrongCredential()
       .subscribe(wrong => {
@@ -62,13 +65,10 @@ export class LoginPage implements OnInit, OnDestroy {
           ).then(() => this.sessionService.setWrongCredential(false));
         }
       });
-
   }
-
   get currentColorTheme() {
     return document.body.getAttribute('color-theme');
   }
-
   @HostListener('document:keydown.enter', ['$event'])
   handleKeyDown(_event: KeyboardEvent) {
     this.logIn();
@@ -98,14 +98,14 @@ export class LoginPage implements OnInit, OnDestroy {
     unsubscribeAll(this.loginSubscription, this.wrongCredentialSubscription);
   }
 
-
   check(): boolean {
     return this.emailFC.valid && this.passwordFC.valid;
   }
-
   switchLanguage() {
     switchLanguage(this.translateService);
   }
+
+
 
   onToggleColorTheme(event) {
     switchColorTheme(event.detail.checked);

@@ -1,11 +1,13 @@
-import {Injectable} from '@angular/core';
-import {HttpService} from './http-service.service';
-import {SessionService} from '../store/session.service';
-import {Sprint} from '../models/Sprint';
-import {Item} from '../models/item/Item';
-import {User} from '../models/User';
-import {map} from 'rxjs/operators';
-
+import { forEach } from 'lodash';
+import { Injectable } from '@angular/core';
+import { HttpService } from './http-service.service';
+import { SessionService } from '../store/session.service';
+import { Sprint } from '../models/Sprint';
+import { Item } from '../models/item/Item';
+import { map } from 'rxjs/operators';
+import { Backlog } from '../models/Backlog';
+import { BacklogInsertion } from '../models/BacklogInsertion';
+import { SprintInsertion } from '../models/SprintInsertion';
 @Injectable({
   providedIn: 'root',
 })
@@ -15,157 +17,103 @@ export class BacklogAPIService {
     private sessionService: SessionService
   ) {}
 
-  // TODO questo diventa getBacklogItems. Creare getBacklog per prendere i dati del backlog senza gli items
+  getFirstBacklog(projectId: number) {
+    const url = `/projects/${projectId}/backlogs`;
+    return this.httpService.get<any>(url).pipe(map((res) => res[0]));
+  }
+
   getBacklog(projectId: number, backlogId: number) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => {
-        const newBacklog = new Sprint([], new Date(), new Date());
-        res.forEach((element) => {
-          const task = new Item(
-            element.item.id,
-            element.item.summary,
-            element.item.status ?? 'da_completare',
-            [
-              new User(
-                element.item.owner.id,
-                element.item.owner.username,
-                '',
-                '',
-                '',
-                '',
-                null
-              ),
-            ],
-            element.item.evaluation,
-            element.item.children,
-            element.item.type,
-            element.item.comments,
-            element.item.tags.split(';'),
-            element.item.description,
-            element.item.note,
-            element.item.epic,
-            element.item.story,
-            element.item.sprint,
-            new User(
-              element.item.owner.id,
-              element.item.owner.username,
-              '',
-              '',
-              '',
-              '',
-              null
-            )
-          );
-          newBacklog.tasks.push(task);
-        });
-        return newBacklog;
-      })
-    );
+    const url = `/projects/${projectId}/backlogs/${backlogId}`;
+    return this.httpService.get<Backlog>(url).pipe(map((res) => res));
   }
 
-  // TODO questo diventa getSprintItems. Creare getSprint per prendere i dati del sprint senza gli items
+  getBacklogItems(projectId: number, backlogId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions`;
+    return this.httpService.get<BacklogInsertion>(url);
+  }
+
+  getSprintItems(projectId: number, backlogId: number, sprintId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions`;
+    return this.httpService.get<SprintInsertion>(url);
+  }
+
   getSprint(projectId: number, backlogId: number, sprintId: number) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
-    return this.httpService.get<any>(url).pipe(
-      map((res) => {
-        if (res.length === 0) {
-          return new Sprint([], new Date(), new Date());
-        }
-        const newSprint = new Sprint([], new Date(), new Date());
-        const randInt = Math.floor(Math.random() * (110 - 100) + 100);
-        res.forEach((element) => {
-          const task = new Item(
-            element.item.id,
-            element.item.summary,
-            element.item.status ?? 'da_completare',
-            [
-              new User(
-                element.item.owner.id,
-                element.item.owner.username,
-                '',
-                '',
-                '',
-                '',
-                null
-              ),
-            ],
-            element.item.evaluation,
-            element.item.children,
-            element.item.type,
-            element.item.comments,
-            element.item.description,
-            element.item.tags,
-            element.item.note,
-            element.item.epic,
-            element.item.story,
-            element.item.sprint,
-            new User(
-              element.item.owner.id,
-              element.item.owner.username,
-              '',
-              '',
-              '',
-              '',
-              null
-            )
-          );
-          newSprint.tasks.push(task);
-        });
-        return newSprint;
-      })
-    );
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.get<Sprint>(url);
   }
 
-  setItems(task) {
-    const url = `/items/${task.id}`;
-    const item = {
-      id: task.id,
-      summary: task.name,
-      description: task.description,
-      measureUnit: 'story points',
-      evaluation: task.weight,
-      tags: task.tags.join(';'),
-      type: task.type,
-      owner: {
-        id: 1,
-        username: 'paolaguarasci@gmail.com',
-      }
+  addItem(item) {
+    const url = `/items`;
+    return this.httpService.post<Item>(url, item);
+  }
+
+  setItems(item) {
+    const url = `/items/${item.id}`;
+    return this.httpService.put<Item>(url, item);
+  }
+  addBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions`;
+    console.log('set backlog insertion', backlogInsertion);
+    return this.httpService.post<BacklogInsertion>(url, backlogInsertion);
+  }
+  setBacklog(projectId: number, backlogId: number, backlog: Backlog) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}`;
+    return this.httpService.put<Backlog>(url, backlog);
+  }
+
+  addSprintInsertion(projectId: number, backlogId: number, sprintId: number, sprintInsertion: SprintInsertion) {
+    console.log('add sprint insertion', sprintInsertion);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions`;
+    return this.httpService.post<SprintInsertion>(url, sprintInsertion);
+  }
+
+  // updateSprintInsertion(projectId: number, backlogId: number, sprintId: number, sprintInsertion: SprintInsertion) {
+  //   console.log('add sprint insertion', sprintInsertion);
+  //   const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions`;
+  //   return this.httpService.put<SprintInsertion>(url, sprintInsertion);
+  // }
+
+  updateBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    console.log('update backlog insertion', backlogInsertion);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions/${backlogInsertion.id}`;
+    return this.httpService.put<BacklogInsertion>(url, backlogInsertion);
+  }
+
+  deleteBacklogInsertion(projectId: number, backlogId: number, backlogInsertion: BacklogInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/insertions/${backlogInsertion.id}`;
+    return this.httpService.delete<BacklogInsertion>(url);
+  }
+
+  deleteSprintInsertion(projectId: number, backlogId: number, sprintId: number, sprintInsertion: SprintInsertion) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions/${sprintInsertion.id}`;
+    return this.httpService.delete<SprintInsertion>(url);
+  }
+
+  newSprint(projectId: number, backlogId: number) {
+    const sprint = {
+      name: 'Sprint',
+      startingDate: null,
+      endingDate: null
     };
-    return this.httpService.put<any>(url, item);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
+    return this.httpService.post<any>(url, sprint);
+  }
+  startSprint(projectId: number, backlogId: number, sprintId: number, sprint: Sprint) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.put<Sprint>(url, sprint);
+  }
+  updateSprint(projectId: number, backlogId: number, sprint: Sprint) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprint.id}`;
+    return this.httpService.put<any>(url, sprint);
+  }
+  deleteSprint(projectId: number, backlogId: number, sprintId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.delete<any>(url);
   }
 
-  setBacklog(projectId: number, backlogId: number, backlog: Sprint) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/items`;
-    const items = [];
-    backlog.tasks.forEach((element, index) => {
-      items.push({
-        item: {
-          id: element.id,
-          summary: element.name,
-          description: element.description,
-          measureUnit: 'story points',
-          evaluation: element.weight,
-          tags: element.tags.join(';'),
-          type: element.type,
-          notes: [],
-          owner: {
-            id: 1,
-            username: 'paolaguarasci@gmail.com',
-          },
-          assegnees: [
-            {
-              id: 1,
-              username: 'paolaguarasci@gmail.com',
-            },
-          ],
-          father: null,
-        },
-        priority: '1',
-      });
-    });
-
-    // return this.httpService.post<any>(url, backlog);
+  getItem(itemId: number) {
+    const url = `/items/${itemId}`;
+    return this.httpService.get<Item>(url);
   }
 
   setSprint(
@@ -174,7 +122,40 @@ export class BacklogAPIService {
     sprintId: number,
     sprint: Sprint
   ) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/items`;
-    return this.httpService.post<any>(url, sprint);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.put<any>(url, sprint);
+  }
+
+  editSprint(
+    projectId: number,
+    backlogId: number,
+    sprintId: number,
+    start: string,
+    end: string
+  ) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    const itemToSend = {
+      id: sprintId,
+      startingDate: start,
+      endingDate: end,
+      insertions: [],
+      backlogId,
+    };
+    return this.httpService.put<any>(url, itemToSend);
+  }
+
+  getBacklogList(projectId: number) {
+    const url = `/projects/${projectId}/backlogs`;
+    return this.httpService.get<any>(url).pipe(map((res) => res));
+  }
+
+  getSprintList(projectId: number, backlogId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
+    return this.httpService.get<any>(url);
+  }
+
+  getSprintInfo(projectId: number, backlogId: number, sprintId: number) {
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
+    return this.httpService.get<any>(url).pipe(map((res) => res));
   }
 }

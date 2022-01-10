@@ -38,7 +38,8 @@ export class Item {
     fatherId: number,
     sons?: Item[],
     notes?: Note[],
-    assignees?: ItemAssignment[])
+    assignees?: ItemAssignment[],
+    )
   {
     // per fare questi assegnamenti è meno verboso scrivere direttamente "public field: type" nel costruttore
     this.id = id;
@@ -56,6 +57,7 @@ export class Item {
     this.notes = notes || [];
     this.createdAt = Date.now();
     this.updatedAt = Date.now();
+    this.sons = sons || [];
   }
 
 }

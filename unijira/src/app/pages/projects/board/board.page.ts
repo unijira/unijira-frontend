@@ -144,7 +144,7 @@ export class BoardPage implements OnInit, OnDestroy {
     //       new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),),
     //       new ItemAssignment(0, null,
     //         new UserInfo(0, 'user0', new URL("https://redcapes.it/wp-content/uploads/2020/03/giorno-giovanna-vento-aureo-trasferisce-17esimo-secolo-cosplay-v4-426434.jpg"),true, false, '', ''),)])),
-    //
+
     //   new SprintInsertion(7, 1, new Item(8, '', 'issue 1', '', 1,
     //     'backend;frontend', ItemType.issue, ItemStatus.done,
     //     new UserInfo(0, 'user0', null, true, false, '', ''),
@@ -162,7 +162,7 @@ export class BoardPage implements OnInit, OnDestroy {
     //     new UserInfo(0, 'user0', null, true, false, '', ''),
     //     new Item(9, '', 'FATHER', '', 1, '', ItemType.epic, ItemStatus.open, null, null, null, null), null, null)),
     // ];
-    //
+
     // this.sprint = new Sprint(0, new Date('2021-02-01'), new Date('2021-03-01'), insertion, 0);
     // fine oggetto mock per test
 

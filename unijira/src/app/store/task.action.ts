@@ -1,3 +1,4 @@
+import { Backlog } from './../models/Backlog';
 import {createAction, props} from '@ngrx/store';
 import {Sprint} from '../models/Sprint';
 
@@ -8,5 +9,5 @@ export const setSprintAction = createAction(
 
 export const setBacklogAction = createAction(
   '[Item] set backlog',
-  props<{ backlog: Sprint }>()
+  props<{ backlog: Backlog }>()
 );

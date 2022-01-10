@@ -28,7 +28,7 @@ export class AppComponent implements OnInit, OnDestroy {
   @ViewChild('notifications') notificationsComponent: NotificationsComponent;
 
   unreadNotificationsCount = 0;
-  public pages = [];
+  pages: any[] = [];
 
   loadingSubscription: Subscription;
   loading = false;

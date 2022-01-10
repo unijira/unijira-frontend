@@ -1,0 +1,85 @@
+<ion-content class="creaitemcontent" class="ion-no-margin ion-no-padding">
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-text color="dark">
+          <h1>Crea Item </h1>
+        </ion-text>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Description</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="description"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Summary</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="summary"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Tags</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="tags"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Evaluation</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input type="number" min="0" [(ngModel)]="evaluation"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Measure Unit</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-input [(ngModel)]="measureunit"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col size="2">
+        <ion-text color="dark">Type</ion-text>
+      </ion-col>
+      <ion-col>
+        <ion-item>
+          <ion-label>Type</ion-label>
+          <ion-select [(ngModel)]="type" placeholder="Select One">
+            <ion-select-option [value]=t.value *ngFor="let t of statusList">{{ t.name | translate}}</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-col>
+        <ion-button color="danger"(click)="close()"> reset </ion-button>
+        <ion-button color="success" (click)="save()"> save </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

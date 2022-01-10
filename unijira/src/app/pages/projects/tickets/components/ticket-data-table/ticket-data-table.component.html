@@ -103,7 +103,7 @@
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngFor="let ticket of filteredTickets" [routerLink]="'/projects/' + projectId + '/tickets/' + ticket.id" [disabled]="!projectId">
+      <ion-item *ngFor="let ticket of filteredTickets" [routerLink]="['/projects', projectId, 'backlog','items', ticket.id]"  [disabled]="!projectId">
         <ion-grid>
           <ion-row class="ion-align-items-center">
             <ion-col size="1">

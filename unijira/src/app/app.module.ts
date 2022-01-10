@@ -33,6 +33,10 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
+
+import { ClipboardModule } from 'ngx-clipboard';
+import { ClipboardService } from 'ngx-clipboard';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -45,7 +49,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     BacklogEditWeightPopoversComponent,
     BacklogEditStatusPopoversComponent,
     NotificationsComponent,
-    BlDetailComponent
+    BlDetailComponent,
+    NewItemComponent
   ],
   entryComponents: [],
   imports: [
@@ -66,6 +71,7 @@ export const createTranslateLoader = (http: HttpClient) =>
         deps: [HttpClient],
       },
     }),
+    ClipboardModule,
     DragulaModule.forRoot(),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
@@ -80,7 +86,9 @@ export const createTranslateLoader = (http: HttpClient) =>
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     SessionService,
     AuthGuard,
-    Title
+    Title,
+    ClipboardService
+
   ],
   bootstrap: [AppComponent],
 })
