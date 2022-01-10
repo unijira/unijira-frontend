@@ -9,7 +9,6 @@ import { BacklogEditVisibilityPopoversComponent } from '../../popovers/backlog-e
 import { BacklogEditSubmenuPopoversComponent } from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
 import { BacklogEditLinkPopoversComponent } from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
 import { BacklogEditLockPopoversComponent } from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { BacklogInsertion } from 'src/app/models/BacklogInsertion';
 @Component({
   selector: 'app-bl-detail',
@@ -26,7 +25,6 @@ export class BlDetailComponent implements OnInit {
   constructor(
     private popOverCtrl: PopoverController,
     private modalCtrl: ModalController,
-    private clipboard: Clipboard
   ) {}
 
   ngOnInit() {
@@ -92,7 +90,7 @@ export class BlDetailComponent implements OnInit {
   }
 
   copyToClipboard(ev) {
-    this.clipboard.copy(this.gitSuggestion.toString());
+    // this.clipboard.copy(this.gitSuggestion.toString());
   }
 
   async editLockPopover(ev: any) {
