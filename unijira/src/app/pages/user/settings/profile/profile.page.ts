@@ -82,23 +82,14 @@ export class ProfilePage implements OnInit {
   }
 
   setPreferredTheme(value) {
-    console.log('Setting preferred theme to '+value);
+
     this.preferredTheme = value;
   }
 
   setPreferredLanguage(value) {
-    console.log('Setting preferred language to '+value);
     this.preferredLanguage = value;
   }
 
-
-  copyBack() {
-    this.dummy();
-  }// Just print object
-
-  dummy() {
-    console.log(this.user);
-  }
 
   getCollaborators() {
     this.usersService.getCollaborators(this.user.id).subscribe(value => {

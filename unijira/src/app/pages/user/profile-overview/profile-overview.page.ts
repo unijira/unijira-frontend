@@ -54,9 +54,7 @@ export class ProfileOverviewPage implements OnInit {
       null, null, null, null, null, null, null, null,
       null);
     this.route.params.subscribe(params => {
-      console.log(params);
       const id = params.id;
-      console.log(id);
       this.usersService.getUser(id).subscribe(user => {
         this.user = user;
         this.getCollaborators();
@@ -89,23 +87,13 @@ export class ProfileOverviewPage implements OnInit {
     }
 
     setPreferredTheme(value) {
-      console.log('Setting preferred theme to '+value);
       this.preferredTheme = value;
     }
 
     setPreferredLanguage(value) {
-      console.log('Setting preferred language to '+value);
       this.preferredLanguage = value;
     }
 
-
-    copyBack() {
-      this.dummy();
-    }// Just print object
-
-    dummy() {
-      console.log(this.user);
-    }
 
     getCollaborators() {
       this.usersService.getCollaborators(this.user.id).subscribe(value => {
