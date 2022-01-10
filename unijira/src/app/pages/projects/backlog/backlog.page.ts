@@ -26,6 +26,8 @@ import { SprintStatus } from '../../../models/SprintStatus';
 import { IonAccordionGroup } from '@ionic/angular';
 import * as Moment from 'moment';
 import { NewItemComponent } from './modals/new-item/new-item.component';
+import { SessionService } from 'src/app/store/session.service';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-backlog',
@@ -86,8 +88,15 @@ export class BacklogPage implements OnInit {
     private backlogAPIService: BacklogAPIService,
     private popOverCtrl: PopoverController,
     private route: ActivatedRoute,
-    private router: Router
-  ) {}
+    private router: Router,
+    private sessionService: SessionService,
+    private pageService: PageService
+  ) {
+
+    this.route.params.subscribe(params => this.sessionService.loadProject(params.id));
+
+    this.pageService.setTitle('backlog.page.title');
+  }
 
   ngOnInit() {
     const that = this;

@@ -27,7 +27,6 @@ export class TicketsPage implements OnInit {
     private activatedRoute: ActivatedRoute) {
 
     this.activatedRoute.params
-      .pipe(first())
       .subscribe(params => {
         this.sessionService.loadProject(params.id);
         this.projectId = params.id;
@@ -44,7 +43,7 @@ export class TicketsPage implements OnInit {
 
   ngOnInit() {
 
-    this.ticketService.getTickets(1).subscribe(tickets => {
+    this.ticketService.getTickets(this.projectId).subscribe(tickets => {
       this.tickets = tickets;
     });
 

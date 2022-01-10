@@ -167,6 +167,7 @@
   "project.pages.backlog": "Backlog",
   "project.pages.roadmap": "Roadmap",
   "project.pages.releases": "Rilasci",
+  "backlog.page.title": "Backlog",
   "project.settings.details.alert.update.title": "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure": "I dettagli del progetto verrano modificati.",
   "project.settings.details.toast.update.success": "I dettagli del progetto sono stati modificati correttamente.",
