@@ -123,6 +123,7 @@ export class RoadmapPage {
   public returnedItem: ItemRoadmap=new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
   public itemRoadmap: ItemRoadmap= new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
   public roadmap: Roadmap = new Roadmap(null,null,null,null);
+  public items: ItemRoadmap[];
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -165,6 +166,7 @@ export class RoadmapPage {
 
     }
   });
+
 }
   public ngOnInit(): void {
       this.roadmapService.getBacklog(this.projectId).subscribe(backlog =>{
@@ -173,8 +175,14 @@ export class RoadmapPage {
       setTimeout(()=> {
         this.roadmapService.getRoadmap(this.projectId,this.backlogId).subscribe( roadmap => {
           this.roadmapId= roadmap[0].id;
+          console.log(this.roadmapId);
         });
-      }, 200);
+      }, 600);
+      setTimeout(()=> {
+        this.roadmapService.getItemsOfTheRoadmap(this.projectId,this.backlogId,this.roadmapId).subscribe( data => {
+          console.log(data);
+        });
+      }, 1500);
      this.initGantt();
   }
 

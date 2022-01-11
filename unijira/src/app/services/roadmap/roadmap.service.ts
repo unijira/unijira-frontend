@@ -24,5 +24,8 @@ export class RoadmapService {
   addItemToRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap): Observable<any>{
     return this.http.post<AnyCatcher>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps/'+idRoadmap+'/insertions',roadmap);
   }
+  getItemsOfTheRoadmap(idProject: number, idBacklog: number, idRoadmap: number){
+    return this.http.get<any[]>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps/'+idRoadmap+'/items');
+  }
 }
 
