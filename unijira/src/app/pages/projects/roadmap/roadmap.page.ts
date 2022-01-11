@@ -26,6 +26,7 @@ import { DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { EmitType } from '@syncfusion/ej2-base';
 import { DialogUtility } from '@syncfusion/ej2-popups';
 import { SessionService } from 'src/app/store/session.service';
+
 import { TranslateService } from '@ngx-translate/core';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import { ItemType } from 'src/app/models/item/ItemType';
@@ -121,7 +122,7 @@ export class RoadmapPage {
   public endingDate: Date= new Date();
   public returnedItem: ItemRoadmap=new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
   public itemRoadmap: ItemRoadmap= new ItemRoadmap(null,'','','',null,'',null,null,null,null,);
-  public roadmap : Roadmap = new Roadmap(null,null,null,null);
+  public roadmap: Roadmap = new Roadmap(null,null,null,null);
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -139,7 +140,7 @@ export class RoadmapPage {
   ) {    this.pageService.setTitle('Roadmap');
 
     this.activatedRoute.params.subscribe((params) =>{
-      this.sessionService.loadProject(params['id'])
+      this.sessionService.loadProject(params['id']);
       this.projectId=params['id'];
     });
     if(translateService.currentLang === 'it'){
@@ -147,9 +148,7 @@ export class RoadmapPage {
       loadCldr(
         require("cldr-data/main/it/numbers.json"),
         require("cldr-data/main/it/ca-gregorian.json"),
-        require("cldr-data/supplemental/numberingSystems.json"),
         require("cldr-data/main/it/timeZoneNames.json"),
-        require('cldr-data/supplemental/weekdata.json')
       );
     }
     this.translateService.onLangChange.subscribe(()=>{
@@ -158,9 +157,7 @@ export class RoadmapPage {
       loadCldr(
         require("cldr-data/main/it/numbers.json"),
         require("cldr-data/main/it/ca-gregorian.json"),
-        require("cldr-data/supplemental/numberingSystems.json"),
         require("cldr-data/main/it/timeZoneNames.json"),
-        require('cldr-data/supplemental/weekdata.json')
       );
     }
     else {
@@ -558,11 +555,11 @@ public openDialogAlertEqualTypeAndFather = function(): void {
   {
     this.roadmapService.addItem(item).subscribe(data => {
       this.returnedItem=data;
-    })
+    });
   }
   addItemRoadmap(idProject: number, idBacklog: number, idRoadmap: number, roadmap: Roadmap ){
     this.roadmapService.addItemToRoadmap(idProject,idBacklog,idRoadmap,roadmap).subscribe(data => {
       console.log(data);
-    })
+    });
   }
 }
