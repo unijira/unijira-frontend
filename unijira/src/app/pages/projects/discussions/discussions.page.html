@@ -1,0 +1,112 @@
+<ion-content>
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'project.pages.discussions'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 translate>project.pages.discussions</h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="primary" expand="block">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-text translate>Nuova discussione</ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <section class="ion-margin">
+    <ion-row>
+      <ion-col size="6">
+        <ion-searchbar [placeholder]="'board.searchText' | translate"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+  </section>
+
+
+  <section class="ion-margin-vertical infinte-width">
+    <ion-list class="infinte-width-inner">
+      <ion-item>
+        <ion-grid>
+        <ion-row>
+          <ion-col size="1">
+            <ion-text color="medium">
+              <strong>
+                <ion-label [translate]="'projects.tickets.list.id'"></ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="9">
+            <ion-text color="medium">
+              <strong>
+                <ion-label>Titolo</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text color="medium">
+              <strong>
+                <ion-label>Aperto da</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text color="medium">
+              <strong>
+                <ion-label>Messaggi</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-item>
+      <ion-item *ngFor="let topic of topics">
+        <ion-grid>
+        <ion-row class="ion-align-items-center">
+          <ion-col size="1">
+            <ion-text>
+              <strong>#{{ topic.id }}</strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="9">
+            <ion-text>
+              <strong>{{ topic.title }}</strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1">
+            <ion-avatar class="avatar-center" [title]="topic.user.username">
+              <ion-img [src]="topic.user.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            </ion-avatar>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text>
+              <strong>{{ topic.numMessages }}</strong>
+            </ion-text>
+          </ion-col>
+        </ion-row>
+        </ion-grid>
+      </ion-item>
+
+    </ion-list>
+  </section>
+
+  <!-- Tickets
+  <section class="ion-margin">
+    <app-ticket-data-table #ticketDataTable [projectId]="projectId" [tickets]="tickets"></app-ticket-data-table>
+  </section>-->
+
+</ion-content>
