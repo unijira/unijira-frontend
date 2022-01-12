@@ -24,7 +24,9 @@ import {TicketDataTableComponent} from './components/ticket-data-table/ticket-da
     PipeModule
   ],
   exports: [
-    TicketDataTableComponent
+    TicketDataTableComponent,
+    TicketStatusPipe,
+    TicketStatusColorPipe
   ],
   declarations: [TicketsPage, TicketStatusPipe, TicketStatusColorPipe, TicketTypePipe, TicketDataTableComponent]
 })

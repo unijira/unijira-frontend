@@ -102,7 +102,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.releases.view.description'"></ion-label>
-            <ion-textarea [(ngModel)]="release.description" maxlength="8192"></ion-textarea>
+            <ion-textarea [(ngModel)]="release.description" auto-grow="true" maxlength="8192"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>

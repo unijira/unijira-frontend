@@ -1,6 +1,6 @@
-import { Sprint } from './Sprint';
+import {Sprint} from './Sprint';
 import {BacklogInsertion} from './BacklogInsertion';
-import { Project } from './projects/Project';
+import {Project} from './projects/Project';
 
 export class Backlog {
 

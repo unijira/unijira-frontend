@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="ticket">
 
   <!-- Breadcrumbs -->
   <section class="ion-margin">
@@ -10,6 +10,64 @@
       <ion-breadcrumb *ngIf="projectId" [routerLink]="['/projects', projectId, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
       <ion-breadcrumb *ngIf="ticket">#{{ticket.id}}</ion-breadcrumb>
     </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="auto">
+          <ion-thumbnail class="row-icon">
+            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col>
+          <ion-text *ngIf="ticket">
+            <h1 class="ion-no-margin">
+              {{ticket.summary}}
+            </h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="12">
+          <ion-button color="primary" (click)="save()" [disabled]="!dirty || !ticket">
+            <ion-icon slot="start" name="save"></ion-icon>
+            <ion-text [translate]="'projects.tickets.view.save'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Ticket Details -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.summary'"></ion-label>
+            <ion-input  [placeholder]="'projects.tickets.view.summary.placeholder' | translate" [(ngModel)]="ticket.summary" maxlength="255"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.status'"></ion-label>
+            <ion-select [(ngModel)]="ticket.status" [placeholder]="'projects.tickets.view.status.placeholder' | translate" interface="popover" >
+              <ion-select-option value="{{ticketStatus.open}}">{{ticketStatus.open | ticketStatus | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{ticketStatus.todo}}">{{ticketStatus.todo | ticketStatus | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{ticketStatus.done}}">{{ticketStatus.done | ticketStatus | translate | titlecase}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.releases.view.description'"></ion-label>
+            <ion-textarea [(ngModel)]="ticket.description" auto-grow="true" maxlength="8192"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </section>
 
 </ion-content>

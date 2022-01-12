@@ -1,4 +1,4 @@
-import { Backlog } from './Backlog';
+import {Backlog} from './Backlog';
 import {Item} from './item/Item';
 
 export class BacklogInsertion {

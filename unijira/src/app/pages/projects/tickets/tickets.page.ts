@@ -3,7 +3,6 @@ import {PageService} from '../../../services/page.service';
 import {TicketService} from '../../../services/ticket/ticket.service';
 import {Item} from '../../../models/item/Item';
 import {SessionService} from '../../../store/session.service';
-import {first} from 'rxjs';
 import {ActivatedRoute} from '@angular/router';
 import {TicketDataTableComponent} from './components/ticket-data-table/ticket-data-table.component';
 

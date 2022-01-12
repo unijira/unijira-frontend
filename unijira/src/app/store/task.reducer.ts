@@ -1,11 +1,10 @@
 import {createReducer, on} from '@ngrx/store';
 import {Sprint} from '../models/Sprint';
 import {Backlog} from '../models/Backlog';
-import {BacklogInsertion} from '../models/BacklogInsertion';
-import {SprintInsertion} from '../models/SprintInsertion';
 import * as TaskActions from './task.action';
 import * as _ from 'lodash';
-import { SprintStatus } from '../models/SprintStatus';
+import {SprintStatus} from '../models/SprintStatus';
+
 export interface TaskState {
   backlog: Backlog;
   sprint: Sprint;

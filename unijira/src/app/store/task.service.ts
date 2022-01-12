@@ -1,10 +1,8 @@
-import { Backlog } from './../models/Backlog';
-import { Injectable } from '@angular/core';
-import { TaskState } from './task.reducer';
-import { createFeatureSelector, createSelector, Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
-import { Sprint } from '../models/Sprint';
-import * as _ from 'lodash';
+import {Injectable} from '@angular/core';
+import {TaskState} from './task.reducer';
+import {createFeatureSelector, createSelector, Store} from '@ngrx/store';
+import {Observable} from 'rxjs';
+
 @Injectable()
 export class TaskService {
   constructor(private store: Store) {}

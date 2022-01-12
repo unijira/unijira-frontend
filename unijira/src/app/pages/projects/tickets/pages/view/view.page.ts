@@ -4,6 +4,7 @@ import {SessionService} from '../../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {TicketService} from '../../../../../services/ticket/ticket.service';
 import {Item} from '../../../../../models/item/Item';
+import {ItemStatus} from '../../../../../models/item/ItemStatus';
 
 @Component({
   selector: 'app-view',
@@ -12,8 +13,12 @@ import {Item} from '../../../../../models/item/Item';
 })
 export class ViewPage implements OnInit {
 
-  projectId: number = null;
+  projectId: number;
+
   ticket: Item = null;
+  initialTicket: string;
+
+  ticketStatus = ItemStatus;
 
   constructor(
     private pageService: PageService,
@@ -21,6 +26,10 @@ export class ViewPage implements OnInit {
     private ticketService: TicketService,
     private activatedRoute: ActivatedRoute,
   ) { }
+
+  get dirty(): boolean {
+    return JSON.stringify(this.ticket || {}) !== this.initialTicket;
+  }
 
   ngOnInit() {
 
@@ -33,10 +42,16 @@ export class ViewPage implements OnInit {
 
       this.ticketService.getTicket(this.projectId, params.ticket).subscribe(ticket => {
         this.pageService.setTitle(['projects.tickets.title' , `#${ticket.id}`]);
+        this.initialTicket = JSON.stringify(ticket);
         this.ticket = ticket;
       });
 
     });
+
+  }
+
+
+  save() {
 
   }
 
