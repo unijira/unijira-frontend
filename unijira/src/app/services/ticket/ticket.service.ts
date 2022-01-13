@@ -1,13 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpParams} from '@angular/common/http';
-import {catchError, map, Observable, of} from 'rxjs';
+import {catchError, Observable, of, switchMap} from 'rxjs';
 import {Item} from '../../models/item/Item';
 import {HttpService} from '../http-service.service';
 import {AccountService} from '../account.service';
 import {ItemStatus} from '../../models/item/ItemStatus';
-import {ItemType} from '../../models/item/ItemType';
-import {ItemAssignment} from '../../models/item/ItemAssignment';
 import {MeasureUnit} from '../../models/item/MeasureUnit';
+import {ItemType} from '../../models/item/ItemType';
 
 @Injectable({
   providedIn: 'root'
@@ -47,15 +46,27 @@ export class TicketService {
 
   public getTicket(projectId: number, ticketId: number): Observable<Item> {
 
-    // return this.http.get<Item>(`/projects/${projectId}/items/${ticketId}`)
-    //   .pipe(catchError(e => of(null)));
-    return this.accountService.me()
-      .pipe(map(me =>
-          new Item(1, 'Ticket Uno', 'Lorem ipsum description', MeasureUnit.storyPoints, 2, 'tag', ItemType.epic, ItemStatus.open, me, null, null, null, [
-            new ItemAssignment(1, 1, me)
-          ]
-      )));
+    return this.http.get<Item>(`/projects/${projectId}/items/${ticketId}`)
+      .pipe(catchError(e => of(null)));
 
+  }
+
+  public createTicket(projectId: number, itemType: ItemType, parentId: number): Observable<Item> {
+
+    return this.accountService.me()
+      .pipe(switchMap(me => this.http.post<Item>(`/items`, new Item(
+          undefined,
+          'Nuovo Ticket',
+          '',
+          MeasureUnit.storyPoints,
+          0,
+          '',
+          itemType,
+          ItemStatus.open,
+          me,
+         parentId
+        )))
+      ).pipe(catchError(_ => of(null)));
 
   }
 

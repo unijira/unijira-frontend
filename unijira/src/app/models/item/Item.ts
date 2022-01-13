@@ -18,13 +18,20 @@ export class Item {
   public type: ItemType;
   public status: ItemStatus;
   public owner: UserInfo;
+
+  // https://www.youtube.com/watch?v=JCQVnSOFqfM
   public fatherId: number;
   public sons: Item[];
+
+  /** @deprecated non esiste nessun father in ItemDTO */
+  public father: Item;
+
   public notes: Note[];
   public assignees: ItemAssignment[];
   public createdAt: string;
   public updatedAt: string;
-  public father: Item;
+  public releaseId: number;
+  public releaseVersion: string;
 
 
   constructor(

@@ -69,10 +69,10 @@ export class LoginPage implements OnInit, OnDestroy {
   get currentColorTheme() {
     return document.body.getAttribute('color-theme');
   }
-  @HostListener('document:keydown.enter', ['$event'])
-  handleKeyDown(_event: KeyboardEvent) {
-    this.logIn();
-  }
+  // @HostListener('document:keydown.enter', ['$event'])
+  // handleKeyDown(_event: KeyboardEvent) {
+  //   this.logIn();
+  // }
 
   ngOnInit() {}
 

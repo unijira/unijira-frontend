@@ -74,7 +74,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item class="ion-align-items-center">
             <ion-label position="floating" [translate]="'projects.releases.view.startDate'"></ion-label>
-            <ion-input [value]="release.startDate | date:'dd/MM/YYYY'"></ion-input>
+            <ion-input [value]="startDate | date:'dd/MM/YYYY'"></ion-input>
             <ion-button slot="end" fill="clear" id="open-start-date">
               <ion-icon icon="calendar"></ion-icon>
             </ion-button>
@@ -88,7 +88,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item class="ion-align-items-center">
             <ion-label position="floating" [translate]="'projects.releases.view.endDate'"></ion-label>
-            <ion-input [value]="release.endDate | date:'dd/MM/YYYY'"></ion-input>
+            <ion-input [value]="endDate | date:'dd/MM/YYYY'"></ion-input>
             <ion-button slot="end" fill="clear" id="open-end-date">
               <ion-icon icon="calendar"></ion-icon>
             </ion-button>

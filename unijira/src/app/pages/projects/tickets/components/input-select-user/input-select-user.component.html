@@ -1,0 +1,24 @@
+<section class="ion-margin-vertical">
+  <ion-grid>
+    <ion-row *ngIf="memberships" class=" ion-align-items-center">
+      <ion-col *ngFor="let user of memberships" size="auto">
+
+        <ion-avatar [id]="'avatar-' + user.id" class="option" [ngClass]="selected(user) ? 'active' : ''" (click)="toggle(user)"
+                    [popper]="user.username"
+                    popperPlacement="bottom"
+                    popperTrigger="hover">
+
+          <ion-img [src]="user.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+        </ion-avatar>
+
+      </ion-col>
+    </ion-row>
+    <ion-row *ngIf="!memberships || memberships.length === 0">
+      <ion-col size="12">
+        <ion-label color="medium">
+          {{ 'projects.tickets.components.inputSelectUser.empty' | translate }}
+        </ion-label>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</section>
