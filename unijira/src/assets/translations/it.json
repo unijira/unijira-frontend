@@ -364,5 +364,6 @@
   "discussions.title": "Titolo",
   "discussions.openedBy": "Aperto da",
   "disussions.messages": "Messaggi",
-  "discussions.type": "Tipo"
+  "discussions.type": "Tipo",
+  "discussions.noDiscussions": "Nessuna discussione trovata"
 }

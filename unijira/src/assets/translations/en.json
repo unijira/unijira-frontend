@@ -340,5 +340,6 @@
   "discussions.title": "Title",
   "discussions.openedBy": "Opened by",
   "disussions.messages": "Messagges",
-  "discussions.type": "Type"
+  "discussions.type": "Type",
+  "discussions.noDiscussions": "No discussion found"
 }

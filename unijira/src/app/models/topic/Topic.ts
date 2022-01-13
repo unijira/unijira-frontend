@@ -1,4 +1,5 @@
 import {UserInfo} from '../users/UserInfo';
+import {TopicType} from './TopicType';
 
 export class Topic {
 

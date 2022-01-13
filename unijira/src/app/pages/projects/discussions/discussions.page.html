@@ -137,8 +137,37 @@
         </ion-row>
         </ion-grid>
       </ion-item>
-
     </ion-list>
+    <ion-list *ngIf="!topics">
+      <ion-item *ngFor="let topic of [1,2,3,4,5,6]">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="8">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+    <p *ngIf="topics?.length === 0" class="ion-text-center ion-margin">
+      <ion-text color="medium">
+        <br>
+        <br>
+        <i translate>discussions.noDiscussions</i>
+      </ion-text>
+    </p>
   </section>
 
   <!-- Tickets
