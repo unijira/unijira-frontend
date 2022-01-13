@@ -14,6 +14,7 @@ export const getTranslation = (translateService: TranslateService, key: string):
 
 
 export const validateConfirmPassword = (g: FormGroup): any => {
+  g.get('password2').setErrors(null);
   if (g.get('password1').value !== g.get('password2').value) {
     g.get('password2').setErrors({invalidConfirm : true});
   }

@@ -59,7 +59,7 @@
           </form>
         </ion-slide>
         <ion-slide>
-          <form *ngIf="index === 1" [formGroup]="passwordFG" (ngSubmit)="onSubmit()">
+          <form *ngIf="index === 1" [formGroup]="passwordFG" (ngSubmit)="onSubmit()" (keyup.enter)="onSubmit()">
             <ion-item lines="full" class="ion-no-padding">
               <ion-label position="floating">{{'register.password' | translate}}</ion-label>
               <ion-input name="password" type="password" autocomplete="password" [formControl]="passwordFC1"></ion-input>

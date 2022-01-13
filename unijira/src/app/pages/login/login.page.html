@@ -16,7 +16,7 @@
         <ion-text>
           <h1 [translate]="'login.altTitle'"></h1>
         </ion-text>
-        <form class="ion-margin-vertical" [formGroup]="loginFG" (ngSubmit)="logIn()">
+        <form class="ion-margin-vertical" [formGroup]="loginFG" (ngSubmit)="logIn()" (keyup.enter)="logIn()">
 
           <ion-item lines="full" class="ion-no-padding">
             <ion-label position="floating" [translate]="'login.email'"></ion-label>
