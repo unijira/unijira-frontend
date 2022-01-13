@@ -1,4 +1,4 @@
-import { MeasureUnitPipe } from './measure-unit.pipe';
+import {MeasureUnitPipe} from './measure-unit.pipe';
 
 describe('MeasureUnitPipe', () => {
   it('create an instance', () => {

@@ -6,13 +6,14 @@ import {TicketService} from '../../../../../services/ticket/ticket.service';
 import {Item} from '../../../../../models/item/Item';
 import {ItemStatus} from '../../../../../models/item/ItemStatus';
 import {MeasureUnit} from '../../../../../models/item/MeasureUnit';
-import {UserInfo} from '../../../../../models/users/UserInfo';
 import {Release} from '../../../../../models/releases/Release';
 import {ReleaseService} from '../../../../../services/release/release.service';
 import {ProjectService} from '../../../../../services/project/project.service';
 import {MembershipStatus} from '../../../../../models/projects/MembershipStatus';
 import {ReleaseStatus} from '../../../../../models/releases/ReleaseStatus';
-import {ItemType} from '../../../../../models/item/ItemType';
+import {Membership} from '../../../../../models/projects/Membership';
+import {AlertController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-view',
@@ -25,7 +26,7 @@ export class ViewPage implements OnInit {
 
   ticket: Item = null;
   initialTicket: string;
-  memberships: UserInfo[];
+  memberships: Membership[];
   releases: Release[];
 
   ticketStatus = ItemStatus;
@@ -38,6 +39,8 @@ export class ViewPage implements OnInit {
     private releaseService: ReleaseService,
     private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
+    private alertController: AlertController,
+    private translateService: TranslateService
   ) { }
 
   get dirty(): boolean {
@@ -66,8 +69,7 @@ export class ViewPage implements OnInit {
 
       this.projectService.getMemberships(this.projectId).subscribe(memberships => {
         this.memberships = memberships
-          .filter(i => i.status === MembershipStatus.enabled)
-          .map(i => i.userInfo);
+          .filter(i => i.status === MembershipStatus.enabled);
       });
 
     });
@@ -76,7 +78,18 @@ export class ViewPage implements OnInit {
 
 
   save() {
-
+    this.ticketService.updateTicket(this.projectId, this.ticket).subscribe(ticket => {
+      if(ticket) {
+        this.ticket = ticket;
+        this.initialTicket = JSON.stringify(this.ticket);
+      } else {
+        this.alertController.create({
+          header: this.translateService.instant('error.title'),
+          message:  this.translateService.instant('error.projects.tickets.save'),
+          buttons: [this.translateService.instant('error.buttons.ok')]
+        }).then(alert => alert.present());
+      }
+    });
   }
 
 }

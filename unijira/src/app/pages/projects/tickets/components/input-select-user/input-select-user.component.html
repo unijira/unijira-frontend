@@ -1,7 +1,7 @@
 <section class="ion-margin-vertical">
   <ion-grid>
-    <ion-row *ngIf="memberships" class=" ion-align-items-center">
-      <ion-col *ngFor="let user of memberships" size="auto">
+    <ion-row *ngIf="memberships && users" class=" ion-align-items-center">
+      <ion-col *ngFor="let user of users" size="auto">
 
         <ion-avatar [id]="'avatar-' + user.id" class="option" [ngClass]="selected(user) ? 'active' : ''" (click)="toggle(user)"
                     [popper]="user.username"

@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {UserInfo} from '../../../../../models/users/UserInfo';
 import {ItemAssignment} from '../../../../../models/item/ItemAssignment';
+import {Membership} from '../../../../../models/projects/Membership';
+import {UserService} from '../../../../../services/user/user.service';
 
 @Component({
   selector: 'app-input-select-user',
@@ -9,14 +11,26 @@ import {ItemAssignment} from '../../../../../models/item/ItemAssignment';
 })
 export class InputSelectUserComponent implements OnInit {
 
-  @Input() memberships: UserInfo[];
+  @Input() memberships: Membership[];
   @Input() ticketId: number;
   @Input() multiple = false;
   @Input() ngModel: ItemAssignment[];
   @Output() ngModelChange = new EventEmitter<ItemAssignment[]>();
 
-  constructor() { }
-  ngOnInit() { }
+  users: UserInfo[] = [];
+
+
+  constructor(
+    private userService: UserService
+  ) { }
+
+  ngOnInit() {
+    this.memberships?.forEach(membership => {
+      this.userService.getUser(membership.keyUserId).subscribe(user => {
+        this.users.push(user);
+      });
+    });
+  }
 
 
   selected(user: UserInfo): boolean {

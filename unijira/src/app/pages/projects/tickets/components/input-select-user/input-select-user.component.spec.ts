@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { InputSelectUserComponent } from './input-select-user.component';
+import {InputSelectUserComponent} from './input-select-user.component';
 
 describe('InputSelectUserComponent', () => {
   let component: InputSelectUserComponent;

@@ -1,4 +1,4 @@
-<ion-content *ngIf="ticket">
+<ion-content>
 
   <!-- Breadcrumbs -->
   <section class="ion-margin">
@@ -7,8 +7,8 @@
         <ion-icon name="home"></ion-icon>
       </ion-breadcrumb>
       <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
-      <ion-breadcrumb *ngIf="projectId" [routerLink]="['/projects', projectId, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
-      <ion-breadcrumb *ngIf="ticket">#{{ticket.id}}</ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/projects', projectId || 0, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
+      <ion-breadcrumb>#{{ticket?.id || 0}}</ion-breadcrumb>
     </ion-breadcrumbs>
   </section>
 
@@ -18,7 +18,7 @@
       <ion-row class="ion-align-items-center">
         <ion-col size="auto">
           <ion-thumbnail class="row-icon">
-            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
+            <ion-img *ngIf="ticket" [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
           </ion-thumbnail>
         </ion-col>
         <ion-col>
@@ -39,7 +39,7 @@
   </section>
 
   <!-- Ticket Details -->
-  <section class="ion-margin">
+  <section class="ion-margin" *ngIf="ticket">
     <ion-grid>
       <ion-row>
         <ion-col size-lg="6" size="12">
@@ -88,7 +88,7 @@
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.release'"></ion-label>
             <ion-select [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" >
-              <ion-select-option *ngFor="let release of releases" value="{{release.id}}">{{release.version}}</ion-select-option>
+              <ion-select-option *ngFor="let release of releases" [value]="release.id">{{release.version}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -106,7 +106,7 @@
 
 
   <!-- Ticket Assigners -->
-  <section class="ion-margin">
+  <section class="ion-margin" *ngIf="ticket && memberships">
     <ion-grid>
       <ion-row>
         <ion-col size="12">
@@ -151,7 +151,7 @@
 
 
   <!-- Tickets Children -->
-  <section class="ion-margin">
+  <section class="ion-margin" *ngIf="ticket && ticket.sons">
     <ion-grid>
       <ion-row>
         <ion-col size="12">

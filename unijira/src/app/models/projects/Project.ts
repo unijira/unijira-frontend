@@ -1,4 +1,5 @@
 import {DateUtils} from '../../classes/date-utils';
+import {Backlog} from '../Backlog';
 
 export class Project {
 
@@ -7,8 +8,11 @@ export class Project {
   public key: string;
   public icon: URL;
   public ownerId: number;
+  public backlogs: Backlog[];
   public createdAt: string;
   public updatedAt: string;
+
+
   public iconLoaded: boolean;
 
   public constructor(id: number, name: string, key: string, icon: URL, ownerId: number) {
@@ -20,6 +24,7 @@ export class Project {
     this.createdAt = DateUtils.toLocalDateTime();
     this.updatedAt = DateUtils.toLocalDateTime();
     this.iconLoaded = false;
+    this.backlogs = null;
   }
 
 }

@@ -22,16 +22,19 @@ export class Item {
   // https://www.youtube.com/watch?v=JCQVnSOFqfM
   public fatherId: number;
   public sons: Item[];
-
-  /** @deprecated non esiste nessun father in ItemDTO */
-  public father: Item;
-
   public notes: Note[];
   public assignees: ItemAssignment[];
-  public createdAt: string;
-  public updatedAt: string;
+
   public releaseId: number;
   public releaseVersion: string;
+
+  public createdAt: string;
+  public updatedAt: string;
+
+
+  public father: Item = undefined;
+
+
 
 
   constructor(
