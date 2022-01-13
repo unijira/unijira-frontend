@@ -18,6 +18,7 @@ import { ItemRoadmap } from 'src/app/models/item/ItemRoadmap';
 import { Roadmap } from 'src/app/models/projects/Roadmap';
 import { PageService } from 'src/app/services/page.service';
 import { RoadmapService } from 'src/app/services/roadmap/roadmap.service';
+import { switchMap, tap } from 'rxjs';
 declare var require: any;
 L10n.load({
   it: {
@@ -103,6 +104,7 @@ export class RoadmapPage {
   public roadmapId: number;
   public startingDate: Date = new Date();
   public endingDate: Date = new Date();
+  public taskIdGantt=0;
   public returnedItem: ItemRoadmap = new ItemRoadmap(
     null,
     '',
@@ -145,10 +147,6 @@ export class RoadmapPage {
   ) {
     this.pageService.setTitle('Roadmap');
 
-    this.activatedRoute.params.subscribe((params) => {
-      this.sessionService.loadProject(params['id']);
-      this.projectId = params['id'];
-    });
     if (translateService.currentLang === 'it') {
       setCulture('it');
       loadCldr(
@@ -169,47 +167,41 @@ export class RoadmapPage {
         setCulture('en');
       }
     });
+
+    this.activatedRoute.params.subscribe((params) => {
+      this.sessionService.loadProject(params['id']);
+      this.projectId = params['id'];
+    });
+
   }
   public ngOnInit(): void {
-    this.roadmapService.getBacklog(this.projectId).subscribe((backlog) => {
-      this.backlogId = backlog[0].id;
-    });
-    setTimeout(() => {
-      this.roadmapService
-        .getRoadmap(this.projectId, this.backlogId)
-        .subscribe((roadmap) => {
-          this.roadmapId = roadmap[0].id;
-          console.log(this.roadmapId);
-        });
-    }, 300);
-    setTimeout(() => {
-      this.roadmapService
-        .getItemsOfTheRoadmap(this.projectId, this.backlogId, this.roadmapId)
-        .subscribe((data) => {
-          this.itemsOfRoadmap = data;
-          console.log(this.itemsOfRoadmap);
-          let recordFather: object = {};
+    this.taskIdGantt=0;
+    this.roadmapService.getBacklog(this.projectId).pipe(
+      tap(backlog=> this.backlogId= backlog[0].id),
+      switchMap(backlog=> this.roadmapService.getRoadmap(this.projectId,backlog[0].id)),
+      tap(roadmap=> this.roadmapId= roadmap[0].id),
+      switchMap(roadmap=> this.roadmapService.getItemsOfTheRoadmap(this.projectId,this.backlogId,roadmap[0].id))
+    ).subscribe(items=>
+     { this.itemsOfRoadmap= items;
+       let recordFather: object = {};
 
+         for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
+           this.taskIdGantt++;
+           if (this.itemsOfRoadmap[i].item.type === this.itemTypeEnum.epic){
+           recordFather = {
+             TaskName: this.itemsOfRoadmap[i].item.description,
+             Status: this.Status,
+             TaskID: this.taskIdGantt,
+             StartDate: this.itemsOfRoadmap[i].startingDate,
+             EndDate: this.itemsOfRoadmap[i].endingDate,
+             ItemType: this.itemsOfRoadmap[i].item.type,
+           }
+           this.data = this.data.concat(recordFather);
 
-          for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
-            let obj: any = (document.getElementById('ganttDefault') as any)
-            .ej2_instances[0];
-            let currentId: any = (parseInt(obj.ids[obj.ids.length - 1]) + 1).toString();
+         }
+         }
+     })
 
-            if (this.itemsOfRoadmap[i].item.type === this.itemTypeEnum.epic){
-            recordFather = {
-              TaskName: this.itemsOfRoadmap[i].item.description,
-              Status: this.Status,
-              TaskID: currentId,
-              StartDate: this.itemsOfRoadmap[i].startingDate,
-              EndDate: this.itemsOfRoadmap[i].endingDate,
-              ItemType: this.itemsOfRoadmap[i].item.type,
-            }
-            this.data = this.data.concat(recordFather);
-          }
-          }
-        });
-    }, 2200);
     this.initGantt();
   }
   public ngOnDestroy(){
@@ -285,16 +277,12 @@ export class RoadmapPage {
       this.roadmap.startingDate = this.startingDate;
       this.roadmap.endingDate = this.endingDate;
       this.roadmap.roadmapId = this.roadmapId;
-      this.addItem(this.itemRoadmap);
-      setTimeout(() => {
-        this.roadmap.item = this.returnedItem;
-        this.addItemRoadmap(
-          this.projectId,
-          this.backlogId,
-          this.roadmapId,
-          this.roadmap
-        );
-      }, 700);
+
+      this.roadmapService.addItem(this.itemRoadmap).pipe(
+        tap(itemR => this.roadmap.item= itemR),
+        switchMap( _ => this.roadmapService.addItemToRoadmap(this.projectId, this.backlogId, this.roadmapId, this.roadmap))
+      ).subscribe();
+
       if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,

@@ -12,11 +12,9 @@ export class RoadmapService {
   constructor( private http: HttpService) { }
   getBacklog(idProject: number): Observable<any>{
     return this.http.get<AnyCatcher>('/projects/'+idProject+'/backlogs')
-  .pipe(catchError(e => of([])));
   }
   getRoadmap(idProject: number, idBacklog: number): Observable<any>{
     return this.http.get<AnyCatcher>('/projects/'+idProject+'/backlogs/'+idBacklog+'/roadmaps')
-  .pipe(catchError(e => of([])));
   }
   addItem(item: ItemRoadmap): Observable<ItemRoadmap>{
     return this.http.post<ItemRoadmap>('/items',item);
