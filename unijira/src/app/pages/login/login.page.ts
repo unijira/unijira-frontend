@@ -1,4 +1,4 @@
-import {Component, HostListener, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormControl, FormGroup, Validators} from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {SessionService} from '../../store/session.service';
@@ -69,10 +69,6 @@ export class LoginPage implements OnInit, OnDestroy {
   get currentColorTheme() {
     return document.body.getAttribute('color-theme');
   }
-  @HostListener('document:keydown.enter', ['$event'])
-  handleKeyDown(_event: KeyboardEvent) {
-    this.logIn();
-  }
 
   ngOnInit() {}
 
@@ -101,6 +97,7 @@ export class LoginPage implements OnInit, OnDestroy {
   check(): boolean {
     return this.emailFC.valid && this.passwordFC.valid;
   }
+
   switchLanguage() {
     switchLanguage(this.translateService);
   }
