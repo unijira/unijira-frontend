@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
 import { DiscussionsPageRoutingModule } from './discussions-routing.module';
 
 import { DiscussionsPage } from './discussions.page';
-import {TranslateModule} from "@ngx-translate/core";
+import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../../pipe.module';
 
 @NgModule({
   imports: [
@@ -15,7 +16,9 @@ import {TranslateModule} from "@ngx-translate/core";
     FormsModule,
     IonicModule,
     DiscussionsPageRoutingModule,
-    TranslateModule
+    TranslateModule,
+    ReactiveFormsModule,
+    PipeModule
   ],
   declarations: [DiscussionsPage]
 })

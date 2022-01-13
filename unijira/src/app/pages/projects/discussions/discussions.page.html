@@ -22,17 +22,28 @@
         <ion-col size-lg="auto" size="6">
           <ion-button color="primary" expand="block">
             <ion-icon slot="start" name="add"></ion-icon>
-            <ion-text translate>Nuova discussione</ion-text>
+            <ion-text translate>discussions.newDiscussion</ion-text>
           </ion-button>
         </ion-col>
       </ion-row>
     </ion-grid>
   </section>
 
-  <section class="ion-margin">
+  <section class="ion-margin" [formGroup]="formGroup">
     <ion-row>
       <ion-col size="6">
-        <ion-searchbar [placeholder]="'board.searchText' | translate"></ion-searchbar>
+        <ion-searchbar [placeholder]="'board.searchText' | translate" formControlName="search"></ion-searchbar>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item lines="none">
+          <ion-label position="floating" translate>board.type</ion-label>
+          <ion-select placeholder="{{'board.select' | translate}}" multiple interface="popover" formControlName="types">
+            <ion-select-option [value]="topicType.announcements" translate>discussions.announcements</ion-select-option>
+            <ion-select-option [value]="topicType.general" translate>discussions.general</ion-select-option>
+            <ion-select-option [value]="topicType.ideas" translate>discussions.ideas</ion-select-option>
+            <ion-select-option [value]="topicType.qanda" translate>discussions.qanda</ion-select-option>
+          </ion-select>
+        </ion-item>
       </ion-col>
     </ion-row>
   </section>
@@ -46,35 +57,42 @@
           <ion-col size="1">
             <ion-text color="medium">
               <strong>
-                <ion-label [translate]="'projects.tickets.list.id'"></ion-label>
+                <ion-label translate>discussions.id</ion-label>
               </strong>
             </ion-text>
           </ion-col>
-          <ion-col size="9">
+          <ion-col size="8">
             <ion-text color="medium">
               <strong>
-                <ion-label>Titolo</ion-label>
-              </strong>
-            </ion-text>
-          </ion-col>
-          <ion-col size="1" class="ion-text-center">
-            <ion-text color="medium">
-              <strong>
-                <ion-label>Aperto da</ion-label>
+                <ion-label translate>discussions.title</ion-label>
               </strong>
             </ion-text>
           </ion-col>
           <ion-col size="1" class="ion-text-center">
             <ion-text color="medium">
               <strong>
-                <ion-label>Messaggi</ion-label>
+                <ion-label translate>discussions.openedBy</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text color="medium">
+              <strong>
+                <ion-label translate>disussions.messages</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text color="medium">
+              <strong>
+                <ion-label translate>discussions.type</ion-label>
               </strong>
             </ion-text>
           </ion-col>
         </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngFor="let topic of topics">
+      <ion-item *ngFor="let topic of filteredTopics">
         <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="1">
@@ -82,9 +100,9 @@
               <strong>#{{ topic.id }}</strong>
             </ion-text>
           </ion-col>
-          <ion-col size="9">
+          <ion-col size="8">
             <ion-text>
-              <strong>{{ topic.title }}</strong>
+              <strong [innerHTML]="topic.title | filtered:searchFC.value | truncate:128"></strong>
             </ion-text>
           </ion-col>
           <ion-col size="1">
@@ -96,6 +114,25 @@
             <ion-text>
               <strong>{{ topic.numMessages }}</strong>
             </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <!-- I used inline style because these colors don't need to change, like img icons-->
+            <div [title]="'discussions.ideas' | translate">
+              <ion-icon name="bulb" style="color: #ffc409" size="large" *ngIf="topic.type===topicType.ideas">
+              </ion-icon>
+            </div>
+            <div [title]="'discussions.general' | translate">
+              <ion-icon name="chatbubbles" style="color: #4c8dff" size="large" *ngIf="topic.type===topicType.general">
+              </ion-icon>
+            </div>
+            <div [title]="'discussions.qanda' | translate">
+              <ion-icon name="help-circle" style="color: #2dd36f" size="large" *ngIf="topic.type===topicType.qanda">
+              </ion-icon>
+            </div>
+            <div [title]="'discussions.announcements' | translate">
+              <ion-icon name="megaphone" style="color: #a94442" size="large" *ngIf="topic.type===topicType.announcements">
+              </ion-icon>
+            </div>
           </ion-col>
         </ion-row>
         </ion-grid>

@@ -1,4 +1,4 @@
-import {UserInfo} from "./users/UserInfo";
+import {UserInfo} from '../users/UserInfo';
 
 export class Topic {
 
@@ -10,7 +10,8 @@ export class Topic {
     public title: string,
     public content: string,
     public projectId: number,
-    public userId: number
+    public userId: number,
+    public type: TopicType,
   ) {
   }
 }
