@@ -17,13 +17,13 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="data ?.length === 0">
+          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="data?.length === 0">
             <ion-icon slot="start" name="create"></ion-icon>
             <ion-text [translate]="'projects.tickets.export'"></ion-text>
           </ion-button>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block" (click)="CreaItem()">
+          <ion-button color="primary" expand="block"  (click)="CreaItem()">
             <ion-icon slot="start" name="add" ></ion-icon>
             <ion-text [translate]="'projects.roadmap.addItem'"></ion-text>
           </ion-button>
@@ -31,7 +31,8 @@
       </ion-row>
     </ion-grid>
   </section>
-  <section class="ion-margin">
+  <div id="gantt">
+  <section class="ion-margin" >
   <ejs-gantt id="ganttDefault" height="70%" [dataSource]="data" [taskFields]="taskSettings"
     [editSettings]="editSettings" [toolbar]="toolbar" [enableContextMenu]="true" [allowSelection]="true"
     [allowSorting]="true" [splitterSettings]="splitterSettings" [sortSettings]="sortSettings" [allowFiltering]="true"
@@ -61,6 +62,7 @@
     </e-columns>
   </ejs-gantt>
   </section>
+</div>
   <!---->
   <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" [header]="'project.roadmap.addNewItem.title'|translate"
     [buttons]="button" [visible]="visible" [animationSettings]="animationSettingsDialog" >
@@ -92,4 +94,5 @@
         </ion-row>
     </ng-template>
   </ejs-dialog>
+
 </ion-content>

@@ -19,6 +19,12 @@ import { Roadmap } from 'src/app/models/projects/Roadmap';
 import { PageService } from 'src/app/services/page.service';
 import { RoadmapService } from 'src/app/services/roadmap/roadmap.service';
 import { switchMap, tap } from 'rxjs';
+import {
+  createSpinner,
+  showSpinner,
+  hideSpinner,
+} from '@syncfusion/ej2-angular-popups';
+
 declare var require: any;
 L10n.load({
   it: {
@@ -104,7 +110,8 @@ export class RoadmapPage {
   public roadmapId: number;
   public startingDate: Date = new Date();
   public endingDate: Date = new Date();
-  public taskIdGantt=0;
+  public taskIdGantt = 0;
+  public disable: boolean = true;
   public returnedItem: ItemRoadmap = new ItemRoadmap(
     null,
     '',
@@ -172,41 +179,61 @@ export class RoadmapPage {
       this.sessionService.loadProject(params['id']);
       this.projectId = params['id'];
     });
-
   }
   public ngOnInit(): void {
-    this.taskIdGantt=0;
-    this.roadmapService.getBacklog(this.projectId).pipe(
-      tap(backlog=> this.backlogId= backlog[0].id),
-      switchMap(backlog=> this.roadmapService.getRoadmap(this.projectId,backlog[0].id)),
-      tap(roadmap=> this.roadmapId= roadmap[0].id),
-      switchMap(roadmap=> this.roadmapService.getItemsOfTheRoadmap(this.projectId,this.backlogId,roadmap[0].id))
-    ).subscribe(items=>
-     { this.itemsOfRoadmap= items;
-       let recordFather: object = {};
-
-         for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
-           this.taskIdGantt++;
-           if (this.itemsOfRoadmap[i].item.type === this.itemTypeEnum.epic){
-           recordFather = {
-             TaskName: this.itemsOfRoadmap[i].item.description,
-             Status: this.Status,
-             TaskID: this.taskIdGantt,
-             StartDate: this.itemsOfRoadmap[i].startingDate,
-             EndDate: this.itemsOfRoadmap[i].endingDate,
-             ItemType: this.itemsOfRoadmap[i].item.type,
-           }
-           this.data = this.data.concat(recordFather);
-
-         }
-         }
-     })
-
     this.initGantt();
-  }
-  public ngOnDestroy(){
 
+    showSpinner(document.getElementById('gantt'));
+    setTimeout(function () {
+      hideSpinner(document.getElementById('gantt'));
+    }, 1300);
+
+    this.taskIdGantt = 0;
+    this.roadmapService
+      .getBacklog(this.projectId)
+      .pipe(
+        tap((backlog) => (this.backlogId = backlog[0].id)),
+        switchMap((backlog) =>
+          this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+        ),
+        tap((roadmap) => (this.roadmapId = roadmap[0].id)),
+        switchMap((roadmap) =>
+          this.roadmapService.getItemsOfTheRoadmap(
+            this.projectId,
+            this.backlogId,
+            roadmap[0].id
+          )
+        )
+      )
+      .subscribe((items) => {
+        this.itemsOfRoadmap = items;
+        let recordFather: object = {};
+        if (this.itemsOfRoadmap.length > 0) {
+          for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
+            this.taskIdGantt++;
+            if (this.itemsOfRoadmap[i].item.type === this.itemTypeEnum.epic) {
+              if (this.itemsOfRoadmap[i].item.sons.length === 0) {
+                recordFather = {
+                  TaskName: this.itemsOfRoadmap[i].item.description,
+                  Status: this.Status,
+                  TaskID: this.taskIdGantt,
+                  StartDate: this.itemsOfRoadmap[i].startingDate,
+                  EndDate: this.itemsOfRoadmap[i].endingDate,
+                  ItemType: this.itemsOfRoadmap[i].item.type,
+                };
+                this.data = this.data.concat(recordFather);
+                this.dataFathersDropDown = this.dataFathersDropDown.concat(
+                  this.itemsOfRoadmap[i].item.description +
+                    ' - ' +
+                    this.itemsOfRoadmap[i].item.type
+                );
+              }
+            }
+          }
+        }
+      });
   }
+  public ngOnDestroy() {}
 
   public initGantt() {
     // Init taskSetting
@@ -278,10 +305,20 @@ export class RoadmapPage {
       this.roadmap.endingDate = this.endingDate;
       this.roadmap.roadmapId = this.roadmapId;
 
-      this.roadmapService.addItem(this.itemRoadmap).pipe(
-        tap(itemR => this.roadmap.item= itemR),
-        switchMap( _ => this.roadmapService.addItemToRoadmap(this.projectId, this.backlogId, this.roadmapId, this.roadmap))
-      ).subscribe();
+      this.roadmapService
+        .addItem(this.itemRoadmap)
+        .pipe(
+          tap((itemR) => (this.roadmap.item = itemR)),
+          switchMap((_) =>
+            this.roadmapService.addItemToRoadmap(
+              this.projectId,
+              this.backlogId,
+              this.roadmapId,
+              this.roadmap
+            )
+          )
+        )
+        .subscribe();
 
       if (itemType.value === this.itemTypeEnum.epic) {
         record = {
@@ -501,18 +538,23 @@ export class RoadmapPage {
     if (args.item.properties.id === 'ganttDefault_add') {
       args.cancel = true;
       this.adddialog.show();
-      this.enabled = false;
-      if (this.dataDropDown.length === 0) {
-        this.dataDropDown = [this.itemTypeEnum.epic];
-      } else {
-        this.dataDropDown = [
-          this.itemTypeEnum.epic,
-          this.itemTypeEnum.story,
-          this.itemTypeEnum.task,
-          this.itemTypeEnum.issue,
-        ];
-      }
+      this.modifyDropDowns();
     }
+  }
+  public modifyDropDowns() {
+    this.enabled = false;
+    if (this.itemsOfRoadmap.length> 0) {
+      this.dataDropDown = [
+        this.itemTypeEnum.epic,
+        this.itemTypeEnum.story,
+        this.itemTypeEnum.task,
+        this.itemTypeEnum.issue,
+      ];
+    }
+    else {
+      this.dataDropDown = [this.itemTypeEnum.epic];
+    }
+    this.disable = false;
   }
   onLoad(args: any) {}
   queryTaskbarInfo(args: any) {
@@ -573,17 +615,7 @@ export class RoadmapPage {
   }
   CreaItem() {
     this.adddialog.show();
-    this.enabled = false;
-    if (this.dataDropDown.length === 0) {
-      this.dataDropDown = [this.itemTypeEnum.epic];
-    } else {
-      this.dataDropDown = [
-        this.itemTypeEnum.epic,
-        this.itemTypeEnum.story,
-        this.itemTypeEnum.task,
-        this.itemTypeEnum.issue,
-      ];
-    }
+    this.modifyDropDowns();
   }
   addItem(item: ItemRoadmap) {
     this.roadmapService.addItem(item).subscribe((data) => {
