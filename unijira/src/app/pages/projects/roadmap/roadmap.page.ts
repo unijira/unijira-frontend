@@ -24,6 +24,7 @@ import {
   showSpinner,
   hideSpinner,
 } from '@syncfusion/ej2-angular-popups';
+import { ItemRoadmapTree } from 'src/app/models/item/itemRoadmapTree';
 
 declare var require: any;
 L10n.load({
@@ -137,7 +138,7 @@ export class RoadmapPage {
     null
   );
   public roadmap: Roadmap = new Roadmap(null, null, null, null);
-  public itemsOfRoadmap: Roadmap[];
+  public itemsOfRoadmap: Array<ItemRoadmapTree>;
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -182,56 +183,12 @@ export class RoadmapPage {
   }
   public ngOnInit(): void {
     this.initGantt();
-
+    createSpinner({
+      target: document.getElementById('gantt')
+    })
     showSpinner(document.getElementById('gantt'));
-    setTimeout(function () {
-      hideSpinner(document.getElementById('gantt'));
-    }, 1300);
-
-    this.taskIdGantt = 0;
-    this.roadmapService
-      .getBacklog(this.projectId)
-      .pipe(
-        tap((backlog) => (this.backlogId = backlog[0].id)),
-        switchMap((backlog) =>
-          this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
-        ),
-        tap((roadmap) => (this.roadmapId = roadmap[0].id)),
-        switchMap((roadmap) =>
-          this.roadmapService.getItemsOfTheRoadmap(
-            this.projectId,
-            this.backlogId,
-            roadmap[0].id
-          )
-        )
-      )
-      .subscribe((items) => {
-        this.itemsOfRoadmap = items;
-        let recordFather: object = {};
-        if (this.itemsOfRoadmap.length > 0) {
-          for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
-            this.taskIdGantt++;
-            if (this.itemsOfRoadmap[i].item.type === this.itemTypeEnum.epic) {
-              if (this.itemsOfRoadmap[i].item.sons.length === 0) {
-                recordFather = {
-                  TaskName: this.itemsOfRoadmap[i].item.description,
-                  Status: this.Status,
-                  TaskID: this.taskIdGantt,
-                  StartDate: this.itemsOfRoadmap[i].startingDate,
-                  EndDate: this.itemsOfRoadmap[i].endingDate,
-                  ItemType: this.itemsOfRoadmap[i].item.type,
-                };
-                this.data = this.data.concat(recordFather);
-                this.dataFathersDropDown = this.dataFathersDropDown.concat(
-                  this.itemsOfRoadmap[i].item.description +
-                    ' - ' +
-                    this.itemsOfRoadmap[i].item.type
-                );
-              }
-            }
-          }
-        }
-      });
+    hideSpinner(document.getElementById('gantt'));
+    this.getAllItemsOfRoadmap();
   }
   public ngOnDestroy() {}
 
@@ -281,6 +238,8 @@ export class RoadmapPage {
     var itemType = (document.getElementById('itemType') as any)
       .ej2_instances[0];
     let currentId: any = (parseInt(obj.ids[obj.ids.length - 1]) + 1).toString();
+    var father = (document.getElementById('father') as any)
+    .ej2_instances[0];
     if (currentId === 'NaN') {
       currentId = 1;
     }
@@ -304,7 +263,6 @@ export class RoadmapPage {
       this.roadmap.startingDate = this.startingDate;
       this.roadmap.endingDate = this.endingDate;
       this.roadmap.roadmapId = this.roadmapId;
-
       this.roadmapService
         .addItem(this.itemRoadmap)
         .pipe(
@@ -338,8 +296,6 @@ export class RoadmapPage {
         this.dataTmp = [];
         var index = 0;
         let recordFather: object = {};
-        var father = (document.getElementById('father') as any)
-          .ej2_instances[0];
         if (father.value === null) {
           this.alert = true;
           this.openDialogAlert();
@@ -543,7 +499,7 @@ export class RoadmapPage {
   }
   public modifyDropDowns() {
     this.enabled = false;
-    if (this.itemsOfRoadmap.length> 0) {
+    if (this.itemsOfRoadmap!== undefined) {
       this.dataDropDown = [
         this.itemTypeEnum.epic,
         this.itemTypeEnum.story,
@@ -632,6 +588,52 @@ export class RoadmapPage {
       .addItemToRoadmap(idProject, idBacklog, idRoadmap, roadmap)
       .subscribe((data) => {
         console.log(data);
+      });
+  }
+  getAllItemsOfRoadmap(){
+    this.taskIdGantt = 0;
+    this.roadmapService
+      .getBacklog(this.projectId)
+      .pipe(
+        tap((backlog) => (this.backlogId = backlog[0].id)),
+        switchMap((backlog) =>
+          this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+        ),
+        tap((roadmap) => (this.roadmapId = roadmap[0].id)),
+        switchMap((roadmap) =>
+          this.roadmapService.getItemsOfTheRoadmap(
+            this.projectId,
+            this.backlogId,
+            roadmap[0].id
+          )
+        )
+      )
+      .subscribe((items) => {
+        this.itemsOfRoadmap = items;
+        let recordFather: object = {};
+        if (this.itemsOfRoadmap.length > 0) {
+          for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
+            this.taskIdGantt++;
+            if (this.itemsOfRoadmap[i].itemType === this.itemTypeEnum.epic) {
+              if (this.itemsOfRoadmap[i].children.length === 0) {
+                recordFather = {
+                  TaskName: this.itemsOfRoadmap[i].itemDescription,
+                  Status: this.Status,
+                  TaskID: this.taskIdGantt,
+                  StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
+                  EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
+                  ItemType: this.itemsOfRoadmap[i].itemType,
+                };
+                this.data = this.data.concat(recordFather);
+                this.dataFathersDropDown = this.dataFathersDropDown.concat(
+                  this.itemsOfRoadmap[i].itemDescription +
+                    ' - ' +
+                    this.itemsOfRoadmap[i].itemType
+                );
+              }
+            }
+          }
+        }
       });
   }
 }
