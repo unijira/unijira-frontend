@@ -15,7 +15,7 @@ export class ItemRoadmap {
   public type: ItemType;
   public status: ItemStatus;
   public owner: UserInfo;
-  public father: number;
+  public fatherId: number;
   public notes: Note[];
   public assignees: ItemAssignment[];
   public createdAt: number;
@@ -33,7 +33,7 @@ export class ItemRoadmap {
     type: ItemType,
     status: ItemStatus,
     owner: UserInfo,
-    father: number,
+    fatherId: number,
     notes?: Note[],
     assignees?: ItemAssignment[],
     sons?: ItemRoadmap[])
@@ -48,7 +48,7 @@ export class ItemRoadmap {
     this.type = type;
     this.status = status;
     this.owner = owner;
-    this.father = father;
+    this.fatherId = fatherId;
     this.assignees = assignees || [];
     this.notes = notes || [];
     this.sons= sons || [];

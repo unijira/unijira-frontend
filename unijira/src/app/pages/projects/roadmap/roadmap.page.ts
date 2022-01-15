@@ -263,7 +263,8 @@ export class RoadmapPage {
       this.roadmap.startingDate = this.startingDate;
       this.roadmap.endingDate = this.endingDate;
       this.roadmap.roadmapId = this.roadmapId;
-      this.roadmapService
+      if (itemType.value === this.itemTypeEnum.epic) {
+        this.roadmapService
         .addItem(this.itemRoadmap)
         .pipe(
           tap((itemR) => (this.roadmap.item = itemR)),
@@ -277,8 +278,6 @@ export class RoadmapPage {
           )
         )
         .subscribe();
-
-      if (itemType.value === this.itemTypeEnum.epic) {
         record = {
           TaskName: tasknameObj.value,
           Status: this.Status,
@@ -305,6 +304,28 @@ export class RoadmapPage {
             var i = 0;
             for (i = 0; i < this.data.length; i++) {
               if (this.data[i].TaskName === father.value.split(' - ')[0]) {
+                let result= this.itemsOfRoadmap.find(item => item.itemSummary === this.data[i].TaskName);
+                console.log(result.itemId)
+                this.itemRoadmap.fatherId= Number(result.itemId);
+                console.log(this.itemRoadmap)
+                this.roadmapService
+               .addItem(this.itemRoadmap)
+               .pipe(
+                 tap((itemR) => {
+                  this.roadmap.item = itemR
+                   this.roadmap.item.fatherId= this.itemRoadmap.fatherId;
+                  console.log(this.roadmap)
+                 }),
+                 switchMap((_) =>
+                   this.roadmapService.addItemToRoadmap(
+                     this.projectId,
+                     this.backlogId,
+                     this.roadmapId,
+                     this.roadmap
+                   )
+                 ),
+                 tap(data=> console.log(data))
+               ).subscribe(data => console.log(data))
                 //task has a subtasks already
                 if (this.data[i].subtasks !== undefined) {
                   this.subtasksTmp = this.data[i].subtasks;
@@ -610,15 +631,17 @@ export class RoadmapPage {
       )
       .subscribe((items) => {
         this.itemsOfRoadmap = items;
+        console.log(this.itemsOfRoadmap)
         let recordFather: object = {};
+        let recordSon: object = {};
+        let sons:any[]=[];
         if (this.itemsOfRoadmap.length > 0) {
           for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
             this.taskIdGantt++;
-            if (this.itemsOfRoadmap[i].itemType === this.itemTypeEnum.epic) {
               if (this.itemsOfRoadmap[i].children.length === 0) {
                 recordFather = {
                   TaskName: this.itemsOfRoadmap[i].itemDescription,
-                  Status: this.Status,
+                  Status: this.itemsOfRoadmap[i].itemStatus,
                   TaskID: this.taskIdGantt,
                   StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                   EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
@@ -631,7 +654,43 @@ export class RoadmapPage {
                     this.itemsOfRoadmap[i].itemType
                 );
               }
-            }
+              else {
+                  for (let j=0 ; j< this.itemsOfRoadmap[i].children.length; j++){
+                    recordSon={};
+                    recordSon = {
+                      TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
+                      Status: this.itemsOfRoadmap[i].children[j].itemStatus,
+                      TaskID: this.taskIdGantt+1,
+                      StartDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionStartingDate,
+                      EndDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionEndingDate,
+                      ItemType: this.itemsOfRoadmap[i].children[j].itemType,
+                    };
+                    sons=sons.concat(recordSon);
+                    if(this.itemsOfRoadmap[i].children[j].itemType=== this.itemTypeEnum.story){
+                      this.dataFathersDropDown = this.dataFathersDropDown.concat(
+                        this.itemsOfRoadmap[i].children[j].itemDescription +
+                          ' - ' +
+                          this.itemsOfRoadmap[i].children[j].itemType
+                      );
+                    }
+                    this.taskIdGantt++;
+                  }
+                  recordFather = {
+                    TaskName: this.itemsOfRoadmap[i].itemDescription,
+                    Status: this.itemsOfRoadmap[i].itemStatus,
+                    TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length,
+                    StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
+                    EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
+                    ItemType: this.itemsOfRoadmap[i].itemType,
+                    subtasks: sons
+                  };
+                  this.data = this.data.concat(recordFather);
+                  this.dataFathersDropDown = this.dataFathersDropDown.concat(
+                    this.itemsOfRoadmap[i].itemDescription +
+                      ' - ' +
+                      this.itemsOfRoadmap[i].itemType
+                  );
+              }
           }
         }
       });
