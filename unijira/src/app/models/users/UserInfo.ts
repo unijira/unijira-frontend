@@ -19,7 +19,6 @@ export class UserInfo {
   public createdAt: string;
   public updatedAt: string;
 
-
   constructor(id: number, username: string, avatar: URL, status: UserStatus, disabled: boolean, birthDate: Date, firstName: string, lastName: string, role: string, description: string, github: string, linkedin: string, phoneNumber: string) {
     this.id = id;
     this.username = username;

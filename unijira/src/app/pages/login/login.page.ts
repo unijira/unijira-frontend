@@ -69,10 +69,6 @@ export class LoginPage implements OnInit, OnDestroy {
   get currentColorTheme() {
     return document.body.getAttribute('color-theme');
   }
-  // @HostListener('document:keydown.enter', ['$event'])
-  // handleKeyDown(_event: KeyboardEvent) {
-  //   this.logIn();
-  // }
 
   ngOnInit() {}
 
@@ -101,6 +97,7 @@ export class LoginPage implements OnInit, OnDestroy {
   check(): boolean {
     return this.emailFC.valid && this.passwordFC.valid;
   }
+
   switchLanguage() {
     switchLanguage(this.translateService);
   }

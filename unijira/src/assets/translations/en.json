@@ -97,6 +97,7 @@
   "project.pages.roadmap": "Roadmap",
   "project.pages.tickets": "Tickets",
   "project.pages.releases": "Releases",
+  "project.pages.discussions": "Discussions",
   "project.pages.settings" : "Project settings",
   "project.pages.settings.details" : "Details",
   "project.pages.settings.notifications" : "Notifications",
@@ -329,5 +330,16 @@
   "invite.change.password.title": "Complete the registration process",
   "invite.change.password.subtitle": "You must have a Unijira account in order to become a member of a project!",
   "project.invite.toast.success": "Registration was completed successfully",
-  "project.invite.toast.failed": "An error occurred while completing registration"
+  "project.invite.toast.failed": "An error occurred while completing registration",
+  "discussions.newDiscussion": "New discussion",
+  "discussions.announcements": "Announcements",
+  "discussions.general": "General",
+  "discussions.ideas": "Ideas",
+  "discussions.qanda": "Q&A",
+  "discussions.id": "ID",
+  "discussions.title": "Title",
+  "discussions.openedBy": "Opened by",
+  "disussions.messages": "Messagges",
+  "discussions.type": "Type",
+  "discussions.noDiscussions": "No discussion found"
 }

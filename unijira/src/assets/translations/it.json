@@ -97,6 +97,7 @@
   "project.pages.roadmap": "Roadmap",
   "project.pages.tickets": "Ticket",
   "project.pages.releases": "Rilasci",
+  "project.pages.discussions": "Discussioni",
   "project.pages.settings" : "Impostazioni progetto",
   "project.pages.settings.details" : "Dettagli",
   "project.pages.settings.notifications" : "Notifiche",
@@ -353,5 +354,16 @@
   "invite.change.password.title" : "Completa la procedura di registrazione",
   "invite.change.password.subtitle" : "Per poter divenire membro di un progetto è necessario possedere un account Unijira!",
   "project.invite.toast.success" : "La registrazione è stata completata correttamente",
-  "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione"
+  "project.invite.toast.failed" : "Si è verificato un errore durante il completamento della registrazione",
+  "discussions.newDiscussion": "Nuova discussione",
+  "discussions.announcements": "Annunci",
+  "discussions.general": "Generale",
+  "discussions.ideas": "Idee",
+  "discussions.qanda": "Q&A",
+  "discussions.id": "ID",
+  "discussions.title": "Titolo",
+  "discussions.openedBy": "Aperto da",
+  "disussions.messages": "Messaggi",
+  "discussions.type": "Tipo",
+  "discussions.noDiscussions": "Nessuna discussione trovata"
 }
