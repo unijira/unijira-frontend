@@ -4,7 +4,7 @@ import {TopicType} from './TopicType';
 export class Topic {
 
   public user: UserInfo;
-  public numMessages: number;
+  public numMessages: number = 0;
 
   constructor(
     public id: number,

@@ -9,6 +9,7 @@ import { DiscussionsPageRoutingModule } from './discussions-routing.module';
 import { DiscussionsPage } from './discussions.page';
 import {TranslateModule} from '@ngx-translate/core';
 import {PipeModule} from '../../../pipe.module';
+import {NewDiscussionComponent} from './new-discussion/new-discussion.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,6 @@ import {PipeModule} from '../../../pipe.module';
     ReactiveFormsModule,
     PipeModule
   ],
-  declarations: [DiscussionsPage]
+  declarations: [DiscussionsPage, NewDiscussionComponent]
 })
 export class DiscussionsPageModule {}

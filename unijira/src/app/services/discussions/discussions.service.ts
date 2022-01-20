@@ -17,6 +17,11 @@ export class DiscussionsService {
 
   getNumMessages(idProject: number, idTopic: number): Observable<number> {
     return this.http.get<number>('/projects/'+idProject+'/topics/'+idTopic+'/messages/count')
+      .pipe(catchError(() => of(0)));
+  }
+
+  createDiscussion(idProject: number, topic: Topic): Observable<Topic> {
+    return this.http.post<Topic>('/projects/' + idProject + '/topics', topic)
       .pipe(catchError(() => of(null)));
   }
 

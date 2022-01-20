@@ -10,6 +10,14 @@
     </ion-breadcrumbs>
   </section>
 
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="isModalOpen=false">
+    <ng-template>
+      <app-modal-content>
+        <app-new-discussion [project]="project"></app-new-discussion>
+      </app-modal-content>
+    </ng-template>
+  </ion-modal>
+
   <!-- Title and Call to Action -->
   <section class="ion-margin">
     <ion-grid>
@@ -20,7 +28,7 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block">
+          <ion-button color="primary" expand="block" (click)="isModalOpen=!isModalOpen">
             <ion-icon slot="start" name="add"></ion-icon>
             <ion-text translate>discussions.newDiscussion</ion-text>
           </ion-button>
@@ -106,13 +114,13 @@
             </ion-text>
           </ion-col>
           <ion-col size="1">
-            <ion-avatar class="avatar-center" [title]="topic.user.username">
-              <ion-img [src]="topic.user.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            <ion-avatar class="avatar-center" [title]="topic.user?.username">
+              <ion-img [src]="topic.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
             </ion-avatar>
           </ion-col>
           <ion-col size="1" class="ion-text-center">
             <ion-text>
-              <strong>{{ topic.numMessages }}</strong>
+              <strong [innerHTML]="topic.numMessages"></strong>
             </ion-text>
           </ion-col>
           <ion-col size="1" class="ion-text-center">

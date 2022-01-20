@@ -341,5 +341,9 @@
   "discussions.openedBy": "Opened by",
   "disussions.messages": "Messagges",
   "discussions.type": "Type",
-  "discussions.noDiscussions": "No discussion found"
+  "discussions.noDiscussions": "No discussion found",
+  "discussions.insertTitle": "Insert title",
+  "discussions.text": "Text",
+  "discussions.insertText": "Insert text",
+  "discussions.openDiscussion": "Open discussion"
 }

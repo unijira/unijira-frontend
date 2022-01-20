@@ -365,5 +365,9 @@
   "discussions.openedBy": "Aperto da",
   "disussions.messages": "Messaggi",
   "discussions.type": "Tipo",
-  "discussions.noDiscussions": "Nessuna discussione trovata"
+  "discussions.noDiscussions": "Nessuna discussione trovata",
+  "discussions.insertTitle": "Inserisci un titolo",
+  "discussions.text": "Testo",
+  "discussions.insertText": "Inserisci del testo",
+  "discussions.openDiscussion": "Apri discussione"
 }

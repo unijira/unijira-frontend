@@ -36,6 +36,8 @@ export class DiscussionsPage implements OnInit, OnDestroy {
 
   filterSubscription: Subscription;
 
+  isModalOpen = false;
+
   constructor(
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute,
@@ -53,27 +55,31 @@ export class DiscussionsPage implements OnInit, OnDestroy {
           this.topics = top;
 
           // Mock objects for testing and demos, to remove
-          this.topics = [
-            new Topic(0, 'topic 1', 'contenuto 1', 0, 0, TopicType.announcements),
-            new Topic(1, 'topic 2', 'contenuto 2', 0, 0, TopicType.ideas),
-            new Topic(2, 'topic 3', 'contenuto 3', 0, 0, TopicType.qanda),
-            new Topic(3, 'topic 4', 'contenuto 4', 0, 0, TopicType.general),
-            new Topic(4, 'topic 5', 'contenuto 5', 0, 0, TopicType.general),
-            new Topic(4, 'topic 6', 'contenuto 5', 0, 0, TopicType.general),
-            new Topic(4, 'topic 7', 'contenuto 5', 0, 0, TopicType.general),
-            new Topic(4, 'topic 8', 'contenuto 5', 0, 0, TopicType.general),
-          ];
-
-          this.topics.forEach(t => {
-            t.numMessages = 10;
-            t.user = new UserInfo(0, 'user0', new URL("https://pbs.twimg.com/profile_images/1194685097158627328/0KpY3jyd_400x400.png"),
-              UserStatus.active, false, null, null, null, 'null', 'null');
-          });
+          // this.topics = [
+          //   new Topic(0, 'topic 1', 'contenuto 1', 0, 0, TopicType.announcements),
+          //   new Topic(1, 'topic 2', 'contenuto 2', 0, 0, TopicType.ideas),
+          //   new Topic(2, 'topic 3', 'contenuto 3', 0, 0, TopicType.qanda),
+          //   new Topic(3, 'topic 4', 'contenuto 4', 0, 0, TopicType.general),
+          //   new Topic(4, 'topic 5', 'contenuto 5', 0, 0, TopicType.general),
+          //   new Topic(4, 'topic 6', 'contenuto 5', 0, 0, TopicType.general),
+          //   new Topic(4, 'topic 7', 'contenuto 5', 0, 0, TopicType.general),
+          //   new Topic(4, 'topic 8', 'contenuto 5', 0, 0, TopicType.general),
+          // ];
+          //
+          // this.topics.forEach(t => {
+          //   t.numMessages = 10;
+          //   t.user = new UserInfo(0, 'user0', new URL("https://pbs.twimg.com/profile_images/1194685097158627328/0KpY3jyd_400x400.png"),
+          //     UserStatus.active, false, null, null, null, 'null', 'null');
+          // });
           // end mock object
 
-          this.topics.forEach(t => {
-            this.discussionsService.getNumMessages(this.project.id, t.id).subscribe(num => t.numMessages = num);
+          this.topics.forEach((t, i) => {
+            this.discussionsService.getNumMessages(this.project.id, t.id).subscribe(num => {
+              t.numMessages = num;
+              this.filteredTopics[i].numMessages = num;
+            });
           });
+
 
           this.filteredTopics = cloneDeep(this.topics);
 
