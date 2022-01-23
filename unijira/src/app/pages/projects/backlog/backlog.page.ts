@@ -1,7 +1,14 @@
 import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy, ViewChild, Input, AfterViewInit } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  ViewChild,
+  Input,
+  AfterViewInit,
+} from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../../../store/task.service';
@@ -166,8 +173,6 @@ export class BacklogPage implements OnInit {
     );
   }
 
-
-
   ngOnInit() {
     const that = this;
     this.totalDones = 0;
@@ -214,21 +219,24 @@ export class BacklogPage implements OnInit {
   }
 
   showSuggestions(): void {
-    this.backlog.insertions.forEach((item) => {
-      // TODO Sostituire con un if realistico (prendere dalle API)
-      if (item.item.summary.includes('d')) {
-        this.introJsOpts.steps.push({
-          element: '#step' + item.item.id,
-          intro: 'Item suggerito: ' + item.item.summary,
+    this.backlogAPIService
+      .getHints(this.projectId, this.backlogId, this.sprintId)
+      .subscribe((res) => {
+        this.backlog.insertions.forEach((item) => {
+          // TODO Sostituire con un if realistico (prendere dalle API)
+          if (res.hint.includes(item.item.id)) {
+            this.introJsOpts.steps.push({
+              element: '#step' + item.item.id,
+              intro: 'Item suggerito: ' + item.item.summary,
+            });
+          }
         });
-      }
-    });
 
-    console.log('INTRO STEPS:', this.introJsOpts.steps);
+        console.log('INTRO STEPS:', this.introJsOpts.steps);
 
-    this.introService.show(this.introJsOpts);
+        this.introService.show(this.introJsOpts);
+      });
   }
-
 
   logAccordionValue() {
     console.log(this.accordionGroup.value);
