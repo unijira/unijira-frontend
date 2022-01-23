@@ -1,13 +1,14 @@
 <ion-content class="popover-wrapper" [formGroup]="formGroup">
   <ion-row>
     <ion-text>
-      <h1 translate class="ion-margin ion-margin-start">discussions.newDiscussion</h1>
+      <h1 translate class="ion-margin ion-margin-start" *ngIf="!discussionToEdit">discussions.newDiscussion</h1>
+      <h1 translate class="ion-margin ion-margin-start" *ngIf="discussionToEdit">discussions.editDiscussion</h1>
     </ion-text>
   </ion-row>
   <ion-row>
     <ion-item class="ion-margin w-100">
       <ion-label position="stacked" translate>discussions.title</ion-label>
-      <ion-input [placeholder]="'discussions.insertTitle' | translate" formControlName="title"></ion-input>
+      <ion-input [placeholder]="'discussions.insertTitle' | translate" type="text" [formControl]="titleFC"></ion-input>
     </ion-item>
   </ion-row>
   <ion-row>
@@ -45,9 +46,11 @@
   <ion-row>
     <ion-col size="6"></ion-col>
     <ion-col size="6">
-    <ion-button color="primary" expand="block" (click)="newDiscussion()" class="ion-margin ion-float-md-right">
-      <ion-icon slot="start" name="add"></ion-icon>
-      <ion-text translate>discussions.openDiscussion</ion-text>
+    <ion-button color="primary" expand="block" (click)="newOrEditDiscussion()" class="ion-margin ion-float-md-right">
+      <ion-icon slot="start" name="add" *ngIf="!discussionToEdit"></ion-icon>
+      <ion-icon slot="start" name="create" *ngIf="discussionToEdit"></ion-icon>
+      <ion-text translate *ngIf="!discussionToEdit">discussions.openDiscussion</ion-text>
+      <ion-text translate *ngIf="discussionToEdit">discussions.editDiscussion</ion-text>
     </ion-button>
     </ion-col>
   </ion-row>

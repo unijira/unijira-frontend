@@ -9,7 +9,7 @@ const routes: Routes = [
     component: DiscussionsPage
   },
   {
-    path: ':id/discussions/:idDiscussion',
+    path: ':idTopic',
     loadChildren: () => import('./discussion/discussion.module').then( m => m.DiscussionPageModule)
   }
 

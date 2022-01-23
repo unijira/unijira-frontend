@@ -13,6 +13,8 @@ export class Topic {
     public projectId: number,
     public userId: number,
     public type: TopicType,
+    public createdAt?: Date,
+    public updatedAt?: Date
   ) {
   }
 }

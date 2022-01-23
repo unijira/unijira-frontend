@@ -4,13 +4,11 @@ import {ActivatedRoute} from '@angular/router';
 import {Project} from '../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {Topic} from '../../../models/topic/Topic';
-import {UserInfo} from '../../../models/users/UserInfo';
-import {UserStatus} from '../../../models/users/UserStatus';
 import {TopicType} from '../../../models/topic/TopicType';
 import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {DiscussionsService} from '../../../services/discussions/discussions.service';
-import {unsubscribeAll} from "../../../util";
+import {unsubscribeAll} from '../../../util';
 
 @Component({
   selector: 'app-discussions',
@@ -73,15 +71,14 @@ export class DiscussionsPage implements OnInit, OnDestroy {
           // });
           // end mock object
 
+          this.filteredTopics = cloneDeep(this.topics);
+
           this.topics.forEach((t, i) => {
             this.discussionsService.getNumMessages(this.project.id, t.id).subscribe(num => {
               t.numMessages = num;
               this.filteredTopics[i].numMessages = num;
             });
           });
-
-
-          this.filteredTopics = cloneDeep(this.topics);
 
         });
       }

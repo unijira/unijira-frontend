@@ -21,6 +21,9 @@ import {NewDiscussionComponent} from './new-discussion/new-discussion.component'
     ReactiveFormsModule,
     PipeModule
   ],
+  exports: [
+    NewDiscussionComponent
+  ],
   declarations: [DiscussionsPage, NewDiscussionComponent]
 })
 export class DiscussionsPageModule {}
