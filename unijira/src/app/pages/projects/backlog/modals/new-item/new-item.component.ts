@@ -35,7 +35,7 @@ export class NewItemComponent implements OnInit {
   measureunit: string;
   evaluation: number;
   status: ItemStatus;
-  type: any;
+  type: ItemType;
   statusList: any[];
 
   constructor(
@@ -92,7 +92,7 @@ export class NewItemComponent implements OnInit {
     this.item.tags = this.tags;
     this.item.measureUnit = this.measureunit;
     this.item.evaluation = this.evaluation;
-    this.item.type = this.type;
+    this.item.type = ItemType[this.type];
     this.item.assignees = [];
 
     delete this.item.createdAt;
