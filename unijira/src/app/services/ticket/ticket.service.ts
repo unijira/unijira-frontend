@@ -66,7 +66,7 @@ export class TicketService {
 
             return this.http.post<Item>(`/items`, item)
               .pipe(switchMap(ticket => this.http.post<BacklogInsertion>(`/projects/${projectId}/backlogs/${project.backlogs[0].id}/insertions`, new BacklogInsertion(null, ticket, project.backlogs[0], 0))
-                  .pipe(map(_ => ticket))));
+              .pipe(map(_ => ticket))));
 
           }))
       ));

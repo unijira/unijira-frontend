@@ -32,7 +32,8 @@ import {NgxPopperjsModule} from 'ngx-popperjs';
     TicketStatusPipe,
     TicketStatusColorPipe,
     MeasureUnitPipe,
-    InputSelectUserComponent
+    InputSelectUserComponent,
+    TicketTypePipe
   ],
   declarations: [TicketsPage, TicketStatusPipe, TicketStatusColorPipe, TicketTypePipe, TicketDataTableComponent, MeasureUnitPipe, InputSelectUserComponent]
 })

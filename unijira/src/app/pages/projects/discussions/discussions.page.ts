@@ -66,8 +66,8 @@ export class DiscussionsPage implements OnInit, OnDestroy {
 
           this.topics.forEach(t => {
             t.numMessages = 10;
-            t.user = new UserInfo(0, 'user0', new URL('https://pbs.twimg.com/profile_images/1194685097158627328/0KpY3jyd_400x400.png'),
-              UserStatus.active, false, null, null, null, 'null', 'null');
+            t.user = new UserInfo(0, 'user0', new URL('https://pbs.twimg.com/profile_images/1194685097158627328/0KpY3jyd_400x400.png'), UserStatus.active,
+                                  false, new Date(), 'User', 'Name', 'Bidello', '', '', '', '');
           });
           // end mock object
 

@@ -1,7 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {PageService} from '../../../../../services/page.service';
 import {SessionService} from '../../../../../store/session.service';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TicketService} from '../../../../../services/ticket/ticket.service';
 import {Item} from '../../../../../models/item/Item';
 import {ItemStatus} from '../../../../../models/item/ItemStatus';
@@ -14,6 +14,8 @@ import {ReleaseStatus} from '../../../../../models/releases/ReleaseStatus';
 import {Membership} from '../../../../../models/projects/Membership';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
+import {ItemType} from '../../../../../models/item/ItemType';
+import {catchError, of} from 'rxjs';
 
 @Component({
   selector: 'app-view',
@@ -31,6 +33,7 @@ export class ViewPage implements OnInit {
 
   ticketStatus = ItemStatus;
   measureUnit = MeasureUnit;
+  ticketType = ItemType;
 
   constructor(
     private pageService: PageService,
@@ -40,7 +43,8 @@ export class ViewPage implements OnInit {
     private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
-    private translateService: TranslateService
+    private translateService: TranslateService,
+    private router: Router
   ) { }
 
   get dirty(): boolean {
@@ -90,6 +94,22 @@ export class ViewPage implements OnInit {
         }).then(alert => alert.present());
       }
     });
+  }
+
+  create(itemType: ItemType) {
+    this.ticketService.createTicket(this.projectId, itemType, this.ticket.id)
+      .pipe(catchError(_ => of(null)))
+      .subscribe(response => {
+        if (response) {
+          this.router.navigate(['/projects', this.projectId, 'tickets', response.id]).then();
+        } else {
+          this.alertController.create({
+            header: this.translateService.instant('error.title'),
+            message: this.translateService.instant('error.projects.tickets.create'),
+            buttons: [this.translateService.instant('error.buttons.ok')]
+          }).then(alert => alert.present());
+        }
+      });
   }
 
 }
