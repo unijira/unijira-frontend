@@ -415,7 +415,7 @@
                     class="light-gray-bg"
                     [(dragulaModel)]="backlog.insertions"
                   >
-                    <ion-row
+                    <ion-row   [id]="'step' + insertion.id"
                       *ngFor="let insertion of filteredTicketsB"
                       class="ion-align-items-end ion-justify-content-center task-item white-bg"
                     >

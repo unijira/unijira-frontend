@@ -36,7 +36,7 @@ import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
   templateUrl: './backlog.page.html',
   styleUrls: ['./backlog.page.scss'],
 })
-export class BacklogPage implements OnInit, AfterViewInit {
+export class BacklogPage implements OnInit {
   @ViewChild(IonAccordionGroup, { static: true })
   accordionGroup: IonAccordionGroup;
 
@@ -90,13 +90,7 @@ export class BacklogPage implements OnInit, AfterViewInit {
   sprintInfo: any;
 
   introJsOpts = {
-    steps: [
-      {
-        element: '#step1',
-        intro:
-          'Welcome to Feature One! On this page you can see all of your AR projects',
-      },
-    ],
+    steps: [],
   };
 
   constructor(
@@ -172,18 +166,7 @@ export class BacklogPage implements OnInit, AfterViewInit {
     );
   }
 
-  ngAfterViewInit(): void {
-    this.backlog.insertions.forEach((item) => {
-      // TODO Sostituire con un if realistico (prendere dalle API)
-      if (item.item.description.includes('d')) {
-        this.introJsOpts.steps.push({
-          element: '#step' + item.item.id,
-          intro: item.item.description,
-        });
-      }
-    });
-    this.introService.show(this.introJsOpts);
-  }
+
 
   ngOnInit() {
     const that = this;
@@ -230,6 +213,21 @@ export class BacklogPage implements OnInit, AfterViewInit {
     });
   }
 
+  showSuggestions(): void {
+    this.backlog.insertions.forEach((item) => {
+      // TODO Sostituire con un if realistico (prendere dalle API)
+      if (item.item.summary.includes('d')) {
+        this.introJsOpts.steps.push({
+          element: '#step' + item.item.id,
+          intro: 'Item suggerito: ' + item.item.summary,
+        });
+      }
+    });
+
+    console.log('INTRO STEPS:', this.introJsOpts.steps);
+
+    this.introService.show(this.introJsOpts);
+  }
 
 
   logAccordionValue() {
@@ -410,6 +408,7 @@ export class BacklogPage implements OnInit, AfterViewInit {
             const tmpB = _.cloneDeep(that.backlog);
             this.backlogServer = _.cloneDeep(that.backlog);
             this.countElementsB();
+            this.showSuggestions();
             that.store.dispatch(
               TaskActions.setBacklogAction({ backlog: tmpB })
             );
