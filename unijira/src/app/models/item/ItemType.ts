@@ -1,6 +1,6 @@
 export enum ItemType {
-  epic = 'epic',
-  story = 'story',
-  task = 'task',
-  issue = 'issue',
+  epic = 'EPIC',
+  story = 'STORY',
+  task = 'TASK',
+  issue = 'ISSUE',
 }
