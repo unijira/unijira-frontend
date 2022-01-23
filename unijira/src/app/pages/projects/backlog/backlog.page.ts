@@ -223,17 +223,13 @@ export class BacklogPage implements OnInit {
       .getHints(this.projectId, this.backlogId, this.sprintId)
       .subscribe((res) => {
         this.backlog.insertions.forEach((item) => {
-          // TODO Sostituire con un if realistico (prendere dalle API)
-          if (res.hint.includes(item.item.id)) {
+          if (res.indexOf(item.item.id) !== -1) {
             this.introJsOpts.steps.push({
               element: '#step' + item.item.id,
               intro: 'Item suggerito: ' + item.item.summary,
             });
           }
         });
-
-        console.log('INTRO STEPS:', this.introJsOpts.steps);
-
         this.introService.show(this.introJsOpts);
       });
   }

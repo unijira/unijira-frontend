@@ -191,11 +191,6 @@ export class BacklogAPIService {
     backlogId: number,
     sprintId: number
   ) {
-    const example = [
-      { id: 1, name: 'hint1' },
-      { id: 2, name: 'hint2' },
-    ];
-
     let userInfo;
     this.sessionService.getUserInfo().subscribe((user) => {
       userInfo = user;
