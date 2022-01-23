@@ -36,8 +36,14 @@
               "moment/locale/en-gb",
               "moment/locale/it"
             ],
-            "styles": ["src/theme/variables.scss", "src/global.scss"],
-            "scripts": [],
+            "styles": [
+              "src/theme/variables.scss",
+              "src/global.scss",
+              "node_modules/intro.js/minified/introjs.min.css"
+            ],
+            "scripts": [
+              "node_modules/intro.js/minified/intro.min.js"
+            ],
             "aot": false,
             "vendorChunk": true,
             "extractLicenses": false,

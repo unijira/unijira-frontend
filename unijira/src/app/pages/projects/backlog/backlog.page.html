@@ -162,8 +162,9 @@
                     <ion-row
                       *ngFor="let insertion of filteredTicketsS"
                       class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
+                      [id]="'step' + insertion.id"
                     >
-                      <ion-col>
+                      <ion-col >
                         <ion-item>
                           <ion-avatar slot="start">
                             <ion-img

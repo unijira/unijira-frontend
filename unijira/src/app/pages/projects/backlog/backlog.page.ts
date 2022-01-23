@@ -1,7 +1,7 @@
 import { setBacklogAction } from './../../../store/task.action';
 import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild, Input, AfterViewInit } from '@angular/core';
 import { Sprint } from '../../../models/Sprint';
 import { DragulaService } from 'ng2-dragula';
 import { TaskService } from '../../../store/task.service';
@@ -29,13 +29,14 @@ import { NewItemComponent } from './modals/new-item/new-item.component';
 import { SessionService } from 'src/app/store/session.service';
 import { PageService } from '../../../services/page.service';
 import { ItemType } from 'src/app/models/item/ItemType';
-
+import { IntrojsService } from 'src/app/services/introjs.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
   styleUrls: ['./backlog.page.scss'],
 })
-export class BacklogPage implements OnInit {
+export class BacklogPage implements OnInit, AfterViewInit {
   @ViewChild(IonAccordionGroup, { static: true })
   accordionGroup: IonAccordionGroup;
 
@@ -88,6 +89,16 @@ export class BacklogPage implements OnInit {
 
   sprintInfo: any;
 
+  introJsOpts = {
+    steps: [
+      {
+        element: '#step1',
+        intro:
+          'Welcome to Feature One! On this page you can see all of your AR projects',
+      },
+    ],
+  };
+
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
@@ -98,9 +109,9 @@ export class BacklogPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private pageService: PageService
+    private pageService: PageService,
+    private introService: IntrojsService
   ) {
-
     this.filterTypeS = [
       ItemType.epic,
       ItemType.story,
@@ -112,7 +123,6 @@ export class BacklogPage implements OnInit {
 
     this.filterSearchS = '';
 
-
     this.filterTypeB = [
       ItemType.epic,
       ItemType.story,
@@ -123,7 +133,6 @@ export class BacklogPage implements OnInit {
     this.filterStatusB = [ItemStatus.open, ItemStatus.done];
     this.filterSearchB = '';
 
-
     this.route.params.subscribe((params) =>
       this.sessionService.loadProject(params.id)
     );
@@ -132,24 +141,51 @@ export class BacklogPage implements OnInit {
   }
 
   get filteredTicketsS() {
-    return this.sprint.insertions?.filter(ticket => (
-      (this.filterSearchS === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchS.toLowerCase())) &&
-      (this.filterStatusS?.length === 0  || this.filterStatusS?.includes(ticket.item.status)) &&
-      (this.filterTypeS?.length === 0    || this.filterTypeS?.includes(ticket.item.type))
-    )) || [];
+    return (
+      this.sprint.insertions?.filter(
+        (ticket) =>
+          (this.filterSearchS === '' ||
+            ticket.item.summary
+              ?.toLowerCase()
+              .includes(this.filterSearchS.toLowerCase())) &&
+          (this.filterStatusS?.length === 0 ||
+            this.filterStatusS?.includes(ticket.item.status)) &&
+          (this.filterTypeS?.length === 0 ||
+            this.filterTypeS?.includes(ticket.item.type))
+      ) || []
+    );
   }
 
   get filteredTicketsB() {
-    return this.backlog.insertions?.filter(ticket => (
-      (this.filterSearchB === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchB.toLowerCase())) &&
-      (this.filterStatusB?.length === 0  || this.filterStatusB?.includes(ticket.item.status)) &&
-      (this.filterTypeB?.length === 0    || this.filterTypeB?.includes(ticket.item.type))
-    )) || [];
+    return (
+      this.backlog.insertions?.filter(
+        (ticket) =>
+          (this.filterSearchB === '' ||
+            ticket.item.summary
+              ?.toLowerCase()
+              .includes(this.filterSearchB.toLowerCase())) &&
+          (this.filterStatusB?.length === 0 ||
+            this.filterStatusB?.includes(ticket.item.status)) &&
+          (this.filterTypeB?.length === 0 ||
+            this.filterTypeB?.includes(ticket.item.type))
+      ) || []
+    );
+  }
+
+  ngAfterViewInit(): void {
+    this.backlog.insertions.forEach((item) => {
+      // TODO Sostituire con un if realistico (prendere dalle API)
+      if (item.item.description.includes('d')) {
+        this.introJsOpts.steps.push({
+          element: '#step' + item.item.id,
+          intro: item.item.description,
+        });
+      }
+    });
+    this.introService.show(this.introJsOpts);
   }
 
   ngOnInit() {
-
-
     const that = this;
     this.totalDones = 0;
     this.totalNonAvviatos = 0;
@@ -193,6 +229,9 @@ export class BacklogPage implements OnInit {
       this.sprint = _.cloneDeep(s);
     });
   }
+
+
+
   logAccordionValue() {
     console.log(this.accordionGroup.value);
   }
