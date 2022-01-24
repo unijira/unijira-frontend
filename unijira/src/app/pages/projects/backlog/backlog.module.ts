@@ -16,6 +16,8 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {PipeModule} from '../../../pipe.module';
 
+import { TicketStatusPipe } from '../tickets/pipes/ticket-status.pipe';
+import { TicketTypePipe } from '../tickets/pipes/ticket-type.pipe';
 @NgModule({
     imports: [
         CommonModule,
@@ -27,7 +29,7 @@ import {PipeModule} from '../../../pipe.module';
         TranslateModule,
         PipeModule
     ],
-    declarations: [BacklogPage, BackloglistComponent, SprintlistComponent],
+    declarations: [BacklogPage, BackloglistComponent, SprintlistComponent, TicketStatusPipe, TicketTypePipe],
     providers: [TaskService]
 })
 export class BacklogPageModule {}
