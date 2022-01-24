@@ -399,7 +399,10 @@ export class BacklogPage implements OnInit {
             .toISOString()
             .split('T')[0];
         }
+        // TODO: sostituire con un check sullo stato appena disponibile nel DTO
         this.sprintIsStarted = moment(this.endSprintDate).diff(moment(), 'days') > 0 ? true : false;
+
+        // this.sprintIsStarted = this.sprint.status === SprintStatus.active ? true : false;
 
         this.backlogAPIService
           .getSprintItems(this.projectId, this.backlogId, this.sprintId)
