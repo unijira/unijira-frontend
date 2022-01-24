@@ -10,6 +10,12 @@
     </ion-breadcrumbs>
   </section>
 
+  <ion-modal [isOpen]="isModalOpen" (didDismiss)="isModalOpen=false">
+    <ng-template>
+      <app-new-discussion [project]="project" (closeModule)="$event ? isModalOpen=false : isModalOpen=true"></app-new-discussion>
+    </ng-template>
+  </ion-modal>
+
   <!-- Title and Call to Action -->
   <section class="ion-margin">
     <ion-grid>
@@ -20,7 +26,7 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block">
+          <ion-button color="primary" expand="block" (click)="isModalOpen=!isModalOpen">
             <ion-icon slot="start" name="add"></ion-icon>
             <ion-text translate>discussions.newDiscussion</ion-text>
           </ion-button>
@@ -61,7 +67,7 @@
               </strong>
             </ion-text>
           </ion-col>
-          <ion-col size="8">
+          <ion-col size="7">
             <ion-text color="medium">
               <strong>
                 <ion-label translate>discussions.title</ion-label>
@@ -72,6 +78,13 @@
             <ion-text color="medium">
               <strong>
                 <ion-label translate>discussions.openedBy</ion-label>
+              </strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text color="medium">
+              <strong>
+                <ion-label translate>discussion.date</ion-label>
               </strong>
             </ion-text>
           </ion-col>
@@ -92,7 +105,7 @@
         </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngFor="let topic of filteredTopics">
+      <ion-item *ngFor="let topic of filteredTopics" [routerLink]="['/projects', project.id, 'discussions', topic.id]" >
         <ion-grid>
         <ion-row class="ion-align-items-center">
           <ion-col size="1">
@@ -100,19 +113,24 @@
               <strong>#{{ topic.id }}</strong>
             </ion-text>
           </ion-col>
-          <ion-col size="8">
+          <ion-col size="7">
             <ion-text>
               <strong [innerHTML]="topic.title | filtered:searchFC.value | truncate:128"></strong>
             </ion-text>
           </ion-col>
           <ion-col size="1">
-            <ion-avatar class="avatar-center" [title]="topic.user.username">
-              <ion-img [src]="topic.user.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            <ion-avatar class="avatar-center row-icon" [title]="topic.user?.username">
+              <ion-img [src]="topic.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
             </ion-avatar>
           </ion-col>
           <ion-col size="1" class="ion-text-center">
             <ion-text>
-              <strong>{{ topic.numMessages }}</strong>
+              <strong>{{ topic.createdAt | time | async }}</strong>
+            </ion-text>
+          </ion-col>
+          <ion-col size="1" class="ion-text-center">
+            <ion-text>
+              <strong [innerHTML]="topic.numMessages"></strong>
             </ion-text>
           </ion-col>
           <ion-col size="1" class="ion-text-center">
@@ -169,10 +187,5 @@
       </ion-text>
     </p>
   </section>
-
-  <!-- Tickets
-  <section class="ion-margin">
-    <app-ticket-data-table #ticketDataTable [projectId]="projectId" [tickets]="tickets"></app-ticket-data-table>
-  </section>-->
 
 </ion-content>

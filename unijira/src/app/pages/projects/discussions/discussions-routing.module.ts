@@ -7,7 +7,12 @@ const routes: Routes = [
   {
     path: '',
     component: DiscussionsPage
+  },
+  {
+    path: ':idTopic',
+    loadChildren: () => import('./discussion/discussion.module').then( m => m.DiscussionPageModule)
   }
+
 ];
 
 @NgModule({
