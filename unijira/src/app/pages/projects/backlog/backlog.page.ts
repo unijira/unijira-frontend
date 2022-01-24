@@ -476,7 +476,7 @@ export class BacklogPage implements OnInit {
     this.backlogServer.insertions?.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
         itemToRemoveFromBacklog.push(
-          new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
+          new SprintInsertion(item.id, this.sprint,  item.item, this.sprintId)
         );
       }
     });
@@ -502,9 +502,9 @@ export class BacklogPage implements OnInit {
     });
 
     itemToRemoveFromBacklog.forEach((item) => {
-      this.backlogAPIService
-        .deleteBacklogInsertion(this.projectId, this.backlogId, item)
-        .subscribe((response) => {});
+      // this.backlogAPIService
+      //   .deleteBacklogInsertion(this.projectId, this.backlogId, item)
+      //   .subscribe((response) => {});
       this.backlogAPIService
         .addSprintInsertion(this.projectId, this.backlogId, this.sprintId, item)
         .subscribe((response) => {});
