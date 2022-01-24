@@ -1,34 +1,31 @@
-import { setBacklogAction } from './../../../store/task.action';
-import { ItemStatus } from './../../../models/item/ItemStatus';
+import {ItemStatus} from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
-import { Sprint } from '../../../models/Sprint';
-import { DragulaService } from 'ng2-dragula';
-import { TaskService } from '../../../store/task.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Sprint} from '../../../models/Sprint';
+import {DragulaService} from 'ng2-dragula';
+import {TaskService} from '../../../store/task.service';
 import * as TaskActions from '../../../store/task.action';
-import { Store } from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
-import { BlDetailComponent } from './modals/bl-detail/bl-detail.component';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { BacklogAPIService } from '../../../services/backlog-api.service';
-import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { Backlog } from '../../../models/Backlog';
-import { BacklogInsertion } from '../../../models/BacklogInsertion';
-import { SprintInsertion } from '../../../models/SprintInsertion';
-import { forEach } from 'lodash';
-import { SprintStatus } from '../../../models/SprintStatus';
-import { IonAccordionGroup } from '@ionic/angular';
+import {forEach} from 'lodash';
+import {IonAccordionGroup, ModalController, PopoverController} from '@ionic/angular';
+import {BacklogAPIService} from '../../../services/backlog-api.service';
+import {
+  BacklogEditWeightPopoversComponent
+} from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import {
+  BacklogEditStatusPopoversComponent
+} from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Backlog} from '../../../models/Backlog';
+import {BacklogInsertion} from '../../../models/BacklogInsertion';
+import {SprintInsertion} from '../../../models/SprintInsertion';
+import {SprintStatus} from '../../../models/SprintStatus';
 import * as Moment from 'moment';
-import { NewItemComponent } from './modals/new-item/new-item.component';
-import { SessionService } from 'src/app/store/session.service';
-import { PageService } from '../../../services/page.service';
-import { ItemType } from 'src/app/models/item/ItemType';
+import {NewItemComponent} from './modals/new-item/new-item.component';
+import {SessionService} from 'src/app/store/session.service';
+import {PageService} from '../../../services/page.service';
+import {ItemType} from 'src/app/models/item/ItemType';
 
 @Component({
   selector: 'app-backlog',

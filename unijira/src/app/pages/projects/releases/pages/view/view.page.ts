@@ -9,6 +9,7 @@ import * as moment from 'moment';
 import {AlertController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {Item} from '../../../../../models/item/Item';
+import {DateUtils} from '../../../../../classes/date-utils';
 
 @Component({
   selector: 'app-view',
@@ -59,11 +60,19 @@ export class ViewPage implements AfterViewInit {
   }
 
   get endDateMinusOne(): Date {
-    return moment(this.release?.endDate, 'YYYY-MM-DD').subtract(1, 'days').toDate();
+    return moment(this.release?.endDate ?? new Date(), 'YYYY-MM-DD').subtract(1, 'days').toDate();
   }
 
   get startDatePlusOne(): Date {
-    return moment(this.release?.startDate, 'YYYY-MM-DD').add(1, 'days').toDate();
+    return moment(this.release?.startDate ?? new Date(), 'YYYY-MM-DD').add(1, 'days').toDate();
+  }
+
+  get startDate(): Date {
+    return moment(this.release?.startDate ?? new Date(), 'YYYY-MM-DD').toDate();
+  }
+
+  get endDate(): Date {
+    return moment(this.release?.endDate ?? new Date(), 'YYYY-MM-DD').toDate();
   }
 
 
@@ -120,8 +129,8 @@ export class ViewPage implements AfterViewInit {
 
   parseDate(date: string | null): string {
     return date
-      ? new Date(date).toISOString().substring(0, 10)
-      : new Date(Date.now()).toISOString().substring(0, 10);
+      ? DateUtils.toLocalDate(new Date(date))
+      : DateUtils.toLocalDate();
   }
 
 }

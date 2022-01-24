@@ -1,19 +1,19 @@
 import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
 import {IonicModule} from '@ionic/angular';
 
-import {SingoloitemPage} from './singoloitem.page';
+import {InputSelectUserComponent} from './input-select-user.component';
 
-describe('SingoloitemPage', () => {
-  let component: SingoloitemPage;
-  let fixture: ComponentFixture<SingoloitemPage>;
+describe('InputSelectUserComponent', () => {
+  let component: InputSelectUserComponent;
+  let fixture: ComponentFixture<InputSelectUserComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ SingoloitemPage ],
+      declarations: [ InputSelectUserComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(SingoloitemPage);
+    fixture = TestBed.createComponent(InputSelectUserComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

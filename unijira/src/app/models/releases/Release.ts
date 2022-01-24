@@ -1,4 +1,5 @@
 import {ReleaseStatus} from './ReleaseStatus';
+import {DateUtils} from '../../classes/date-utils';
 
 export class Release {
 
@@ -9,19 +10,19 @@ export class Release {
   public startDate: string;
   public endDate: string;
   public projectId: number;
-  public createdAt: Date;
-  public updatedAt: Date;
+  public createdAt: string;
+  public updatedAt: string;
 
   public constructor(id: number, version: string, description: string, status: ReleaseStatus, startDate: Date, endDate: Date, projectId: number) {
     this.id = id;
     this.version = version;
     this.description = description;
     this.status = status;
-    this.startDate = startDate.toISOString().substring(0, 10);
-    this.endDate = endDate.toISOString().substring(0, 10);
+    this.startDate = DateUtils.toLocalDate(startDate);
+    this.endDate = DateUtils.toLocalDate(endDate);
     this.projectId = projectId;
-    this.createdAt = new Date(Date.now());
-    this.updatedAt = new Date(Date.now());
+    this.createdAt = DateUtils.toLocalDateTime();
+    this.updatedAt = DateUtils.toLocalDateTime();
   }
 
   static empty(projectId: number): Release {
