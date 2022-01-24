@@ -26,7 +26,7 @@ import {NewItemComponent} from './modals/new-item/new-item.component';
 import {SessionService} from 'src/app/store/session.service';
 import {PageService} from '../../../services/page.service';
 import {ItemType} from 'src/app/models/item/ItemType';
-
+import * as moment from 'moment';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -95,7 +95,7 @@ export class BacklogPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private pageService: PageService
+    private pageService: PageService,
   ) {
 
     this.filterTypeS = [
@@ -285,15 +285,25 @@ export class BacklogPage implements OnInit {
     this.sprint.endingDate = new Date($event.detail.value)
       .toISOString()
       .split('T')[0];
+    this.sprint.status = SprintStatus.active;
     this.backlogAPIService
-      .startSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
       .subscribe((response) => {
         this.getFromApi();
       });
   }
 
   stopSprint() {
-    alert('stop');
+    this.startSprintDate = '';
+    this.endSprintDate = '';
+    this.sprintIsStarted = false;
+    this.sprint.endingDate = new Date().toISOString().split('T')[0];
+    this.sprint.status = SprintStatus.inactive;
+    this.backlogAPIService
+      .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .subscribe((response) => {
+        this.getFromApi();
+      });
   }
 
   editWeight(task, data, type) {
@@ -389,7 +399,8 @@ export class BacklogPage implements OnInit {
             .toISOString()
             .split('T')[0];
         }
-        this.sprintIsStarted = this.startSprintDate ? true : false;
+        this.sprintIsStarted = moment(this.endSprintDate).diff(moment(), 'days') > 0 ? true : false;
+
         this.backlogAPIService
           .getSprintItems(this.projectId, this.backlogId, this.sprintId)
           .subscribe((response1) => {

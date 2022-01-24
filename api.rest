@@ -1,9 +1,9 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDE3NTE4OTAsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQxNzQ4MjkwLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.xQf8fc73E-HP3CrgHONmN87Vpc59qOPQljbnrCE7_T8
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDMwMTE3OTYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQzMDA4MTk2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.qkcGoxyBcR3J5P-qyCkFRj1Ih-tBGiTYDydCfw56qcQ
 
 # @token = {{login.response.body.token}}
 
-@projectid = 20
-@backlogid = 21
+@projectid = 2
+@backlogid = 3
 @sprintid = 38
 ############## AUTH #############
 
@@ -252,8 +252,8 @@ Content-Type: application/json
 
 {
   "name": "Sprint",
-  "startingDate": null,
-  "endingDate": null
+  "startingDate": "2022-01-01",
+  "endingDate": "2022-01-30"
 }
 
 ### Start spirnt (cioe' set con le date)
