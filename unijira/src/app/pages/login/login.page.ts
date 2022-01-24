@@ -7,7 +7,6 @@ import {presentToast, switchColorTheme, switchLanguage, unsubscribeAll} from '..
 import {PageService} from '../../services/page.service';
 import {TranslateService} from '@ngx-translate/core';
 import {ToastController} from '@ionic/angular';
-import {IonicWindow} from '@ionic/angular/types/interfaces';
 
 
 @Component({

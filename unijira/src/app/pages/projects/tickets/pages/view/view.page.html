@@ -29,7 +29,7 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="12" class="ion-text-end">
-          <ion-button color="primary" (click)="save()" [disabled]="!dirty || !ticket || !ticket.summary">
+          <ion-button color="primary" (click)="save()" [disabled]="!dirty || !ticket || !ticket?.summary">
             <ion-icon slot="start" name="save"></ion-icon>
             <ion-text [translate]="'projects.tickets.view.save'"></ion-text>
           </ion-button>
@@ -87,7 +87,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.release'"></ion-label>
-            <ion-select [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" >
+            <ion-select [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" [disabled]="!releases || releases.length === 0" >
               <ion-select-option *ngFor="let release of releases" [value]="release.id">{{release.version}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -160,11 +160,11 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="12">
-          <ion-button id="createChildButton" color="primary" expand="block" [disabled]="!ticket || !projectId">
+          <ion-button [id]="'createChildButton' + ticket.id" color="primary" expand="block" [disabled]="!ticket || !projectId">
             <ion-icon slot="start" name="add"></ion-icon>
             <ion-text [translate]="'projects.tickets.view.add'"></ion-text>
           </ion-button>
-          <ion-popover trigger="createChildButton" dismiss-on-select="true" backdrop-dismiss="true" show-backdrop="false">
+          <ion-popover [trigger]="'createChildButton' + ticket.id" dismiss-on-select="true" backdrop-dismiss="true" show-backdrop="false">
             <ng-template>
               <ion-list>
                 <ion-item button="true" (click)="create(ticketType.story)" *ngIf="ticket.type === ticketType.epic">
@@ -191,7 +191,7 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-    <app-ticket-data-table [projectId]="projectId" [tickets]="ticket.sons"></app-ticket-data-table>
+    <app-ticket-data-table [projectId]="projectId" [tickets]="ticket.sons || []"></app-ticket-data-table>
   </section>
 
 

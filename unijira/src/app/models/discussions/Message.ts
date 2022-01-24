@@ -3,7 +3,7 @@ import {DateUtils} from '../../classes/date-utils';
 export class Message {
 
   public id: number;
-  public content: string;
+  public text: string;
   public topicId: number;
   public authorId: number;
   public authorUsername: string;
@@ -12,9 +12,9 @@ export class Message {
   public updatedAt: string;
 
 
-  constructor(id: number, content: string, topicId: number, authorId: number, authorUsername: string, repliesToId: number, createdAt: number, updatedAt: number) {
+  constructor(id: number, text: string, topicId: number, authorId: number, authorUsername: string, repliesToId: number, createdAt: number, updatedAt: number) {
     this.id = id;
-    this.content = content;
+    this.text = text;
     this.topicId = topicId;
     this.authorId = authorId;
     this.authorUsername = authorUsername;

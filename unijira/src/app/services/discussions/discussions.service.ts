@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpService} from '../http-service.service';
 import {catchError, Observable, of} from 'rxjs';
 import {Topic} from '../../models/topic/Topic';

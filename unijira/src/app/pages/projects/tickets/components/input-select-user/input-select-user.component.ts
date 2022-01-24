@@ -34,12 +34,12 @@ export class InputSelectUserComponent implements OnInit {
 
 
   selected(user: UserInfo): boolean {
-    return this.ngModel.some(assignment => assignment.assignee.id === user.id);
+    return this.ngModel.some(assignment => assignment.assigneeId === user.id);
   }
 
   toggle(user: UserInfo) {
     if (this.selected(user)) {
-      this.ngModel = this.ngModel.filter(assignment => assignment.assignee.id !== user.id);
+      this.ngModel = this.ngModel.filter(assignment => assignment.assigneeId !== user.id);
     } else {
       if(this.multiple) {
         this.ngModel.push(new ItemAssignment(this.ticketId, user));

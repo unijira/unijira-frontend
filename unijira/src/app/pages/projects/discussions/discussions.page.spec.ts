@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { DiscussionsPage } from './discussions.page';
+import {DiscussionsPage} from './discussions.page';
 
 describe('DiscussionsPage', () => {
   let component: DiscussionsPage;

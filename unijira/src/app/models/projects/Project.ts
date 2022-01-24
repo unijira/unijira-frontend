@@ -21,10 +21,10 @@ export class Project {
     this.key = key;
     this.icon = icon;
     this.ownerId = ownerId;
-    this.createdAt = DateUtils.toLocalDateTime();
-    this.updatedAt = DateUtils.toLocalDateTime();
     this.iconLoaded = false;
     this.backlogs = null;
+    this.createdAt = DateUtils.toLocalDateTime();
+    this.updatedAt = DateUtils.toLocalDateTime();
   }
 
 }
