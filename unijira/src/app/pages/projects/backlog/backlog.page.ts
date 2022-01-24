@@ -488,7 +488,7 @@ export class BacklogPage implements OnInit {
     );
     console.log('itemRimastiNelBacklog', itemRimastiNelBacklog);
     itemRimastiNelBacklog.forEach((item, index) => {
-      item.priority = index;
+      item.priority = tmpB.insertions.find(i => i.id === item.id).priority;
       this.backlogAPIService
         .updateBacklogInsertion(this.projectId, this.backlogId, item)
         .subscribe((response) => {});
@@ -526,6 +526,7 @@ export class BacklogPage implements OnInit {
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+    this.getFromApi();
   }
 
   createSprint() {
