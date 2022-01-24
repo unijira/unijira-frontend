@@ -50,6 +50,7 @@
     "@ngx-translate/http-loader": "^7.0.0",
     "@types/intro.js": "^3.0.2",
     "angular-intro.js": "^3.4.0",
+    "@popperjs/core": "^2.11.2",
     "firebase": "^8.10.0",
     "intro.js": "^4.3.0",
     "ionic4-tooltips": "^2.0.0",
@@ -57,6 +58,7 @@
     "moment": "^2.29.1",
     "ng2-dragula": "^2.1.1",
     "ngx-clipboard": "^15.0.1",
+    "ngx-popperjs": "^13.0.0",
     "rxjs": "~7.4.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

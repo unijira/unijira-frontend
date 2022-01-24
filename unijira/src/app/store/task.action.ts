@@ -1,4 +1,4 @@
-import { Backlog } from './../models/Backlog';
+import {Backlog} from './../models/Backlog';
 import {createAction, props} from '@ngrx/store';
 import {Sprint} from '../models/Sprint';
 

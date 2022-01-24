@@ -33,10 +33,9 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
+import {NewItemComponent} from './pages/projects/backlog/modals/new-item/new-item.component';
 
-import { ClipboardModule } from 'ngx-clipboard';
-import { ClipboardService } from 'ngx-clipboard';
+import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');

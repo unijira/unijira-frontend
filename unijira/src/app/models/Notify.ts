@@ -1,4 +1,7 @@
+import {DateUtils} from '../classes/date-utils';
+
 export class Notify {
+
   public id: number;
   public title: string;
   public message: string;
@@ -18,8 +21,8 @@ export class Notify {
     this.read = read;
     this.target = target;
     this.userId = userId;
-    this.createdAt = new Date().toUTCString();
-    this.updatedAt = new Date().toUTCString();
+    this.createdAt = DateUtils.toLocalDateTime();
+    this.updatedAt = DateUtils.toLocalDateTime();
   }
 }
 

@@ -1,4 +1,3 @@
-import { forEach } from 'lodash';
 import { Injectable } from '@angular/core';
 import { HttpService } from './http-service.service';
 import { SessionService } from '../store/session.service';
@@ -8,6 +7,8 @@ import { map } from 'rxjs/operators';
 import { Backlog } from '../models/Backlog';
 import { BacklogInsertion } from '../models/BacklogInsertion';
 import { SprintInsertion } from '../models/SprintInsertion';
+import { SprintStatus } from '../models/SprintStatus';
+
 @Injectable({
   providedIn: 'root',
 })
@@ -116,6 +117,7 @@ export class BacklogAPIService {
       name: 'Sprint',
       startingDate: null,
       endingDate: null,
+      status: SprintStatus.inactive,
     };
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
     return this.httpService.post<any>(url, sprint);
@@ -129,8 +131,14 @@ export class BacklogAPIService {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
     return this.httpService.put<Sprint>(url, sprint);
   }
-  updateSprint(projectId: number, backlogId: number, sprint: Sprint) {
-    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprint.id}`;
+  updateSprint(
+    projectId: number,
+    backlogId: number,
+    sprintId: number,
+    sprint: Sprint
+  ) {
+    console.log('Update sprint', sprint);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
     return this.httpService.put<any>(url, sprint);
   }
   deleteSprint(projectId: number, backlogId: number, sprintId: number) {

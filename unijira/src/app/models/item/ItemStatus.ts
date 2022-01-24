@@ -1,5 +1,5 @@
 export enum ItemStatus {
   open = 'OPEN',
   done = 'DONE',
-  todo = 'TODO'
+  todo = 'IN_PROGRESS'
 }

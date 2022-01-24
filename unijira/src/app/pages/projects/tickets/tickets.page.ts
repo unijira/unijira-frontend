@@ -3,9 +3,11 @@ import {PageService} from '../../../services/page.service';
 import {TicketService} from '../../../services/ticket/ticket.service';
 import {Item} from '../../../models/item/Item';
 import {SessionService} from '../../../store/session.service';
-import {first} from 'rxjs';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {TicketDataTableComponent} from './components/ticket-data-table/ticket-data-table.component';
+import {ItemType} from '../../../models/item/ItemType';
+import {AlertController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-tickets',
@@ -19,15 +21,19 @@ export class TicketsPage implements OnInit {
   tickets: Item[] = null;
   projectId: number = null;
 
+  ticketType = ItemType;
+
 
   constructor(
     private ticketService: TicketService,
     private pageService: PageService,
     private sessionService: SessionService,
-    private activatedRoute: ActivatedRoute) {
-
+    private activatedRoute: ActivatedRoute,
+    private alertController: AlertController,
+    private translateService: TranslateService,
+    private router: Router
+  ) {
     this.pageService.setTitle('projects.tickets.title');
-
   }
 
 
@@ -53,6 +59,20 @@ export class TicketsPage implements OnInit {
 
   export() {
     this.ticketDataTable.export();
+  }
+
+  create(type: ItemType) {
+    this.ticketService.createTicket(this.projectId, type, null).subscribe(ticket => {
+      if(ticket) {
+        this.router.navigate(['/projects', this.projectId, 'tickets', ticket.id]).then();
+      } else {
+        this.alertController.create({
+          header: this.translateService.instant('error.title'),
+          message: this.translateService.instant('error.projects.tickets.create'),
+          buttons: [this.translateService.instant('error.buttons.ok')]
+        }).then(alert => alert.present());
+      }
+    });
   }
 
 }
