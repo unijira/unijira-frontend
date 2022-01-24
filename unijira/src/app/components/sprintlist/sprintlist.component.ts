@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, Output, EventEmitter, OnChanges } from '@angular/core';
-import { BacklogAPIService } from 'src/app/services/backlog-api.service';
+import {Component, EventEmitter, Input, OnChanges, OnInit, Output} from '@angular/core';
+import {BacklogAPIService} from 'src/app/services/backlog-api.service';
+
 @Component({
   selector: 'app-sprintlist',
   templateUrl: './sprintlist.component.html',

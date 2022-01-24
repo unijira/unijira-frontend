@@ -10,7 +10,7 @@ import {ItemStatus} from '../../../../../models/item/ItemStatus';
 })
 export class TicketDataTableComponent implements OnInit {
 
-  @Input() filterSearch;
+  @Input() filterSearch: string;
   @Input() filterStatus: string[];
   @Input() filterType: string[];
   @Input() tickets: Item[];

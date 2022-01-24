@@ -140,9 +140,9 @@
   <div class="ion-margin">
     <div *ngIf="currentSegment === 'open'">
       <ion-list>
-        <ion-item *ngFor="let ticket of myTicketsOpen" [routerLink]="'/tickets/' + ticket.id">
+        <ion-item *ngFor="let ticket of myTicketsOpen" [routerLink]="['/tickets', ticket.id]">
           <ion-avatar slot="start">
-            <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
+            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
           </ion-avatar>
           <ion-label>
             <h2>{{ ticket.summary }}</h2>
@@ -154,10 +154,10 @@
       <ion-list *ngIf="myTicketsOpen === null">
         <ion-item *ngFor="let i of [1, 2, 3, 4, 5]">
           <ion-label>
-            <ion-skeleton-text animated></ion-skeleton-text>
-            <ion-skeleton-text animated></ion-skeleton-text>
+            <ion-skeleton-text animated="true"></ion-skeleton-text>
+            <ion-skeleton-text animated="true"></ion-skeleton-text>
           </ion-label>
-          <ion-skeleton-text animated></ion-skeleton-text>
+          <ion-skeleton-text animated="true"></ion-skeleton-text>
         </ion-item>
       </ion-list>
       <ion-row *ngIf="myTicketsOpen?.length === 0" class="ion-justify-content-center">
@@ -168,9 +168,9 @@
     </div>
     <div *ngIf="currentSegment === 'done'">
       <ion-list>
-        <ion-item *ngFor="let ticket of myTicketsDone" [routerLink]="'/tickets/' + ticket.id">
+        <ion-item *ngFor="let ticket of myTicketsDone" [routerLink]="['/tickets', ticket.id]">
           <ion-avatar slot="start">
-            <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'"></ion-img>
+            <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
           </ion-avatar>
           <ion-label>
             <h2>{{ ticket.summary }}</h2>

@@ -8,15 +8,17 @@ import {ViewPageRoutingModule} from './view-routing.module';
 
 import {ViewPage} from './view.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {TicketsPageModule} from '../../tickets.module';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    TranslateModule,
-    ViewPageRoutingModule
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        TranslateModule,
+        ViewPageRoutingModule,
+        TicketsPageModule
+    ],
   declarations: [ViewPage]
 })
 export class ViewPageModule {}

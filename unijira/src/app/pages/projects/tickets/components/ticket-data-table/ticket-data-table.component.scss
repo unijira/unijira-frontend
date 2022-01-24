@@ -1,12 +1,3 @@
-.row-icon {
-  height: 1.5rem;
-  width: 1.5rem;
-}
-
-.row-icon:hover {
-  transform: scale(1.2);
-}
-
 
 .infinte-width-inner {
   min-width: 64rem;
@@ -21,3 +12,21 @@
 .infinte-width::-webkit-scrollbar {
   display: none;
 }
+
+
+.ticket-data-row {
+  .ticket-add {
+    display: none;
+  }
+  .ticket-icon {
+    height: 1.5rem;
+    width: 1.5rem;
+  }
+  & .ticket-icon:hover {
+    transform: scale(1.2);
+  }
+}
+
+
+
+
