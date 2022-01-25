@@ -1,5 +1,5 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
+import {FormControl, FormGroup} from '@angular/forms';
 import {TopicType} from '../../../../models/topic/TopicType';
 import {Project} from '../../../../models/projects/Project';
 import {SessionService} from '../../../../store/session.service';
@@ -23,8 +23,9 @@ export class NewDiscussionComponent implements OnInit {
   project: Project;
 
   @Output()
-  closeModule: EventEmitter<boolean> = new EventEmitter<boolean>()
+  closeModule: EventEmitter<boolean> = new EventEmitter<boolean>();
 
+  topicType = TopicType;
   user: UserInfo;
 
   titleFC: FormControl = new FormControl('');
@@ -38,16 +39,6 @@ export class NewDiscussionComponent implements OnInit {
   });
 
   discussionToEdit: Topic = null;
-  @Input() set toEdit(discussion: Topic) {
-    this.discussionToEdit = discussion;
-    if (discussion) {
-      this.titleFC.setValue(discussion.title);
-      this.descriptionFC.setValue(discussion.content);
-      this.typeRadioFC.setValue(discussion.type);
-    }
-  }
-
-  topicType = TopicType;
 
   constructor(private sessionService: SessionService,
               private discussionsService: DiscussionsService,
@@ -56,6 +47,17 @@ export class NewDiscussionComponent implements OnInit {
               private translateService: TranslateService) {
     this.sessionService.getUserInfo().pipe(first()).subscribe(u => this.user = u );
   }
+
+  @Input()
+  set toEdit(discussion: Topic) {
+    this.discussionToEdit = discussion;
+    if (discussion) {
+      this.titleFC.setValue(discussion.title);
+      this.descriptionFC.setValue(discussion.content);
+      this.typeRadioFC.setValue(discussion.type);
+    }
+  }
+
 
   ngOnInit() {
     this.typeRadioFC.setValue(this.topicType.general);
@@ -78,7 +80,7 @@ export class NewDiscussionComponent implements OnInit {
         this.discussionToEdit.type = this.typeRadioFC.value;
         this.discussionsService.updateDiscussion(this.project.id, this.discussionToEdit).subscribe(discussion => {
           if (discussion) {
-            this.router.navigate(['/projects/' + this.project.id + '/discussions/' + discussion.id]);
+            this.router.navigate(['/projects/' + this.project.id + '/discussions/' + discussion.id]).then();
             presentToast(this.toastController, this.translateService.instant('discussions.discussionEdited'), false).then();
           }
         });
@@ -91,7 +93,7 @@ export class NewDiscussionComponent implements OnInit {
           this.user.id,
           this.typeRadioFC.value)).subscribe(discussion => {
             if (discussion) {
-              this.router.navigate(['/projects/' + this.project.id + '/discussions/' + discussion.id]);
+              this.router.navigate(['/projects/' + this.project.id + '/discussions/' + discussion.id]).then();
               presentToast(this.toastController, this.translateService.instant('discussions.newDiscussionCreated'), false).then();
             }
           });

@@ -1,13 +1,13 @@
-import { Injectable } from '@angular/core';
-import { HttpService } from './http-service.service';
-import { SessionService } from '../store/session.service';
-import { Sprint } from '../models/Sprint';
-import { Item } from '../models/item/Item';
-import { map } from 'rxjs/operators';
-import { Backlog } from '../models/Backlog';
-import { BacklogInsertion } from '../models/BacklogInsertion';
-import { SprintInsertion } from '../models/SprintInsertion';
-import { SprintStatus } from '../models/SprintStatus';
+import {Injectable} from '@angular/core';
+import {HttpService} from './http-service.service';
+import {SessionService} from '../store/session.service';
+import {Sprint} from '../models/Sprint';
+import {Item} from '../models/item/Item';
+import {map} from 'rxjs/operators';
+import {Backlog} from '../models/Backlog';
+import {BacklogInsertion} from '../models/BacklogInsertion';
+import {SprintInsertion} from '../models/SprintInsertion';
+import {SprintStatus} from '../models/SprintStatus';
 
 @Injectable({
   providedIn: 'root',

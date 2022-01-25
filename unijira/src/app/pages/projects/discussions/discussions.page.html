@@ -84,7 +84,7 @@
           <ion-col size="1" class="ion-text-center">
             <ion-text color="medium">
               <strong>
-                <ion-label translate>discussion.date</ion-label>
+                <ion-label translate>discussions.date</ion-label>
               </strong>
             </ion-text>
           </ion-col>
@@ -107,52 +107,53 @@
       </ion-item>
       <ion-item *ngFor="let topic of filteredTopics" [routerLink]="['/projects', project.id, 'discussions', topic.id]" >
         <ion-grid>
-        <ion-row class="ion-align-items-center">
-          <ion-col size="1">
-            <ion-text>
-              <strong>#{{ topic.id }}</strong>
-            </ion-text>
-          </ion-col>
-          <ion-col size="7">
-            <ion-text>
-              <strong [innerHTML]="topic.title | filtered:searchFC.value | truncate:128"></strong>
-            </ion-text>
-          </ion-col>
-          <ion-col size="1">
-            <ion-avatar class="avatar-center row-icon" [title]="topic.user?.username">
-              <ion-img [src]="topic.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-            </ion-avatar>
-          </ion-col>
-          <ion-col size="1" class="ion-text-center">
-            <ion-text>
-              <strong>{{ topic.createdAt | time | async }}</strong>
-            </ion-text>
-          </ion-col>
-          <ion-col size="1" class="ion-text-center">
-            <ion-text>
-              <strong [innerHTML]="topic.numMessages"></strong>
-            </ion-text>
-          </ion-col>
-          <ion-col size="1" class="ion-text-center">
-            <!-- I used inline style because these colors don't need to change, like img icons-->
-            <div [title]="'discussions.ideas' | translate">
-              <ion-icon name="bulb" style="color: #ffc409" size="large" *ngIf="topic.type===topicType.ideas">
-              </ion-icon>
-            </div>
-            <div [title]="'discussions.general' | translate">
-              <ion-icon name="chatbubbles" style="color: #4c8dff" size="large" *ngIf="topic.type===topicType.general">
-              </ion-icon>
-            </div>
-            <div [title]="'discussions.qanda' | translate">
-              <ion-icon name="help-circle" style="color: #2dd36f" size="large" *ngIf="topic.type===topicType.qanda">
-              </ion-icon>
-            </div>
-            <div [title]="'discussions.announcements' | translate">
-              <ion-icon name="megaphone" style="color: #a94442" size="large" *ngIf="topic.type===topicType.announcements">
-              </ion-icon>
-            </div>
-          </ion-col>
-        </ion-row>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="1">
+              <ion-text>
+                <strong>#{{ topic.id }}</strong>
+              </ion-text>
+            </ion-col>
+            <ion-col size="7">
+              <ion-text>
+                <span [innerHTML]="topic.title | filtered:searchFC.value | truncate:128"></span>
+              </ion-text>
+            </ion-col>
+            <ion-col size="1">
+              <ion-avatar class="avatar-center row-icon" [title]="topic.userUsername || ''">
+                <ion-img [src]="topic.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+              </ion-avatar>
+            </ion-col>
+            <ion-col size="1" class="ion-text-center">
+              <ion-text>
+                <span>{{ topic.createdAt | time | async }}</span>
+              </ion-text>
+            </ion-col>
+            <ion-col size="1" class="ion-text-center">
+              <ion-text>
+                <span [innerHTML]="topic.numMessages"></span>
+              </ion-text>
+            </ion-col>
+            <ion-col size="1" class="ion-text-center">
+              <!-- I used inline style because these colors don't need to change, like img icons-->
+              <!-- R: "avrei preferito che mi tradissi" semi-cit. -->
+              <div [title]="'discussions.ideas' | translate">
+                <ion-icon name="bulb" style="color: #ffc409" size="large" *ngIf="topic.type===topicType.ideas">
+                </ion-icon>
+              </div>
+              <div [title]="'discussions.general' | translate">
+                <ion-icon name="chatbubbles" style="color: #4c8dff" size="large" *ngIf="topic.type===topicType.general">
+                </ion-icon>
+              </div>
+              <div [title]="'discussions.qanda' | translate">
+                <ion-icon name="help-circle" style="color: #2dd36f" size="large" *ngIf="topic.type===topicType.qanda">
+                </ion-icon>
+              </div>
+              <div [title]="'discussions.announcements' | translate">
+                <ion-icon name="megaphone" style="color: #a94442" size="large" *ngIf="topic.type===topicType.announcements">
+                </ion-icon>
+              </div>
+            </ion-col>
+          </ion-row>
         </ion-grid>
       </ion-item>
     </ion-list>

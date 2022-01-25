@@ -33,7 +33,7 @@ import {NewItemComponent} from './modals/new-item/new-item.component';
 import {SessionService} from 'src/app/store/session.service';
 import {PageService} from '../../../services/page.service';
 import {ItemType} from 'src/app/models/item/ItemType';
-import * as moment from 'moment';
+
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',

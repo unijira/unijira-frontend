@@ -56,7 +56,7 @@ export class TicketService {
 
   public createTicket(projectId: number, itemType: ItemType, parentId: number): Observable<Item> {
 
-    const item = new Item(undefined, 'Ticket', 'Ticket', MeasureUnit.storyPoints, 0, '', itemType, ItemStatus.open, null, parentId);
+    const item = new Item(undefined, 'Ticket', 'Ticket', MeasureUnit.storyPoints, 0, '', itemType, ItemStatus.open, null, projectId, parentId);
 
     return this.accountService.me()
       .pipe(switchMap(me => this.projectService.getProject(projectId)
@@ -77,4 +77,10 @@ export class TicketService {
     return this.http.put<Item>(`/items/${ticket.id}`, ticket)
       .pipe(catchError(e => of(null)));
   }
+
+  public removeTicket(projectId: number, ticket: Item): Observable<boolean> {
+    return this.http.delete<boolean>(`/items/${ticket.id}`)
+      .pipe(catchError(e => of(false)));
+  }
+
 }

@@ -4,7 +4,9 @@ import {TopicType} from './TopicType';
 export class Topic {
 
   public user: UserInfo;
-  public numMessages: number = 0;
+  public numMessages = 0;
+  public userUsername: string;
+  public userAvatar: URL;
 
   constructor(
     public id: number,
