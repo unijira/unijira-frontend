@@ -30,7 +30,7 @@ export class DiscussionsPage implements OnInit, OnDestroy {
   formGroup = new FormGroup({
     types: this.typesCheckedFC,
     search: this.searchFC
-  })
+  });
 
   filterSubscription: Subscription;
 
@@ -50,6 +50,7 @@ export class DiscussionsPage implements OnInit, OnDestroy {
 
       if (p) {
         this.discussionsService.getDiscussions(this.project.id).subscribe(top => {
+
           this.topics = top;
 
           // Mock objects for testing and demos, to remove
@@ -85,7 +86,7 @@ export class DiscussionsPage implements OnInit, OnDestroy {
 
     });
 
-    this.filterSubscription = this.formGroup.statusChanges.subscribe(() => this.filterItems())
+    this.filterSubscription = this.formGroup.statusChanges.subscribe(() => this.filterItems());
   }
 
   ngOnInit() {

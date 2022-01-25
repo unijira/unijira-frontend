@@ -28,6 +28,8 @@ export class Item {
   public releaseId: number;
   public releaseVersion: string;
 
+  public projectId: number;
+
   public createdAt: string;
   public updatedAt: string;
 
@@ -47,6 +49,7 @@ export class Item {
     type: ItemType,
     status: ItemStatus,
     owner: UserInfo,
+    projectId: number,
     fatherId: number,
     sons?: Item[],
     notes?: Note[],
@@ -61,6 +64,7 @@ export class Item {
       this.type = type;
       this.status = status;
       this.owner = owner;
+      this.projectId = projectId;
       this.fatherId = fatherId;
       this.sons = sons || [];
       this.assignees = assignees || [];

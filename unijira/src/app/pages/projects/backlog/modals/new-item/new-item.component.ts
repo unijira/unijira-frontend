@@ -75,6 +75,7 @@ export class NewItemComponent implements OnInit {
       ItemType.task,
       ItemStatus.open,
       this.user,
+      null, // FIXME: Attribuire un projectId valido
       null
     );
     this.backlogInsertion = new BacklogInsertion(0, this.item, this.backlog, 1);

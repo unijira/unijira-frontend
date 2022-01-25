@@ -17,6 +17,7 @@
           <ion-item>
             <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
               <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+              <ion-select-option [value]="itemStatus.todo">{{ itemStatus.todo | ticketStatus | translate }}</ion-select-option>
               <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -143,7 +144,7 @@
             </ion-col>
             <ion-col>
               <ion-badge [color]="ticket.status | ticketStatusColor">
-                <ion-label>{{ ticket.status | ticketStatus | translate | titlecase }}</ion-label>
+                <ion-label>{{ ticket.status | ticketStatus | translate }}</ion-label>
               </ion-badge>
             </ion-col>
             <ion-col>

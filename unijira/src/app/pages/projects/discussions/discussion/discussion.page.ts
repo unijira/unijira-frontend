@@ -21,6 +21,9 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class DiscussionPage implements OnInit, OnDestroy {
 
+  @ViewChild('scrollMe') myScrollContainer: any;
+  @ViewChild('input') answerInput: IonTextarea;
+
   project: Project;
   projectSubscription: Subscription;
 
@@ -40,8 +43,6 @@ export class DiscussionPage implements OnInit, OnDestroy {
   topicType = TopicType;
 
   answerFC: FormControl = new FormControl('');
-  @ViewChild('scrollMe') private myScrollContainer: any;
-  @ViewChild('input') answerInput: IonTextarea;
 
   constructor(private sessionService: SessionService,
               private activatedRoute: ActivatedRoute,
@@ -83,12 +84,11 @@ export class DiscussionPage implements OnInit, OnDestroy {
                   }
                 });
               }
-              console.log(this.answers);
             });
             this.discussionsService.getDiscussions(this.project.id).subscribe(topics => {
               topics.forEach(t => {
                 if (this.otherDiscussions.length < 3) {
-                  if (t.id != this.discussion.id && !this.otherDiscussions.some(ot => ot.id === t.id)) {
+                  if (t.id !== this.discussion.id && !this.otherDiscussions.some(ot => ot.id === t.id)) {
                     this.otherDiscussions.push(t);
                     return true;
                   }
@@ -121,7 +121,7 @@ export class DiscussionPage implements OnInit, OnDestroy {
       if (result) {
         this.discussionsService.deleteDiscussion(this.project.id, this.discussion.id).subscribe(() => {
           presentToast(this.toastController, this.translateService.instant('discussions.discussionDeleted'), false).then();
-          this.router.navigate(['projects', this.project.id, 'discussions']);
+          this.router.navigate(['projects', this.project.id, 'discussions']).then();
         });
       }
     });
@@ -134,7 +134,7 @@ export class DiscussionPage implements OnInit, OnDestroy {
       presentToast(this.toastController,
         this.translateService.instant('discussions.answerCantBeLongerThan250Characters'), true).then();
     } else {
-      let message = new Message(null, this.answerFC.value, this.discussion.id, this.user.id,
+      const message = new Message(null, this.answerFC.value, this.discussion.id, this.user.id,
         this.user.username, this.toReply ? this.toReply.id : null);
       this.discussionsService.createMessage(this.project.id, this.discussion.id, message)
         .subscribe(m => {

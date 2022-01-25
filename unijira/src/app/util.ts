@@ -71,9 +71,9 @@ export const presentToast = async (toastController: ToastController, message: st
 };
 
 export const showAlertConfirmDiscard = async (alertController: AlertController, header: string,
-                                message: string, cancel: string, confirm: string): Promise<any> => {
+                                              message: string, cancel: string, confirm: string): Promise<any> =>
 
-  return new Promise(async (resolve) => {
+  new Promise(async (resolve) => {
 
     const alert = await alertController.create({
       header,
@@ -98,4 +98,3 @@ export const showAlertConfirmDiscard = async (alertController: AlertController, 
     await alert.present();
 
   });
-}

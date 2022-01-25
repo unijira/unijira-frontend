@@ -33,18 +33,8 @@ export class TicketDataTableComponent implements OnInit {
 
   ngOnInit() {
 
-    this.filterType = this.filterType ?? [
-      ItemType.epic,
-      ItemType.story,
-      ItemType.task,
-      ItemType.issue
-    ];
-
-    this.filterStatus = this.filterStatus ?? [
-      ItemStatus.open,
-      ItemStatus.done
-    ];
-
+    this.filterType   = this.filterType   ?? [];
+    this.filterStatus = this.filterStatus ?? [];
     this.filterSearch = this.filterSearch ?? '';
 
   }
