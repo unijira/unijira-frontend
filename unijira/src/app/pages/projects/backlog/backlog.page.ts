@@ -217,7 +217,9 @@ export class BacklogPage implements OnInit {
       .subscribe((res) => {
         const hints = JSON.parse(JSON.stringify(res));
         hints.forEach((hint) => {
-          const item = this.backlog.insertions.find((i) => i.item.id === hint.id);
+          const item = this.backlog.insertions.find(
+            (i) => i.item.id === hint.id
+          );
           if (item) {
             console.log('HINT:', item);
             this.introJsOpts.steps.push({
@@ -226,8 +228,9 @@ export class BacklogPage implements OnInit {
             });
           }
         });
-        this.introService.show(this.introJsOpts);
-
+        setTimeout(() => {
+          this.introService.show(this.introJsOpts);
+        }, 2000);
       });
   }
 
