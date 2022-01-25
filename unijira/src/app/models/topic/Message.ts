@@ -11,7 +11,9 @@ export class Message {
     public topicId: number,
     public authorId: number,
     public authorUsername: string,
-    public repliesToId: number
+    public repliesToId: number,
+    public createdAt: Date = new Date(),
+    public updatedAt: Date = new Date()
   ) {
   }
 }

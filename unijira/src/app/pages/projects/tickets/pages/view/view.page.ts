@@ -96,6 +96,37 @@ export class ViewPage implements OnInit {
     });
   }
 
+  remove() {
+    this.alertController.create({
+      header: this.translateService.instant('projects.tickets.remove.title'),
+      message: this.translateService.instant('projects.tickets.remove.message'),
+      buttons: [
+        {
+          text: this.translateService.instant('projects.tickets.remove.cancel'),
+          role: 'cancel'
+        },
+        {
+          text: this.translateService.instant('projects.tickets.remove.confirm'),
+          handler: () => {
+            this.ticketService.removeTicket(this.projectId, this.ticket).subscribe(response => {
+
+              if(response) {
+                this.router.navigate(['/projects', this.projectId, 'tickets']).then();
+              } else {
+                this.alertController.create({
+                  header: this.translateService.instant('error.title'),
+                  message:  this.translateService.instant('error.projects.tickets.remove'),
+                  buttons: [this.translateService.instant('error.buttons.ok')]
+                }).then(alert => alert.present());
+              }
+
+            });
+          }
+        }
+      ]
+    }).then(alert => alert.present());
+  }
+
   create(itemType: ItemType) {
     this.ticketService.createTicket(this.projectId, itemType, this.ticket.id)
       .pipe(catchError(_ => of(null)))

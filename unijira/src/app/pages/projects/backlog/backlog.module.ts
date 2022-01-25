@@ -16,8 +16,9 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {PipeModule} from '../../../pipe.module';
 
-import { TicketStatusPipe } from '../tickets/pipes/ticket-status.pipe';
-import { TicketTypePipe } from '../tickets/pipes/ticket-type.pipe';
+import {TicketStatusPipe} from '../tickets/pipes/ticket-status.pipe';
+import {TicketTypePipe} from '../tickets/pipes/ticket-type.pipe';
+
 @NgModule({
     imports: [
         CommonModule,
