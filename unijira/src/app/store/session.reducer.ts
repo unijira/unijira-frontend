@@ -8,14 +8,12 @@ import {
   userInfoAction,
   wrongCredentialAction
 } from './session.action';
-import {User} from '../models/User';
 import {UserInfo} from '../models/users/UserInfo';
 import {Project} from '../models/projects/Project';
 
 export interface SessionState {
   loading: boolean;
   isLoggedIn: boolean;
-  user: User;
   token: string;
   wrongCredential: boolean;
   userInfo: UserInfo;
@@ -25,7 +23,6 @@ export interface SessionState {
 export const initialState: SessionState = {
   loading: false,
   isLoggedIn: false,
-  user: null,
   token: null,
   wrongCredential: false,
   userInfo: null,

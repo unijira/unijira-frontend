@@ -36,11 +36,7 @@ export class ReleasesPage implements OnInit {
 
     pageService.setTitle('projects.releases.title');
 
-    this.filterStatus = [
-      ReleaseStatus.draft,
-      ReleaseStatus.released,
-      ReleaseStatus.archived,
-    ];
+    this.filterStatus = [];
 
   }
 

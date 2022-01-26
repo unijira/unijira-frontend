@@ -51,8 +51,7 @@ export class ProfileOverviewPage implements OnInit {
 
   ngOnInit() {
     this.user = new UserInfo(null, null, null, null, null, null,
-      null, null, null, null, null, null, null, null,
-      null);
+      null, null, null, null, null, null, null);
     this.route.params.subscribe(params => {
       const id = params.id;
       this.usersService.getUser(id).subscribe(user => {

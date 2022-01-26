@@ -1,15 +1,32 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { Item } from '../../../../../models/item/Item';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { BacklogEditWeightPopoversComponent } from '../../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from '../../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import { BacklogEditSharePopoversComponent } from '../../popovers/backlog-edit-share-popovers/backlog-edit-share-popovers.component';
-import { BacklogEditLikePopoversComponent } from '../../popovers/backlog-edit-like-popovers/backlog-edit-like-popovers.component';
-import { BacklogEditVisibilityPopoversComponent } from '../../popovers/backlog-edit-visibility-popovers/backlog-edit-visibility-popovers.component';
-import { BacklogEditSubmenuPopoversComponent } from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
-import { BacklogEditLinkPopoversComponent } from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
-import { BacklogEditLockPopoversComponent } from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
-import { BacklogInsertion } from 'src/app/models/BacklogInsertion';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Item} from '../../../../../models/item/Item';
+import {ModalController, PopoverController} from '@ionic/angular';
+import {
+  BacklogEditWeightPopoversComponent
+} from '../../popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import {
+  BacklogEditStatusPopoversComponent
+} from '../../popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import {
+  BacklogEditSharePopoversComponent
+} from '../../popovers/backlog-edit-share-popovers/backlog-edit-share-popovers.component';
+import {
+  BacklogEditLikePopoversComponent
+} from '../../popovers/backlog-edit-like-popovers/backlog-edit-like-popovers.component';
+import {
+  BacklogEditVisibilityPopoversComponent
+} from '../../popovers/backlog-edit-visibility-popovers/backlog-edit-visibility-popovers.component';
+import {
+  BacklogEditSubmenuPopoversComponent
+} from 'src/app/pages/projects/backlog/popovers/backlog-edit-submenu-popovers/backlog-edit-submenu-popovers.component';
+import {
+  BacklogEditLinkPopoversComponent
+} from '../../popovers/backlog-edit-link-popovers/backlog-edit-link-popovers.component';
+import {
+  BacklogEditLockPopoversComponent
+} from '../../popovers/backlog-edit-lock-popovers/backlog-edit-lock-popovers.component';
+import {BacklogInsertion} from 'src/app/models/BacklogInsertion';
+
 @Component({
   selector: 'app-bl-detail',
   templateUrl: './bl-detail.component.html',

@@ -1,18 +1,17 @@
-import { Backlog } from './../../../../../models/Backlog';
-import { UserInfo } from './../../../../../models/users/UserInfo';
-import { SessionService } from './../../../../../store/session.service';
-import { Component, OnInit, Input } from '@angular/core';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { Item } from '../../../../../models/item/Item';
+import {Backlog} from '../../../../../models/Backlog';
+import {UserInfo} from '../../../../../models/users/UserInfo';
+import {SessionService} from '../../../../../store/session.service';
+import {Component, Input, OnInit} from '@angular/core';
+import {ModalController} from '@ionic/angular';
+import {Item} from '../../../../../models/item/Item';
+import {ItemStatus} from 'src/app/models/item/ItemStatus';
+import {ItemType} from 'src/app/models/item/ItemType';
+import {BacklogInsertion} from 'src/app/models/BacklogInsertion';
+import {BacklogAPIService} from 'src/app/services/backlog-api.service';
+import {Project} from 'src/app/models/projects/Project';
+import {ActivatedRoute} from '@angular/router';
+import {MeasureUnit} from '../../../../../models/item/MeasureUnit';
 
-import { ItemAssignment } from 'src/app/models/item/ItemAssignment';
-import { ItemStatus } from 'src/app/models/item/ItemStatus';
-import { ItemType } from 'src/app/models/item/ItemType';
-import { BacklogInsertion } from 'src/app/models/BacklogInsertion';
-import { BacklogAPIService } from 'src/app/services/backlog-api.service';
-import { Project } from 'src/app/models/projects/Project';
-import { convertActionBinding } from '@angular/compiler/src/compiler_util/expression_converter';
-import { ActivatedRoute } from '@angular/router';
 @Component({
   selector: 'app-new-item',
   templateUrl: './new-item.component.html',
@@ -32,10 +31,10 @@ export class NewItemComponent implements OnInit {
   description: string;
   summary: string;
   tags: string;
-  measureunit: string;
+  measureunit: MeasureUnit;
   evaluation: number;
   status: ItemStatus;
-  type: any;
+  type: ItemType;
   statusList: any[];
 
   constructor(
@@ -70,12 +69,13 @@ export class NewItemComponent implements OnInit {
       0,
       '',
       '',
-      '',
+      MeasureUnit.storyPoints,
       0,
       '',
       ItemType.task,
       ItemStatus.open,
       this.user,
+      null, // FIXME: Attribuire un projectId valido
       null
     );
     this.backlogInsertion = new BacklogInsertion(0, this.item, this.backlog, 1);
@@ -92,7 +92,7 @@ export class NewItemComponent implements OnInit {
     this.item.tags = this.tags;
     this.item.measureUnit = this.measureunit;
     this.item.evaluation = this.evaluation;
-    this.item.type = this.type;
+    this.item.type = ItemType[this.type];
     this.item.assignees = [];
 
     delete this.item.createdAt;

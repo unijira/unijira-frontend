@@ -1,7 +1,7 @@
-import { map } from 'rxjs';
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { PopoverController } from '@ionic/angular';
-import { ItemStatus } from 'src/app/models/item/ItemStatus';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {PopoverController} from '@ionic/angular';
+import {ItemStatus} from 'src/app/models/item/ItemStatus';
+
 @Component({
   selector: 'app-backlog-edit-status-popovers',
   templateUrl: './backlog-edit-status-popovers.component.html',

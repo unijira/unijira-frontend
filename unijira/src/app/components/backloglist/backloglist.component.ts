@@ -1,7 +1,6 @@
-import { Component, Input, OnInit, Output, EventEmitter  } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { BacklogAPIService } from '../../services/backlog-api.service';
-import { map } from 'rxjs';
+import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {BacklogAPIService} from '../../services/backlog-api.service';
+
 @Component({
   selector: 'app-backloglist',
   templateUrl: './backloglist.component.html',

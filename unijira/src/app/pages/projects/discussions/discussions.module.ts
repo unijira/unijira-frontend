@@ -1,14 +1,15 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {NgModule} from '@angular/core';
+import {CommonModule} from '@angular/common';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
-import { IonicModule } from '@ionic/angular';
+import {IonicModule} from '@ionic/angular';
 
-import { DiscussionsPageRoutingModule } from './discussions-routing.module';
+import {DiscussionsPageRoutingModule} from './discussions-routing.module';
 
-import { DiscussionsPage } from './discussions.page';
+import {DiscussionsPage} from './discussions.page';
 import {TranslateModule} from '@ngx-translate/core';
 import {PipeModule} from '../../../pipe.module';
+import {NewDiscussionComponent} from './new-discussion/new-discussion.component';
 
 @NgModule({
   imports: [
@@ -20,6 +21,9 @@ import {PipeModule} from '../../../pipe.module';
     ReactiveFormsModule,
     PipeModule
   ],
-  declarations: [DiscussionsPage]
+  exports: [
+    NewDiscussionComponent
+  ],
+  declarations: [DiscussionsPage, NewDiscussionComponent]
 })
 export class DiscussionsPageModule {}

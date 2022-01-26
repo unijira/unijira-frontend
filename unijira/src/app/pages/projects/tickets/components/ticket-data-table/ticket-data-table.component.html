@@ -17,6 +17,7 @@
           <ion-item>
             <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
               <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+              <ion-select-option [value]="itemStatus.todo">{{ itemStatus.todo | ticketStatus | translate }}</ion-select-option>
               <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -103,11 +104,11 @@
           </ion-row>
         </ion-grid>
       </ion-item>
-      <ion-item *ngFor="let ticket of filteredTickets" [routerLink]="['/projects', projectId, 'backlog','items', ticket.id]"  [disabled]="!projectId">
-        <ion-grid>
+      <ion-item *ngFor="let ticket of filteredTickets" [routerLink]="['/projects', projectId, 'tickets', ticket.id]"  [disabled]="!projectId">
+        <ion-grid class="ticket-data-row">
           <ion-row class="ion-align-items-center">
             <ion-col size="1">
-              <ion-img [src]="'/assets/img/tickets/' + (ticket.type.toLowerCase()) + '.svg'" class="row-icon" [title]="ticket.type | titlecase" alt=""></ion-img>
+              <ion-img [src]="'/assets/img/tickets/' + ticket.type + '.svg'" class="ticket-icon" [title]="ticket.type | titlecase" alt=""></ion-img>
             </ion-col>
             <ion-col size="1">
               <ion-text>
@@ -123,7 +124,7 @@
               </ion-text>
               <ion-row *ngIf="ticket.owner" class="ion-align-items-center ion-justify-content-center ion-nowrap ion-padding-horizontal">
                 <ion-col size="auto">
-                  <ion-avatar class="row-icon" [title]="ticket.owner.username">
+                  <ion-avatar *ngIf="ticket.owner" class="ticket-icon" [title]="ticket.owner.username">
                     <ion-img [src]="ticket.owner.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                   </ion-avatar>
                 </ion-col>
@@ -135,15 +136,15 @@
               </ion-text>
               <ion-row *ngIf="ticket.assignees.length" class="ion-align-items-center ion-justify-content-start ion-nowrap">
                 <ion-col *ngFor="let assignee of ticket.assignees.slice(0, 3)" size="auto">
-                  <ion-avatar class="row-icon" [title]="assignee.assignee.username">
-                    <ion-img [src]="assignee.assignee?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                  <ion-avatar class="ticket-icon" [title]="assignee.assigneeUsername">
+                    <ion-img [src]="assignee.assigneeAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                   </ion-avatar>
                 </ion-col>
               </ion-row>
             </ion-col>
             <ion-col>
               <ion-badge [color]="ticket.status | ticketStatusColor">
-                <ion-label>{{ ticket.status | ticketStatus | translate | titlecase }}</ion-label>
+                <ion-label>{{ ticket.status | ticketStatus | translate }}</ion-label>
               </ion-badge>
             </ion-col>
             <ion-col>
@@ -165,28 +166,28 @@
         <ion-grid>
           <ion-row class="ion-align-items-center">
             <ion-col size="1">
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col size="1">
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col size="3">
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col size="1">
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col>
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col>
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col>
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
             <ion-col>
-              <ion-skeleton-text animated></ion-skeleton-text>
+              <ion-skeleton-text animated="true"></ion-skeleton-text>
             </ion-col>
           </ion-row>
         </ion-grid>

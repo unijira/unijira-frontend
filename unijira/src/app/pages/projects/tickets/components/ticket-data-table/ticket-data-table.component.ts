@@ -10,7 +10,7 @@ import {ItemStatus} from '../../../../../models/item/ItemStatus';
 })
 export class TicketDataTableComponent implements OnInit {
 
-  @Input() filterSearch;
+  @Input() filterSearch: string;
   @Input() filterStatus: string[];
   @Input() filterType: string[];
   @Input() tickets: Item[];
@@ -33,18 +33,8 @@ export class TicketDataTableComponent implements OnInit {
 
   ngOnInit() {
 
-    this.filterType = this.filterType ?? [
-      ItemType.epic,
-      ItemType.story,
-      ItemType.task,
-      ItemType.issue
-    ];
-
-    this.filterStatus = this.filterStatus ?? [
-      ItemStatus.open,
-      ItemStatus.done
-    ];
-
+    this.filterType   = this.filterType   ?? [];
+    this.filterStatus = this.filterStatus ?? [];
     this.filterSearch = this.filterSearch ?? '';
 
   }

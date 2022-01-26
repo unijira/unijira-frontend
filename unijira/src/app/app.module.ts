@@ -39,8 +39,7 @@ import { DialogModule} from '@syncfusion/ej2-angular-popups';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
 
-import { ClipboardModule } from 'ngx-clipboard';
-import { ClipboardService } from 'ngx-clipboard';
+import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');

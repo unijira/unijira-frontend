@@ -6,8 +6,7 @@ import {Observable} from 'rxjs';
 import {BacklogState} from './backlog.reducer';
 import {saveBacklogAction, saveSprintAction} from './backlog.action';
 import {Backlog} from '../../../../models/Backlog';
-import {BacklogInsertion} from '../../../../models/BacklogInsertion';
-import {SprintInsertion} from '../../../../models/SprintInsertion';
+
 @Injectable()
 export class BacklogService {
   constructor(private store: Store) {}
