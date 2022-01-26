@@ -520,7 +520,7 @@ export class RoadmapPage {
   }
   public modifyDropDowns() {
     this.enabled = false;
-    if (this.itemsOfRoadmap!== undefined) {
+    if (this.itemsOfRoadmap!== undefined || this.data.length !==0) {
       this.dataDropDown = [
         this.itemTypeEnum.epic,
         this.itemTypeEnum.story,

@@ -63,6 +63,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./tickets/tickets.module').then(m => m.TicketsPageModule)
   },
+  {
+    path: ':id/discussions',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./discussions/discussions.module').then( m => m.DiscussionsPageModule)
+  },
+
 ];
 
 @NgModule({

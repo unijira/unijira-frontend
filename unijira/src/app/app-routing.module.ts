@@ -51,6 +51,7 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/projects/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
   },
+
 ];
 
 @NgModule({

@@ -13,11 +13,11 @@ export class UserInfo {
     public birthDate: Date,
     public firstName: string,
     public lastName: string,
-    public role: string,
-    public description: string,
-    public github: string,
-    public linkedin: string,
-    public phoneNumber: string
+    public role?: string,
+    public description?: string,
+    public github?: string,
+    public linkedin?: string,
+    public phoneNumber?: string
   ) {
   }
 
