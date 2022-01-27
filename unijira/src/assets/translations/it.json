@@ -458,5 +458,13 @@
   "project.settings.defOfDone.delete.confirm": "Conferma",
   "project.settings.defOfDone.empty": "La tua Definition of Done è vuota",
   "project.settings.defOfDone.add": "Nuova entry",
-  "project.settings.defOfDone.activeSprint": "Sprint in corso"
+  "project.settings.defOfDone.activeSprint": "Sprint in corso",
+  "charts.storyPoint": "Story point",
+  "charts.workingHours": "Ore di lavoro",
+  "charts.workingDays": "Giorni di lavoro",
+  "charts": "Grafici",
+  "charts.burnUpChart": "Grafico burn-up",
+  "charts.date": "Data ",
+  "charts.workingDone": "Lavoro completato",
+  "charts.idealVelocity": "Velocità ideale"
 }

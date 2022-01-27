@@ -85,7 +85,7 @@
           <br>
 
 
-          <div *ngIf="this.router.url.includes('settings')">
+          <div *ngIf="this.router.url.includes('settings') || this.router.url.includes('charts')">
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection="root" [routerLink]="['/projects/' + project?.id]"
                       lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
@@ -97,7 +97,7 @@
           <hr>
           </div>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let element of (this.router.url.includes('settings') ? settings : pages)">
+          <ion-menu-toggle auto-hide="false" *ngFor="let element of getUrls()">
             <ion-item routerDirection="root" [routerLink]="[element?.url]"
                       lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
               <ion-icon name="{{element?.icon}}"></ion-icon>
