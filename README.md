@@ -1,5 +1,6 @@
 # Unijira
 
+[![CodeQL](https://github.com/unijira/unijira-frontend/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/unijira/unijira-frontend/actions/workflows/codeql-analysis.yml)
 [![License: GPL](https://img.shields.io/badge/License-GPL-blue.svg)](/LICENSE)
 
 
@@ -9,6 +10,10 @@ To run Unijira frontend:
 ```shell script
 $ npm ci
 $ npm run start
+
+# Or use the following command if you want to run Unijira
+# with online deployed backend (https://unijira.herokuapp.com/)
+$ npm run prod
 ```
 
 **NOTE:** Building and running requires [NodeJS LTS Gallium 16.x.x](https://nodejs.org/en/about/releases/) or greater.  
