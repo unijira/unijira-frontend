@@ -105,6 +105,7 @@
   "project.pages.settings.roles" : "Ruoli",
   "project.pages.settings.back" : "Torna al progetto",
   "project.pages.settings.permissions" : "Permessi",
+  "project.pages.settings.defOfDone": "Definition of Done",
   "project.settings.details.title" : "Dettagli",
   "project.settings.details.home" : "Home",
   "project.settings.details.projects" : "Progetti",
@@ -365,5 +366,15 @@
   "discussions.openedBy": "Aperto da",
   "disussions.messages": "Messaggi",
   "discussions.type": "Tipo",
-  "discussions.noDiscussions": "Nessuna discussione trovata"
+  "discussions.noDiscussions": "Nessuna discussione trovata",
+  "project.settings.defOfDone.title": "Definition of Done",
+  "project.settings.defOfDone.subtitle": "Specifica le attività da svolgere per completare un item",
+  "project.settings.defOfDone.info": "Con Unijira puoi stilare la tua Definition of Done, la quale dovrà essere rispettata da ciascun item per poter essere completato. In accordo con Scrum, è possibile modificarla in qualsiasi momento, a patto che non sia in corso uno sprint.",
+  "project.settings.defOfDone.activity": "Attività",
+  "project.settings.defOfDone.delete": "Elimina",
+  "project.settings.defOfDone.delete.msg": "Sei sicuro di voler eliminare questa entry?",
+  "project.settings.defOfDone.delete.abort": "Annulla",
+  "project.settings.defOfDone.delete.confirm": "Conferma",
+  "project.settings.defOfDone.empty": "La tua Definition of Done è vuota",
+  "project.settings.defOfDone.add": "Nuova entry"
 }

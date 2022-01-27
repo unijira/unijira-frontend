@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, of} from 'rxjs';
+import {catchError, map, Observable, of} from 'rxjs';
 import {Project} from '../../models/projects/Project';
 import {HttpService} from '../http-service.service';
 import {Membership} from '../../models/projects/Membership';
@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {MembershipRoles} from '../../models/projects/MembershipRoles';
 import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
+import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
 
 @Injectable({
   providedIn: 'root'
@@ -82,4 +83,28 @@ export class ProjectService {
 
   }
 
+  createDefOfDoneEntry(projectId: number, entry: DefinitionOfDoneEntry): Observable<DefinitionOfDoneEntry> {
+    return this.http.post<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone`, entry)
+      .pipe(catchError(() => of(null)));
+  }
+
+  updateDefOfDoneEntry(projectId: number, entryId: number, entry: DefinitionOfDoneEntry): Observable<DefinitionOfDoneEntry> {
+    return this.http.put<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone/${entryId}`, entry)
+      .pipe(catchError(() => of(null)));
+  }
+
+  deleteDefOfDoneEntry(projectId: number, entryId: number): Observable<boolean> {
+    return this.http.delete<boolean>(`/projects/${projectId}/defofdone/${entryId}`)
+      .pipe(map(() => true), catchError(() => of(null)));
+  }
+
+  getProjectDefOfDone(projectId: number): Observable<DefinitionOfDoneEntry[]> {
+    return this.http.get<DefinitionOfDoneEntry[]>(`/projects/${projectId}/defofdone`)
+      .pipe(catchError(() => of(null)));
+  }
+
+  getProjectDefOfDoneEntry(projectId: number, entryId: number): Observable<DefinitionOfDoneEntry> {
+    return this.http.get<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone/${entryId}`)
+      .pipe(catchError(() => of(null)));
+  }
 }
