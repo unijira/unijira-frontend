@@ -8,6 +8,9 @@ import {ViewPageRoutingModule} from './view-routing.module';
 
 import {ViewPage} from './view.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {TicketsPageModule} from '../../tickets.module';
+import {NgxPopperjsModule} from 'ngx-popperjs';
+import {PipeModule} from '../../../../../pipe.module';
 
 @NgModule({
   imports: [
@@ -15,7 +18,10 @@ import {TranslateModule} from '@ngx-translate/core';
     FormsModule,
     IonicModule,
     TranslateModule,
-    ViewPageRoutingModule
+    ViewPageRoutingModule,
+    TicketsPageModule,
+    NgxPopperjsModule,
+    PipeModule
   ],
   declarations: [ViewPage]
 })

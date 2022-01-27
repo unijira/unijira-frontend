@@ -49,8 +49,7 @@ export class ProfilePage implements OnInit {
 
   ngOnInit() {
     this.user = new UserInfo(null, null, null, null, null, null,
-      null, null, null, null, null, null, null, null,
-      null);
+      null, null, null, null, null, null, null);
     this.accountService.me().subscribe(value => {
       this.usersService.getUser(value.id).subscribe(user => {
         this.user = user;

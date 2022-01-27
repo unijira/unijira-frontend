@@ -1,0 +1,32 @@
+ion-modal {
+  --height: 31rem;
+}
+
+hr {
+  border: 0;
+  clear:both;
+  display:block;
+  width: 95%;
+  background-color: lightgray;
+  height: 1px;
+}
+
+.username-color {
+  color: var(--ion-color-medium-shade);
+}
+
+.main-card {
+  background-color: var(--ion-color-light);
+  margin-right: 5px;
+  margin-left: 5px;
+}
+
+.main-icon {
+  width: 4rem;
+  height: 4rem;
+}
+
+.answer-icon {
+  width: 3rem;
+  height: 3rem;
+}

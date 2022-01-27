@@ -69,3 +69,32 @@ export const presentToast = async (toastController: ToastController, message: st
   });
   await toast.present();
 };
+
+export const showAlertConfirmDiscard = async (alertController: AlertController, header: string,
+                                              message: string, cancel: string, confirm: string): Promise<any> =>
+
+  new Promise(async (resolve) => {
+
+    const alert = await alertController.create({
+      header,
+      message,
+      buttons: [
+        {
+          text: cancel,
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: () => {
+            resolve(false);
+          }
+        }, {
+          text: confirm,
+          handler: () => {
+            resolve(true);
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+
+  });

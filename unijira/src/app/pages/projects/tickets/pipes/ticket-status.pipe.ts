@@ -11,6 +11,8 @@ export class TicketStatusPipe implements PipeTransform {
     switch(value) {
       case ItemStatus.open:
         return 'projects.tickets.status.open';
+      case ItemStatus.todo:
+        return 'projects.tickets.status.todo';
       case ItemStatus.done:
         return 'projects.tickets.status.done';
       default:

@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Project} from '../../models/projects/Project';
 import {ProjectService} from '../../services/project/project.service';
 import {Item} from '../../models/item/Item';
@@ -6,6 +6,10 @@ import {TicketService} from '../../services/ticket/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
 import {PageService} from '../../services/page.service';
 import {Router} from '@angular/router';
+import {SessionService} from '../../store/session.service';
+import {UserStatus} from '../../models/users/UserStatus';
+import {ToastController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -15,17 +19,18 @@ import {Router} from '@angular/router';
 })
 export class HomePage implements OnInit {
 
-  @Input() recentProjects: Array<Project> = null;
-  @Input() myTicketsOpen: Array<Item> = null;
-  @Input() myTicketsDone: Array<Item> = null;
-  @Input() myTicketsOpenCount = 0;
-  @Input() myTicketsDoneCount = 0;
-  @Input() currentSegment = 'open';
+  recentProjects: Array<Project> = null;
+  myTicketsOpen: Array<Item> = null;
+  myTicketsDone: Array<Item> = null;
+  currentSegment = 'open';
 
   constructor(
     private projectService: ProjectService,
     private ticketService: TicketService,
     private pageService: PageService,
+    private sessionService: SessionService,
+    private translateService: TranslateService,
+    private toastController: ToastController,
     private router: Router
   ) {
     this.pageService.setTitle('user.home.title');
@@ -57,15 +62,30 @@ export class HomePage implements OnInit {
       }
     );
 
+    this.sessionService.getUserInfo().subscribe(user => {
+      if(user.status === UserStatus.requireConfirm) {
+        this.toastController.create({
+          message: this.translateService.instant('user.home.confirm'),
+          duration: 3000,
+          position: 'top',
+          color: 'warning',
+          icon: 'warning'
+        }).then(toast => toast.present());
+      }
+    });
+
   }
 
   onSegmentChanged(e: CustomEvent) {
     this.currentSegment = e.detail?.value;
   }
 
-  navigateToProjectHome(id: number) {
-    // this.sessionService.loadProject(id);
-    // this.router.navigate(['/project-home']);
+  myTicketsDonePerProject(projectId: number) {
+    return this.myTicketsDone.filter(ticket => ticket.projectId === projectId).length;
+  }
+
+  myTicketsOpenPerProject(projectId: number) {
+    return this.myTicketsOpen.filter(ticket => ticket.projectId === projectId).length;
   }
 
 }

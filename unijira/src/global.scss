@@ -69,6 +69,9 @@
 /* end porcheria */
 
 
+.ion-padding-sm {
+  padding: 0.4rem;
+}
 
 
 
@@ -99,4 +102,16 @@ ion-content:not(.popover-wrapper) {
 
 .w-100 {
   width: 100%;
+}
+
+.smooth {
+  transition: all 0.3s ease-in-out;
+}
+
+.user-avatar:hover {
+  transform: scale(1.2);
+}
+
+.unauthorized {
+  cursor: not-allowed !important;
 }

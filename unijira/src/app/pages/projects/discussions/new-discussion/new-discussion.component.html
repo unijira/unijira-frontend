@@ -1,0 +1,53 @@
+<ion-content class="popover-wrapper" [formGroup]="formGroup">
+  <ion-row>
+    <ion-text>
+      <h1 translate class="ion-margin ion-margin-start" *ngIf="!discussionToEdit">discussions.newDiscussion</h1>
+      <h1 translate class="ion-margin ion-margin-start" *ngIf="discussionToEdit">discussions.editDiscussion</h1>
+    </ion-text>
+  </ion-row>
+  <ion-row>
+    <ion-item class="ion-margin w-100">
+      <ion-label position="stacked" translate>discussions.title</ion-label>
+      <ion-input [placeholder]="'discussions.insertTitle' | translate" type="text" [formControl]="titleFC"></ion-input>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-item class="ion-margin w-100" >
+      <ion-label position="stacked" translate>discussions.text</ion-label>
+      <ion-textarea rows="6" [placeholder]="'discussions.insertText' | translate"  formControlName="description"></ion-textarea>
+    </ion-item>
+  </ion-row>
+  <ion-row>
+    <ion-radio-group formControlName="type">
+      <ion-row class="ion-margin ion-align-items-center ion-justify-content-center ion-align-self-center">
+        <ion-item lines="none" [title]="'discussions.general' | translate">
+          <ion-icon name="chatbubbles" style="color: #4c8dff" size="large" class="ion-margin-end"></ion-icon>
+          <ion-radio [value]="topicType.general"></ion-radio>
+        </ion-item>
+        <ion-item lines="none" [title]="'discussions.ideas' | translate">
+          <ion-icon name="bulb" style="color: #ffc409" size="large" class="ion-margin-end"></ion-icon>
+          <ion-radio [value]="topicType.ideas"></ion-radio>
+        </ion-item>
+        <ion-item lines="none" [title]="'discussions.qanda' | translate">
+          <ion-icon name="help-circle" style="color: #2dd36f" size="large" class="ion-margin-end"></ion-icon>
+          <ion-radio [value]="topicType.qanda"></ion-radio>
+        </ion-item>
+        <ion-item lines="none" [title]="'discussions.announcements' | translate">
+          <ion-icon name="megaphone" style="color: #a94442" size="large" class="ion-margin-end"></ion-icon>
+          <ion-radio [value]="topicType.announcements"></ion-radio>
+        </ion-item>
+      </ion-row>
+    </ion-radio-group>
+  </ion-row>
+  <ion-row>
+    <ion-col size="6"></ion-col>
+    <ion-col size="6">
+    <ion-button color="primary" expand="block" (click)="newOrEditDiscussion()" class="ion-margin ion-float-md-right">
+      <ion-icon slot="start" name="add" *ngIf="!discussionToEdit"></ion-icon>
+      <ion-icon slot="start" name="create" *ngIf="discussionToEdit"></ion-icon>
+      <ion-text translate *ngIf="!discussionToEdit">discussions.openDiscussion</ion-text>
+      <ion-text translate *ngIf="discussionToEdit">discussions.editDiscussion</ion-text>
+    </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

@@ -1,5 +1,4 @@
 import {createAction, props} from '@ngrx/store';
-import {User} from '../models/User';
 import {Error} from '../classes/error';
 import {UserInfo} from '../models/users/UserInfo';
 import {Project} from '../models/projects/Project';
@@ -12,11 +11,6 @@ export const loadingAction = createAction(
 export const isLoggedAction = createAction(
   '[Session] loggedIn',
   props<{ isLoggedIn: boolean }>()
-);
-
-export const setUserAction = createAction(
-  '[Session] Set User',
-  props<{ user: User }>()
 );
 
 export const errorAction = createAction(

@@ -1,34 +1,31 @@
-import { setBacklogAction } from './../../../store/task.action';
-import { ItemStatus } from './../../../models/item/ItemStatus';
+import {ItemStatus} from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import { Component, OnInit, OnDestroy, ViewChild, Input } from '@angular/core';
-import { Sprint } from '../../../models/Sprint';
-import { DragulaService } from 'ng2-dragula';
-import { TaskService } from '../../../store/task.service';
+import {Component, OnInit, ViewChild} from '@angular/core';
+import {Sprint} from '../../../models/Sprint';
+import {DragulaService} from 'ng2-dragula';
+import {TaskService} from '../../../store/task.service';
 import * as TaskActions from '../../../store/task.action';
-import { Store } from '@ngrx/store';
+import {Store} from '@ngrx/store';
 import * as _ from 'lodash';
-import { BlDetailComponent } from './modals/bl-detail/bl-detail.component';
-import { ModalController, PopoverController } from '@ionic/angular';
-import { BacklogAPIService } from '../../../services/backlog-api.service';
-import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import { ActivatedRoute, ParamMap } from '@angular/router';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { Location } from '@angular/common';
-import { Router } from '@angular/router';
-import { Backlog } from '../../../models/Backlog';
-import { BacklogInsertion } from '../../../models/BacklogInsertion';
-import { SprintInsertion } from '../../../models/SprintInsertion';
-import { forEach } from 'lodash';
-import { SprintStatus } from '../../../models/SprintStatus';
-import { IonAccordionGroup } from '@ionic/angular';
+import {forEach} from 'lodash';
+import {IonAccordionGroup, ModalController, PopoverController} from '@ionic/angular';
+import {BacklogAPIService} from '../../../services/backlog-api.service';
+import {
+  BacklogEditWeightPopoversComponent
+} from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import {
+  BacklogEditStatusPopoversComponent
+} from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import {ActivatedRoute, ParamMap, Router} from '@angular/router';
+import {Backlog} from '../../../models/Backlog';
+import {BacklogInsertion} from '../../../models/BacklogInsertion';
+import {SprintInsertion} from '../../../models/SprintInsertion';
+import {SprintStatus} from '../../../models/SprintStatus';
 import * as Moment from 'moment';
-import { NewItemComponent } from './modals/new-item/new-item.component';
-import { SessionService } from 'src/app/store/session.service';
-import { PageService } from '../../../services/page.service';
-import { ItemType } from 'src/app/models/item/ItemType';
+import {NewItemComponent} from './modals/new-item/new-item.component';
+import {SessionService} from 'src/app/store/session.service';
+import {PageService} from '../../../services/page.service';
+import {ItemType} from 'src/app/models/item/ItemType';
 
 @Component({
   selector: 'app-backlog',
@@ -98,7 +95,7 @@ export class BacklogPage implements OnInit {
     private route: ActivatedRoute,
     private router: Router,
     private sessionService: SessionService,
-    private pageService: PageService
+    private pageService: PageService,
   ) {
 
     this.filterTypeS = [
@@ -288,15 +285,25 @@ export class BacklogPage implements OnInit {
     this.sprint.endingDate = new Date($event.detail.value)
       .toISOString()
       .split('T')[0];
+    this.sprint.status = SprintStatus.active;
     this.backlogAPIService
-      .startSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
       .subscribe((response) => {
         this.getFromApi();
       });
   }
 
   stopSprint() {
-    alert('stop');
+    this.startSprintDate = '';
+    this.endSprintDate = '';
+    this.sprintIsStarted = false;
+    this.sprint.endingDate = new Date().toISOString().split('T')[0];
+    this.sprint.status = SprintStatus.inactive;
+    this.backlogAPIService
+      .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
+      .subscribe((response) => {
+        this.getFromApi();
+      });
   }
 
   editWeight(task, data, type) {
@@ -392,7 +399,11 @@ export class BacklogPage implements OnInit {
             .toISOString()
             .split('T')[0];
         }
-        this.sprintIsStarted = this.startSprintDate ? true : false;
+        // TODO: sostituire con un check sullo stato appena disponibile nel DTO
+        // this.sprintIsStarted = moment(this.endSprintDate).diff(moment(), 'days') > 0 ? true : false;
+
+        this.sprintIsStarted = this.sprint.status === SprintStatus.active ? true : false;
+
         this.backlogAPIService
           .getSprintItems(this.projectId, this.backlogId, this.sprintId)
           .subscribe((response1) => {
@@ -465,7 +476,7 @@ export class BacklogPage implements OnInit {
     this.backlogServer.insertions?.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
         itemToRemoveFromBacklog.push(
-          new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
+          new SprintInsertion(item.id, this.sprint,  item.item, this.sprintId)
         );
       }
     });
@@ -477,7 +488,7 @@ export class BacklogPage implements OnInit {
     );
     console.log('itemRimastiNelBacklog', itemRimastiNelBacklog);
     itemRimastiNelBacklog.forEach((item, index) => {
-      item.priority = index;
+      item.priority = tmpB.insertions.find(i => i.id === item.id).priority;
       this.backlogAPIService
         .updateBacklogInsertion(this.projectId, this.backlogId, item)
         .subscribe((response) => {});
@@ -491,9 +502,9 @@ export class BacklogPage implements OnInit {
     });
 
     itemToRemoveFromBacklog.forEach((item) => {
-      this.backlogAPIService
-        .deleteBacklogInsertion(this.projectId, this.backlogId, item)
-        .subscribe((response) => {});
+      // this.backlogAPIService
+      //   .deleteBacklogInsertion(this.projectId, this.backlogId, item)
+      //   .subscribe((response) => {});
       this.backlogAPIService
         .addSprintInsertion(this.projectId, this.backlogId, this.sprintId, item)
         .subscribe((response) => {});
@@ -515,6 +526,7 @@ export class BacklogPage implements OnInit {
 
     this.store.dispatch(TaskActions.setBacklogAction({ backlog: tmpB }));
     this.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
+    this.getFromApi();
   }
 
   createSprint() {

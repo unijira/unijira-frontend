@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { SingoloitemPage } from './singoloitem.page';
+import {SingoloitemPage} from './singoloitem.page';
 
 describe('SingoloitemPage', () => {
   let component: SingoloitemPage;

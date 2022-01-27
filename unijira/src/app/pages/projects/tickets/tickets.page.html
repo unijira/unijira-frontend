@@ -26,11 +26,41 @@
             <ion-text [translate]="'projects.tickets.export'"></ion-text>
           </ion-button>
         </ion-col>
-        <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block" [routerLink]="'/projects/' + projectId + '/backlog'" [disabled]="!projectId">
+        <ion-col size-lg="auto" size="6" [ngClass]="{unauthorized}">
+          <ion-button id="createButton" color="primary" expand="block" [disabled]="!projectId || unauthorized">
             <ion-icon slot="start" name="add"></ion-icon>
             <ion-text [translate]="'projects.tickets.add'"></ion-text>
           </ion-button>
+          <ion-popover trigger="createButton" dismiss-on-select="true" backdrop-dismiss="true" show-backdrop="false">
+            <ng-template>
+              <ion-list>
+                <ion-item button="true" (click)="create(ticketType.epic)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/EPIC.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.epic | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.story)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/STORY.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.story | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.task)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/TASK.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.task | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.issue)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/ISSUE.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.issue | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+              </ion-list>
+            </ng-template>
+          </ion-popover>
         </ion-col>
       </ion-row>
     </ion-grid>

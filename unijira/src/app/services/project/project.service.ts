@@ -78,8 +78,23 @@ export class ProjectService {
 
   updateMemberships(keyProjectId: number, keyUserId: number, role: MembershipRoles, status: MembershipStatus, permissions: MembershipPermission[]): Observable<Membership> {
 
-    return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyProjectId, keyUserId, role, status, permissions})
+    return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyUserId, keyProjectId, role, status, permissions})
       .pipe(catchError(() => of(null)));
+
+  }
+
+  removeMember(projectId: number, userId: number) {
+
+    return this.http.delete<Membership>(`/projects/${projectId}/memberships/${userId}`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  verifyPermission(projectId: number, userId: number, permission: MembershipPermission) {
+
+    return this.http.get<boolean>(`/projects/${projectId}/memberships/${userId}/permission/${permission}`)
+      .pipe(map(_ => true))
+      .pipe(catchError(_ => of(false)));
 
   }
 

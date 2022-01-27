@@ -9,6 +9,9 @@ import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../../../services/page.service';
 import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
 import {ProjectService} from '../../../../services/project/project.service';
+import {Membership} from '../../../../models/projects/Membership';
+import {UserInfo} from '../../../../models/users/UserInfo';
+import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
 
 @Component({
   selector: 'app-details',
@@ -28,6 +31,12 @@ export class DetailsPage implements OnInit {
   nameForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
   keyForm: FormControl = new FormControl('', [Validators.required, Validators.minLength(3)]);
 
+  userInfoSubscription: Subscription;
+  userInfo: UserInfo;
+
+  membership: Membership;
+  membershipPermission = MembershipPermission;
+
   constructor(private sessionService: SessionService,
               public alertController: AlertController,
               private projectService: ProjectService,
@@ -40,13 +49,37 @@ export class DetailsPage implements OnInit {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.details']);
 
+    this.userInfoSubscription = sessionService.getUserInfo().subscribe(info => {
+
+      if(!this.userInfo) {
+        this.userInfo = info;
+      }
+
+    });
+
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
 
       this.project = p;
 
       if(p) {
+
         this.nameForm.setValue(this.project && this.project.name);
         this.keyForm.setValue(this.project && this.project.key);
+
+        this.projectService.getMemberships(p.id).subscribe(
+          members => {
+
+            members.forEach(member => {
+
+                if (member.keyUserId === this.userInfo.id) {
+                  this.membership = member;
+                }
+
+            });
+
+          }
+        );
+
       }
 
    });

@@ -1,7 +1,7 @@
-import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
-import { IonicModule } from '@ionic/angular';
+import {ComponentFixture, TestBed, waitForAsync} from '@angular/core/testing';
+import {IonicModule} from '@ionic/angular';
 
-import { SprintlistComponent } from './sprintlist.component';
+import {SprintlistComponent} from './sprintlist.component';
 
 describe('SprintlistComponent', () => {
   let component: SprintlistComponent;
