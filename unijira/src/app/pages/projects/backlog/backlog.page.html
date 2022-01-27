@@ -34,6 +34,16 @@
         </ion-col>
         <ion-col size="1" class="ion-align-self-end">
           <ion-button
+            (click)="showSuggestions()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.hints'"
+          >
+          </ion-button>
+          </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button
             (click)="saveToAPI()"
             expand="block"
             color="primary"
@@ -45,7 +55,7 @@
       </ion-row>
 
       <!-- /ion-row PROGETTO-->
-      <ion-accordion-group>
+      <ion-accordion-group value="sprintsss">
         <ion-accordion
           value="sprintsss"
           toggle-icon="arrow-down-circle"
@@ -163,11 +173,11 @@
                       *ngFor="let insertion of filteredTicketsS"
                       class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
                     >
-                      <ion-col>
+                      <ion-col [id]="'step' + insertion.item.id">
                         <ion-item>
                           <ion-avatar slot="start">
                             <ion-img
-                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                              [src]="'assets/img/tickets/' + (insertion.item.type) + '.svg'"
                             ></ion-img>
                           </ion-avatar>
                           <span class="task-name">
@@ -244,10 +254,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                         >
-                          <img
+                         <!-- <img
                             class="avatar-img"
                             [src]="insertion.item.assignees[0].assignee.avatar"
-                          />
+                          />-->
                         </ion-thumbnail>
                       </ion-col>
 
@@ -274,7 +284,7 @@
       </ion-accordion-group>
       <!-- /ion-row SPRINT BOARD-->
 
-      <ion-accordion-group>
+      <ion-accordion-group value="backlogssss">
         <ion-accordion value="backlogssss" toggle-icon="arrow-down-circle">
           <ion-row slot="header">
             <ion-col class="ion-align-items-center ion-justify-content-end">
@@ -351,10 +361,10 @@
                       class="ion-align-items-end ion-justify-content-center task-item white-bg"
                     >
                       <ion-col>
-                        <ion-item>
+                        <ion-item [id]="'step' + insertion.item.id">
                           <ion-avatar slot="start">
                             <ion-img
-                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                              [src]="'assets/img/tickets/' + (insertion.item.type) + '.svg'"
                             ></ion-img>
                           </ion-avatar>
                           <span class="task-name">
@@ -426,10 +436,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                         >
-                          <img
+                          <!--<img
                             class="avatar-img"
                             [src]="insertion.item.assignees[0].assignee.avatar"
-                          />
+                          />-->
                         </ion-thumbnail>
                       </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">

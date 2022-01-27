@@ -180,6 +180,8 @@
   "backlog.edit.status.done": "Completato",
   "backlog.edit.status.open": "Aperto",
   "backlog.edit.status.todo": "Da fare",
+  "backlog.server.hints": "Hints",
+  "backlog.server.hints.warning": "Attenzione: non hai nessun suggerimento!",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
   "project.settings.details.toast.update.success" : "I dettagli del progetto sono stati modificati correttamente.",
