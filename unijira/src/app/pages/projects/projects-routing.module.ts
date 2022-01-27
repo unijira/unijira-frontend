@@ -68,6 +68,12 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./discussions/discussions.module').then( m => m.DiscussionsPageModule)
   },
+  {
+    path: ':id/settings/defofdone',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./settings/defofdone/defofdone.module').then( m => m.DefOfDonePageModule)
+  },
+
 
 ];
 

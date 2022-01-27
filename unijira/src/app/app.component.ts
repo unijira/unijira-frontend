@@ -86,6 +86,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
           {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
           {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
+          {name: 'project.pages.settings.defOfDone', url: `/projects/${proj.id}/settings/defofdone`, icon: 'checkmark-done-circle-outline'},
         ];
 
       }
