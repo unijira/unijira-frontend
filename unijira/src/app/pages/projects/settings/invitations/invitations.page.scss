@@ -35,3 +35,26 @@
   height: 1.5rem;
   width: 1.5rem;
 }
+
+.send-icon {
+  color: lightslategray;
+  cursor: pointer;
+}
+
+.send-icon:hover {
+  color: #3880ff;
+}
+
+.delete-icon {
+  color: lightslategray;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #eb445a;
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}
