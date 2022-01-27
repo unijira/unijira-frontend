@@ -419,5 +419,13 @@
   "discussions.discussionEdited": "Discussion edited",
   "discussions.newDiscussionCreated": "New discussion created",
   "discussions.answerCantBeEmpty": "Answer can't be empty",
-  "discussions.answerCantBeLongerThan250Characters": "Answer can't be longer than 250 characters"
+  "discussions.answerCantBeLongerThan250Characters": "Answer can't be longer than 250 characters",
+  "charts.storyPoint": "Story point",
+  "charts.workingHours": "Working hours",
+  "charts.workingDays": "Working days",
+  "charts": "Charts",
+  "charts.burnUpChart": "Burn-up chart",
+  "charts.date": "Date ",
+  "charts.workingDone": "Working done",
+  "charts.idealVelocity": "Ideal velocity"
 }

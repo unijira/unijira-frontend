@@ -1,60 +1,184 @@
-import {Component, OnInit} from '@angular/core';
+import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
 import {MeasureUnit} from '../../../../models/item/MeasureUnit';
-import {ItemType} from '../../../../models/item/ItemType';
 import {ItemStatus} from '../../../../models/item/ItemStatus';
+import {BacklogAPIService} from '../../../../services/backlog-api.service';
+import {Sprint} from '../../../../models/Sprint';
+import {Project} from '../../../../models/projects/Project';
+import {Subscription} from 'rxjs';
+import {unsubscribeAll} from '../../../../util';
+import {FormControl} from '@angular/forms';
+import {Backlog} from '../../../../models/Backlog';
+import {TranslateService} from '@ngx-translate/core';
+import {ItemType} from '../../../../models/item/ItemType';
+import {SprintStatus} from '../../../../models/SprintStatus';
 
 @Component({
   selector: 'app-burnup',
   templateUrl: './burnup.page.html',
   styleUrls: ['./burnup.page.scss'],
 })
-export class BurnupPage implements OnInit {
+export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
 
-  public primaryXAxis: any;
-  public primaryYAxis: any;
-  public chartData: any[] = [];
+  primaryXAxis: any;
+  primaryYAxis: any;
+  chartData: any[] = [];
+  startEndChartData: any[] = [];
+  tooltip: any;
+  marker: any;
 
   items: Item[] = [];
+  sprints: Sprint[] = [];
+  selectedSprint: Sprint;
+
+  project: Project;
+  projectSubscription: Subscription;
+  backlog: Backlog;
+
+  sprintSelectedFC: FormControl = new FormControl(0);
+  selectionSubscription: Subscription;
+  translationsSubscriptions: Subscription[];
+
+  measureUnitKey = 'charts.workingHours';
 
   constructor(private sessionService: SessionService,
-              private activatedRoute: ActivatedRoute) {
+              private activatedRoute: ActivatedRoute,
+              private backlogService: BacklogAPIService,
+              private translateService: TranslateService) {
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.projectSubscription = this.sessionService.getProject().subscribe(p => {
 
-    this.items = [
-      new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-01')),
-      new Item(0, '', '', MeasureUnit.storyPoints, 7, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
-      new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-03')),
-      new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
-    ];
+      this.project = p;
+      if (p) {
+        this.backlogService.getFirstBacklog(this.project.id).subscribe(b => {
+          if (b) {
+            this.backlog = b;
+            this.backlogService.getSprintList(p.id, b.id).subscribe(s =>{
+              if (s) {
+                this.sprints = s;
+                if (this.sprints.length > 0) {
+                  this.backlogService.getSprintInsertions(p.id, b.id, s[0].id).subscribe(ins => {
+                    let items = [];
+                    ins.forEach(i => items.push(i.item && i.item.status == ItemStatus.done));
 
-    this.items = this.items.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
-    let sum = 0;
-    this.items.forEach(i => {
-      sum += i.evaluation;
-      const data = { date: i.doneOn, points: sum}
-      this.chartData.push(data);
+                    switch (ins[0].item.measureUnit) {
+                      case MeasureUnit.storyPoints:
+                        this.measureUnitKey = 'charts.storyPoints';
+                        break;
+                      case MeasureUnit.workingDays:
+                        this.measureUnitKey = 'charts.workingDays';
+                        break;
+                      case MeasureUnit.workingHours:
+                        this.measureUnitKey = 'charts.workingHours';
+                        break;
+                    }
+
+                    this.itemsToChartData(items);
+                    this.sprintSelectedFC.setValue(0);
+                    this.selectedSprint = this.sprints[0];
+                  });
+                } else {
+                  this.sprintSelectedFC.disable();
+
+                }
+              }
+            });
+          }
+
+        });
+      }
+    });
+
+    // this.sprints.push(
+    //   new Sprint(0, new Date('2019-12-28'), new Date('2020-01-30'), null, 0, SprintStatus.inactive),
+    //   new Sprint(0, new Date('2019-12-12'), new Date('2020-01-12'), null, 0, SprintStatus.inactive),
+    // );
+    // this.selectedSprint = this.sprints[0];
+    //
+    // const items = [
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-01')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 7, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
+    // ];
+    // this.itemsToChartData(items)
+
+
+
+    this.selectionSubscription = this.sprintSelectedFC.statusChanges.subscribe(() => {
+      if (this.project && this.backlog && this.sprints.length > 0) {
+        this.selectedSprint = this.sprints[this.sprintSelectedFC.value];
+        this.backlogService.getSprintInsertions(this.project.id, this.backlog.id,
+          this.sprints[this.sprintSelectedFC.value].id).subscribe(ins => {
+            let items = [];
+            ins.forEach(i => items.push(i.item && i.item.status == ItemStatus.done));
+            this.itemsToChartData(items);
+        });
+      }
     });
   }
 
   ngOnInit() {
 
+    this.tooltip = {enable: true};
+    this.marker = { visible: true, width: 10, height: 10 };
 
-    // this.chartData = [
-    //   { x: new Date(2000, 6, 11), y: 10 }, { x: new Date(2002, 3, 7), y: 30 },
-    //   { x: new Date(2004, 3, 6), y: 15 }, { x: new Date(2006, 3, 30), y: 65 },
-    //   { x: new Date(2008, 3, 8), y: 90 }, { x: new Date(2010, 3, 8), y: 85 }
-    // ];
-    this.primaryXAxis = {
-      valueType: 'DateTime',
-      labelFormat: 'y-MMM-dd'
-    };
-    this.primaryYAxis = {
-      valueType: 'Category'
-    };
+    this.translationsSubscriptions = [
+      this.translateService.get(this.measureUnitKey).subscribe(t => {
+        this.primaryYAxis = {
+          labelFormat: '{value}',
+          title: t
+        };
+      }),
+
+      this.translateService.get('charts.date').subscribe(t => {
+        this.primaryXAxis = {
+          valueType: 'DateTime',
+          labelFormat: 'MMM-dd',
+          title: t
+        };
+      })
+
+    ];
+
+
+
+  }
+
+  ngOnDestroy() {
+    unsubscribeAll(this.projectSubscription,
+      this.selectionSubscription,
+      this.translationsSubscriptions[0],
+      this.translationsSubscriptions[1]);
+  }
+
+  ngAfterContentInit() {
+    this.sprintSelectedFC.setValue(0);
+  }
+
+  itemsToChartData(items) {
+    if (this.selectedSprint) {
+      items.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
+      let sum = 0;
+      const map = new Map();
+      items.forEach(i => {
+        sum += i.evaluation;
+        map.set(i.doneOn.toDateString(), sum)
+      });
+
+      this.chartData.push({date: this.selectedSprint.startingDate, points: 0});
+      map.forEach((v, k, m) => {
+        this.chartData.push({date: new Date(k), points: v});
+      });
+
+      this.startEndChartData = [
+        {date: this.selectedSprint.startingDate, points: 0},
+        {date: this.selectedSprint.endingDate, points: items.map(item => item.evaluation).reduce((a, b) => a + b)}
+      ];
+    }
   }
 
 }

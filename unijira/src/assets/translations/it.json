@@ -444,5 +444,13 @@
   "discussions.discussionEdited": "Discussione modificata",
   "discussions.newDiscussionCreated": "Nuova discussione creata",
   "discussions.answerCantBeEmpty": "La risposta non può essere vuota",
-  "discussions.answerCantBeLongerThan250Characters": "La risposta non può avere più di 250 caratteri"
+  "discussions.answerCantBeLongerThan250Characters": "La risposta non può avere più di 250 caratteri",
+  "charts.storyPoint": "Story point",
+  "charts.workingHours": "Ore di lavoro",
+  "charts.workingDays": "Giorni di lavoro",
+  "charts": "Grafici",
+  "charts.burnUpChart": "Grafico burn-up",
+  "charts.date": "Data ",
+  "charts.workingDone": "Lavoro completato",
+  "charts.idealVelocity": "Velocità ideale"
 }

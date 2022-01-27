@@ -405,7 +405,7 @@ export class BacklogPage implements OnInit {
         this.sprintIsStarted = this.sprint.status === SprintStatus.active ? true : false;
 
         this.backlogAPIService
-          .getSprintItems(this.projectId, this.backlogId, this.sprintId)
+          .getSprintInsertions(this.projectId, this.backlogId, this.sprintId)
           .subscribe((response1) => {
             console.log('Get Sprint insertion ', response1);
             this.sprint.insertions = [];

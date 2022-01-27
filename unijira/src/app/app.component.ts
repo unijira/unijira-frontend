@@ -80,7 +80,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
           {name: 'project.pages.releases', url: `/projects/${proj.id}/releases`, icon: 'cube-outline'},
           {name: 'project.pages.discussions', url: `/projects/${proj.id}/discussions`, icon: 'chatbubbles-outline'},
-          {name: 'Charts', url: `/projects/${proj.id}/charts/burnup`, icon: 'chatbubbles-outline'},
+          {name: 'charts', url: `/projects/${proj.id}/charts/burnup`, icon: 'bar-chart-outline'},
           {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 
@@ -92,7 +92,7 @@ export class AppComponent implements OnInit, OnDestroy {
         ];
 
         this.charts = [
-          {name: 'Burnup', url: `/projects/${proj.id}/charts/burnup`, icon: 'information-outline'},
+          {name: 'charts.burnUpChart', url: `/projects/${proj.id}/charts/burnup`, icon: 'trending-up-outline'},
         ];
 
       }

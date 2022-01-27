@@ -33,9 +33,9 @@ export class BacklogAPIService {
     return this.httpService.get<BacklogInsertion>(url);
   }
 
-  getSprintItems(projectId: number, backlogId: number, sprintId: number) {
+  getSprintInsertions(projectId: number, backlogId: number, sprintId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/insertions`;
-    return this.httpService.get<SprintInsertion>(url);
+    return this.httpService.get<SprintInsertion[]>(url);
   }
 
   getSprint(projectId: number, backlogId: number, sprintId: number) {
@@ -186,7 +186,7 @@ export class BacklogAPIService {
 
   getSprintList(projectId: number, backlogId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints`;
-    return this.httpService.get<any>(url);
+    return this.httpService.get<Sprint[]>(url);
   }
 
   getSprintInfo(projectId: number, backlogId: number, sprintId: number) {

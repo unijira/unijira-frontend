@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 
 import { IonicModule } from '@ionic/angular';
 
@@ -14,6 +14,8 @@ import {
   LegendService, LineSeriesService, StripLineService,
   TooltipService
 } from '@syncfusion/ej2-angular-charts';
+import {TranslateModule} from '@ngx-translate/core';
+import {PipeModule} from '../../../../pipe.module';
 
 @NgModule({
   imports: [
@@ -21,7 +23,9 @@ import {
     FormsModule,
     IonicModule,
     BurnupPageRoutingModule,
-    ChartModule
+    ChartModule,
+    TranslateModule, ReactiveFormsModule,
+    PipeModule
   ],
   declarations: [BurnupPage],
   providers: [
