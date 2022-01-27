@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  baseURL: 'https://unijira.com',
+  baseURL: 'https://unijira.herokuapp.com',
   firebase: {
     apiKey: 'AIzaSyBP-x2pFlGzkg5b_RwDdrF1Oq9fnjWIwzk',
     authDomain: 'unijira-7b931.firebaseapp.com',
