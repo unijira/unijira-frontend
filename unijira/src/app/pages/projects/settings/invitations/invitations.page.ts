@@ -12,6 +12,7 @@ import {MembershipStatus} from '../../../../models/projects/MembershipStatus';
 import {PageService} from '../../../../services/page.service';
 import {FormControl, Validators} from '@angular/forms';
 import {UserInfo} from '../../../../models/users/UserInfo';
+import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
 
 @Component({
   selector: 'app-invitations',
@@ -43,6 +44,9 @@ export class InvitationsPage implements OnInit {
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
   users: string[] = [];
+
+  userMembership: Membership;
+  membershipPermission = MembershipPermission;
 
   mailForm: FormControl = new FormControl('', [Validators.required, Validators.email]);
 
@@ -82,11 +86,17 @@ export class InvitationsPage implements OnInit {
               this.memberships = members;
 
               members.forEach(member => {
-                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+
+                if (member.keyUserId === this.userInfo.id) {
+                  this.userMembership = member;
+                }
+
+                this.usersService.getUser(member.keyUserId).subscribe(user => {
                     member.userInfo = user;
                     this.users.push(user.username);
                   });
                 }
+
               );
 
             }
@@ -151,6 +161,32 @@ export class InvitationsPage implements OnInit {
     }
 
     this.mailForm.setValue('');
+
+  }
+
+  inviteAgain(username: string) {
+
+    this.showAlert(this.translateService.instant('project.settings.invitations.alert.title'),
+      this.translateService.instant('project.settings.invitations.alert.description.again'),
+      this.translateService.instant('wizard.alert.message.button.cancel'),
+      this.translateService.instant('wizard.alert.message.button.confirm'))
+      .then(results => {
+
+        if (results) {
+
+          this.projectService.sendInvitations(this.project.id, [username]).subscribe(i => {
+
+            if (i) {
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.success')).then();
+            } else {
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.failed')).then();
+            }
+
+          });
+
+        }
+
+    });
 
   }
 
@@ -238,6 +274,53 @@ export class InvitationsPage implements OnInit {
       await alert.present();
 
     });
+  }
+
+  removeUser(membership: Membership | undefined) {
+
+    if(membership === undefined){
+      return;
+    }
+
+    this.showAlert(this.translateService.instant('project.settings.invitations.alert.title'),
+      this.translateService.instant('project.settings.invitations.alert.description.delete'),
+      this.translateService.instant('wizard.alert.message.button.cancel'),
+      this.translateService.instant('wizard.alert.message.button.confirm'))
+      .then(results => {
+
+        if (results) {
+
+          this.projectService.removeMember(membership.keyProjectId, membership.keyUserId).subscribe(
+            i => {
+
+              if(i === null) {
+
+                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.success')).then();
+
+                this.projectService.getMemberships(this.project.id).subscribe(
+                  members => {
+                    this.memberships = members;
+                    members.forEach(member => {
+                        this.usersService.getUser(member.keyUserId).subscribe(user => member.userInfo = user);
+                      }
+                    );
+                  }
+                );
+
+
+              } else {
+
+                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.failed')).then();
+
+              }
+
+            }
+          );
+
+        }
+
+      });
+
   }
 
 }

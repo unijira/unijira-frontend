@@ -11,6 +11,7 @@ import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
 import {UserInfo} from '../../../../models/users/UserInfo';
+import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
 
 @Component({
   selector: 'app-roles',
@@ -43,6 +44,9 @@ export class RolesPage implements OnInit {
 
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
+
+  userMembership: Membership;
+  membershipPermission = MembershipPermission;
 
   constructor(private sessionService: SessionService,
               public alertController: AlertController,
@@ -81,7 +85,12 @@ export class RolesPage implements OnInit {
 
               members.forEach(member => {
 
-                  this.usersService.getUser(member.keyUserId).subscribe(user => {
+                if (member.keyUserId === this.userInfo.id) {
+                  this.userMembership = member;
+                }
+
+
+                this.usersService.getUser(member.keyUserId).subscribe(user => {
                     member.userInfo = user;
                   });
 

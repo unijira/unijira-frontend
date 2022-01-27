@@ -41,9 +41,16 @@
                   </ion-fab-button>
 
                   <ion-fab-list side="end">
-                    <ion-fab-button (click)="delete()">
-                      <ion-icon name="trash"></ion-icon>
-                    </ion-fab-button>
+                    <span *ngIf="!membership?.permissions?.includes(membershipPermission.details)" class="not-allowed">
+                      <ion-fab-button disabled="true" (click)="delete()">
+                        <ion-icon name="trash"></ion-icon>
+                      </ion-fab-button>
+                    </span>
+                    <span *ngIf="membership?.permissions?.includes(membershipPermission.details)">
+                      <ion-fab-button (click)="delete()">
+                        <ion-icon name="trash"></ion-icon>
+                      </ion-fab-button>
+                    </span>
                   </ion-fab-list>
 
                 </ion-fab>
@@ -124,10 +131,19 @@
           <!-- Save Details -->
           <ion-row class="ion-justify-content-center">
 
-            <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
-              <ion-icon slot="start" name="save-outline"></ion-icon>
-              <span [translate]="'project.settings.details.save'"></span>
-            </ion-button>
+            <span *ngIf="!membership?.permissions?.includes(membershipPermission.details)" class="not-allowed">
+              <ion-button disabled="true" color="light" (click)="save()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>
+                <span [translate]="'project.settings.details.save'"></span>
+              </ion-button>
+            </span>
+
+            <span *ngIf="membership?.permissions?.includes(membershipPermission.details)">
+              <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>
+                <span [translate]="'project.settings.details.save'"></span>
+              </ion-button>
+            </span>
 
           </ion-row>
 

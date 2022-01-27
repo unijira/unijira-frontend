@@ -8,16 +8,18 @@ import {DetailsPageRoutingModule} from './details-routing.module';
 
 import {DetailsPage} from './details.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {NgxPopperjsModule} from 'ngx-popperjs';
 
 @NgModule({
-  imports: [
-    CommonModule,
-    FormsModule,
-    IonicModule,
-    DetailsPageRoutingModule,
-    ReactiveFormsModule,
-    TranslateModule,
-  ],
+    imports: [
+        CommonModule,
+        FormsModule,
+        IonicModule,
+        DetailsPageRoutingModule,
+        ReactiveFormsModule,
+        TranslateModule,
+        NgxPopperjsModule,
+    ],
   declarations: [DetailsPage]
 })
 export class DetailsPageModule {}

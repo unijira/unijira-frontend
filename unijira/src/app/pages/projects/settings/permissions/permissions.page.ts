@@ -48,6 +48,11 @@ export class PermissionsPage implements OnInit {
     { type: MembershipPermission.roles,
       title: 'project.settings.permissions.roles.title',
       description: 'project.settings.permissions.roles.description',
+      value: false },
+
+    { type: MembershipPermission.ticket,
+      title: 'project.settings.permissions.ticket.title',
+      description: 'project.settings.permissions.ticket.description',
       value: false }
 
   ];
@@ -87,6 +92,9 @@ export class PermissionsPage implements OnInit {
   userInfoSubscription: Subscription;
   userInfo: UserInfo;
 
+  userMembership: Membership;
+  membershipPermission = MembershipPermission;
+
   constructor(private sessionService: SessionService,
               public alertController: AlertController,
               private projectService: ProjectService,
@@ -123,6 +131,10 @@ export class PermissionsPage implements OnInit {
               this.memberships = members;
 
               members.forEach(member => {
+
+                  if (member.keyUserId === this.userInfo.id) {
+                    this.userMembership = member;
+                  }
 
                   this.usersService.getUser(member.keyUserId).subscribe(user => {
                     member.userInfo = user;
