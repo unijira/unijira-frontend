@@ -85,13 +85,13 @@ export class DefOfDonePage implements OnInit {
           ),
           true
         ).then();
+        this.loadDefOfDone();
       }
     });
   }
 
   updateEntry(d: DefinitionOfDoneEntry) {
       this.projectService.updateDefOfDoneEntry(this.project.id, d.id, d).subscribe((r) => {
-        console.log(d);
         if(r === null || r.description !== d.description || r.priority !== d.priority) {
           this.loadDefOfDone();
         }
@@ -113,6 +113,7 @@ export class DefOfDonePage implements OnInit {
               ),
               true
             ).then();
+            this.loadDefOfDone();
           }
         });
       }
