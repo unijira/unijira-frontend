@@ -218,7 +218,7 @@ export class BacklogPage implements OnInit {
         const hints = JSON.parse(JSON.stringify(res));
         hints.forEach((hint) => {
           const item = this.sprint.insertions.find(
-            (i) => i.item.id === hint.id
+            (i) => hint.indexOf(i.item.id) > -1
           );
           if (item) {
             console.log('HINT:', item);
