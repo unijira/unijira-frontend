@@ -68,6 +68,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./discussions/discussions.module').then( m => m.DiscussionsPageModule)
   },
+  {
+    path: ':id/charts/burnup',
+    loadChildren: () => import('./charts/burnup/burnup.module').then( m => m.BurnupPageModule)
+  },
+
 
 ];
 
