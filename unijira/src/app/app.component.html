@@ -49,8 +49,24 @@
 
         <ion-list id="inbox-list">
 
-          <ion-list-header>{{project?.name}}</ion-list-header>
-          <ion-note>{{project?.key}}</ion-note>
+          <ion-item *ngIf="project" [routerLink]="['/projects', project.id]">
+            <ion-avatar class="nav-icon ion-margin-end" [title]="project.name">
+              <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" alt=""></ion-img>
+            </ion-avatar>
+            <ion-label>
+              <br>
+              <h2>
+                <ion-text>
+                  {{ project.name || 'app.project.default' | translate }}
+                </ion-text>
+              </h2>
+              <p>{{ project.key || '' }}</p>
+              <br>
+            </ion-label>
+          </ion-item>
+
+          <br>
+
 
           <div *ngIf="this.router.url.includes('settings') || this.router.url.includes('charts')">
           <ion-menu-toggle auto-hide="false">

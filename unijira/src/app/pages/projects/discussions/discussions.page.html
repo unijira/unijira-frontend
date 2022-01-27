@@ -37,10 +37,10 @@
 
   <section class="ion-margin" [formGroup]="formGroup">
     <ion-row>
-      <ion-col size="6">
+      <ion-col size-lg="6" size="12">
         <ion-searchbar [placeholder]="'board.searchText' | translate" formControlName="search"></ion-searchbar>
       </ion-col>
-      <ion-col size="6">
+      <ion-col size-lg="6" size="12">
         <ion-item lines="none">
           <ion-label position="floating" translate>board.type</ion-label>
           <ion-select placeholder="{{'board.select' | translate}}" multiple interface="popover" formControlName="types">
@@ -67,7 +67,7 @@
               </strong>
             </ion-text>
           </ion-col>
-          <ion-col size="7">
+          <ion-col size="6">
             <ion-text color="medium">
               <strong>
                 <ion-label translate>discussions.title</ion-label>
@@ -81,7 +81,7 @@
               </strong>
             </ion-text>
           </ion-col>
-          <ion-col size="1" class="ion-text-center">
+          <ion-col size="2" class="ion-text-center">
             <ion-text color="medium">
               <strong>
                 <ion-label translate>discussions.date</ion-label>
@@ -113,17 +113,17 @@
                 <strong>#{{ topic.id }}</strong>
               </ion-text>
             </ion-col>
-            <ion-col size="7">
+            <ion-col size="6">
               <ion-text>
                 <span [innerHTML]="topic.title | filtered:searchFC.value | truncate:128"></span>
               </ion-text>
             </ion-col>
             <ion-col size="1">
-              <ion-avatar class="avatar-center row-icon" [title]="topic.userUsername || ''">
-                <ion-img [src]="topic.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-              </ion-avatar>
+                <ion-avatar class="avatar-center row-icon user-avatar" [title]="topic.userUsername || ''" [routerLink]="['/users', topic.userId]">
+                  <ion-img [src]="topic.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                </ion-avatar>
             </ion-col>
-            <ion-col size="1" class="ion-text-center">
+            <ion-col size="2" class="ion-text-center">
               <ion-text>
                 <span>{{ topic.createdAt | time | async }}</span>
               </ion-text>
