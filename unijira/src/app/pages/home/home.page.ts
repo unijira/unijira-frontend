@@ -65,7 +65,7 @@ export class HomePage implements OnInit {
     this.sessionService.getUserInfo().subscribe(user => {
       if(user.status === UserStatus.requireConfirm) {
         this.toastController.create({
-          message: this.translateService.instant('user.home.confirm'),
+          message: this.translateService.instant('backlog.server.hints.warning'),
           duration: 3000,
           position: 'top',
           color: 'warning',

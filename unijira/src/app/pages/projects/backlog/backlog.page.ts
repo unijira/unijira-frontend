@@ -29,7 +29,8 @@ import { NewItemComponent } from './modals/new-item/new-item.component';
 import { SessionService } from 'src/app/store/session.service';
 import { PageService } from '../../../services/page.service';
 import { ItemType } from 'src/app/models/item/ItemType';
-
+import { TranslateService } from '@ngx-translate/core';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -103,7 +104,9 @@ export class BacklogPage implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private pageService: PageService,
-    private introService: IntrojsService
+    private introService: IntrojsService,
+    private toastController: ToastController,
+    private translate: TranslateService
   ) {
     this.filterTypeS = [
       ItemType.epic,
@@ -229,10 +232,22 @@ export class BacklogPage implements OnInit {
             });
           }
         });
+
         setTimeout(() => {
           this.introService.show(this.introJsOpts);
         }, 2000);
       });
+
+
+      if (this.introJsOpts.steps.length === 0) {
+        this.toastController.create({
+          message: this.translate.instant('backlog.server.hints.warning'),
+          duration: 3000,
+          position: 'top',
+          color: 'warning',
+          icon: 'warning'
+        }).then(toast => toast.present());
+      }
   }
 
   logAccordionValue() {
