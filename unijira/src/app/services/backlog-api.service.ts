@@ -208,9 +208,9 @@ export class BacklogAPIService {
     this.sessionService.getUserInfo().subscribe((user) => {
       userInfo = user;
     });
-    // const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/user/${userInfo.id}/hints`;
-    // return this.httpService.get<any>(url);
-    const url = `/assets/mock/hints.json`;
-    return this.http.get(url);
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/user/${userInfo.id}/hints`;
+    return this.httpService.get<any>(url);
+    //const url = `/assets/mock/hints.json`;
+    //return this.http.get(url);
   }
 }
