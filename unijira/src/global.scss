@@ -111,3 +111,7 @@ ion-content:not(.popover-wrapper) {
 .user-avatar:hover {
   transform: scale(1.2);
 }
+
+.unauthorized {
+  cursor: not-allowed !important;
+}

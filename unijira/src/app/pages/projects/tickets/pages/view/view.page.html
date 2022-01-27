@@ -28,14 +28,14 @@
             </h1>
           </ion-text>
         </ion-col>
-        <ion-col size-lg="auto" size="12" class="ion-text-end">
-          <ion-button color="danger" expand="full" (click)="remove()" [disabled]="!ticket">
+        <ion-col size-lg="auto" size="12" class="ion-text-end" [ngClass]="{unauthorized}">
+          <ion-button color="danger" expand="full" (click)="remove()" [disabled]="!ticket || unauthorized">
             <ion-icon slot="start" name="trash"></ion-icon>
             <ion-text [translate]="'projects.tickets.view.delete'"></ion-text>
           </ion-button>
         </ion-col>
-        <ion-col size-lg="auto" size="12" class="ion-text-end">
-          <ion-button color="primary" expand="full" (click)="save()" [disabled]="!dirty || !ticket || !ticket?.summary">
+        <ion-col size-lg="auto" size="12" class="ion-text-end" [ngClass]="{unauthorized}">
+          <ion-button color="primary" expand="full" (click)="save()" [disabled]="!dirty || !ticket || !ticket?.summary || unauthorized">
             <ion-icon slot="start" name="save"></ion-icon>
             <ion-text [translate]="'projects.tickets.view.save'"></ion-text>
           </ion-button>

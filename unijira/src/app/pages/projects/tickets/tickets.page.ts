@@ -8,6 +8,8 @@ import {TicketDataTableComponent} from './components/ticket-data-table/ticket-da
 import {ItemType} from '../../../models/item/ItemType';
 import {AlertController, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
+import {ProjectService} from '../../../services/project/project.service';
+import {MembershipPermission} from '../../../models/projects/MembershipPermission';
 
 @Component({
   selector: 'app-tickets',
@@ -20,6 +22,7 @@ export class TicketsPage implements OnInit {
 
   tickets: Item[] = null;
   projectId: number = null;
+  unauthorized = true;
 
   ticketType = ItemType;
 
@@ -28,6 +31,7 @@ export class TicketsPage implements OnInit {
     private ticketService: TicketService,
     private pageService: PageService,
     private sessionService: SessionService,
+    private projectService: ProjectService,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
     private translateService: TranslateService,
@@ -52,6 +56,12 @@ export class TicketsPage implements OnInit {
 
         this.ticketService.getTickets(this.projectId).subscribe(tickets => {
           this.tickets = tickets;
+        });
+
+        this.sessionService.getUserInfo().subscribe(user => {
+          this.projectService.verifyPermission(this.projectId, user.id, MembershipPermission.ticket).subscribe(permission => {
+            this.unauthorized = !permission;
+          });
         });
 
       });

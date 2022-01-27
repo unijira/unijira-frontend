@@ -19,6 +19,7 @@ import {catchError, of} from 'rxjs';
 import {EvaluationProposal} from '../../../../../models/item/EvaluationProposal';
 import {AccountService} from '../../../../../services/account.service';
 import {UserInfo} from '../../../../../models/users/UserInfo';
+import {MembershipPermission} from '../../../../../models/projects/MembershipPermission';
 
 @Component({
   selector: 'app-view',
@@ -33,6 +34,7 @@ export class ViewPage implements OnInit {
 
   ticket: Item = null;
   initialTicket: string;
+  unauthorized = true;
   memberships: Membership[];
   releases: Release[];
   propose: EvaluationProposal;
@@ -87,7 +89,7 @@ export class ViewPage implements OnInit {
 
         this.ticketService.getProposals(this.projectId, params.ticket).subscribe(proposals => {
           this.proposals = proposals.reverse();
-          this.accountService.me().subscribe(me => {
+          this.sessionService.getUserInfo().subscribe(me => {
             this.me = me;
             this.propose = new EvaluationProposal(this.ticket.id, this.me.id, 1, '');
           });
@@ -103,6 +105,12 @@ export class ViewPage implements OnInit {
       this.projectService.getMemberships(this.projectId).subscribe(memberships => {
         this.memberships = memberships
           .filter(i => i.status === MembershipStatus.enabled);
+      });
+
+      this.sessionService.getUserInfo().subscribe(user => {
+        this.projectService.verifyPermission(this.projectId, user.id, MembershipPermission.ticket).subscribe(permission => {
+          this.unauthorized = !permission;
+        });
       });
 
     });
