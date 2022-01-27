@@ -33,12 +33,23 @@
 
             <!-- Add Members -->
             <ion-col>
-              <ion-row class="ion-justify-content-end">
-                <ion-button id="invite-members" (click)="open()">
-                  <ion-icon slot="start" name="people-outline"></ion-icon>
-                  <span [translate]="'project.settings.invitations.add'"></span>
-                </ion-button>
-              </ion-row>
+                <ion-row class="ion-justify-content-end">
+
+                  <span *ngIf="!userMembership?.permissions?.includes(membershipPermission.invitations)" class="not-allowed">
+                    <ion-button disabled="true" (click)="open()">
+                      <ion-icon slot="start" name="people-outline"></ion-icon>
+                      <span [translate]="'project.settings.invitations.add'"></span>
+                    </ion-button>
+                  </span>
+
+                  <span *ngIf="userMembership?.permissions?.includes(membershipPermission.invitations)">
+                    <ion-button id="invite-members" (click)="open()">
+                      <ion-icon slot="start" name="people-outline"></ion-icon>
+                      <span [translate]="'project.settings.invitations.add'"></span>
+                    </ion-button>
+                  </span>
+
+                </ion-row>
             </ion-col>
 
           </ion-row>
@@ -178,14 +189,16 @@
 
             <ion-list-header>
 
-                <ion-col>
+                <ion-col size="4">
                   <ion-label [translate]="'project.settings.invitations.mail'"></ion-label>
                 </ion-col>
-                <ion-col>
+                <ion-col class="ion-text-center" size="4">
                   <ion-label [translate]="'project.settings.invitations.date'"></ion-label>
                 </ion-col>
-                <ion-col size="auto">
-                  <ion-label [translate]="'project.settings.invitations.status'"></ion-label>
+                <ion-col size="4">
+                  <ion-row class="ion-justify-content-end ion-padding ion-margin">
+                    <ion-label [translate]="'project.settings.invitations.status'"></ion-label>
+                  </ion-row>
                 </ion-col>
 
             </ion-list-header>
@@ -195,35 +208,73 @@
               <ion-item *ngFor="let membership of filteredMemberships">
 
 
-                <!-- Profile Image -->
-                <div *ngIf="membership?.userInfo">
-                  <ion-col class="ion-padding">
-                    <ion-avatar class="row-icon">
-                      <ion-img [src]="membership?.userInfo.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-                    </ion-avatar>
-                  </ion-col>
-                </div>
+                <ion-col size="4" class="ion-text-center">
+                  <ion-row class="ion-align-items-center">
 
-                <!-- Profile Mail -->
-                <ion-label class="ion-padding" *ngIf="membership?.userInfo">
-                  <h2 [innerHTML]="membership.userInfo.username | filtered:searchTerm"></h2>
-                </ion-label>
+                    <!-- Profile Image -->
+                    <div *ngIf="membership?.userInfo">
+                      <ion-col class="ion-padding">
+                        <ion-avatar class="row-icon">
+                          <ion-img [src]="membership?.userInfo.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                        </ion-avatar>
+                      </ion-col>
+                    </div>
+
+                    <div>
+                      <!-- Profile Mail -->
+                      <ion-label class="ion-padding" *ngIf="membership?.userInfo">
+                        <h2 [innerHTML]="membership.userInfo.username | filtered:searchTerm"></h2>
+                      </ion-label>
+                    </div>
+
+                  </ion-row>
+                </ion-col>
 
                 <!-- Profile Update -->
-                <ion-label *ngIf="membership?.userInfo">
-                  <p>{{ membership.userInfo.updatedAt | time | async }}</p>
-                </ion-label>
+                <ion-col size="4" class="ion-text-center ion-align-items-center">
+
+                  <ion-label *ngIf="membership?.userInfo">
+                    <p>
+                      {{ membership.userInfo.updatedAt | time | async }}
+                    </p>
+                  </ion-label>
+
+                </ion-col>
 
                 <ion-label *ngIf="membership?.userInfo === undefined">
                   <ion-skeleton-text animated></ion-skeleton-text>
                 </ion-label>
 
-                <!-- Profile Status -->
-                <ion-badge *ngIf="membership?.status === MembershipStatus.enabled" slot="end" color="success">{{ 'project.settings.invitations.enabled' | translate }}</ion-badge>
-                <ion-badge *ngIf="membership?.status === MembershipStatus.disabled" slot="end" color="danger">{{ 'project.settings.invitations.disabled' | translate }}</ion-badge>
-                <ion-badge *ngIf="membership?.status === MembershipStatus.pending" slot="end" color="medium">{{ 'project.settings.invitations.pending' | translate }}</ion-badge>
+                <ion-col size="4">
+                  <ion-row class="ion-justify-content-end">
+
+                    <!-- Invite Again -->
+                    <ion-item class="ion-no-margin ion-no-padding" lines="none">
+                      <ion-icon *ngIf="membership?.status !== MembershipStatus.enabled && userMembership?.permissions?.includes(membershipPermission.invitations)"
+                                (click)="inviteAgain(membership?.userInfo.username)"
+                                name="mail-outline" class="send-icon">
+                      </ion-icon>
+                    </ion-item>
+
+                    <!-- Remove User -->
+                    <ion-item class="ion-no-margin ion-no-padding" lines="none">
+                      <ion-icon *ngIf="membership?.userInfo?.id !== project?.ownerId && userMembership?.permissions?.includes(membershipPermission.admin)"
+                                (click)="removeUser(membership)" name="trash-outline" class="delete-icon" >
+                      </ion-icon>
+                    </ion-item>
+
+                    <!-- Profile Status -->
+                    <ion-item class="ion-no-margin ion-no-padding" lines="none">
+                      <ion-badge *ngIf="membership?.status === MembershipStatus.enabled" color="success">{{ 'project.settings.invitations.enabled' | translate }}</ion-badge>
+                      <ion-badge *ngIf="membership?.status === MembershipStatus.disabled" color="danger">{{ 'project.settings.invitations.disabled' | translate }}</ion-badge>
+                      <ion-badge *ngIf="membership?.status === MembershipStatus.pending" color="medium">{{ 'project.settings.invitations.pending' | translate }}</ion-badge>
+                    </ion-item>
+
+                  </ion-row>
+                </ion-col>
 
               </ion-item>
+
             </ion-list>
 
 

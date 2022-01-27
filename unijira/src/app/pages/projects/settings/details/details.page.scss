@@ -21,3 +21,8 @@
 ion-input {
   width: 240px;
 }
+
+.not-allowed {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}
