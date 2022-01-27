@@ -34,6 +34,16 @@
         </ion-col>
         <ion-col size="1" class="ion-align-self-end">
           <ion-button
+            (click)="showSuggestions()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.hints'"
+          >
+          </ion-button>
+          </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button
             (click)="saveToAPI()"
             expand="block"
             color="primary"

@@ -423,7 +423,6 @@ export class BacklogPage implements OnInit {
             const tmpB = _.cloneDeep(that.backlog);
             this.backlogServer = _.cloneDeep(that.backlog);
             this.countElementsB();
-            this.showSuggestions();
             that.store.dispatch(
               TaskActions.setBacklogAction({ backlog: tmpB })
             );

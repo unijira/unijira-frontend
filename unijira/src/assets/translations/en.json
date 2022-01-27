@@ -154,6 +154,7 @@
   "backlog.server.additem": "Add item",
   "backlog.pages.backlog": "Backlog",
   "backlog.page.title": "Backlog",
+  "backlog.server.hints": "Hints",
   "project.settings.details.alert.update.title": "Are you sure you want to save?",
   "project.settings.details.alert.update.message.sure": "Project details will be changed.",
   "project.settings.details.toast.update.success": "The project details have been changed successfully.",
