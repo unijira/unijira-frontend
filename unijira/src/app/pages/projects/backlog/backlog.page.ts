@@ -169,6 +169,12 @@ export class BacklogPage implements OnInit {
   }
 
   ngOnInit() {
+    this.introJsOpts.steps = [
+      {
+        element: 'd',
+        intro: 'a',
+      },
+    ];
     const that = this;
     this.totalDones = 0;
     this.totalNonAvviatos = 0;
@@ -238,16 +244,17 @@ export class BacklogPage implements OnInit {
         }, 2000);
       });
 
-
-      if (this.introJsOpts.steps.length === 0) {
-        this.toastController.create({
+    if (this.introJsOpts.steps.length === 0) {
+      this.toastController
+        .create({
           message: this.translate.instant('backlog.server.hints.warning'),
-          duration: 3000,
+          duration: 500,
           position: 'top',
           color: 'warning',
-          icon: 'warning'
-        }).then(toast => toast.present());
-      }
+          icon: 'warning',
+        })
+        .then((toast) => toast.present());
+    }
   }
 
   logAccordionValue() {
