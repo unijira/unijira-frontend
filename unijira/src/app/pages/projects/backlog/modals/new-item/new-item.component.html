@@ -50,14 +50,16 @@
         </ion-item>
       </ion-col>
     </ion-row>
-
     <ion-row class="ion-align-items-center ion-justify-content-center">
       <ion-col size="2">
         <ion-text color="dark">Measure Unit</ion-text>
       </ion-col>
       <ion-col>
         <ion-item>
-          <ion-input [(ngModel)]="measureunit"></ion-input>
+          <ion-label>Measure Unit</ion-label>
+          <ion-select [(ngModel)]="measureunit" placeholder="Select One">
+            <ion-select-option [value]=t.value *ngFor="let t of measureUnitList">{{ t.name | translate}}</ion-select-option>
+          </ion-select>
         </ion-item>
       </ion-col>
     </ion-row>

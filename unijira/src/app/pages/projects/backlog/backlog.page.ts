@@ -294,7 +294,11 @@ export class BacklogPage implements OnInit {
         bid: this.backlogId,
       },
     });
+    modal.onDidDismiss().then((dataReturned) => {
+      this.getFromApi();
+    });
     return await modal.present();
+
   }
 
   dismiss() {
@@ -603,6 +607,15 @@ export class BacklogPage implements OnInit {
       .subscribe((response) => {
         this.sprintId = response.id;
         this.getFromApi();
+        this.toastController.create({
+          message: this.translate.instant('backlog.server.sprint.created'),
+          duration: 500,
+          position: 'top',
+          color: 'success',
+          icon: 'checkmark-circle-outline',
+        }).then((toast) => {
+          toast.present();
+        });
       });
   }
 

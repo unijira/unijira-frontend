@@ -180,6 +180,11 @@
   "backlog.edit.status.done": "Completato",
   "backlog.edit.status.open": "Aperto",
   "backlog.edit.status.todo": "Da fare",
+"backlog.server.sprint.created": "Sprint creato",
+  "backlog.edit.measureUnit.storyPoints": "Story Points",
+  "backlog.edit.measureUnit.workingHours": "Ore lavorative",
+  "backlog.edit.measureUnit.workingDays": "Giorni lavorativi",
+
   "backlog.server.hints": "Hints",
   "backlog.server.hints.warning": "Attenzione: non hai nessun suggerimento!",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
