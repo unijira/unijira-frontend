@@ -1,0 +1,156 @@
+<ion-content>
+
+  <!-- Project Settings Details -->
+  <ion-row class="ion-justify-content-center ion-margin-vertical">
+    <ion-col size="auto">
+      <div class="container-main-inner">
+
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/home/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
+        <!-- Details Header -->
+        <ion-grid>
+
+          <br>
+
+          <ion-row>
+
+            <!-- Details Title -->
+            <ion-col>
+              <ion-text>
+                <h1 [translate]="'project.settings.details.title'"></h1>
+              </ion-text>
+            </ion-col>
+
+            <!-- Details Delete -->
+            <ion-col>
+              <ion-row class="ion-justify-content-end">
+
+                <ion-fab vertical="right" horizontal="right">
+
+                  <ion-fab-button size="small">
+                    <ion-icon name="ellipsis-horizontal"></ion-icon>
+                  </ion-fab-button>
+
+                  <ion-fab-list side="end">
+                    <span *ngIf="!membership?.permissions?.includes(membershipPermission.details)" class="not-allowed">
+                      <ion-fab-button disabled="true" (click)="delete()">
+                        <ion-icon name="trash"></ion-icon>
+                      </ion-fab-button>
+                    </span>
+                    <span *ngIf="membership?.permissions?.includes(membershipPermission.details)">
+                      <ion-fab-button (click)="delete()">
+                        <ion-icon name="trash"></ion-icon>
+                      </ion-fab-button>
+                    </span>
+                  </ion-fab-list>
+
+                </ion-fab>
+
+              </ion-row>
+            </ion-col>
+
+          </ion-row>
+
+        </ion-grid>
+
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+        <ion-grid >
+
+          <!-- Project Icon -->
+          <ion-row class="ion-justify-content-center">
+
+            <div class="project-image">
+              <ion-img *ngIf="image === ''" [src]="project?.icon || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
+            </div>
+
+          </ion-row>
+
+          <br>
+
+          <!-- Project Icon Selection -->
+          <ion-row class="ion-justify-content-center">
+            <input
+              style="display: none"
+              type="file" (change)="onFileChanged($event)"
+              id="input"
+              #fileInput>
+            <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+            <div class="ion-align-self-center ion-padding-start">
+              <ion-button type="reset" *ngIf="image !== '' && !saved" color="light" (click)="image = ''; file = undefined; this.saved = false;" >
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- Project Name -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
+              <ion-input type="text" (ionChange)='onChangeTime($event.target.value)' [formControl]="nameForm"></ion-input>
+            </ion-item>
+            <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+          <br>
+          <br>
+
+          <!-- Project Key -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
+              <ion-input type="text" [formControl]="keyForm"></ion-input>
+            </ion-item>
+            <ion-icon class="project-settings-details-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- Save Details -->
+          <ion-row class="ion-justify-content-center">
+
+            <span *ngIf="!membership?.permissions?.includes(membershipPermission.details)" class="not-allowed">
+              <ion-button disabled="true" color="light" (click)="save()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>
+                <span [translate]="'project.settings.details.save'"></span>
+              </ion-button>
+            </span>
+
+            <span *ngIf="membership?.permissions?.includes(membershipPermission.details)">
+              <ion-button [disabled]="verifyChanges()" color="light" (click)="save()">
+                <ion-icon slot="start" name="save-outline"></ion-icon>
+                <span [translate]="'project.settings.details.save'"></span>
+              </ion-button>
+            </span>
+
+          </ion-row>
+
+        </ion-grid>
+
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

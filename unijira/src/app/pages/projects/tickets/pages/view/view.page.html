@@ -1,0 +1,274 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [routerLink]="['/projects', projectId || 0, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
+      <ion-breadcrumb>#{{ticket?.id || 0}}</ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="auto">
+          <ion-thumbnail class="row-icon">
+            <ion-img *ngIf="ticket" [src]="'/assets/img/tickets/' + ticket.type + '.svg'"></ion-img>
+          </ion-thumbnail>
+        </ion-col>
+        <ion-col size="12" size-lg="">
+          <ion-text *ngIf="ticket">
+            <h1 class="ion-no-margin">
+              {{ticket.summary}}
+            </h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="12" class="ion-text-end" [ngClass]="{unauthorized}">
+          <ion-button color="danger" expand="full" (click)="remove()" [disabled]="!ticket || unauthorized">
+            <ion-icon slot="start" name="trash"></ion-icon>
+            <ion-text [translate]="'projects.tickets.view.delete'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="12" class="ion-text-end" [ngClass]="{unauthorized}">
+          <ion-button color="primary" expand="full" (click)="save()" [disabled]="!dirty || !ticket || !ticket?.summary || unauthorized">
+            <ion-icon slot="start" name="save"></ion-icon>
+            <ion-text [translate]="'projects.tickets.view.save'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Ticket Details -->
+  <section class="ion-margin" *ngIf="ticket">
+    <ion-grid>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating">{{'projects.tickets.view.summary' | translate}}*</ion-label>
+            <ion-input  [placeholder]="'projects.tickets.view.summary.placeholder' | translate" [(ngModel)]="ticket.summary" maxlength="255"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.status'"></ion-label>
+            <ion-select [(ngModel)]="ticket.status" [placeholder]="'projects.tickets.view.status.placeholder' | translate" interface="popover" >
+              <ion-select-option value="{{ticketStatus.open}}">{{ticketStatus.open | ticketStatus | translate}}</ion-select-option>
+              <ion-select-option value="{{ticketStatus.todo}}">{{ticketStatus.todo | ticketStatus | translate}}</ion-select-option>
+              <ion-select-option value="{{ticketStatus.done}}">{{ticketStatus.done | ticketStatus | translate}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item class="ion-align-items-end">
+            <ion-label position="floating" [translate]="'projects.tickets.view.evaluation'"></ion-label>
+            <ion-input type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation"></ion-input>
+            <ion-button id="btn-evaluation" fill="clear" slot="end" class="ion-no-margin ion-margin-vertical" (click)="toggle()"
+                        [popper]="(hint ? 'projects.tickets.view.evaluation.tooltip' : 'projects.tickets.view.evaluation.tooltip.nohint') | translate:{value: hint}"
+                        popperTrigger="hover"
+                        popperApplyClass="ion-text-nowrap">
+              <ion-icon slot="icon-only" name="bulb-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.measureUnit'"></ion-label>
+            <ion-select [(ngModel)]="ticket.measureUnit" [placeholder]="'projects.tickets.view.measureUnit.placeholder' | translate" interface="popover" >
+              <ion-select-option value="{{measureUnit.storyPoints}}">{{measureUnit.storyPoints | measureUnit | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{measureUnit.workingDays}}">{{measureUnit.workingDays | measureUnit | translate | titlecase}}</ion-select-option>
+              <ion-select-option value="{{measureUnit.workingHours}}">{{measureUnit.workingHours | measureUnit | translate | titlecase}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12" class="ion-no-padding">
+          <ion-accordion-group class="ion-no-margin" #evaluate>
+            <ion-accordion value="evaluations">
+              <ion-grid slot="content">
+                <ion-row class="ion-align-items-end">
+                  <ion-col size="12" size-lg="6">
+                    <ion-list *ngIf="proposals" class="proposals-container">
+                      <ion-item *ngFor="let p of proposals" [routerLink]="['/users', p.authorId]">
+                        <ion-avatar class="row-icon user-avatar ion-margin-horizontal" [title]="p.authorUsername">
+                          <ion-img [src]="p.authorAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                        </ion-avatar>
+                        <ion-label>
+                          <h2>
+                            <ion-text color="medium" *ngIf="!p.content">
+                              <i>{{ 'projects.tickets.view.evalutation.proposals.emptyNote' | translate }}</i>
+                            </ion-text>
+                            <ion-text *ngIf="p.content">
+                              {{ p.content }}
+                            </ion-text>
+                          </h2>
+                          <p>{{ p.createdAt | time | async }}</p>
+                        </ion-label>
+                        <ion-chip color="secondary" slot="end">
+                          <ion-label class="ion-padding-sm">
+                            {{ p.evaluation }}
+                          </ion-label>
+                        </ion-chip>
+                      </ion-item>
+                    </ion-list>
+                    <ion-text color="medium" *ngIf="!proposals || proposals?.length === 0">
+                      <p class="ion-text-center">
+                        <small><i>{{ 'projects.tickets.view.evalutation.proposals.empty' | translate }}</i></small>
+                      </p>
+                    </ion-text>
+                    <br>
+                    <ion-grid *ngIf="propose">
+                      <ion-row class="ion-align-items-end">
+                        <ion-col>
+                          <ion-item class="ion-align-items-end">
+                            <ion-label position="floating" [translate]="'projects.tickets.view.evaluation.propose.label'"></ion-label>
+                            <ion-input type="text" [(ngModel)]="propose.content" [placeholder]="'projects.tickets.view.evaluation.propose.placeholder' | translate" maxlength="255"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="3" size-lg="2">
+                          <ion-item class="ion-align-items-end">
+                            <ion-label position="floating" [translate]="'projects.tickets.view.evaluation.value.label'"></ion-label>
+                            <ion-input type="number" min="1" [(ngModel)]="propose.evaluation" [placeholder]="'projects.tickets.view.evaluation.value.placeholder' | translate"></ion-input>
+                          </ion-item>
+                        </ion-col>
+                        <ion-col size="auto">
+                          <ion-button fill="clear" (click)="createProposal()" [title]="'projects.tickets.view.evaluation.add.title' | translate" [disabled]="!propose.evaluation">
+                            <ion-icon slot="icon-only" name="add-circle-outline"></ion-icon>
+                          </ion-button>
+                        </ion-col>
+                      </ion-row>
+                    </ion-grid>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </ion-accordion>
+          </ion-accordion-group>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.tags'"></ion-label>
+            <ion-input [placeholder]="'projects.tickets.view.tags.placeholder' | translate" [(ngModel)]="ticket.tags"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.release'"></ion-label>
+            <ion-select [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" [disabled]="!releases || releases.length === 0" >
+              <ion-select-option *ngFor="let release of releases" [value]="release.id">{{release.version}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        <ion-col size="12">
+          <ion-item>
+            <ion-label position="floating" [translate]="'projects.tickets.view.description'"></ion-label>
+            <ion-textarea [(ngModel)]="ticket.description" [placeholder]="'projects.tickets.view.description.placeholder'" auto-grow="true" rows="4" maxlength="8192"></ion-textarea>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+
+  <!-- Ticket Assigners -->
+  <section class="ion-margin" *ngIf="ticket && memberships">
+    <ion-grid>
+      <ion-row>
+        <ion-col size="12">
+          <ion-text>
+            <h2 [translate]="'projects.tickets.view.assigners'"></h2>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+      <ion-row class="ion-align-items-start">
+        <ion-col size-lg="6" size="12">
+          <ion-label position="floating">
+            {{'projects.tickets.view.assignedTo' | translate:{value: ticket?.assignees?.length || 0} }}
+          </ion-label>
+          <app-input-select-user [memberships]="memberships" [multiple]="true" [(ngModel)]="ticket.assignees"></app-input-select-user>
+        </ion-col>
+        <ion-col size-lg="6" size="12">
+          <ion-label position="floating" [translate]="'projects.tickets.view.owner'"></ion-label>
+          <ion-item class="ion-margin-vertical" [routerLink]="['/users', ticket.owner.id]">
+            <ion-avatar class="owner-icon" slot="start">
+              <ion-img [src]="ticket?.owner?.avatar || 'assets/img/user/avatar.svg'" alt=""></ion-img>
+            </ion-avatar>
+            <section>
+              <div>
+                <ion-text>
+                  <span>{{ticket?.owner?.firstName || 'John'}} {{ticket?.owner?.lastName || 'Doe'}}</span>
+                </ion-text>
+              </div>
+              <div>
+                <ion-text color="medium">
+                  <small>{{ticket?.owner?.username}}</small>
+                </ion-text>
+              </div>
+            </section>
+            <ion-badge color="medium" class="ion-margin-end" slot="end">
+              <ion-label>{{ticket?.createdAt | date: 'dd/MM/YYYY'}}</ion-label>
+            </ion-badge>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+
+  <!-- Tickets Children -->
+  <section class="ion-margin" *ngIf="ticket">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'projects.tickets.view.children'"></h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="12">
+          <ion-button [id]="'createChildButton' + ticket.id" color="primary" expand="block" [disabled]="!ticket || !projectId">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-text [translate]="'projects.tickets.view.add'"></ion-text>
+          </ion-button>
+          <ion-popover [trigger]="'createChildButton' + ticket.id" dismiss-on-select="true" backdrop-dismiss="true" show-backdrop="false">
+            <ng-template>
+              <ion-list>
+                <ion-item button="true" (click)="create(ticketType.story)" *ngIf="ticket.type === ticketType.epic">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/STORY.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.story | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.task)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/TASK.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.task | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.issue)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/ISSUE.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.issue | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+              </ion-list>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+    <app-ticket-data-table [projectId]="projectId" [tickets]="ticket.sons || []"></app-ticket-data-table>
+  </section>
+
+
+</ion-content>

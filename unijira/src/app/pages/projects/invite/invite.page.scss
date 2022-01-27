@@ -1,0 +1,49 @@
+.project-invite-header-image {
+  height: 220px;
+}
+
+.project-invite-header-image img {
+  width: 100%;
+}
+
+.text {
+  color: lightslategray;
+}
+
+ion-content {
+  --padding-top: 10px!important;
+}
+
+ion-buttons ion-button {
+  --background: var(--ion-color-light);
+  --color: var(--ion-color-dark);
+}
+
+input.native-input {
+  -webkit-background-clip: text!important;
+}
+
+ion-chip {
+  pointer-events: none;
+}
+
+ion-item {
+  --background: var(--ion-background-color);
+}
+
+ion-list {
+  background: var(--ion-background-color);
+}
+
+.main-container {
+  min-height: 75vh;
+}
+
+ion-img {
+  max-width: 250px;
+  margin: auto;
+}
+
+ion-slide, form {
+  width: 100%;
+}

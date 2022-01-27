@@ -1,0 +1,474 @@
+<ion-content>
+  <ion-row>
+    <section class="ion-margin">
+      <ion-breadcrumbs>
+        <ion-breadcrumb routerLink="/">
+          <ion-icon name="home"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb
+          routerLink="/projects"
+          [translate]="'user.projects.title'"
+        ></ion-breadcrumb>
+        <ion-breadcrumb [translate]="'backlog.pages.backlog'"></ion-breadcrumb>
+      </ion-breadcrumbs>
+    </section>
+  </ion-row>
+
+  <div class="page">
+    <ion-grid>
+      <ion-row class="ion-align-items-center ion-justify-content-end">
+        <ion-col class="ion-align-self-start">
+          <ion-text color="dark">
+            <h4>Progetto {{projectId}}</h4>
+          </ion-text>
+        </ion-col>
+        <ion-col class="ion-align-self-end">
+          <!-- <ion-button
+            (click)="getFromApi()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.get'"
+          >
+          </ion-button> -->
+        </ion-col>
+        <ion-col size="1" class="ion-align-self-end">
+          <ion-button
+            (click)="saveToAPI()"
+            expand="block"
+            color="primary"
+            class="add-task-button"
+            [translate]="'backlog.server.save'"
+          >
+          </ion-button>
+        </ion-col>
+      </ion-row>
+
+      <!-- /ion-row PROGETTO-->
+      <ion-accordion-group>
+        <ion-accordion
+          value="sprintsss"
+          toggle-icon="arrow-down-circle"
+          expanded
+        >
+          <ion-row
+            class="ion-align-items-center ion-justify-content-start"
+            slot="header"
+          >
+            <ion-col class="ion-align-self-center">
+              <ion-text color="dark">
+                <p>
+                  Sprint {{ sprintId }}
+                  <ion-text *ngIf="sprintIsStarted" color="primary">
+                      {{formatDate(this.startSprintDate)}} - {{formatDate(this.endSprintDate)}}
+
+                  </ion-text>
+                  <ion-text color="primary">
+                    ({{this.sprint?.insertions?.length}} tickets)</ion-text
+                  >
+                </p>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.search.label'"></small>
+              </ion-text>
+              <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchS"></ion-searchbar>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.status.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterStatusS" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.type.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterTypeS" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemType.epic"> {{ itemType.epic  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.story">{{ itemType.story | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.task"> {{ itemType.task  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.issue">{{ itemType.issue | ticketType | translate | titlecase }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="light">{{ totalNonAvviatos }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="primary">{{ totalOpens }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="success">{{ totalDones }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-button
+                color="light"
+                *ngIf="sprintIsStarted"
+                (click)="stopSprint()"
+              >
+                Stop Sprint
+              </ion-button>
+              <ion-button
+                color="light"
+                id="open-modal"
+                *ngIf="!sprintIsStarted"
+              >
+                Avvia Sprint
+              </ion-button>
+              <ion-modal trigger="open-modal">
+                <ng-template>
+                  <ion-content>
+                    <ion-datetime
+                      min="2022"
+                      presentation="date"
+                      showDefaultButtons
+                      (ionChange)="avviaSprint($event)"
+                    ></ion-datetime>
+                  </ion-content>
+                </ng-template>
+              </ion-modal>
+            </ion-col>
+
+            <ion-col size="2" class="ion-align-self-end">
+              <app-sprintlist
+                [projectId]="projectId"
+                [backlogId]="backlogId"
+                (sprintSelected)="changeSprint($event)"
+              ></app-sprintlist>
+            </ion-col>
+          </ion-row>
+          <!-- /ion-row SPRINT Titolo-->
+          <ion-row slot="content" class="ion-no-padding ion-no-margin">
+            <ion-col>
+              <div class="sprint">
+                <div *ngIf="!sprint || !sprint.insertions">
+                  <p [translate]="'backlog.sprint.empty'">Sprint vuoto</p>
+                </div>
+                <div *ngIf="sprint && sprint.insertions">
+                  <ion-list
+                    dragula="bag"
+                    [(dragulaModel)]="sprint.insertions"
+                    lines="none"
+                    class="light-gray-bg"
+                  >
+                    <ion-row
+                      *ngFor="let insertion of filteredTicketsS"
+                      class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
+                    >
+                      <ion-col>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-img
+                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                            ></ion-img>
+                          </ion-avatar>
+                          <span class="task-name">
+                            {{ insertion.item.summary }}
+                          </span>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col
+                        class="ion-justify-content-end ion-align-self-center"
+                      >
+                      <ion-item>
+
+                        <div *ngIf="insertion.item.father">
+                          <fa-icon
+                          [icon]="['fas', 'network-wired']"
+                          class="childicon"
+                          >
+                        </fa-icon>
+                      </div>
+                    </ion-item>
+                      </ion-col>
+                      <ion-col
+                        size="auto"
+                        class="ion-align-self-center"
+                        *ngIf="insertion.item.sons.length > 0"
+                      >
+                        <ion-button color="light">
+                          <fa-icon [icon]="['fas', 'network-wired']"></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <div
+                          (click)="editPesoPopover($event, insertion, 'sprint')"
+                        >
+                          <ion-badge
+                            class="weight-badge"
+                            color="light"
+                            (save)="editWeight($event, insertion, 'backlog')"
+                          >
+                            <span>{{ insertion.item.evaluation }}</span>
+                          </ion-badge>
+                        </div>
+                      </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <div
+                          (click)="editStatusPopover($event, insertion, 'sprint')"
+                        >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'OPEN' "
+                            color="primary"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+                          <ion-badge
+                            *ngIf="insertion.item.status === 'DONE' "
+                            color="success"
+                            class="status-badge"
+                            >{{ insertion.item.status }}</ion-badge
+                          >
+
+                          <ion-badge
+                          *ngIf="insertion.item.status === 'TODO' "
+                          color="light"
+                          class="status-badge"
+                          >{{ insertion.item.status }}</ion-badge
+                        >
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <ion-thumbnail
+
+                          class="avatar"
+                          *ngIf="insertion.item.assignees?.length > 0"
+                        >
+                          <img
+                            class="avatar-img"
+                            [src]="insertion.item.assignees[0].assignee.avatar"
+                          />
+                        </ion-thumbnail>
+                      </ion-col>
+
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <ion-button
+                          class="action-btn"
+                          size="small"
+                          color="light"
+                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis-h']"
+                            class="childicon"
+                          ></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-list>
+                </div>
+              </div>
+            </ion-col>
+          </ion-row>
+        </ion-accordion>
+      </ion-accordion-group>
+      <!-- /ion-row SPRINT BOARD-->
+
+      <ion-accordion-group>
+        <ion-accordion value="backlogssss" toggle-icon="arrow-down-circle">
+          <ion-row slot="header">
+            <ion-col class="ion-align-items-center ion-justify-content-end">
+              <ion-text color="dark">
+                <p>
+                  Backlog {{ backlogId }}
+                  <ion-text color="primary">
+                    ({{this.backlog?.insertions?.length}} tickets)</ion-text
+                  >
+                </p>
+              </ion-text>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.search.label'"></small>
+              </ion-text>
+              <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchB"></ion-searchbar>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.status.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterStatusB" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col>
+              <ion-text color="medium" class="ion-margin">
+                <small [translate]="'projects.tickets.type.label'"></small>
+              </ion-text>
+              <ion-item>
+                <ion-select [(ngModel)]="filterTypeB" [placeholder]="'projects.tickets.type.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+                  <ion-select-option [value]="itemType.epic"> {{ itemType.epic  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.story">{{ itemType.story | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.task"> {{ itemType.task  | ticketType | translate | titlecase }}</ion-select-option>
+                  <ion-select-option [value]="itemType.issue">{{ itemType.issue | ticketType | translate | titlecase }}</ion-select-option>
+                </ion-select>
+              </ion-item>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center"> </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="light">{{ totalNonAvviatob }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="primary">{{ totalOpenb }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-badge color="success">{{ totalDoneb }}</ion-badge>
+            </ion-col>
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-button (click)="createSprint()" color="light">
+                Crea Sprint
+              </ion-button>
+            </ion-col>
+          </ion-row>
+          <ion-row slot="content">
+            <ion-col>
+              <div class="backlog">
+                <div *ngIf="!backlog || !backlog.insertions">
+                  <p [translate]="'backlog.empty'"></p>
+                </div>
+                <div *ngIf="backlog && backlog.insertions">
+                  <ion-list
+                    dragula="bag"
+                    lines="none"
+                    class="light-gray-bg"
+                    [(dragulaModel)]="backlog.insertions"
+                  >
+                    <ion-row
+                      *ngFor="let insertion of filteredTicketsB"
+                      class="ion-align-items-end ion-justify-content-center task-item white-bg"
+                    >
+                      <ion-col>
+                        <ion-item>
+                          <ion-avatar slot="start">
+                            <ion-img
+                              [src]="'assets/img/tickets/' + (insertion.item.type.toLowerCase()) + '.svg'"
+                            ></ion-img>
+                          </ion-avatar>
+                          <span class="task-name">
+                            {{ insertion.item.summary }}
+                          </span>
+                        </ion-item>
+                      </ion-col>
+
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <div *ngIf="insertion.item.father">
+                          <fa-icon
+                            [icon]="['fas', 'network-wired']"
+                            class="childicon"
+                          >
+                          </fa-icon>
+                        </div>
+                      </ion-col>
+                      <ion-col
+                        size="auto"
+                        class="ion-align-self-center"
+                        *ngIf="insertion.item.sons.length > 0"
+                      >
+                        <ion-button color="light" size="small">
+                          <fa-icon [icon]="['fas', 'network-wired']"></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <div
+                          (click)="editPesoPopover($event, insertion, 'backlog')"
+                        >
+                          <ion-badge
+                            class="weight-badge"
+                            color="light"
+                            (save)="editWeight($event, insertion, 'backlog')"
+                          >
+                            <span>{{ insertion.item.evaluation }}</span>
+                          </ion-badge>
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <div
+                          (click)="editStatusPopover($event, insertion, 'backlog')"
+                        >
+                        <ion-badge
+                        *ngIf="insertion.item.status === 'OPEN' "
+                        color="primary"
+                        class="status-badge"
+                        >{{ insertion.item.status }}</ion-badge
+                      >
+                      <ion-badge
+                        *ngIf="insertion.item.status === 'DONE' "
+                        color="success"
+                        class="status-badge"
+                        >{{ insertion.item.status }}</ion-badge
+                      >
+
+                      <ion-badge
+                      *ngIf="insertion.item.status === 'TODO' "
+                      color="light"
+                      class="status-badge"
+                      >{{ insertion.item.status }}</ion-badge
+                    >
+                        </div>
+                      </ion-col>
+
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <ion-thumbnail
+                          class="avatar"
+                          *ngIf="insertion.item.assignees?.length > 0"
+                        >
+                          <img
+                            class="avatar-img"
+                            [src]="insertion.item.assignees[0].assignee.avatar"
+                          />
+                        </ion-thumbnail>
+                      </ion-col>
+                      <ion-col size="auto" class="ion-align-self-center">
+                        <ion-button
+                          class="action-btn"
+                          size="small"
+                          color="light"
+                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
+                        >
+                          <fa-icon
+                            [icon]="['fas', 'ellipsis-h']"
+                            class="childicon"
+                          ></fa-icon>
+                        </ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-list>
+                </div>
+                <!-- backlog.insertions -->
+              </div>
+              <!-- backlog -->
+            </ion-col>
+          </ion-row>
+        </ion-accordion>
+      </ion-accordion-group>
+      <ion-row>
+        <ion-col>
+          <ion-button
+            (click)="newItemModal()"
+            expand="block"
+            color="light"
+            class="add-task-button"
+            [translate]="'backlog.server.additem'"
+          >
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </div>
+
+  <!-- page -->
+</ion-content>

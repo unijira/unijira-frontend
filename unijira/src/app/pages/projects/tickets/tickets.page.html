@@ -1,0 +1,74 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'projects.tickets.title'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin" *ngIf="ticketDataTable">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'projects.tickets.title'"></h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="!filteredTickets || filteredTickets?.length === 0">
+            <ion-icon slot="start" name="create"></ion-icon>
+            <ion-text [translate]="'projects.tickets.export'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="6" [ngClass]="{unauthorized}">
+          <ion-button id="createButton" color="primary" expand="block" [disabled]="!projectId || unauthorized">
+            <ion-icon slot="start" name="add"></ion-icon>
+            <ion-text [translate]="'projects.tickets.add'"></ion-text>
+          </ion-button>
+          <ion-popover trigger="createButton" dismiss-on-select="true" backdrop-dismiss="true" show-backdrop="false">
+            <ng-template>
+              <ion-list>
+                <ion-item button="true" (click)="create(ticketType.epic)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/EPIC.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.epic | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.story)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/STORY.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.story | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.task)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/TASK.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.task | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+                <ion-item button="true" (click)="create(ticketType.issue)">
+                  <ion-thumbnail slot="start" class="row-icon">
+                    <ion-img src="/assets/img/tickets/ISSUE.svg"></ion-img>
+                  </ion-thumbnail>
+                  <ion-text [translate]="ticketType.issue | ticketType | translate | titlecase"></ion-text>
+                </ion-item>
+              </ion-list>
+            </ng-template>
+          </ion-popover>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Tickets -->
+  <section class="ion-margin">
+    <app-ticket-data-table #ticketDataTable [projectId]="projectId" [tickets]="tickets"></app-ticket-data-table>
+  </section>
+
+</ion-content>

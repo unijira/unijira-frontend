@@ -1,0 +1,207 @@
+<ion-content>
+
+  <ion-slides pager="false" class="swiper-no-swiping ion-margin-vertical" #wizardSlider>
+
+    <ion-slide>
+
+      <!-- Project Wizard Info -->
+      <div id="wizard-info">
+
+        <!-- Info Header -->
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h1 [translate]="'wizard.info.title'"></h1>
+            </ion-text>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h3 [translate]="'wizard.info.description'"></h3>
+            </ion-text>
+          </ion-row>
+        </ion-grid>
+
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+        <ion-grid >
+
+          <!-- Project Icon -->
+          <ion-row class="ion-justify-content-center">
+            <div class="project-image">
+              <ion-img *ngIf="image === ''" [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+              <ion-img *ngIf="image !== ''" [src]="image" class="ion-no-margin"></ion-img>
+            </div>
+          </ion-row>
+
+          <br>
+
+          <!-- Project Icon Selection -->
+          <ion-row class="ion-justify-content-center">
+            <input
+              style="display: none"
+              type="file" (change)="onFileChanged($event)"
+              id="input"
+              #fileInput>
+            <ion-button color="light" [translate]="'wizard.info.icon'" type='file' (click)="fileInput.click()"></ion-button>
+            <div class="ion-align-self-center ion-padding-start">
+              <ion-button type="reset" *ngIf="image !== ''" color="light" (click)="image = ''; file = undefined;" >
+                <ion-icon name="trash-outline"></ion-icon>
+              </ion-button>
+            </div>
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+          <!-- Project Name -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.name'"></ion-label>
+              <ion-input type="text" (ionChange)='onChangeTime($event.target.value)' [formControl]="nameForm"></ion-input>
+            </ion-item>
+            <ion-icon class="info-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+          <br>
+          <br>
+
+          <!-- Project Key -->
+          <ion-row class="ion-justify-content-center">
+            <ion-item lines="full">
+              <ion-label position="floating" [translate]="'wizard.info.key'"></ion-label>
+              <ion-input type="text" [formControl]="keyForm"></ion-input>
+            </ion-item>
+            <ion-icon class="info-icon ion-align-self-center ion-padding-start" name="help-circle"></ion-icon>
+          </ion-row>
+
+        </ion-grid>
+
+        <br>
+        <br>
+        <br>
+        <br>
+
+      </div>
+
+    </ion-slide>
+
+    <ion-slide>
+
+      <!-- Project Invite Page -->
+      <div id="wizard-invite">
+
+        <!-- Invite Header -->
+        <ion-grid>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h1 [translate]="'wizard.invite.title'"></h1>
+            </ion-text>
+          </ion-row>
+          <ion-row class="ion-justify-content-center">
+            <ion-text>
+              <h3 [translate]="'wizard.invite.description'"></h3>
+            </ion-text>
+          </ion-row>
+        </ion-grid>
+
+        <br>
+        <br>
+        <hr>
+        <br>
+        <br>
+
+        <ion-grid>
+
+          <!-- Invite Image -->
+          <ion-row class="ion-justify-content-center">
+            <img src="/assets/img/mail.webp" class="wizard-invite-header-image" alt="">
+          </ion-row>
+
+          <br>
+          <br>
+
+
+          <!-- Invite Member -->
+          <form (ngSubmit)="invite()">
+            <ion-row class="ion-justify-content-center">
+
+              <ion-item lines="full">
+                <ion-label position="floating" [translate]="'wizard.invite.mail'"></ion-label>
+                <ion-input id="mailForm" type="text" [formControl]="mailForm"></ion-input>
+              </ion-item>
+
+              <div class="ion-align-self-center ion-padding-start">
+                <ion-button [disabled]="this.mailForm.value === this.userInfo.username"
+                            type="submit" [translate]="'wizard.invite.add'" (click)="invite()" ></ion-button>
+              </div>
+
+              <div class="ion-align-self-center ion-padding-start">
+                <ion-button type="reset" *ngIf="invites.length > 0" color="light" (click)="invites = []" >
+                  <ion-icon name="trash-outline"></ion-icon>
+                </ion-button>
+              </div>
+
+            </ion-row>
+          </form>
+
+          <br>
+          <br>
+
+
+          <!-- All invitations -->
+
+          <ion-row class="ion-justify-content-center wizard-invite-mail">
+
+            <ion-chip *ngFor="let invite of invites">
+              <ion-icon name="mail-outline"></ion-icon>
+              <ion-label>{{invite}}</ion-label>
+              <ion-icon name="close-circle-outline" (click)="delete(invite)"></ion-icon>
+            </ion-chip>
+
+          </ion-row>
+
+          <br>
+          <br>
+          <br>
+          <br>
+
+        </ion-grid>
+
+      </div>
+    </ion-slide>
+
+  </ion-slides>
+
+  <ion-row class="ion-justify-content-center">
+
+    <ion-button *ngIf="index === 0" color="light"  [routerLink]="'/home'">
+      <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      <span [translate]="'wizard.back'"></span>
+    </ion-button>
+
+    <ion-button *ngIf="index === 1" color="light" (click)="this.wizardSlider.slideTo(0); index = 0">
+      <ion-icon slot="start" name="arrow-back-outline"></ion-icon>
+      <span [translate]="'wizard.back'"></span>
+    </ion-button>
+
+    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+    <ion-button *ngIf="index === 0" [disabled]="!validation()" color="light" (click)="updateProject()">
+      <span [translate]="'wizard.continue'"></span>
+      <ion-icon slot="end" name="arrow-forward-outline"></ion-icon>
+    </ion-button>
+
+    <ion-button *ngIf="index === 1" expand="block" color="light" (click)="updateProject()">
+      <span [translate]="'wizard.continue'"></span>
+      <ion-icon slot="end" name="arrow-forward-outline" ></ion-icon>
+    </ion-button>
+
+  </ion-row>
+
+</ion-content>

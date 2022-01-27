@@ -1,0 +1,28 @@
+
+.project-image {
+  width: 200px;
+  height: 200px;
+  border-radius: 50%;
+  overflow: hidden;
+  display: inline-block;
+  background-color: lightgray;
+  vertical-align: middle;
+}
+
+.project-image ion-img {
+  width: 100%;
+}
+
+.project-settings-details-icon {
+  color: #3880ff;
+  cursor: pointer;
+}
+
+ion-input {
+  width: 240px;
+}
+
+.not-allowed {
+  cursor: not-allowed !important;
+  pointer-events: all !important;
+}

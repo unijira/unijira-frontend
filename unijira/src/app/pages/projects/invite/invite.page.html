@@ -1,0 +1,124 @@
+<ion-content>
+
+  <ion-row class="ion-justify-content-end">
+    <ion-buttons class="ion-float-right ion-padding">
+      <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+      <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+      <ion-button class="ion-padding-horizontal" (click)="switchLanguage()" fill="solid">
+        <span>{{translateService.currentLang}}</span>
+      </ion-button>
+    </ion-buttons>
+  </ion-row>
+
+  <ion-slides pager="false" class="swiper-no-swiping ion-margin-vertical" #inviteSlider>
+
+    <ion-slide *ngIf="this.resetPassword === '1'">
+
+      <ion-grid>
+
+        <ion-row class="ion-justify-content-center ion-align-items-center ion-padding main-container">
+
+          <!-- Password Changer Header -->
+          <ion-col size="5" size-lg="auto">
+            <ion-img src="/assets/logo.webp" alt=""></ion-img>
+          </ion-col>
+
+          <ion-col size="10" size-lg="4" offset-lg="1">
+
+            <ion-row class="ion-text-start">
+              <h2>{{'invite.change.password.title' | translate}}</h2>
+              <span>{{'invite.change.password.subtitle' | translate}}</span>
+            </ion-row>
+
+            <br>
+            <br>
+
+            <!-- Password Changer Forms -->
+            <form [formGroup]="passwordFG">
+
+              <ion-item lines="full" class="ion-no-padding">
+                <ion-label position="floating">{{'register.password' | translate}}</ion-label>
+                <ion-input name="password" type="password" autocomplete="password" [formControl]="passwordFC1"></ion-input>
+              </ion-item>
+
+              <ion-item lines="full" class="ion-no-padding">
+                <ion-label position="floating">{{'register.password.confirm' | translate}}</ion-label>
+                <ion-input name="confirm-password" type="password" autocomplete="confirm-password" [formControl]="passwordFC2"></ion-input>
+              </ion-item>
+
+              <br/>
+
+              <!-- Password Changer Update -->
+              <ion-grid class="ion-align-items-baseline ion-no-padding">
+                <ion-row class="ion-align-items-center ion-justify-content-start">
+                  <ion-col size="auto" class="ion-margin-end ion-padding-end">
+                    <ion-button (click)="updatePassword()" color="primary" [disabled]="!this.passwordFG.valid">{{'register.finished' | translate}}</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+
+            </form>
+          </ion-col>
+
+        </ion-row>
+
+      </ion-grid>
+
+    </ion-slide>
+
+    <ion-slide>
+
+      <div class="project-invite">
+
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+
+        <!-- Project Invite Header -->
+        <ion-grid class="ion-padding">
+
+          <!-- Invite Image -->
+          <ion-row class="ion-justify-content-center">
+            <img src="/assets/img/mail.webp" class="project-invite-header-image" alt="">
+          </ion-row>
+
+          <br>
+          <br>
+
+          <ion-row class="ion-justify-content-center">
+            <h1 class="ion-color-medium" [translate]="'project.invite.title'"></h1>
+          </ion-row>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-col size="6">
+              <div class="text"><span class="ion-color-medium"><i>{{'project.invite.description' | translate}}</i></span></div>
+            </ion-col>
+          </ion-row>
+
+        </ion-grid>
+
+        <br>
+        <br>
+
+        <!-- Project Invite Content -->
+        <ion-grid>
+
+          <ion-row class="ion-justify-content-center">
+            <ion-button expand="block" color="success" (click)="accept()">
+              <span [translate]="'project.invite.accept'"></span>
+              <ion-icon slot="end" name="checkmark-outline" ></ion-icon>
+            </ion-button>
+          </ion-row>
+
+        </ion-grid>
+
+      </div>
+
+    </ion-slide>
+
+  </ion-slides>
+
+</ion-content>

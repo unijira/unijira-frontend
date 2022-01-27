@@ -1,0 +1,16 @@
+.infinte-width {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-scrolling: touch;
+}
+
+.infinte-width::-webkit-scrollbar {
+  display: none;
+}
+
+/* size-lg (ionic) */
+@media only screen and (min-width: 992px) {
+  .project-card {
+    max-width: 24rem;
+  }
+}

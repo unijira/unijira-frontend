@@ -2,7 +2,7 @@
  * App Global CSS
  * ----------------------------------------------------------------------------
  * Put style rules here that you want to apply globally. These styles are for
- * the entire app and not just one component. Additionally, this file can be
+ * the entire app and not just one components. Additionally, this file can be
  * used as an entry point to import other CSS/Sass files to be included in the
  * output CSS.
  * For more information on global stylesheets, visit the documentation:
@@ -16,7 +16,7 @@
 @import "~@ionic/angular/css/normalize.css";
 @import "~@ionic/angular/css/structure.css";
 @import "~@ionic/angular/css/typography.css";
-@import '~@ionic/angular/css/display.css';
+@import "~@ionic/angular/css/display.css";
 
 /* Optional CSS utils that can be commented out */
 @import "~@ionic/angular/css/padding.css";
@@ -24,3 +24,94 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+
+
+.loading-class {
+  --background: #222;
+  --spinner-color: #3880ff;
+  --background-opacity: 0.33;
+  //--height: 200px;
+  //--width: 200px;
+  color: #fff;
+}
+
+/*  Questi devono stare qui, altrimenti non se li piglia! No... non piace nemmeno a me */
+.backlog-edit-like-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-link-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-lock-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-share-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-status-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 140px;
+}
+
+.backlog-edit-submenu-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+.backlog-edit-visibility-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+
+.backlog-edit-weight-popover .popover-wrapper.sc-ion-popover-md {
+  --width: 80px;
+}
+/* end porcheria */
+
+
+.ion-padding-sm {
+  padding: 0.4rem;
+}
+
+
+
+mark {
+  background-color: rgba(252, 248, 227, 1);
+}
+
+.notifications-popover {
+  --min-width: 480px;
+}
+
+.container-main-inner {
+  width: auto;
+  max-width: 1280px;
+}
+
+@media only screen and (min-width: 1480px) {
+  .container-main-inner {
+    width: 1280px;
+  }
+}
+
+
+/* FIXME: Trovare un modo migliore per farlo funzionare */
+ion-content:not(.popover-wrapper) {
+  --padding-top: 70px !important;
+}
+
+.w-100 {
+  width: 100%;
+}
+
+.smooth {
+  transition: all 0.3s ease-in-out;
+}
+
+.user-avatar:hover {
+  transform: scale(1.2);
+}
+
+.unauthorized {
+  cursor: not-allowed !important;
+}

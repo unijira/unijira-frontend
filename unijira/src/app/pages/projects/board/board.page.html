@@ -1,0 +1,142 @@
+<ion-content [formGroup]="formGroup">
+  <ion-row>
+    <section class="ion-margin">
+      <ion-breadcrumbs>
+        <ion-breadcrumb routerLink="/">
+          <ion-icon name="home"></ion-icon>
+        </ion-breadcrumb>
+        <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+        <ion-breadcrumb [translate]="'project.pages.board'"></ion-breadcrumb>
+      </ion-breadcrumbs>
+    </section>
+  </ion-row>
+
+  <section class="ion-margin">
+    <ion-row class="ion-align-items-center">
+      <ion-col>
+        <ion-row>
+          <ion-text>
+            <h1 translate>project.pages.board</h1>
+          </ion-text>
+        </ion-row>
+        <ion-row *ngIf="sprint">
+          <ion-text>
+            <h6 class="sprint-date" translate
+                [translateParams]="{d1: sprint.startingDate.toLocaleDateString('it-IT'),
+                d2:sprint.endingDate.toLocaleDateString('it-IT')}">
+            board.sprintDate
+            </h6>
+          </ion-text>
+        </ion-row>
+      </ion-col>
+      <ion-col size-lg="auto" size="6" *ngIf="sprint">
+        <ion-button color="primary" (click)="0">
+          <ion-text translate>board.endSprint</ion-text>
+        </ion-button>
+      </ion-col>
+    </ion-row>
+  </section>
+    <section class="ion-margin">
+      <ion-row>
+        <ion-col size="3">
+          <ion-searchbar [placeholder]="'board.searchText' | translate" formControlName="search"></ion-searchbar>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="floating" translate>board.epic</ion-label>
+            <ion-select placeholder="{{'board.select' | translate}}" multiple interface="popover" formControlName="epics">
+              <ion-select-option *ngFor="let epic of epics" [value]="epic.id">{{epic.description}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="floating" translate>board.tag</ion-label>
+            <ion-select placeholder="{{'board.select' | translate}}" multiple interface="popover" formControlName="tags">
+              <ion-select-option *ngFor="let tag of tags" [value]="tag">{{tag}}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+        <ion-col size="3">
+          <ion-item lines="none">
+            <ion-label position="floating" translate>board.type</ion-label>
+            <ion-select placeholder="{{'board.select' | translate}}" multiple interface="popover" formControlName="types">
+              <ion-select-option [value]="itemType.story">{{ 'projects.tickets.type.story' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.task">{{ 'projects.tickets.type.task' | translate }}</ion-select-option>
+              <ion-select-option [value]="itemType.issue">{{ 'projects.tickets.type.issue' | translate }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </section>
+    <section class="ion-margin" *ngIf="sprint">
+      <ion-row>
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: storiesToShow.length}">board.storiesTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="storiesToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: toDoItemsToShow.length}">board.toDoTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="toDoItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: openedItemsToShow.length}">board.openedTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="openedItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+
+        <ion-col size="3">
+          <ion-card class="main-card">
+            <ion-card-header>
+              <ion-card-subtitle translate [translateParams]="{value: doneItemsToShow.length}">board.doneTickets</ion-card-subtitle>
+            </ion-card-header>
+            <ion-card-content class="scrollbars board-card-content">
+              <ion-list style="background-color: var(--ion-color-light)">
+                <app-board-card [itemsToShow]="doneItemsToShow" [searchedText]="searchFC.value"></app-board-card>
+              </ion-list>
+            </ion-card-content>
+          </ion-card>
+        </ion-col>
+      </ion-row>
+    </section>
+  <div *ngIf="!sprint">
+    <ion-row class="ion-justify-content-center">
+      <ion-img src="/assets/img/projects/board-no-sprint.webp" class="wizard-invite-header-image" alt="" style="height: 300px"></ion-img>
+    </ion-row>
+    <ion-row class="ion-justify-content-center">
+      <ion-col>
+        <ion-row class="ion-justify-content-center">
+          <ion-text translate>board.noSprintActive</ion-text>
+        </ion-row>
+        <ion-row class="ion-justify-content-center">
+          <ion-button *ngIf="project" color="primary" translate [routerLink]="'/projects/'+project.id+'/backlog'">board.startSprint</ion-button>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </div>
+</ion-content>
