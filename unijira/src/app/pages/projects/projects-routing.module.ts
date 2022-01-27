@@ -73,6 +73,12 @@ const routes: Routes = [
     loadChildren: () => import('./charts/burnup/burnup.module').then( m => m.BurnupPageModule)
   },
 
+  {
+    path: ':id/settings/defofdone',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./settings/defofdone/defofdone.module').then( m => m.DefOfDonePageModule)
+  },
+
 
 ];
 

@@ -1,32 +1,36 @@
-import {ItemStatus} from './../../../models/item/ItemStatus';
+import { ItemStatus } from './../../../models/item/ItemStatus';
 // import { monthsName } from './../util';
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {Sprint} from '../../../models/Sprint';
-import {DragulaService} from 'ng2-dragula';
-import {TaskService} from '../../../store/task.service';
+import { OnDestroy, Input, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Sprint } from '../../../models/Sprint';
+import { DragulaService } from 'ng2-dragula';
+import { TaskService } from '../../../store/task.service';
 import * as TaskActions from '../../../store/task.action';
-import {Store} from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import * as _ from 'lodash';
-import {forEach} from 'lodash';
-import {IonAccordionGroup, ModalController, PopoverController} from '@ionic/angular';
-import {BacklogAPIService} from '../../../services/backlog-api.service';
+import { forEach } from 'lodash';
 import {
-  BacklogEditWeightPopoversComponent
-} from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
-import {
-  BacklogEditStatusPopoversComponent
-} from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import {ActivatedRoute, ParamMap, Router} from '@angular/router';
-import {Backlog} from '../../../models/Backlog';
-import {BacklogInsertion} from '../../../models/BacklogInsertion';
-import {SprintInsertion} from '../../../models/SprintInsertion';
-import {SprintStatus} from '../../../models/SprintStatus';
+  IonAccordionGroup,
+  ModalController,
+  PopoverController,
+} from '@ionic/angular';
+import { BacklogAPIService } from '../../../services/backlog-api.service';
+import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
+import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
+import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { Backlog } from '../../../models/Backlog';
+import { BacklogInsertion } from '../../../models/BacklogInsertion';
+import { SprintInsertion } from '../../../models/SprintInsertion';
+import { SprintStatus } from '../../../models/SprintStatus';
 import * as Moment from 'moment';
-import {NewItemComponent} from './modals/new-item/new-item.component';
-import {SessionService} from 'src/app/store/session.service';
-import {PageService} from '../../../services/page.service';
-import {ItemType} from 'src/app/models/item/ItemType';
-
+import { IntrojsService } from 'src/app/services/introjs.service';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
+import { NewItemComponent } from './modals/new-item/new-item.component';
+import { SessionService } from 'src/app/store/session.service';
+import { PageService } from '../../../services/page.service';
+import { ItemType } from 'src/app/models/item/ItemType';
+import { TranslateService } from '@ngx-translate/core';
+import { ToastController } from '@ionic/angular';
 @Component({
   selector: 'app-backlog',
   templateUrl: './backlog.page.html',
@@ -85,6 +89,10 @@ export class BacklogPage implements OnInit {
 
   sprintInfo: any;
 
+  introJsOpts = {
+    steps: [],
+  };
+
   constructor(
     private dragulaService: DragulaService,
     private taskService: TaskService,
@@ -96,8 +104,10 @@ export class BacklogPage implements OnInit {
     private router: Router,
     private sessionService: SessionService,
     private pageService: PageService,
+    private introService: IntrojsService,
+    private toastController: ToastController,
+    private translate: TranslateService
   ) {
-
     this.filterTypeS = [
       ItemType.epic,
       ItemType.story,
@@ -109,7 +119,6 @@ export class BacklogPage implements OnInit {
 
     this.filterSearchS = '';
 
-
     this.filterTypeB = [
       ItemType.epic,
       ItemType.story,
@@ -120,7 +129,6 @@ export class BacklogPage implements OnInit {
     this.filterStatusB = [ItemStatus.open, ItemStatus.done];
     this.filterSearchB = '';
 
-
     this.route.params.subscribe((params) =>
       this.sessionService.loadProject(params.id)
     );
@@ -129,24 +137,44 @@ export class BacklogPage implements OnInit {
   }
 
   get filteredTicketsS() {
-    return this.sprint.insertions?.filter(ticket => (
-      (this.filterSearchS === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchS.toLowerCase())) &&
-      (this.filterStatusS?.length === 0  || this.filterStatusS?.includes(ticket.item.status)) &&
-      (this.filterTypeS?.length === 0    || this.filterTypeS?.includes(ticket.item.type))
-    )) || [];
+    return (
+      this.sprint.insertions?.filter(
+        (ticket) =>
+          (this.filterSearchS === '' ||
+            ticket.item.summary
+              ?.toLowerCase()
+              .includes(this.filterSearchS.toLowerCase())) &&
+          (this.filterStatusS?.length === 0 ||
+            this.filterStatusS?.includes(ticket.item.status)) &&
+          (this.filterTypeS?.length === 0 ||
+            this.filterTypeS?.includes(ticket.item.type))
+      ) || []
+    );
   }
 
   get filteredTicketsB() {
-    return this.backlog.insertions?.filter(ticket => (
-      (this.filterSearchB === ''         || ticket.item.summary?.toLowerCase().includes(this.filterSearchB.toLowerCase())) &&
-      (this.filterStatusB?.length === 0  || this.filterStatusB?.includes(ticket.item.status)) &&
-      (this.filterTypeB?.length === 0    || this.filterTypeB?.includes(ticket.item.type))
-    )) || [];
+    return (
+      this.backlog.insertions?.filter(
+        (ticket) =>
+          (this.filterSearchB === '' ||
+            ticket.item.summary
+              ?.toLowerCase()
+              .includes(this.filterSearchB.toLowerCase())) &&
+          (this.filterStatusB?.length === 0 ||
+            this.filterStatusB?.includes(ticket.item.status)) &&
+          (this.filterTypeB?.length === 0 ||
+            this.filterTypeB?.includes(ticket.item.type))
+      ) || []
+    );
   }
 
   ngOnInit() {
-
-
+    this.introJsOpts.steps = [
+      {
+        element: 'd',
+        intro: 'a',
+      },
+    ];
     const that = this;
     this.totalDones = 0;
     this.totalNonAvviatos = 0;
@@ -190,6 +218,45 @@ export class BacklogPage implements OnInit {
       this.sprint = _.cloneDeep(s);
     });
   }
+
+  showSuggestions(): void {
+    this.introJsOpts.steps = [];
+    this.backlogAPIService
+      .getHints(this.projectId, this.backlogId, this.sprintId)
+      .subscribe((res) => {
+        const hints = JSON.parse(JSON.stringify(res));
+        hints.forEach((hint) => {
+          const hasasasints = Array.of(hint);
+          const item = this.sprint.insertions.find(
+            (i) => hasasasints.indexOf(i.item.id) > -1
+          );
+          if (item) {
+            console.log('HINT:', item);
+            this.introJsOpts.steps.push({
+              element: '#step' + item.item.id,
+              intro: item.item.summary,
+            });
+          }
+        });
+
+        setTimeout(() => {
+          this.introService.show(this.introJsOpts);
+        }, 2000);
+      });
+
+    if (this.introJsOpts.steps.length === 0) {
+      this.toastController
+        .create({
+          message: this.translate.instant('backlog.server.hints.warning'),
+          duration: 500,
+          position: 'top',
+          color: 'warning',
+          icon: 'warning',
+        })
+        .then((toast) => toast.present());
+    }
+  }
+
   logAccordionValue() {
     console.log(this.accordionGroup.value);
   }
@@ -402,7 +469,8 @@ export class BacklogPage implements OnInit {
         // TODO: sostituire con un check sullo stato appena disponibile nel DTO
         // this.sprintIsStarted = moment(this.endSprintDate).diff(moment(), 'days') > 0 ? true : false;
 
-        this.sprintIsStarted = this.sprint.status === SprintStatus.active ? true : false;
+        this.sprintIsStarted =
+          this.sprint.status === SprintStatus.active ? true : false;
 
         this.backlogAPIService
           .getSprintInsertions(this.projectId, this.backlogId, this.sprintId)
@@ -476,7 +544,7 @@ export class BacklogPage implements OnInit {
     this.backlogServer.insertions?.forEach((item) => {
       if (tmpB.insertions.find((i) => i.id === item.id) === undefined) {
         itemToRemoveFromBacklog.push(
-          new SprintInsertion(item.id, this.sprint,  item.item, this.sprintId)
+          new SprintInsertion(item.id, this.sprint, item.item, this.sprintId)
         );
       }
     });
@@ -488,7 +556,7 @@ export class BacklogPage implements OnInit {
     );
     console.log('itemRimastiNelBacklog', itemRimastiNelBacklog);
     itemRimastiNelBacklog.forEach((item, index) => {
-      item.priority = tmpB.insertions.find(i => i.id === item.id).priority;
+      item.priority = tmpB.insertions.find((i) => i.id === item.id).priority;
       this.backlogAPIService
         .updateBacklogInsertion(this.projectId, this.backlogId, item)
         .subscribe((response) => {});

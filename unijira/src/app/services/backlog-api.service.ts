@@ -9,13 +9,18 @@ import {BacklogInsertion} from '../models/BacklogInsertion';
 import {SprintInsertion} from '../models/SprintInsertion';
 import {SprintStatus} from '../models/SprintStatus';
 
+
+import { HttpClient } from '@angular/common/http';
+
+
 @Injectable({
   providedIn: 'root',
 })
 export class BacklogAPIService {
   constructor(
     private httpService: HttpService,
-    private sessionService: SessionService
+    private sessionService: SessionService,
+    private http: HttpClient
   ) {}
 
   getFirstBacklog(projectId: number) {
@@ -192,5 +197,20 @@ export class BacklogAPIService {
   getSprintInfo(projectId: number, backlogId: number, sprintId: number) {
     const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}`;
     return this.httpService.get<any>(url).pipe(map((res) => res));
+  }
+
+  getHints(
+    projectId: number,
+    backlogId: number,
+    sprintId: number
+  ) {
+    let userInfo;
+    this.sessionService.getUserInfo().subscribe((user) => {
+      userInfo = user;
+    });
+    const url = `/projects/${projectId}/backlogs/${backlogId}/sprints/${sprintId}/user/${userInfo.id}/hint`;
+    return this.httpService.get<any>(url);
+    //const url = `/assets/mock/hints.json`;
+    //return this.http.get(url);
   }
 }

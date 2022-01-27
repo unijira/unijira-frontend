@@ -46,11 +46,11 @@
           </ion-text>
           <ion-searchbar [placeholder]="'projects.releases.search.placeholder' | translate" [(ngModel)]="filterSearch"></ion-searchbar>
         </ion-col>
-        <ion-col>
-          <ion-text color="medium" class="ion-margin">
-            <small [translate]="'projects.releases.status.label'"></small>
-          </ion-text>
+        <ion-col size="12" size-lg="6">
           <ion-item>
+            <ion-label position="floating" color="medium" class="ion-margin">
+              <span [translate]="'projects.releases.status.label'"></span>
+            </ion-label>
             <ion-select [(ngModel)]="filterStatus" [placeholder]="'projects.releases.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
               <ion-select-option [value]="releaseStatus.draft">{{ releaseStatus.draft | releaseStatus | translate }}</ion-select-option>
               <ion-select-option [value]="releaseStatus.released">{{ releaseStatus.released | releaseStatus | translate }}</ion-select-option>
