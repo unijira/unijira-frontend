@@ -50,9 +50,11 @@
     <ion-col>
       <ion-row>
         <ion-col size="auto">
-          <ion-avatar [title]="user?.username" class="ion-margin main-icon">
-            <ion-img [src]="user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-          </ion-avatar>
+          <a [routerLink]="['/user', user?.id]">
+            <ion-avatar [title]="user?.username" class="ion-margin main-icon user-avatar">
+              <ion-img [src]="user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            </ion-avatar>
+          </a>
         </ion-col>
         <ion-col>
           <ion-row class="ion-margin-bottom" >
@@ -84,9 +86,11 @@
 
       <ion-row *ngFor="let answer of answers; let i = index" class="ion-margin-bottom">
         <ion-col size="auto">
-          <ion-avatar [title]="answer.user?.username" class="ion-margin answer-icon">
-            <ion-img [src]="answer.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-          </ion-avatar>
+          <a [routerLink]="['/user', answer.user?.id]">
+            <ion-avatar [title]="answer.user?.username" class="ion-margin answer-icon user-avatar">
+              <ion-img [src]="answer.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            </ion-avatar>
+          </a>
         </ion-col>
         <ion-col>
           <ion-row class="ion-margin-bottom">
@@ -153,9 +157,11 @@
 
       <ion-row>
         <ion-col size="auto">
-          <ion-avatar [title]="user?.username" class="ion-margin-start">
-            <ion-img [src]="user?.avatar || '/assets/img/user/avatar.svg'" class="answer-icon" alt=""></ion-img>
-          </ion-avatar>
+          <a [routerLink]="['/user', user?.id]">
+            <ion-avatar [title]="user?.username" class="ion-margin-start">
+              <ion-img [src]="user?.avatar || '/assets/img/user/avatar.svg'" class="answer-icon user-avatar" alt=""></ion-img>
+            </ion-avatar>
+          </a>
         </ion-col>
         <ion-col>
           <ion-row class="ion-margin-bottom">

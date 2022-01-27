@@ -9,6 +9,7 @@ import {MeasureUnit} from '../../models/item/MeasureUnit';
 import {ItemType} from '../../models/item/ItemType';
 import {ProjectService} from '../project/project.service';
 import {BacklogInsertion} from '../../models/BacklogInsertion';
+import {EvaluationProposal} from '../../models/item/EvaluationProposal';
 
 @Injectable({
   providedIn: 'root'
@@ -81,6 +82,16 @@ export class TicketService {
   public removeTicket(projectId: number, ticket: Item): Observable<boolean> {
     return this.http.delete<boolean>(`/items/${ticket.id}`)
       .pipe(catchError(e => of(false)));
+  }
+
+  public getProposals(projectId: number, ticketId: number): Observable<EvaluationProposal[]> {
+    return this.http.get<EvaluationProposal[]>(`/items/${ticketId}/proposals`)
+      .pipe(catchError(e => of(null)));
+  }
+
+  public createProposal(projectId: number, ticketId: number, proposal: EvaluationProposal): Observable<EvaluationProposal> {
+    return this.http.post<EvaluationProposal>(`/items/${ticketId}/proposals`, proposal)
+      .pipe(catchError(e => of(null)));
   }
 
 }
