@@ -1,5 +1,6 @@
 {
   "app.title": "Unijira",
+  "app.project.default": "New Project",
   "error.title": "Error",
   "error.buttons.ok": "OK",
   "error.auth.unexpected": "There was an unexpected error while trying to authenticate you",
@@ -61,6 +62,7 @@
   "user.projects.search": "Search projects",
   "user.projects.noProjects": "No projects yet",
   "user.projects.createProject": "Create a new project",
+  "user.home.confirm": "Remember to confirm your account before using it, open the email you received and click on the link",
   "user.notifications.title": "Notifications",
   "user.notifications.loading": "Loading notifications...",
   "user.notifications.noNotifications": "No notifications yet",

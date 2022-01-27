@@ -1,5 +1,6 @@
 {
   "app.title": "Unijira",
+  "app.project.default": "Nuovo progetto",
   "error.title": "Errore",
   "error.buttons.ok": "OK",
   "error.auth.unexpected": "Si è verificato un errore imprevisto, impossibile accedere al sistema",
@@ -58,6 +59,7 @@
   "user.home.noTicketsDone": "Non hai ancora completato nessun ticket",
   "user.home.segments.open": "Aperti",
   "user.home.segments.done": "Completati",
+  "user.home.confirm": "Ricordati di confermare il tuo account, cliccando sul link che ti abbiamo inviato alla tua email",
   "user.projects.title": "Progetti",
   "user.projects.search": "Cerca tra i progetti",
   "user.projects.noProjects": "Non hai ancora creato nessun progetto",
