@@ -77,6 +77,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.roadmap', url: `/projects/${proj.id}/roadmap`, icon: 'map-outline'},
           {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
           {name: 'project.pages.releases', url: `/projects/${proj.id}/releases`, icon: 'cube-outline'},
+          {name: 'project.pages.documents', url: `/projects/${proj.id}/documents`, icon: 'document-outline'},
           {name: 'project.pages.discussions', url: `/projects/${proj.id}/discussions`, icon: 'chatbubbles-outline'},
           {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];

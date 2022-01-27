@@ -1,0 +1,205 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'projects.documents.title'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title and Call to Action -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'projects.documents.title'"></h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="primary" expand="block">
+            <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
+            <ion-text [translate]="'projects.documents.load'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- Drug and Drop -->
+  <section class="ion-margin">
+    <ngx-dropzone (change)="onSelect($event)">
+      <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
+      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      </ngx-dropzone-preview>
+    </ngx-dropzone>
+  </section>
+
+  <!-- Filters -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size="12" size-lg="6">
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.documents.search.label'"></small>
+          </ion-text>
+          <ion-searchbar [placeholder]="'projects.documents.search.placeholder' | translate" [(ngModel)]="filterSearch"></ion-searchbar>
+        </ion-col>
+        <ion-col>
+          <ion-text color="medium" class="ion-margin">
+            <small [translate]="'projects.documents.mimes.label'"></small>
+          </ion-text>
+          <ion-item>
+            <ion-select *ngFor="let mime of filterMimes" [(ngModel)]="filterMimes"
+                        [placeholder]="'projects.documents.mimes.placeholder' | translate"
+                        [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option [value]="mime">{{ mime }}</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <!-- List of Documents -->
+  <section class="ion-margin infinte-width">
+    <ion-list class="infinte-width-inner">
+
+      <!-- Header -->
+      <ion-item>
+        <ion-grid>
+          <ion-row>
+
+            <!-- Filename -->
+            <ion-col size="3">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.documents.list.filename'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+
+            <!-- Mime -->
+            <ion-col size="3">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.documents.list.type'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+
+            <!-- Load Date -->
+            <ion-col size="3">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.documents.list.loadDate'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+
+            <!-- Owner -->
+            <ion-col size="3">
+              <ion-text color="medium">
+                <strong>
+                  <ion-label [translate]="'projects.documents.list.owner'"></ion-label>
+                </strong>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+
+      <!-- Documents -->
+      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+
+            <!-- Filename -->
+            <ion-col size="2">
+              <ion-item>
+                <ion-icon name="document-outline"></ion-icon>
+                <ion-label>
+                  <strong [innerHTML]="d.filename | filtered:filterSearch"></strong>
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+            <!-- Mime -->
+            <ion-col size="2">
+              <ion-badge color="secondary">
+                <ion-label>{{ d.mime | uppercase | filtered:filterSearch}}</ion-label>
+              </ion-badge>
+            </ion-col>
+
+            <!-- Load Date -->
+            <ion-col size="2">
+              <ion-label>
+                {{ d.createdAt | date:'dd/MM/YYYY' }}
+              </ion-label>
+            </ion-col>
+
+            <!-- Owner -->
+            <ion-col size="2">
+              <ion-item>
+                <ion-avatar [popper]="d.userUsername"
+                            popperPlacement="bottom"
+                            popperTrigger="hover">
+
+                  <ion-img [src]="d.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                </ion-avatar>
+                <ion-label>
+                  {{ d.userFirstName }}
+                </ion-label>
+                <ion-label>
+                  {{ d.userFirstName }}
+                </ion-label>
+              </ion-item>
+            </ion-col>
+
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <!-- Skeleton Documents -->
+    <ion-list *ngIf="!documents">
+      <ion-item *ngFor="let document of [1,2,3,4,5,6]">
+        <ion-grid>
+          <ion-row class="ion-align-items-center">
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col size="2">
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+            <ion-col>
+              <ion-skeleton-text animated></ion-skeleton-text>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-item>
+    </ion-list>
+
+    <p *ngIf="documents?.length === 0" class="ion-text-center ion-margin">
+      <ion-text color="medium">
+        <br>
+        <br>
+        <i [translate]="'projects.documents.list.empty'"></i>
+      </ion-text>
+    </p>
+
+  </section>
+
+</ion-content>

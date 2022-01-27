@@ -433,5 +433,17 @@
   "project.settings.defOfDone.delete.confirm": "Confirm",
   "project.settings.defOfDone.empty": "Your Definition of Done is empty",
   "project.settings.defOfDone.add": "New entry",
-  "project.settings.defOfDone.activeSprint": "Sprint in progress"
+  "project.settings.defOfDone.activeSprint": "Sprint in progress",
+  "project.pages.documents": "Documents",
+  "projects.documents.title": "Documents",
+  "projects.documents.load": "Load documents",
+  "projects.documents.search.label": "Search",
+  "projects.documents.search.placeholder": "Search documents",
+  "projects.documents.mimes.label": "Type",
+  "projects.documents.mimes.placeholder": "No typology",
+  "projects.documents.list.filename": "Name",
+  "projects.documents.list.type": "Type",
+  "projects.documents.list.loadDate": "Upload date",
+  "projects.documents.list.owner": "User",
+  "projects.documents.list.empty": "No documents available"
 }

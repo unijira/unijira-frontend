@@ -34,6 +34,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NewItemComponent} from './pages/projects/backlog/modals/new-item/new-item.component';
+import { NgxDropzoneModule } from 'ngx-dropzone';
 
 import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
 
@@ -56,6 +57,7 @@ export const createTranslateLoader = (http: HttpClient) =>
     BrowserAnimationsModule,
     BrowserModule,
     PipeModule,
+    NgxDropzoneModule,
     IonicModule.forRoot({
       mode: 'md',
     }),

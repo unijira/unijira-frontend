@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {MembershipRoles} from '../../models/projects/MembershipRoles';
 import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
+import {Document} from '../../models/projects/Document';
 import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
 
 @Injectable({
@@ -95,6 +96,32 @@ export class ProjectService {
     return this.http.get<boolean>(`/projects/${projectId}/memberships/${userId}/permission/${permission}`)
       .pipe(map(_ => true))
       .pipe(catchError(_ => of(false)));
+
+  }
+
+  getDocuments(projectId: number): Observable<Document[]> {
+
+    return this.http.get<Document[]>(`/projects/${projectId}/documents`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  deleteDocument(projectId: number, documentId: number): Observable<Document> {
+
+    return this.http.get<Document>(`/projects/${projectId}/documents/${documentId}`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  createDocument(filename: string, path: URL, projectId: number, userId: number,
+                 userFirstName: string, userLastName: string, userUsername: string,
+                 userAvatar: string, mime: string): Observable<Document> {
+
+    return this.http.post<Document>(`/projects/${projectId}/documents`,
+      {filename, path, projectId, userId,
+             userFirstName, userLastName, userUsername,
+             userAvatar, mime})
+      .pipe(catchError(() => of(null)));
 
   }
 
