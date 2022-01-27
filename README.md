@@ -12,7 +12,7 @@ $ npm ci
 $ npm run start
 
 # Or use the following command if you want to run Unijira
-# with online deployed backend (https://unijira.herokuapp.com/)
+# with the online backend instance (https://unijira.herokuapp.com/)
 $ npm run prod
 ```
 
