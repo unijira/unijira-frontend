@@ -1,4 +1,4 @@
-import { UserService } from './../../../../services/user/user.service';
+import { UserService } from '../../../../services/user/user.service';
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpService} from '../../../../services/http-service.service';
 import {AccountService} from '../../../../services/account.service';
@@ -8,6 +8,7 @@ import {BasePath, FileUploadService} from '../../../../services/file-upload/file
 import {PageService} from '../../../../services/page.service';
 import { setLanguage, setTheme } from 'src/app/util';
 import { TranslateService } from '@ngx-translate/core';
+import {UserPasswordReset} from '../../../../models/users/UserPasswordReset';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -132,7 +133,11 @@ export class ProfilePage implements OnInit {
 
   }
 
-  changePassword() {}
+
+  changePassword() {
+    const userChangePassword = new UserPasswordReset(this.newPassword, 'blablablabla');
+    this.usersService.resetPassword(userChangePassword).subscribe(value => {});
+  }
 
   onFileChanged(event) {
     const reader = new FileReader();
