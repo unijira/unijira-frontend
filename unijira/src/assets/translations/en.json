@@ -430,5 +430,6 @@
   "project.settings.defOfDone.delete.abort": "Cancel",
   "project.settings.defOfDone.delete.confirm": "Confirm",
   "project.settings.defOfDone.empty": "Your Definition of Done is empty",
-  "project.settings.defOfDone.add": "New entry"
+  "project.settings.defOfDone.add": "New entry",
+  "project.settings.defOfDone.activeSprint": "Sprint in progress"
 }

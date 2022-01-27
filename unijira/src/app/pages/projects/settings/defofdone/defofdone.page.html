@@ -29,7 +29,14 @@
             </ion-col>
             <ion-col class="ion-align-self-center">
               <ion-row class="ion-justify-content-end ion-align-self-center">
-                <ion-button (click)="addEntry()" [translate]="'project.settings.defOfDone.add'"></ion-button>
+                <ion-button *ngIf="!disabled" (click)="addEntry()">
+                  <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+                  <ion-label>{{'project.settings.defOfDone.add' | translate}}</ion-label>
+                </ion-button>
+                <ion-chip *ngIf="activeSprint" class="ion-no-margin ion-margin-end" outline="false" color="danger" [disabled]="false">
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  <ion-label>{{'project.settings.defOfDone.activeSprint' | translate}}</ion-label>
+                </ion-chip>
               </ion-row>
             </ion-col>
           </ion-row>
@@ -66,13 +73,13 @@
 
           <div *ngIf="defOfDone?.length > 0" class="ion-margin">
 
-            <ion-reorder-group (ionItemReorder)="doReorder($event)" disabled="false">
+            <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="disabled">
 
                 <ion-item *ngFor="let d of defOfDone">
-                  <ion-input type="text" [(ngModel)]="d.description" (ionBlur)="updateEntry(d)"></ion-input>
+                  <ion-input type="text" [(ngModel)]="d.description" (ionBlur)="updateEntry(d)" [disabled]="disabled"></ion-input>
 
                   <ion-buttons slot="end">
-                    <ion-button slot="start" color="danger" class="ion-padding-end" (click)="deleteEntry(d)">
+                    <ion-button slot="start" color="danger" class="ion-padding-end" (click)="deleteEntry(d)" [disabled]="disabled">
                       <ion-icon name="trash-outline"></ion-icon>
                     </ion-button>
                     <ion-reorder slot="end">

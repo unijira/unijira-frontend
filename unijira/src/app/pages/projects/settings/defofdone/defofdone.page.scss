@@ -5,3 +5,11 @@
 .info-text {
   color: lightslategray;
 }
+
+ion-chip {
+  pointer-events: none;
+}
+
+ion-item {
+  --highlight-color-valid: var(--ion-color-primary);
+}

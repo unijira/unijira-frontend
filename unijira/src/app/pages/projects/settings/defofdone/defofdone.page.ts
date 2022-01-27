@@ -9,6 +9,7 @@ import {PageService} from '../../../../services/page.service';
 import {AlertController, ItemReorderEventDetail, ToastController} from '@ionic/angular';
 import {DefinitionOfDoneEntry} from '../../../../models/projects/DefinitionOfDoneEntry';
 import {presentToast} from '../../../../util';
+import {BoardService} from '../../../../services/board/board.service';
 
 @Component({
   selector: 'app-defofdone',
@@ -21,6 +22,8 @@ export class DefOfDonePage implements OnInit {
   @Input() projectSubscription: Subscription;
 
   defOfDone: DefinitionOfDoneEntry[];
+  disabled = true;
+  activeSprint = false;
 
   constructor(private sessionService: SessionService,
               private projectService: ProjectService,
@@ -28,7 +31,8 @@ export class DefOfDonePage implements OnInit {
               private translateService: TranslateService,
               private pageService: PageService,
               private toastController: ToastController,
-              private alertController: AlertController
+              private alertController: AlertController,
+              private boardService: BoardService
   ) {
 
     this.pageService.setTitle(['project.pages.settings','project.pages.settings.defOfDone']);
@@ -42,6 +46,7 @@ export class DefOfDonePage implements OnInit {
         this.project = p;
 
         if(p) {
+          this.checkActiveSprint();
           this.loadDefOfDone();
         }
 
@@ -64,6 +69,11 @@ export class DefOfDonePage implements OnInit {
 
     const target: DefinitionOfDoneEntry = this.defOfDone[event.detail.to];
     target.priority = event.detail.to + 1;
+
+    if(this.disabled) {
+      return;
+    }
+
     this.projectService.updateDefOfDoneEntry(this.project.id, target.id, target).subscribe((d) => {
       if(d === null || target.priority !== d.priority) {
         this.loadDefOfDone();
@@ -72,6 +82,10 @@ export class DefOfDonePage implements OnInit {
   }
 
   addEntry() {
+    if(this.disabled) {
+      return;
+    }
+
     const newEntry: DefinitionOfDoneEntry = new DefinitionOfDoneEntry(null, this.translateService.instant('project.settings.defOfDone.activity'), null, this.project.id);
     this.projectService.createDefOfDoneEntry(this.project.id, newEntry).subscribe((d) => {
       if(d !== null) {
@@ -91,7 +105,11 @@ export class DefOfDonePage implements OnInit {
   }
 
   updateEntry(d: DefinitionOfDoneEntry) {
-      this.projectService.updateDefOfDoneEntry(this.project.id, d.id, d).subscribe((r) => {
+    if(this.disabled) {
+      return;
+    }
+
+    this.projectService.updateDefOfDoneEntry(this.project.id, d.id, d).subscribe((r) => {
         if(r === null || r.description !== d.description || r.priority !== d.priority) {
           this.loadDefOfDone();
         }
@@ -99,6 +117,10 @@ export class DefOfDonePage implements OnInit {
   }
 
   deleteEntry(d: DefinitionOfDoneEntry) {
+    if(this.disabled) {
+      return;
+    }
+
     this.showAlert().then((choice) => {
       if(choice) {
         this.projectService.deleteDefOfDoneEntry(this.project.id, d.id).subscribe((r) => {
@@ -148,4 +170,16 @@ export class DefOfDonePage implements OnInit {
 
     });
   }
+
+  private checkActiveSprint() {
+    this.boardService.getActiveSprint(this.project.id).subscribe((s) => {
+      if(s === null) {
+        this.disabled = false;
+      }
+      else {
+        this.activeSprint = true;
+      }
+    });
+  }
+
 }
