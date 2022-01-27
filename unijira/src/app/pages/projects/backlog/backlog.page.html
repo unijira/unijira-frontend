@@ -163,7 +163,7 @@
                       *ngFor="let insertion of filteredTicketsS"
                       class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
                     >
-                      <ion-col>
+                      <ion-col [id]="'step' + insertion.item.id">
                         <ion-item>
                           <ion-avatar slot="start">
                             <ion-img

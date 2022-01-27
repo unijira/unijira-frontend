@@ -1,10 +1,11 @@
-@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDMwMTE3OTYsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQzMDA4MTk2LCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.qkcGoxyBcR3J5P-qyCkFRj1Ih-tBGiTYDydCfw56qcQ
+@token = eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJwYXNzd29yZCI6IlRlc3RhenpvLjk5IiwiaXNzIjoiYXV0aC1zZXJ2aWNlLXVuaWppcmEiLCJleHAiOjE2NDMyOTI3OTAsInR5cGUiOiJBVVRIT1JJWkFUSU9OIiwiaWF0IjoxNjQzMjg5MTkwLCJ1c2VybmFtZSI6InBhb2xhZ3VhcmFzY2lAZ21haWwuY29tIn0.rI2xAJ7Atuy1BmZ2KSouJ-nGav6yMTo_LaLh1w4Oi3U
 
 # @token = {{login.response.body.token}}
 
-@projectid = 2
-@backlogid = 3
-@sprintid = 38
+@projectid = 38
+@backlogid = 41
+@sprintid = 50
+@roadmapid = 95
 ############## AUTH #############
 
 
@@ -787,3 +788,195 @@ Content-Type: application/json
   },
   "priority": "1"
 }
+
+###
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 10,
+  "backlogId": 41,
+  "insertions": []
+}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps/{{roadmapid}}/insertions
+Authorization: Bearer {{token}}
+
+###
+GET http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps/{{roadmapid}}/tree
+Authorization: Bearer {{token}}
+
+###
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps/{{roadmapid}}/insertions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 1,
+  "startingDate": "2018-01-01",
+  "endingDate": "2018-01-01",
+  "item": {
+    "id": 2,
+    "summary": "Summary Epic 0",
+    "description": "Epic 0",
+    "measureUnit": "STORY_POINTS",
+    "evaluation": 10,
+    "tags": "#tag1#,#tag2#",
+    "type": "EPIC",
+    "status": "OPEN",
+    "owner": {
+      "id": 1,
+      "username": "paolaguarasci@gmail.com",
+      "status": "ACTIVE",
+      "disabled": false,
+      "avatar": null,
+      "birthDate": null,
+      "firstName": "",
+      "lastName": "",
+      "role": "",
+      "description": "",
+      "github": "",
+      "linkedin": "",
+      "phoneNumber": ""
+    },
+    "releaseId": null,
+    "releaseVersion": null,
+    "fatherId": null,
+    "projectId": null,
+    "sons": [],
+    "notes": [],
+    "assignees": [
+      {
+        "id": 3,
+        "itemId": 2,
+        "assigneeId": 1,
+        "assigneeUsername": "paolaguarasci@gmail.com",
+        "assigneeAvatar": null
+      }
+    ]
+  },
+  "roadmapId": "97"
+}
+
+###
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps/{{roadmapid}}/insertions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 1,
+  "startingDate": "2018-01-01",
+  "endingDate": "2018-01-01",
+  "item": 
+  {
+      "createdAt": "2022-01-27T15:00:23.061587",
+      "updatedAt": "2022-01-27T15:00:23.061593",
+      "id": 8,
+      "summary": "Summary Story 0",
+      "description": "Story 0",
+      "measureUnit": "STORY_POINTS",
+      "evaluation": 10,
+      "tags": "#tag1#,#tag2#",
+      "type": "STORY",
+      "status": "OPEN",
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "status": "REQUIRE_CONFIRM",
+        "disabled": false,
+        "avatar": null,
+        "createdAt": "2022-01-27T15:00:22.872561",
+        "updatedAt": "2022-01-27T15:00:22.872575",
+        "birthDate": null,
+        "firstName": "",
+        "lastName": "",
+        "role": "",
+        "description": "",
+        "github": "",
+        "linkedin": "",
+        "phoneNumber": ""
+      },
+      "releaseId": null,
+      "releaseVersion": null,
+      "fatherId": 2,
+      "projectId": null,
+      "sons": [],
+      "notes": [],
+      "assignees": [
+        {
+          "id": 9,
+          "itemId": 8,
+          "assigneeId": 1,
+          "assigneeUsername": "paolaguarasci@gmail.com",
+          "assigneeAvatar": null
+        }
+      ]
+    },
+  "roadmapId": "97"
+}
+
+
+###
+POST http://localhost:7080/projects/{{projectid}}/backlogs/{{backlogid}}/roadmaps/{{roadmapid}}/insertions
+Authorization: Bearer {{token}}
+Content-Type: application/json
+
+{
+  "id": 1,
+  "startingDate": "2018-01-01",
+  "endingDate": "2018-01-01",
+  "item": 
+  {
+      "createdAt": "2022-01-27T15:00:23.131479",
+      "updatedAt": "2022-01-27T15:00:23.13148",
+      "id": 14,
+      "summary": "Summary Story 3",
+      "description": "Story 3",
+      "measureUnit": "STORY_POINTS",
+      "evaluation": 13,
+      "tags": "#tag1#,#tag2#",
+      "type": "STORY",
+      "status": "OPEN",
+      "owner": {
+        "id": 1,
+        "username": "paolaguarasci@gmail.com",
+        "status": "REQUIRE_CONFIRM",
+        "disabled": false,
+        "avatar": null,
+        "createdAt": "2022-01-27T15:00:22.872561",
+        "updatedAt": "2022-01-27T15:00:22.872575",
+        "birthDate": null,
+        "firstName": "",
+        "lastName": "",
+        "role": "",
+        "description": "",
+        "github": "",
+        "linkedin": "",
+        "phoneNumber": ""
+      },
+      "releaseId": null,
+      "releaseVersion": null,
+      "fatherId": 2,
+      "projectId": null,
+      "sons": [],
+      "notes": [],
+      "assignees": [
+        {
+          "id": 15,
+          "itemId": 14,
+          "assigneeId": 1,
+          "assigneeUsername": "paolaguarasci@gmail.com",
+          "assigneeAvatar": null
+        }
+      ]
+    },
+  "roadmapId": "97"
+}
+
+###

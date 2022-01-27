@@ -217,7 +217,7 @@ export class BacklogPage implements OnInit {
       .subscribe((res) => {
         const hints = JSON.parse(JSON.stringify(res));
         hints.forEach((hint) => {
-          const item = this.backlog.insertions.find(
+          const item = this.sprint.insertions.find(
             (i) => i.item.id === hint.id
           );
           if (item) {
@@ -451,7 +451,7 @@ export class BacklogPage implements OnInit {
           this.sprint.status === SprintStatus.active ? true : false;
 
         this.backlogAPIService
-          .getSprintItems(this.projectId, this.backlogId, this.sprintId)
+          .getSprintInsertions(this.projectId, this.backlogId, this.sprintId)
           .subscribe((response1) => {
             console.log('Get Sprint insertion ', response1);
             this.sprint.insertions = [];
