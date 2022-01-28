@@ -481,7 +481,7 @@
       <ion-row>
         <ion-col>
           <ion-button
-            (click)="newItemModal()"
+            [routerLink]="['/projects', projectId, 'tickets']"
             expand="block"
             color="light"
             class="add-task-button"
