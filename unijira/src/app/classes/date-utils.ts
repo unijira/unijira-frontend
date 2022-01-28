@@ -3,15 +3,15 @@ import * as moment from 'moment';
 export class DateUtils {
 
   public static toLocalDate(date?: Date): string {
-    return (date ?? new Date()).toISOString().substring(0, 10);
+    return moment(date ?? new Date()).format('YYYY-MM-DD');
   }
 
   public static toLocalDateTime(date?: Date): string {
-    return (date ?? new Date()).toISOString();
+    return moment(date ?? new Date()).add(1, 'hours').toISOString();
   }
 
   public static fromLocalDate(date: string): Date {
-    return moment(date, 'YYYY-MM-dd').toDate();
+    return moment(date, 'YYYY-MM-DD').toDate();
   }
 
   public static fromLocalDateTime(date: string): Date {

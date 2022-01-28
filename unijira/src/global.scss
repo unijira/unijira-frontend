@@ -26,6 +26,7 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+
 .loading-class {
   --background: #222;
   --spinner-color: #3880ff;
@@ -101,6 +102,9 @@
   }
 
 
+.ion-padding-sm {
+  padding: 0.4rem;
+}
 
 
 
@@ -130,9 +134,17 @@ ion-content:not(.popover-wrapper) {
 }
 
 .w-100 {
-  width: 100%;
+  width: 100% !important;
 }
 
 .smooth {
   transition: all 0.3s ease-in-out;
+}
+
+.user-avatar:hover {
+  transform: scale(1.2);
+}
+
+.unauthorized {
+  cursor: not-allowed !important;
 }

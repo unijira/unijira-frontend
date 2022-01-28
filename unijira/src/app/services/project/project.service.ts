@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {catchError, Observable, of} from 'rxjs';
+import {catchError, map, Observable, of} from 'rxjs';
 import {Project} from '../../models/projects/Project';
 import {HttpService} from '../http-service.service';
 import {Membership} from '../../models/projects/Membership';
@@ -7,6 +7,7 @@ import {HttpParams} from '@angular/common/http';
 import {MembershipRoles} from '../../models/projects/MembershipRoles';
 import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
+import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
 
 @Injectable({
   providedIn: 'root'
@@ -77,9 +78,48 @@ export class ProjectService {
 
   updateMemberships(keyProjectId: number, keyUserId: number, role: MembershipRoles, status: MembershipStatus, permissions: MembershipPermission[]): Observable<Membership> {
 
-    return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyProjectId, keyUserId, role, status, permissions})
+    return this.http.put<Membership>(`/projects/${keyProjectId}/memberships/${keyUserId}`, {keyUserId, keyProjectId, role, status, permissions})
       .pipe(catchError(() => of(null)));
 
   }
 
+  removeMember(projectId: number, userId: number) {
+
+    return this.http.delete<Membership>(`/projects/${projectId}/memberships/${userId}`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  verifyPermission(projectId: number, userId: number, permission: MembershipPermission) {
+
+    return this.http.get<boolean>(`/projects/${projectId}/memberships/${userId}/permission/${permission}`)
+      .pipe(map(_ => true))
+      .pipe(catchError(_ => of(false)));
+
+  }
+
+  createDefOfDoneEntry(projectId: number, entry: DefinitionOfDoneEntry): Observable<DefinitionOfDoneEntry> {
+    return this.http.post<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone`, entry)
+      .pipe(catchError(() => of(null)));
+  }
+
+  updateDefOfDoneEntry(projectId: number, entryId: number, entry: DefinitionOfDoneEntry): Observable<DefinitionOfDoneEntry> {
+    return this.http.put<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone/${entryId}`, entry)
+      .pipe(catchError(() => of(null)));
+  }
+
+  deleteDefOfDoneEntry(projectId: number, entryId: number): Observable<boolean> {
+    return this.http.delete<boolean>(`/projects/${projectId}/defofdone/${entryId}`)
+      .pipe(map(() => true), catchError(() => of(null)));
+  }
+
+  getProjectDefOfDone(projectId: number): Observable<DefinitionOfDoneEntry[]> {
+    return this.http.get<DefinitionOfDoneEntry[]>(`/projects/${projectId}/defofdone`)
+      .pipe(catchError(() => of(null)));
+  }
+
+  getProjectDefOfDoneEntry(projectId: number, entryId: number): Observable<DefinitionOfDoneEntry> {
+    return this.http.get<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone/${entryId}`)
+      .pipe(catchError(() => of(null)));
+  }
 }

@@ -47,6 +47,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
   public settings = [];
 
+  charts: any[] = [];
+
   constructor(
     public router: Router,
     public translateService: TranslateService,
@@ -79,6 +81,7 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.tickets', url: `/projects/${proj.id}/tickets`, icon: 'ticket-outline'},
           {name: 'project.pages.releases', url: `/projects/${proj.id}/releases`, icon: 'cube-outline'},
           {name: 'project.pages.discussions', url: `/projects/${proj.id}/discussions`, icon: 'chatbubbles-outline'},
+          {name: 'charts', url: `/projects/${proj.id}/charts/burnup`, icon: 'bar-chart-outline'},
           {name: 'project.pages.settings', url: `/projects/${proj.id}/settings/details`, icon: 'settings-outline'},
         ];
 
@@ -87,6 +90,11 @@ export class AppComponent implements OnInit, OnDestroy {
           {name: 'project.pages.settings.invitations', url: `/projects/${proj.id}/settings/invitations`, icon: 'mail-outline'},
           {name: 'project.pages.settings.roles', url: `/projects/${proj.id}/settings/roles`, icon: 'people-outline'},
           {name: 'project.pages.settings.permissions', url: `/projects/${proj.id}/settings/permissions`, icon: 'shield-checkmark-outline'},
+          {name: 'project.pages.settings.defOfDone', url: `/projects/${proj.id}/settings/defofdone`, icon: 'checkmark-done-circle-outline'},
+        ];
+
+        this.charts = [
+          {name: 'charts.burnUpChart', url: `/projects/${proj.id}/charts/burnup`, icon: 'trending-up-outline'},
         ];
 
       }
@@ -180,5 +188,14 @@ export class AppComponent implements OnInit, OnDestroy {
       /\/registration/.test(this.router.url) ||
       /\/activate/.test(this.router.url) ||
       /\/invite/.test(this.router.url);
+  }
+
+  getUrls(): any[] {
+    if (this.router.url.includes('settings')) {
+      return this.settings;
+    } else if (this.router.url.includes('charts')) {
+      return this.charts;
+    }
+    return this.pages;
   }
 }

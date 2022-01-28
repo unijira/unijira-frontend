@@ -70,7 +70,8 @@
             <ion-col size="8" class="ion-align-self-center">
               <ion-item>
                 <ion-label position="floating">{{'projects.settings.permissions.filter.user.type' | translate}}</ion-label>
-                <ion-select interface="popover" #userSelect (ionChange)="onChangeUser($event)">
+                <ion-select disabled="{{userMembership?.permissions?.includes(membershipPermission.admin) ? 'false' : 'true'}}"
+                            interface="popover" #userSelect (ionChange)="onChangeUser($event)">
                   <ion-select-option *ngFor="let membership of memberships || []" value='{{membership?.userInfo?.username}}'>
                     <ion-item>
                       {{ membership?.userInfo?.username }}
@@ -84,7 +85,8 @@
             <ion-col size="4" class="ion-align-self-center">
               <ion-item>
                 <ion-label position="floating">{{'projects.settings.permissions.filter.mask.type' | translate}}</ion-label>
-                <ion-select interface="popover" #maskSelect (ionChange)="onChangeMask($event)">
+                <ion-select disabled="{{userMembership?.permissions?.includes(membershipPermission.admin) ? 'false' : 'true'}}"
+                            interface="popover" #maskSelect (ionChange)="onChangeMask($event)">
                   <ion-select-option *ngFor="let mask of masks" value='{{mask.role}}'>{{ mask.translate | translate }}</ion-select-option>
                 </ion-select>
               </ion-item>

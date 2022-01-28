@@ -36,7 +36,7 @@ export class NewItemComponent implements OnInit {
   status: ItemStatus;
   type: ItemType;
   statusList: any[];
-
+  measureUnitList: any[];
   constructor(
     private sessionService: SessionService,
     private backlogAPIService: BacklogAPIService,
@@ -53,6 +53,20 @@ export class NewItemComponent implements OnInit {
         });
       }
     }
+
+
+
+    this.measureUnitList = [];
+    for (const type in MeasureUnit) {
+      if (MeasureUnit.hasOwnProperty(type)) {
+        this.measureUnitList.push({
+          name: `backlog.edit.measureUnit.${type}`,
+          value: type,
+          className: type,
+        });
+      }
+    }
+
     this.sessionService.getUserInfo().subscribe((user) => {
       this.user = user;
     });

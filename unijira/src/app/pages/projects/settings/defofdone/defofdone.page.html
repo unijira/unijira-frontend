@@ -1,0 +1,105 @@
+<ion-content>
+
+  <!-- Project Settings Invitations -->
+  <ion-row class="ion-justify-content-center ion-margin-vertical">
+    <ion-col size="auto">
+      <div class="container-main-inner">
+
+        <!-- Breadcrumbs -->
+        <section>
+          <ion-breadcrumbs>
+            <ion-breadcrumb [routerLink]="['/']">
+              <ion-icon name="home"></ion-icon>
+            </ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/']">{{'project.settings.details.projects' | translate}}</ion-breadcrumb>
+            <ion-breadcrumb [routerLink]="['/projects/' + this.project?.id + '/settings/details']">{{'project.settings.details.settings' | translate}}</ion-breadcrumb>
+          </ion-breadcrumbs>
+        </section>
+
+        <ion-grid>
+
+          <br>
+
+          <ion-row>
+            <!-- Definition of Done Title -->
+            <ion-col>
+              <ion-text>
+                <h1 [translate]="'project.settings.defOfDone.title'"></h1>
+              </ion-text>
+            </ion-col>
+            <ion-col class="ion-align-self-center">
+              <ion-row class="ion-justify-content-end ion-align-self-center">
+                <ion-button *ngIf="!disabled" (click)="addEntry()">
+                  <ion-icon slot="start" name="add-circle-outline"></ion-icon>
+                  <ion-label>{{'project.settings.defOfDone.add' | translate}}</ion-label>
+                </ion-button>
+                <ion-chip *ngIf="activeSprint" class="ion-no-margin ion-margin-end" outline="false" color="danger" [disabled]="false">
+                  <ion-icon name="alert-circle-outline"></ion-icon>
+                  <ion-label>{{'project.settings.defOfDone.activeSprint' | translate}}</ion-label>
+                </ion-chip>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+
+          <ion-row>
+
+            <!-- Definition of Done Subtitle -->
+            <ion-col>
+              <ion-text>
+                <h4 [translate]="'project.settings.defOfDone.subtitle'"></h4>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <ion-row>
+
+            <!-- Definition of Done Information Icon -->
+            <ion-col size="auto" class="ion-align-self-center">
+              <ion-icon size="large" name="information-circle" class="info-icon"></ion-icon>
+            </ion-col>
+
+            <!-- Definition of Done Information -->
+            <ion-col class="ion-align-self-center">
+              <ion-text>
+                <h5 class="info-text" [translate]="'project.settings.defOfDone.info'"></h5>
+              </ion-text>
+            </ion-col>
+
+          </ion-row>
+
+          <br>
+          <br>
+
+          <div *ngIf="defOfDone?.length > 0" class="ion-margin">
+
+            <ion-reorder-group (ionItemReorder)="doReorder($event)" [disabled]="disabled">
+
+                <ion-item *ngFor="let d of defOfDone">
+                  <ion-input type="text" [(ngModel)]="d.description" (ionBlur)="updateEntry(d)" [disabled]="disabled"></ion-input>
+
+                  <ion-buttons slot="end">
+                    <ion-button slot="start" color="danger" class="ion-padding-end" (click)="deleteEntry(d)" [disabled]="disabled">
+                      <ion-icon name="trash-outline"></ion-icon>
+                    </ion-button>
+                    <ion-reorder slot="end">
+                    </ion-reorder>
+                  </ion-buttons>
+                </ion-item>
+
+            </ion-reorder-group>
+
+
+          </div>
+          <ion-row *ngIf="defOfDone?.length === 0" class="ion-justify-content-center">
+            <ion-text class="ion-margin" color="medium">
+              <p><i [translate]="'project.settings.defOfDone.empty'"></i></p>
+            </ion-text>
+          </ion-row>
+        </ion-grid>
+
+      </div>
+    </ion-col>
+  </ion-row>
+
+</ion-content>

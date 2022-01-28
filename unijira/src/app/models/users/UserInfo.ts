@@ -18,6 +18,8 @@ export class UserInfo {
   public phoneNumber: string;
   public createdAt: string;
   public updatedAt: string;
+  public preferedTheme: string;
+  public preferedLanguage: string;
 
   constructor(id: number, username: string, avatar: URL, status: UserStatus, disabled: boolean, birthDate: Date, firstName: string, lastName: string, role: string, description: string, github: string, linkedin: string, phoneNumber: string) {
     this.id = id;

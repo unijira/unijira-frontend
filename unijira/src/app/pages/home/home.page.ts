@@ -6,6 +6,10 @@ import {TicketService} from '../../services/ticket/ticket.service';
 import {TimePipe} from '../../pipes/time.pipe';
 import {PageService} from '../../services/page.service';
 import {Router} from '@angular/router';
+import {SessionService} from '../../store/session.service';
+import {UserStatus} from '../../models/users/UserStatus';
+import {ToastController} from '@ionic/angular';
+import {TranslateService} from '@ngx-translate/core';
 
 @Component({
   selector: 'app-home',
@@ -24,6 +28,9 @@ export class HomePage implements OnInit {
     private projectService: ProjectService,
     private ticketService: TicketService,
     private pageService: PageService,
+    private sessionService: SessionService,
+    private translateService: TranslateService,
+    private toastController: ToastController,
     private router: Router
   ) {
     this.pageService.setTitle('user.home.title');
@@ -54,6 +61,18 @@ export class HomePage implements OnInit {
         this.myTicketsDone = tickets;
       }
     );
+
+    this.sessionService.getUserInfo().subscribe(user => {
+      if(user.status === UserStatus.requireConfirm) {
+        this.toastController.create({
+          message: this.translateService.instant('user.home.confirm'),
+          duration: 3000,
+          position: 'top',
+          color: 'warning',
+          icon: 'warning'
+        }).then(toast => toast.present());
+      }
+    });
 
   }
 

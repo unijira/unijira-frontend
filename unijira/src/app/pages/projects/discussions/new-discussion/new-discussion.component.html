@@ -21,23 +21,19 @@
     <ion-radio-group formControlName="type">
       <ion-row class="ion-margin ion-align-items-center ion-justify-content-center ion-align-self-center">
         <ion-item lines="none" [title]="'discussions.general' | translate">
-          <ion-icon name="chatbubbles" style="color: #4c8dff" size="large">
-          </ion-icon>
+          <ion-icon name="chatbubbles" style="color: #4c8dff" size="large" class="ion-margin-end"></ion-icon>
           <ion-radio [value]="topicType.general"></ion-radio>
         </ion-item>
         <ion-item lines="none" [title]="'discussions.ideas' | translate">
-          <ion-icon name="bulb" style="color: #ffc409" size="large">
-          </ion-icon>
+          <ion-icon name="bulb" style="color: #ffc409" size="large" class="ion-margin-end"></ion-icon>
           <ion-radio [value]="topicType.ideas"></ion-radio>
         </ion-item>
         <ion-item lines="none" [title]="'discussions.qanda' | translate">
-          <ion-icon name="help-circle" style="color: #2dd36f" size="large">
-          </ion-icon>
+          <ion-icon name="help-circle" style="color: #2dd36f" size="large" class="ion-margin-end"></ion-icon>
           <ion-radio [value]="topicType.qanda"></ion-radio>
         </ion-item>
         <ion-item lines="none" [title]="'discussions.announcements' | translate">
-          <ion-icon name="megaphone" style="color: #a94442" size="large">
-          </ion-icon>
+          <ion-icon name="megaphone" style="color: #a94442" size="large" class="ion-margin-end"></ion-icon>
           <ion-radio [value]="topicType.announcements"></ion-radio>
         </ion-item>
       </ion-row>
