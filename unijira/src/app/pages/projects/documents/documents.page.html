@@ -45,20 +45,18 @@
     <ion-grid>
       <ion-row class="ion-align-items-center">
         <ion-col size="12" size-lg="6">
-          <ion-text color="medium" class="ion-margin">
+          <ion-label color="medium" class="ion-margin">
             <small [translate]="'projects.documents.search.label'"></small>
-          </ion-text>
+          </ion-label>
           <ion-searchbar [placeholder]="'projects.documents.search.placeholder' | translate" [(ngModel)]="filterSearch"></ion-searchbar>
         </ion-col>
         <ion-col>
-          <ion-text color="medium" class="ion-margin">
-            <small [translate]="'projects.documents.mimes.label'"></small>
-          </ion-text>
           <ion-item>
-            <ion-select *ngFor="let mime of filterMimes" [(ngModel)]="filterMimes"
-                        [placeholder]="'projects.documents.mimes.placeholder' | translate"
-                        [multiple]="true" interface="popover" class="ion-padding-top w-100">
-              <ion-select-option [value]="mime">{{ mime }}</ion-select-option>
+            <ion-label position="floating" color="medium" class="ion-margin">
+              <span [translate]="'projects.documents.mimes.label'"></span>
+            </ion-label>
+            <ion-select [placeholder]="'projects.documents.mimes.placeholder' | translate" [disabled]="!filteredDocuments || filteredDocuments.length === 0" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option *ngFor="let mime of filterMimes" [value]="mime">{{ mime }}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -76,7 +74,7 @@
           <ion-row>
 
             <!-- Filename -->
-            <ion-col size="3">
+            <ion-col size="6">
               <ion-text color="medium">
                 <strong>
                   <ion-label [translate]="'projects.documents.list.filename'"></ion-label>
@@ -85,7 +83,7 @@
             </ion-col>
 
             <!-- Mime -->
-            <ion-col size="3">
+            <ion-col size="2">
               <ion-text color="medium">
                 <strong>
                   <ion-label [translate]="'projects.documents.list.type'"></ion-label>
@@ -93,20 +91,20 @@
               </ion-text>
             </ion-col>
 
-            <!-- Load Date -->
-            <ion-col size="3">
+            <!-- Owner -->
+            <ion-col size="2">
               <ion-text color="medium">
                 <strong>
-                  <ion-label [translate]="'projects.documents.list.loadDate'"></ion-label>
+                  <ion-label [translate]="'projects.documents.list.owner'"></ion-label>
                 </strong>
               </ion-text>
             </ion-col>
 
-            <!-- Owner -->
-            <ion-col size="3">
+            <!-- Load Date -->
+            <ion-col size="2">
               <ion-text color="medium">
                 <strong>
-                  <ion-label [translate]="'projects.documents.list.owner'"></ion-label>
+                  <ion-label [translate]="'projects.documents.list.loadDate'"></ion-label>
                 </strong>
               </ion-text>
             </ion-col>
@@ -116,18 +114,22 @@
       </ion-item>
 
       <!-- Documents -->
-      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId">
+      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId" [routerLink]="d.path?.href || ''">
         <ion-grid>
           <ion-row class="ion-align-items-center">
 
             <!-- Filename -->
-            <ion-col size="2">
-              <ion-item>
-                <ion-icon name="document-outline"></ion-icon>
-                <ion-label>
-                  <strong [innerHTML]="d.filename | filtered:filterSearch"></strong>
-                </ion-label>
-              </ion-item>
+            <ion-col size="6">
+              <ion-row class="ion-align-items-center">
+                <ion-col size="auto">
+                  <ion-icon name="document-outline" size="large"></ion-icon>
+                </ion-col>
+                <ion-col>
+                  <ion-label>
+                    <strong [innerHTML]="d.filename | filtered:filterSearch"></strong>
+                  </ion-label>
+                </ion-col>
+              </ion-row>
             </ion-col>
 
             <!-- Mime -->
@@ -137,29 +139,27 @@
               </ion-badge>
             </ion-col>
 
+            <!-- Owner -->
+            <ion-col size="2">
+              <ion-row class="ion-align-items-center">
+                <ion-col size="auto">
+                  <ion-avatar [title]="d.userUsername" class="row-icon user-avatar">
+                    <ion-img [src]="d.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                  </ion-avatar>
+                </ion-col>
+                <ion-col>
+                  <ion-label>
+                    {{ d.userFirstName }} {{ d.userLastName }}
+                  </ion-label>
+                </ion-col>
+              </ion-row>
+            </ion-col>
+
             <!-- Load Date -->
             <ion-col size="2">
               <ion-label>
                 {{ d.createdAt | date:'dd/MM/YYYY' }}
               </ion-label>
-            </ion-col>
-
-            <!-- Owner -->
-            <ion-col size="2">
-              <ion-item>
-                <ion-avatar [popper]="d.userUsername"
-                            popperPlacement="bottom"
-                            popperTrigger="hover">
-
-                  <ion-img [src]="d.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
-                </ion-avatar>
-                <ion-label>
-                  {{ d.userFirstName }}
-                </ion-label>
-                <ion-label>
-                  {{ d.userFirstName }}
-                </ion-label>
-              </ion-item>
             </ion-col>
 
           </ion-row>
@@ -172,7 +172,7 @@
       <ion-item *ngFor="let document of [1,2,3,4,5,6]">
         <ion-grid>
           <ion-row class="ion-align-items-center">
-            <ion-col size="2">
+            <ion-col size="6">
               <ion-skeleton-text animated></ion-skeleton-text>
             </ion-col>
             <ion-col size="2">
@@ -182,9 +182,6 @@
               <ion-skeleton-text animated></ion-skeleton-text>
             </ion-col>
             <ion-col size="2">
-              <ion-skeleton-text animated></ion-skeleton-text>
-            </ion-col>
-            <ion-col>
               <ion-skeleton-text animated></ion-skeleton-text>
             </ion-col>
           </ion-row>

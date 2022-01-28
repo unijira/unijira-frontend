@@ -325,6 +325,7 @@
   "projects.releases.view.progress.title": "Progresso",
   "projects.releases.view.progress.release": "Rilascio previsto",
   "projects.releases.view.save": "Salva",
+  "projects.releases.toast.save.success": "Salvataggio release avvenuto con successo",
   "projects.releases.view.tickets.title": "Ticket",
   "profile" : "Profilo",
   "profile.edit.propic" : "Cambia immagine",

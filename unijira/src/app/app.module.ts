@@ -34,7 +34,7 @@ import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {NewItemComponent} from './pages/projects/backlog/modals/new-item/new-item.component';
-import { NgxDropzoneModule } from 'ngx-dropzone';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
 
@@ -57,11 +57,11 @@ export const createTranslateLoader = (http: HttpClient) =>
     BrowserAnimationsModule,
     BrowserModule,
     PipeModule,
-    NgxDropzoneModule,
     IonicModule.forRoot({
       mode: 'md',
     }),
     AppRoutingModule,
+    NgxDropzoneModule,
     FontAwesomeModule,
     StoreModule.forRoot({ sessionReducer, taskReducer }),
     HttpClientModule,
@@ -81,7 +81,7 @@ export const createTranslateLoader = (http: HttpClient) =>
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

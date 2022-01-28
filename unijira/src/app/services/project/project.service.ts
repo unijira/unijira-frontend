@@ -9,6 +9,7 @@ import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
 import {Document} from '../../models/projects/Document';
 import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
+import {DateUtils} from '../../classes/date-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -101,8 +102,15 @@ export class ProjectService {
 
   getDocuments(projectId: number): Observable<Document[]> {
 
-    return this.http.get<Document[]>(`/projects/${projectId}/documents`)
-      .pipe(catchError(() => of(null)));
+    // return this.http.get<Document[]>(`/projects/${projectId}/documents`)
+    //   .pipe(catchError(() => of(null)));
+
+    return of([
+      new Document(1, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(2, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@ædmin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(3, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(4, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime())
+    ]);
 
   }
 
