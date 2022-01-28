@@ -8,7 +8,7 @@ import {BacklogAPIService} from '../../../../services/backlog-api.service';
 import {Sprint} from '../../../../models/Sprint';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
-import {getColorTheme, unsubscribeAll} from '../../../../util';
+import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
@@ -123,7 +123,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
 
   get background() {
-    return getColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
+    return isDarkColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
   }
 
   ngOnInit() {
