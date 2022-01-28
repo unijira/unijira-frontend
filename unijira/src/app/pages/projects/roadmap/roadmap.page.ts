@@ -242,7 +242,7 @@ export class RoadmapPage {
     };
   }
   // Click add Button function
-  public addokButton: EmitType<object> = () => {
+  /* public addokButton: EmitType<object> = () => {
     this.alert = false;
     this.itemAdded = false;
     // Get all param
@@ -520,12 +520,11 @@ export class RoadmapPage {
       },
     },
   ];
-
+ */
   public onActionComplete(args: any): void {
     let startingDate;
     let endingDate;
     if(args.requestType==='save'){
-      console.log(args.data.taskData.id);
       this.itemEdited.item= new Item(null,null,null,null,null,null,null,null,null,null,null,null,null,);
       this.itemEdited.item.type=args.data.ItemType;
       this.itemEdited.item.status=args.data.Status;
@@ -557,7 +556,7 @@ export class RoadmapPage {
               this.itemEdited
             )
           ),
-        ).subscribe(data=>console.log(data));
+        ).subscribe();
     }
 
   }
@@ -669,7 +668,6 @@ export class RoadmapPage {
     this.roadmapService.getItems(this.projectId).pipe(tap(tickets => {
         for (let i=0 ;i< tickets.length; i++){
           this.sons= tickets[i].sons;
-          console.log(tickets[i])
           this.roadmap.item= tickets[i];
           this.roadmapService
             .getBacklog(this.projectId)
@@ -693,7 +691,6 @@ export class RoadmapPage {
           if(this.sons.length > 0){
 
             for (let j =0; j<this.sons.length; j++){
-              console.log(this.sons[j])
               this.sonsOfSons= this.sons[j].sons;
               this.roadmapSon.item= this.sons[j];
               this.roadmapService
@@ -716,7 +713,6 @@ export class RoadmapPage {
                   )).subscribe();
               if(this.sonsOfSons.length >0){
                 for (let k =0; k<this.sonsOfSons.length; k++){
-                  console.log(this.sonsOfSons[k])
 
                   this.roadmapSonOfSon.item= this.sonsOfSons[k];
                   this.roadmapService
@@ -763,7 +759,6 @@ export class RoadmapPage {
         )
         .subscribe((items) => {
           this.itemsOfRoadmap = items;
-          console.log(this.itemsOfRoadmap)
           this.data=[];
           let recordFather: object = {};
           let recordMidelFather: object = {};
@@ -865,12 +860,11 @@ export class RoadmapPage {
                 );
               }
             }
-            console.log(this.data);
           }
         }))
     ).subscribe();
   }
-  findInsertion(): Boolean{
+  /* findInsertion(): Boolean{
     let array: any[];
     this.roadmapService.getBacklog(this.projectId)
       .pipe(
@@ -894,5 +888,5 @@ export class RoadmapPage {
       return true;
     }
     return false;
-  }
+  } */
 }
