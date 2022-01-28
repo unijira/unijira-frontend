@@ -8,9 +8,9 @@ import { DocumentsPageRoutingModule } from './documents-routing.module';
 
 import { DocumentsPage } from './documents.page';
 import {TranslateModule} from '@ngx-translate/core';
-import {NgxDropzoneModule} from "ngx-dropzone";
-import {PipeModule} from "../../../pipe.module";
-import {NgxPopperjsModule} from "ngx-popperjs";
+import {NgxDropzoneModule} from 'ngx-dropzone';
+import {PipeModule} from '../../../pipe.module';
+import {NgxPopperjsModule} from 'ngx-popperjs';
 
 @NgModule({
   imports: [

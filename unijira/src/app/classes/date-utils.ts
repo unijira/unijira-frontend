@@ -17,5 +17,7 @@ export class DateUtils {
   public static fromLocalDateTime(date: string): Date {
     return moment(date, moment.ISO_8601).toDate();
   }
-
+  public static fromFullDateToLocalDate(date: Date): Date {
+    return moment(date, 'YYYY-MM-dd').toDate();
+  }
 }

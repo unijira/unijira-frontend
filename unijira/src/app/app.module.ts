@@ -1,3 +1,4 @@
+/* eslint-disable ngrx/no-reducer-in-key-names */
 import {
   BacklogEditWeightPopoversComponent
 } from './pages/projects/backlog/popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
@@ -33,10 +34,14 @@ import {AngularFireModule} from '@angular/fire';
 import {AngularFireStorageModule} from '@angular/fire/storage';
 import {environment} from '../environments/environment';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-import {NewItemComponent} from './pages/projects/backlog/modals/new-item/new-item.component';
+import { GanttModule } from '@syncfusion/ej2-angular-gantt';
+import { DialogModule} from '@syncfusion/ej2-angular-popups';
+import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
+import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
 import {NgxDropzoneModule} from 'ngx-dropzone';
 
 import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
+import { DatePipe } from '@angular/common';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -80,6 +85,10 @@ export const createTranslateLoader = (http: HttpClient) =>
     }),
     EffectsModule.forRoot([SessionEffects]),
     FormsModule,
+    GanttModule,
+    DialogModule,
+    TextBoxModule,
+
     AngularFireModule.initializeApp(environment.firebase),
     AngularFireStorageModule,
   ],
@@ -88,7 +97,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     SessionService,
     AuthGuard,
     Title,
-    ClipboardService
+    ClipboardService,
+    DatePipe
 
   ],
   bootstrap: [AppComponent],

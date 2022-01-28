@@ -42,6 +42,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
   translationsSubscriptions: Subscription[];
 
   measureUnitKey = 'charts.workingHours';
+  // eslint-disable-next-line @typescript-eslint/member-ordering
   @ViewChild('chartContainer') chartConteiner: any;
 
   constructor(private sessionService: SessionService,
@@ -69,7 +70,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
                         itemsDone.push(i.item);
                       }
                       if (i.item && i.item.evaluation)
-                        allItems.push(i.item)
+                        {allItems.push(i.item);}
                     });
                     this.itemsToChartData(itemsDone, allItems);
                     this.sprintSelectedFC.setValue(0);
@@ -138,7 +139,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
               itemsDone.push(i.item);
             }
             if (i.item && i.item.evaluation)
-              allItems.push(i.item)
+              {allItems.push(i.item);}
           });
           this.itemsToChartData(itemsDone, allItems);
         });

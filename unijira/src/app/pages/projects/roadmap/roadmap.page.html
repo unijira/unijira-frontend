@@ -1,0 +1,100 @@
+<ion-content>
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb> Roadmap</ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1>Roadmap</h1>
+          </ion-text>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="secondary" expand="block" (click)="export()" [disabled]="data?.length === 0">
+            <ion-icon slot="start" name="create"></ion-icon>
+            <ion-text [translate]="'projects.tickets.export'"></ion-text>
+          </ion-button>
+        </ion-col>
+        <ion-col size-lg="auto" size="6">
+          <ion-button color="primary" expand="block"  routerLink="/projects/{{projectId}}/tickets">
+            <ion-icon slot="start" name="add" ></ion-icon>
+            <ion-text [translate]="'projects.roadmap.addItem'"></ion-text>
+          </ion-button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+  <div id="gantt">
+  <section class="ion-margin" >
+  <ejs-gantt id="ganttDefault" height="70%" [dataSource]="data" [taskFields]="taskSettings"
+    [editSettings]="editSettings" [toolbar]="toolbar" [enableContextMenu]="true" [allowSelection]="true"
+    [allowSorting]="true" [splitterSettings]="splitterSettings" [sortSettings]="sortSettings" [allowFiltering]="true"
+    [editDialogFields]="editDialogFields" (actionComplete)="onActionComplete($event)" dateFormat="yyyy/MM/dd"
+    (actionBegin)="actionBegin($event)"  (toolbarClick)="toolbarClick($event)"
+    (queryTaskbarInfo)="queryTaskbarInfo($event)" (load)="onLoad($event)" [allowRowDragAndDrop]="true" >
+    <e-columns>
+      <e-column field="TaskID" headerText="ID" textAlign="Left" width="100"></e-column>
+      <e-column field="ItemType" [headerText]="'project.roadmap.type' |translate" mappingName="itemType" width="150">
+        <ng-template #template let-data>
+          <ion-row>
+            <ion-img src="/assets/img/tickets/{{data.ItemType}}.svg" style="height: 30px; width: 30px">
+            </ion-img>
+            <h6 style="font-size: 14px; margin-left: 5px; margin-top: 5px">
+              {{data.ItemType}}
+            </h6>
+          </ion-row>
+        </ng-template>
+      </e-column>
+      <e-column field="TaskName" [headerText]="'project.roadmap.taskName' | translate" width="150"> </e-column>
+      <e-column field="Status" [headerText]="'project.roadmap.status' | translate" width="150" >
+        <ion-badge >
+          <ion-label>{{ "project.roadmap.statusOpen"| translate }}</ion-label>
+        </ion-badge>
+      </e-column>
+      <e-column field="StartDate" [headerText]="'project.roadmap.startDate' | translate" width="150"></e-column>
+      <e-column field="EndDate" [headerText]="'project.roadmap.endDate' | translate" width="150"></e-column>
+      <e-column field="Duration" [headerText]="'project.roadmap.duration'| translate" width="150"></e-column>
+    </e-columns>
+  </ejs-gantt>
+  </section>
+</div>
+  <!---->
+  <!-- <ejs-dialog showCloseIcon="true" id="adddialog" #adddialog width="700px" isModal="true" [header]="'project.roadmap.addNewItem.title'|translate"
+    [buttons]="button" [visible]="visible" [animationSettings]="animationSettingsDialog" >
+    <ng-template #content >
+      <h1></h1>
+      <ion-row class="ion-margin">
+        <ion-col>
+        <ejs-textbox  id="taskName"  [placeholder]="'project.roadmap.taskName' | translate" maxlength=200 width="300px"></ejs-textbox>
+      </ion-col>
+      <ion-col>
+        <ejs-dropdownlist  id="itemType"  [dataSource]="dataDropDown" [placeholder]="'project.roadmap.type' |translate" width="300px"
+           (change)="showFathersDropDown($event)" #itemType ></ejs-dropdownlist>
+          </ion-col>
+          </ion-row>
+          <ion-row  class="ion-margin" >
+            <ion-col>
+        <ejs-datepicker  id="startDate"  [placeholder]="'project.roadmap.startDate' | translate" [min]='minStartDate' width="300px" ></ejs-datepicker>
+      </ion-col>
+      <ion-col>
+        <ejs-datepicker id="endDate"  [placeholder]="'project.roadmap.endDate' | translate" width="300px"  [min]='minEndDate' >
+        </ejs-datepicker>
+      </ion-col>
+      </ion-row >
+      <ion-row class="ion-margin">
+        <ion-col>
+        <ejs-dropdownlist  id="father"  [dataSource]="dataFathersDropDown" [placeholder]="'project.roadmap.selectFather' | translate" width="300px"
+          [enabled]="enabled"></ejs-dropdownlist>
+        </ion-col>
+        </ion-row>
+    </ng-template>
+  </ejs-dialog> -->
+
+</ion-content>
