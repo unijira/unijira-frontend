@@ -431,6 +431,7 @@
   "projects.tickets.remove.message": "Sei sicuro di voler eliminare questo ticket?",
   "projects.tickets.remove.cancel": "Annulla",
   "projects.tickets.remove.confirm": "Elimina",
+  "projects.tickets.remove.success": "Ticket eliminato con successo",
   "projects.tickets.view.evaluation.propose.label": "Proponi una valutazione",
   "projects.tickets.view.evaluation.propose.placeholder": "Inserisci una valutazione per questo ticket",
   "projects.tickets.view.evaluation.value.label": "Valore",
