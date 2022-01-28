@@ -475,5 +475,13 @@
   "projects.documents.list.owner": "User",
   "projects.documents.list.empty": "No documents available",
   "charts.remainingWork": "Remaining work",
-  "charts.burnDownChart": "Burn-down chart"
+  "charts.burnDownChart": "Burn-down chart",
+  "charts.cumulative": "Cumulative flow",
+  "charts.cumulative.title": "Cumulative flow diagram",
+  "charts.cumulative.open": "Open",
+  "charts.cumulative.todo": "In progress",
+  "charts.cumulative.done": "Done",
+  "charts.cumulative.tickets": "Tickets number",
+  "charts.cumulative.reset": "Reset",
+  "charts.cumulative.noData": "No data available"
 }
