@@ -458,5 +458,7 @@
   "projects.documents.list.type": "Type",
   "projects.documents.list.loadDate": "Upload date",
   "projects.documents.list.owner": "User",
-  "projects.documents.list.empty": "No documents available"
+  "projects.documents.list.empty": "No documents available",
+  "charts.remainingWork": "Remaining work",
+  "charts.burnDownChart": "Burn-down chart"
 }

@@ -1,4 +1,4 @@
-import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
@@ -12,6 +12,8 @@ import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
+import {ItemType} from '../../../../models/item/ItemType';
+import {SprintStatus} from '../../../../models/SprintStatus';
 
 @Component({
   selector: 'app-burnup',
@@ -40,6 +42,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
   translationsSubscriptions: Subscription[];
 
   measureUnitKey = 'charts.workingHours';
+  @ViewChild('chartContainer') chartConteiner: any;
 
   constructor(private sessionService: SessionService,
               private activatedRoute: ActivatedRoute,
@@ -111,7 +114,16 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
     //   new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
     //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
     // ];
-    // this.itemsToChartData(items)
+    //
+    // const allitems = [
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-01')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 7, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.todo, null, 1, 0, null, null, null, null),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.todo, null, 1, 0, null, null, null, null),
+    // ];
+    // this.itemsToChartData(items, allitems);
 
 
     this.selectionSubscription = this.sprintSelectedFC.statusChanges.subscribe(() => {
@@ -175,6 +187,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.sprintSelectedFC.updateValueAndValidity();
+    this.chartConteiner.refresh();
   }
 
   itemsToChartData(itemsDone, allItems) {
