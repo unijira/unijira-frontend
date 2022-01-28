@@ -500,5 +500,13 @@
   "charts.workingDone": "Lavoro completato",
   "charts.idealVelocity": "Velocità ideale",
   "charts.remainingWork": "Lavoro rimanente",
-  "charts.burnDownChart": "Grafico burn-down"
+  "charts.burnDownChart": "Grafico burn-down",
+  "charts.cumulative": "Flusso cumulativo",
+  "charts.cumulative.title": "Diagramma di flusso cumulativo",
+  "charts.cumulative.open": "Aperti",
+  "charts.cumulative.todo": "In corso",
+  "charts.cumulative.done": "Completati",
+  "charts.cumulative.tickets": "Numero ticket",
+  "charts.cumulative.reset": "Reset",
+  "charts.cumulative.noData": "Nessun dato disponibile"
 }
