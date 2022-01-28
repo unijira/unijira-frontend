@@ -8,7 +8,7 @@ import {BacklogAPIService} from '../../../../services/backlog-api.service';
 import {Sprint} from '../../../../models/Sprint';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../../../../util';
+import {getColorTheme, unsubscribeAll} from '../../../../util';
 import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
@@ -108,7 +108,6 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
     // this.itemsToChartData(items)
 
 
-
     this.selectionSubscription = this.sprintSelectedFC.statusChanges.subscribe(() => {
       if (this.project && this.backlog && this.sprints.length > 0) {
         this.selectedSprint = this.sprints[this.sprintSelectedFC.value];
@@ -120,6 +119,11 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     });
+  }
+
+
+  get background() {
+    return getColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
   }
 
   ngOnInit() {

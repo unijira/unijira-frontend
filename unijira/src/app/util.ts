@@ -64,6 +64,10 @@ export const switchColorTheme = (enableDark: boolean) => {
   }
 };
 
+
+export const getColorTheme = () =>
+  (localStorage.getItem('colorTheme') || document.body.getAttribute('color-theme')) === 'dark';
+
  export const setTheme = (theme: string) => {
   if (theme === 'dark') {
     document.body.setAttribute('color-theme', 'dark');
