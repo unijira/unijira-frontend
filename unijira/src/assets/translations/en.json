@@ -156,7 +156,7 @@
   "backlog.edit.measureUnit.workingHours": "Working Houres",
   "backlog.edit.measureUnit.workingDays": "Working Days",
   "backlog.server.sprint.created": "Sprint created",
-  "backlog.server.additem": "Add item",
+  "backlog.server.additem": "Add Task",
   "backlog.pages.backlog": "Backlog",
   "backlog.page.title": "Backlog",
   "backlog.server.hints": "Hints",

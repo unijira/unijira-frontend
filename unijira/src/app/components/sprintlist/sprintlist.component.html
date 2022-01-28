@@ -1,6 +1,6 @@
 <ion-item>
   <ion-label>Sprint</ion-label>
-  <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange) = "handleSelection($event)">
+  <ion-select [interfaceOptions]="customPopoverOptions" interface="popover" (ionChange) = "handleSelection($event)" [value]="sprintId">
     <ion-select-option *ngFor="let sprint of sprintList" value="{{ sprint.id }}">{{ sprint.id }} | {{ sprint.status.toLowerCase() }}</ion-select-option>
   </ion-select>
 </ion-item>

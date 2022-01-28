@@ -92,7 +92,9 @@
               <ion-item>
                 <ion-select [(ngModel)]="filterStatusS" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
                   <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.todo">{{itemStatus.todo | ticketStatus | translate}}</ion-select-option>
                   <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+
                 </ion-select>
               </ion-item>
             </ion-col>
@@ -150,6 +152,7 @@
               <app-sprintlist (click)="$event.stopPropagation();"
                 [projectId]="projectId"
                 [backlogId]="backlogId"
+                [sprintId]="sprintId"
                 (sprintSelected)="changeSprint($event)"
               ></app-sprintlist>
             </ion-col>
@@ -229,20 +232,20 @@
                           (click)="editStatusPopover($event, insertion, 'sprint')"
                         >
                           <ion-badge
-                            *ngIf="insertion.item.status === 'OPEN' "
+                            *ngIf="insertion.item.status == 'OPEN' "
                             color="primary"
                             class="status-badge"
                             >{{ insertion.item.status }}</ion-badge
                           >
                           <ion-badge
-                            *ngIf="insertion.item.status === 'DONE' "
+                            *ngIf="insertion.item.status == 'DONE' "
                             color="success"
                             class="status-badge"
                             >{{ insertion.item.status }}</ion-badge
                           >
 
                           <ion-badge
-                          *ngIf="insertion.item.status === 'TODO' "
+                          *ngIf="insertion.item.status == 'IN_PROGRESS' "
                           color="light"
                           class="status-badge"
                           >{{ insertion.item.status }}</ion-badge
@@ -258,10 +261,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                           >
-                          <!-- <img
+                          <img
                             class="avatar-img"
-                            [src]="insertion.item.assignees[0].assignee.avatar"
-                            />-->
+                            [src]="insertion.item.assignees[0].assigneeAvatar || 'assets/img/user/avatar.svg'"
+                            />
                           </ion-thumbnail>
                         </ion-item>
                       </ion-col>
@@ -319,6 +322,7 @@
                 <ion-select [(ngModel)]="filterStatusB" [placeholder]="'projects.tickets.status.placeholder' | translate" [multiple]="true" interface="popover" class="ion-padding-top w-100">
                   <ion-select-option [value]="itemStatus.open">{{ itemStatus.open | ticketStatus | translate }}</ion-select-option>
                   <ion-select-option [value]="itemStatus.done">{{ itemStatus.done | ticketStatus | translate }}</ion-select-option>
+                  <ion-select-option [value]="itemStatus.todo">{{itemStatus.todo | ticketStatus | translate}}</ion-select-option>
                 </ion-select>
               </ion-item>
             </ion-col>
@@ -417,20 +421,20 @@
                           (click)="editStatusPopover($event, insertion, 'backlog')"
                         >
                         <ion-badge
-                        *ngIf="insertion.item.status === 'OPEN' "
+                        *ngIf="insertion.item.status == 'OPEN' "
                         color="primary"
                         class="status-badge"
                         >{{ insertion.item.status }}</ion-badge
                       >
                       <ion-badge
-                        *ngIf="insertion.item.status === 'DONE' "
+                        *ngIf="insertion.item.status == 'DONE' "
                         color="success"
                         class="status-badge"
                         >{{ insertion.item.status }}</ion-badge
                       >
 
                       <ion-badge
-                      *ngIf="insertion.item.status === 'TODO' "
+                      *ngIf="insertion.item.status == 'IN_PROGRESS' "
                       color="light"
                       class="status-badge"
                       >{{ insertion.item.status }}</ion-badge
@@ -445,10 +449,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                           >
-                          <!--<img
+                          <img
                             class="avatar-img"
-                            [src]="insertion.item.assignees[0].assignee.avatar"
-                            />-->
+                            [src]="insertion.item.assignees[0].assigneeAvatar || 'assets/img/user/avatar.svg'"
+                            />
                           </ion-thumbnail>
                         </ion-item>
                       </ion-col>
