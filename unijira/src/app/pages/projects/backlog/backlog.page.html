@@ -18,8 +18,8 @@
     <ion-grid>
       <ion-row class="ion-align-items-center ion-justify-content-end">
         <ion-col class="ion-align-self-start">
-          <ion-text color="dark">
-            <h4>Progetto {{projectId}}</h4>
+          <ion-text color="dark"           >
+            <h4> {{ 'backlog.project.title' | translate }} {{projectId}}</h4>
           </ion-text>
         </ion-col>
         <ion-col class="ion-align-self-end">
@@ -130,8 +130,7 @@
                 color="light"
                 id="open-modal"
                 *ngIf="!sprintIsStarted"
-              >
-                Avvia Sprint
+                [translate]="'backlog.buttons.startsprint'">
               </ion-button>
               <ion-modal trigger="open-modal">
                 <ng-template>
@@ -347,8 +346,7 @@
               <ion-badge color="success">{{ totalDoneb }}</ion-badge>
             </ion-col>
             <ion-col size="auto" class="ion-align-self-center">
-              <ion-button  (click)="$event.stopPropagation(); createSprint()" color="light">
-                Crea Sprint
+              <ion-button  (click)="$event.stopPropagation(); createSprint()" color="light" [translate]="'backlog.buttons.newsprint'">
               </ion-button>
             </ion-col>
           </ion-row>

@@ -184,8 +184,10 @@
   "backlog.edit.measureUnit.storyPoints": "Story Points",
   "backlog.edit.measureUnit.workingHours": "Ore lavorative",
   "backlog.edit.measureUnit.workingDays": "Giorni lavorativi",
-
-  "backlog.server.hints": "Hints",
+"backlog.buttons.startsprint": "Inizia sprint",
+"backlog.buttons.newsprint": "Crea sprint",
+"backlog.project.title": "Progetto",
+  "backlog.server.hints": "Hint",
   "backlog.server.hints.warning": "Attenzione: non hai nessun suggerimento!",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
   "project.settings.details.alert.update.message.sure" : "I dettagli del progetto verrano modificati.",
