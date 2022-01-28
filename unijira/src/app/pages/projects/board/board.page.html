@@ -30,7 +30,7 @@
         </ion-row>
       </ion-col>
       <ion-col size-lg="auto" size="6" *ngIf="sprint">
-        <ion-button color="primary" (click)="0">
+        <ion-button color="primary" [routerLink]="['/projects/' + project.id + '/backlog']">
           <ion-text translate>board.endSprint</ion-text>
         </ion-button>
       </ion-col>
