@@ -8,6 +8,8 @@ import {ProfilePageRoutingModule} from './profile-routing.module';
 
 import {ProfilePage} from './profile.page';
 import {TranslateModule} from '@ngx-translate/core';
+import {UserinfoComponent} from '../../../../components/user/userinfo/userinfo.component';
+import {UsersettingsComponent} from '../../../../components/user/usersettings/usersettings.component';
 
 @NgModule({
     imports: [
@@ -17,6 +19,10 @@ import {TranslateModule} from '@ngx-translate/core';
         ProfilePageRoutingModule,
         TranslateModule
     ],
-  declarations: [ProfilePage]
+  declarations: [
+    ProfilePage,
+    UsersettingsComponent,
+    UserinfoComponent],
+  exports: [UsersettingsComponent,UserinfoComponent],
 })
 export class ProfilePageModule {}

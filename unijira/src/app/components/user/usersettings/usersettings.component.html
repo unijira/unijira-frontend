@@ -1,0 +1,93 @@
+<ion-grid>
+  <ion-row>
+    <ion-col>
+      <ion-card class="ion-justify-content-center">
+        <ion-card-header>
+          <ion-card-subtitle>
+            <ion-icon name="desktop"></ion-icon>
+            {{'profile.device.preferences'| translate}}</ion-card-subtitle>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item lines="full">
+                  <ion-list>
+                    <ion-radio-group value="{{this.preferredLanguage}}" >
+                      <ion-list-header>
+                        <ion-icon name="earth"></ion-icon>
+                        {{'profile.preferred.language' | translate}}
+                      </ion-list-header>
+                      <ion-item>
+                        <ion-label>{{'profile.lang.italian' | translate}}</ion-label>
+                        <ion-radio  (click)="setPreferredLanguage('it')" slot="start" value="it"></ion-radio>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'profile.lang.english' | translate}}</ion-label>
+                        <ion-radio slot="start" value="en"
+                                   (click)="setPreferredLanguage('en')"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-list>
+                </ion-item>
+              </ion-col>
+              <ion-col>
+                <ion-item lines="full">
+                  <ion-list>
+                    <ion-radio-group value="{{this.preferredTheme}}">
+                      <ion-list-header>
+                        <ion-icon name="brush"></ion-icon>
+                        {{'profile.preferred.theme' | translate}}
+                      </ion-list-header>
+                      <ion-item>
+                        <ion-label>{{'profile.theme.dark' | translate}}</ion-label>
+                        <ion-radio slot="start" value="dark" (click)="setPreferredTheme('dark')"></ion-radio>
+                      </ion-item>
+                      <ion-item>
+                        <ion-label>{{'profile.theme.light' | translate}}</ion-label>
+                        <ion-radio slot="start" value="light" (click)="setPreferredTheme('light')"></ion-radio>
+                      </ion-item>
+                    </ion-radio-group>
+                  </ion-list>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+    <ion-col>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-subtitle>
+            <ion-icon name="key"></ion-icon>
+            {{'profile.security.preferences'| translate}}</ion-card-subtitle>
+          <ion-card-title>
+            {{'change.password' | translate}}
+          </ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col>
+                <ion-item lines="full">
+                  <ion-label position="floating">{{'profile.username'|translate}}</ion-label>
+                  <ion-input type="email" value="{{username}}" [readonly]="true"></ion-input>
+                </ion-item>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <ion-label position="floating">{{'new.password'|translate}}</ion-label>
+                <ion-input type="password" [(ngModel)]="newPassword"></ion-input>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-button color="light" (click)="changePassword()">{{'change.password'|translate}}</ion-button>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-grid>
