@@ -6,7 +6,7 @@ import {ProjectService} from '../../../../services/project/project.service';
 import {ActivatedRoute} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {PageService} from '../../../../services/page.service';
-import {AlertController, ItemReorderEventDetail, ToastController} from '@ionic/angular';
+import {AlertController, ToastController} from '@ionic/angular';
 import {DefinitionOfDoneEntry} from '../../../../models/projects/DefinitionOfDoneEntry';
 import {presentToast} from '../../../../util';
 import {BoardService} from '../../../../services/board/board.service';
@@ -64,7 +64,7 @@ export class DefOfDonePage implements OnInit {
     });
   }
 
-  doReorder(event: CustomEvent<ItemReorderEventDetail>) {
+  doReorder(event) {
     event.detail.complete(this.defOfDone);
 
     const target: DefinitionOfDoneEntry = this.defOfDone[event.detail.to];
