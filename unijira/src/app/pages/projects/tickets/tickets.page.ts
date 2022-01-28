@@ -59,9 +59,11 @@ export class TicketsPage implements OnInit {
         });
 
         this.sessionService.getUserInfo().subscribe(user => {
-          this.projectService.verifyPermission(this.projectId, user.id, MembershipPermission.ticket).subscribe(permission => {
-            this.unauthorized = !permission;
-          });
+          if(user) {
+            this.projectService.verifyPermission(this.projectId, user.id, MembershipPermission.ticket).subscribe(permission => {
+              this.unauthorized = !permission;
+            });
+          }
         });
 
       });

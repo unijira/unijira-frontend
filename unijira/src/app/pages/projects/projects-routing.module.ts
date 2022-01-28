@@ -79,6 +79,11 @@ const routes: Routes = [
     loadChildren: () => import('./settings/defofdone/defofdone.module').then( m => m.DefOfDonePageModule)
   },
   {
+    path: ':id/documents',
+    loadChildren: () => import('./documents/documents.module').then( m => m.DocumentsPageModule)
+  },
+
+  {
     path: ':id/charts/burndown',
     loadChildren: () => import('./charts/burndown/burndown.module').then( m => m.BurndownPageModule)
   },

@@ -7,7 +7,9 @@ import {HttpParams} from '@angular/common/http';
 import {MembershipRoles} from '../../models/projects/MembershipRoles';
 import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
+import {Document} from '../../models/projects/Document';
 import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
+import {DateUtils} from '../../classes/date-utils';
 
 @Injectable({
   providedIn: 'root'
@@ -95,6 +97,39 @@ export class ProjectService {
     return this.http.get<boolean>(`/projects/${projectId}/memberships/${userId}/permission/${permission}`)
       .pipe(map(_ => true))
       .pipe(catchError(_ => of(false)));
+
+  }
+
+  getDocuments(projectId: number): Observable<Document[]> {
+
+    // return this.http.get<Document[]>(`/projects/${projectId}/documents`)
+    //   .pipe(catchError(() => of(null)));
+
+    return of([
+      new Document(1, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(2, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@ædmin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(3, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
+      new Document(4, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime())
+    ]);
+
+  }
+
+  deleteDocument(projectId: number, documentId: number): Observable<Document> {
+
+    return this.http.get<Document>(`/projects/${projectId}/documents/${documentId}`)
+      .pipe(catchError(() => of(null)));
+
+  }
+
+  createDocument(filename: string, path: URL, projectId: number, userId: number,
+                 userFirstName: string, userLastName: string, userUsername: string,
+                 userAvatar: string, mime: string): Observable<Document> {
+
+    return this.http.post<Document>(`/projects/${projectId}/documents`,
+      {filename, path, projectId, userId,
+             userFirstName, userLastName, userUsername,
+             userAvatar, mime})
+      .pipe(catchError(() => of(null)));
 
   }
 
