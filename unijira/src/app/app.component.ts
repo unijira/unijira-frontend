@@ -174,8 +174,6 @@ export class AppComponent implements OnInit, OnDestroy {
       event: ev,
     });
 
-    popOver.onDidDismiss().then(data=> console.log(data));
-
     return await popOver.present();
   }
 

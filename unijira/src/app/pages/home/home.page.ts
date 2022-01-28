@@ -63,7 +63,7 @@ export class HomePage implements OnInit {
     );
 
     this.sessionService.getUserInfo().subscribe(user => {
-      if(user.status === UserStatus.requireConfirm) {
+      if(user?.status === UserStatus.requireConfirm) {
         this.toastController.create({
           message: this.translateService.instant('user.home.confirm'),
           duration: 3000,
@@ -80,12 +80,12 @@ export class HomePage implements OnInit {
     this.currentSegment = e.detail?.value;
   }
 
-  myTicketsDonePerProject(projectId: number) {
-    return this.myTicketsDone.filter(ticket => ticket.projectId === projectId).length;
+  myTicketsDonePerProject(projectId: number): number {
+    return this.myTicketsDone?.filter(ticket => ticket.projectId === projectId).length || 0;
   }
 
-  myTicketsOpenPerProject(projectId: number) {
-    return this.myTicketsOpen.filter(ticket => ticket.projectId === projectId).length;
+  myTicketsOpenPerProject(projectId: number): number {
+    return this.myTicketsOpen?.filter(ticket => ticket.projectId === projectId).length || 0;
   }
 
 }
