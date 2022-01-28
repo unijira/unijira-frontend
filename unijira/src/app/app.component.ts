@@ -97,6 +97,7 @@ export class AppComponent implements OnInit, OnDestroy {
         this.charts = [
           {name: 'charts.burnUpChart', url: `/projects/${proj.id}/charts/burnup`, icon: 'trending-up-outline'},
           {name: 'charts.burnDownChart', url: `/projects/${proj.id}/charts/burndown`, icon: 'trending-down-outline'},
+          {name: 'charts.cumulative', url: `/projects/${proj.id}/charts/cumulative`, icon: 'stats-chart-outline'}
         ];
 
       }

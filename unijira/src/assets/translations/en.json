@@ -156,7 +156,7 @@
   "backlog.edit.measureUnit.workingHours": "Working Houres",
   "backlog.edit.measureUnit.workingDays": "Working Days",
   "backlog.server.sprint.created": "Sprint created",
-  "backlog.server.additem": "Add item",
+  "backlog.server.additem": "Add Task",
   "backlog.pages.backlog": "Backlog",
   "backlog.page.title": "Backlog",
   "backlog.server.hints": "Hints",
@@ -480,5 +480,13 @@
   "projects.documents.toast.success": "The documents have been uploaded successfully!",
   "projects.documents.toast.failed": "An error occurred while loading documents.",
   "charts.remainingWork": "Remaining work",
-  "charts.burnDownChart": "Burn-down chart"
+  "charts.burnDownChart": "Burn-down chart",
+  "charts.cumulative": "Cumulative flow",
+  "charts.cumulative.title": "Cumulative flow diagram",
+  "charts.cumulative.open": "Open",
+  "charts.cumulative.todo": "In progress",
+  "charts.cumulative.done": "Done",
+  "charts.cumulative.tickets": "Tickets number",
+  "charts.cumulative.reset": "Reset",
+  "charts.cumulative.noData": "No data available"
 }

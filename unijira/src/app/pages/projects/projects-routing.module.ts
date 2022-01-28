@@ -77,6 +77,11 @@ const routes: Routes = [
     path: ':id/documents',
     loadChildren: () => import('./documents/documents.module').then( m => m.DocumentsPageModule)
   },
+  {
+    path: ':id/charts/cumulative',
+    loadChildren: () => import('./charts/cumulative/cumulative.module').then( m => m.CumulativePageModule)
+  },
+
 
   {
     path: ':id/charts/burndown',

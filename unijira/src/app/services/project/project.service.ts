@@ -10,6 +10,7 @@ import {MembershipPermission} from '../../models/projects/MembershipPermission';
 import {Document} from '../../models/projects/Document';
 import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
 import {DateUtils} from '../../classes/date-utils';
+import {ItemStatusHistory} from '../../models/item/ItemStatusHistory';
 
 @Injectable({
   providedIn: 'root'
@@ -155,6 +156,11 @@ export class ProjectService {
 
   getProjectDefOfDoneEntry(projectId: number, entryId: number): Observable<DefinitionOfDoneEntry> {
     return this.http.get<DefinitionOfDoneEntry>(`/projects/${projectId}/defofdone/${entryId}`)
+      .pipe(catchError(() => of(null)));
+  }
+
+  getItemsStatusHistoryByProject(project: number): Observable<ItemStatusHistory[]> {
+    return this.http.get<ItemStatusHistory[]>(`/projects/${project}/items/history`)
       .pipe(catchError(() => of(null)));
   }
 }

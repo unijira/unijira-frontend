@@ -144,7 +144,7 @@
   "backlog.server.save": "Salva",
   "backlog.page.title": "Backlog",
   "backlog.pages.backlog": "Backlog",
-  "backlog.server.additem": "Crea item",
+  "backlog.server.additem": "Crea Task",
   "backlog.detail.description": "Descrizione",
   "backlog.detail.childTickets": "Ticket figli",
   "backlog.detail.activity": "Attività",
@@ -505,5 +505,13 @@
   "projects.documents.toast.failed" : "Si è verificato un errore durante il caricamento dei documenti.",
   "charts.idealVelocity": "Velocità ideale",
   "charts.remainingWork": "Lavoro rimanente",
-  "charts.burnDownChart": "Grafico burn-down"
+  "charts.burnDownChart": "Grafico burn-down",
+  "charts.cumulative": "Flusso cumulativo",
+  "charts.cumulative.title": "Diagramma di flusso cumulativo",
+  "charts.cumulative.open": "Aperti",
+  "charts.cumulative.todo": "In corso",
+  "charts.cumulative.done": "Completati",
+  "charts.cumulative.tickets": "Numero ticket",
+  "charts.cumulative.reset": "Reset",
+  "charts.cumulative.noData": "Nessun dato disponibile"
 }

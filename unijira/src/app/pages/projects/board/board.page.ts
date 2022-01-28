@@ -87,28 +87,34 @@ export class BoardPage implements OnInit, OnDestroy {
               const splitted = ins.item.tags && ins.item.tags !== '' && ins.item.tags.split(';');
               this.tags = this.tags.concat(splitted);
               this.types.push(ins.item.type);
-              if (ins.item.type === ItemType.story) {
+              if (ins.item.type === ItemType.story && !this.stories.map(i => i.id).includes(ins.item.id)) {
                 this.stories.push(ins.item);
                 this.storiesToShow.push(ins.item);
               }
 
-              if (ins.item.type === ItemType.epic) {
+              if (ins.item.type === ItemType.epic && !this.epics.map(i => i.id).includes(ins.item.id)) {
                 this.epics.push(ins.item);
               }
 
               if (ins.item.type === ItemType.issue || ins.item.type === ItemType.task) {
                 switch (ins.item.status) {
                   case ItemStatus.done:
-                    this.doneItems.push(ins.item);
-                    this.doneItemsToShow.push(ins.item);
+                    if (!this.doneItems.map(i => i.id).includes(ins.item.id)) {
+                      this.doneItems.push(ins.item);
+                      this.doneItemsToShow.push(ins.item);
+                    }
                     break;
                   case ItemStatus.open:
-                    this.openedItems.push(ins.item);
-                    this.openedItemsToShow.push(ins.item);
+                    if (!this.openedItems.map(i => i.id).includes(ins.item.id)) {
+                      this.openedItems.push(ins.item);
+                      this.openedItemsToShow.push(ins.item);
+                    }
                     break;
                   case ItemStatus.todo:
-                    this.toDoItems.push(ins.item);
-                    this.toDoItemsToShow.push(ins.item);
+                    if (!this.toDoItems.map(i => i.id).includes(ins.item.id)) {
+                      this.toDoItems.push(ins.item);
+                      this.toDoItemsToShow.push(ins.item);
+                    }
                 }
               }
             });

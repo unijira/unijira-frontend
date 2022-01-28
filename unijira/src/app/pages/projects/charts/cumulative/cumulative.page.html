@@ -1,0 +1,80 @@
+<ion-content>
+
+  <!-- Breadcrumbs -->
+  <section class="ion-margin">
+    <ion-breadcrumbs>
+      <ion-breadcrumb routerLink="/">
+        <ion-icon name="home"></ion-icon>
+      </ion-breadcrumb>
+      <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
+      <ion-breadcrumb [translate]="'charts'"></ion-breadcrumb>
+    </ion-breadcrumbs>
+  </section>
+
+  <!-- Title -->
+  <section class="ion-margin">
+    <ion-grid>
+      <ion-row class="ion-align-items-center">
+        <ion-col size-lg="" size="12">
+          <ion-text>
+            <h1 [translate]="'charts.cumulative.title'"></h1>
+          </ion-text>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </section>
+
+  <section class="ion-margin">
+    <ion-row class="ion-align-items-center">
+      <ion-col size-lg="3" size="12">
+        <ion-item class="ion-align-items-center" [disabled]="history?.length === 0">
+          <ion-label position="floating" [translate]="'projects.releases.view.startDate'"></ion-label>
+          <ion-input readonly="true" [value]="startDate | date:'dd/MM/YYYY'"></ion-input>
+          <ion-button slot="end" fill="clear" id="open-start-date">
+            <ion-icon icon="calendar"></ion-icon>
+          </ion-button>
+          <ion-popover trigger="open-start-date" show-backdrop="false">
+            <ng-template>
+              <ion-datetime [max]="endDateMinusOne | date:'YYYY-MM-dd'" #popoverStartDate presentation="date" (ionChange)="changeDate(true, popoverStartDate.value)"></ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size="12">
+        <ion-item class="ion-align-items-center" [disabled]="history?.length === 0">
+          <ion-label position="floating" [translate]="'projects.releases.view.endDate'"></ion-label>
+          <ion-input readonly="true" [value]="endDate | date:'dd/MM/YYYY'"></ion-input>
+          <ion-button slot="end" fill="clear" id="open-end-date">
+            <ion-icon icon="calendar"></ion-icon>
+          </ion-button>
+          <ion-popover trigger="open-end-date" show-backdrop="false">
+            <ng-template>
+              <ion-datetime [min]="startDatePlusOne | date:'YYYY-MM-dd'" #popoverEndDate presentation="date" (ionChange)="changeDate(false, popoverEndDate.value)"></ion-datetime>
+            </ng-template>
+          </ion-popover>
+        </ion-item>
+      </ion-col>
+      <ion-col size-lg="3" size="12">
+          <ion-button [disabled]="startDateField === null && endDateField === null" (click)="resetDate()" [translate]="'charts.cumulative.reset'"></ion-button>
+      </ion-col>
+    </ion-row>
+  </section>
+
+  <ion-row *ngIf="history?.length > 0">
+    <ion-col>
+      <ejs-chart #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" [background]="background" class="ion-margin-start ion-margin-end" [margin]="margin">
+        <e-series-collection>
+          <e-series [dataSource]="openCharts" type="StepArea" xName="date" yName="points" [name]="'charts.cumulative.open' | translate" [marker]="marker" opacity=0.6></e-series>
+          <e-series [dataSource]="todoCharts" type="StepArea" xName="date" yName="points" [name]="'charts.cumulative.todo' | translate" [marker]="marker" opacity=0.6></e-series>
+          <e-series [dataSource]="doneCharts" type="StepArea" xName="date" yName="points" [name]="'charts.cumulative.done' | translate" [marker]="marker" opacity=0.6></e-series>
+        </e-series-collection>
+      </ejs-chart>
+    </ion-col>
+  </ion-row>
+  <ion-row *ngIf="history?.length === 0" class="ion-justify-content-center">
+    <ion-text class="ion-margin" color="medium">
+      <p><i [translate]="'charts.cumulative.noData'"></i></p>
+    </ion-text>
+  </ion-row>
+
+</ion-content>
