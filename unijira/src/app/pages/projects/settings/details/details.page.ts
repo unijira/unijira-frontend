@@ -142,6 +142,7 @@ export class DetailsPage implements OnInit {
 
             this.uploadService.upload(this.project.id, 'icon', this.file, BasePath.project).subscribe(
               url => {
+
                 this.projectService.updateProject(this.project.id, this.nameForm.value, this.keyForm.value,
                   this.project.ownerId, new URL(url)).subscribe(
                   p => {

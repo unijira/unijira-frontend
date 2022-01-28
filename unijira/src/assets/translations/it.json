@@ -460,7 +460,7 @@
   "projects.documents.search.label" : "Ricerca",
   "projects.documents.search.placeholder" : "Cerca documenti",
   "projects.documents.mimes.label" : "Tipo",
-  "projects.documents.mimes.placeholder" : "Nessuna tipologia",
+  "projects.documents.mimes.placeholder" : "Seleziona un tipo di file",
   "projects.documents.list.filename" : "Nome",
   "projects.documents.list.type" : "Tipo",
   "projects.documents.list.loadDate" : "Data di caricamento",
@@ -484,5 +484,10 @@
   "charts.burnUpChart": "Grafico burn-up",
   "charts.date": "Data ",
   "charts.workingDone": "Lavoro completato",
-  "charts.idealVelocity": "Velocità ideale"
+  "charts.idealVelocity": "Velocità ideale",
+  "projects.documents.drop.title": "Trascina qui i tuoi documenti...",
+  "projects.documents.alert.title" : "Sei sicuro di voler continuare?",
+  "projects.documents.alert.sure" : "I documenti selezionati verranno condivisi con il resto del team.",
+  "projects.documents.toast.success" : "I documenti sono stati caricati correttamente!",
+  "projects.documents.toast.failed" : "Si è verificato un errore durante il caricamento dei documenti."
 }

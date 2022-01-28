@@ -453,10 +453,15 @@
   "projects.documents.search.label": "Search",
   "projects.documents.search.placeholder": "Search documents",
   "projects.documents.mimes.label": "Type",
-  "projects.documents.mimes.placeholder": "No typology",
+  "projects.documents.mimes.placeholder": "Select a file type",
   "projects.documents.list.filename": "Name",
   "projects.documents.list.type": "Type",
   "projects.documents.list.loadDate": "Upload date",
   "projects.documents.list.owner": "User",
-  "projects.documents.list.empty": "No documents available"
+  "projects.documents.list.empty": "No documents available",
+  "projects.documents.drop.title": "Drag your documents here...",
+  "projects.documents.alert.title": "Are you sure you want to continue?",
+  "projects.documents.alert.sure": "The selected documents will be shared with the rest of the team.",
+  "projects.documents.toast.success": "The documents have been uploaded successfully!",
+  "projects.documents.toast.failed": "An error occurred while loading documents."
 }

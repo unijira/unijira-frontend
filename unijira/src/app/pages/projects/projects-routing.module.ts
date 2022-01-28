@@ -34,11 +34,6 @@ const routes: Routes = [
     loadChildren: () => import('./releases/releases.module').then(m => m.ReleasesPageModule)
   },
   {
-    path: ':id/invite',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./invite/invite.module').then(m => m.InvitePageModule)
-  },
-  {
     path: ':id/settings/details',
     canActivate: [AuthGuard],
     loadChildren: () => import('./settings/details/details.module').then(m => m.DetailsPageModule)

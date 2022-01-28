@@ -2,3 +2,16 @@
   width: 2rem;
   height: 2rem;
 }
+
+.dropzone {
+  background: var(--ion-background-color);
+}
+
+.delete-icon {
+  color: lightslategray;
+  cursor: pointer;
+}
+
+.delete-icon:hover {
+  color: #eb445a;
+}
