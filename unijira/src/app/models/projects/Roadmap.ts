@@ -1,4 +1,4 @@
-import { Item } from "../item/Item";
+import { Item } from '../item/Item';
 
 export class Roadmap {
   public startingDate: Date;
@@ -14,7 +14,7 @@ export class Roadmap {
       this.startingDate= startingDate;
       this.endingDate= endingDate;
       this.item= item;
-      this.roadmapId=roadmapId
+      this.roadmapId=roadmapId;
   }
 
 }

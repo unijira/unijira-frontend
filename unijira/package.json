@@ -49,17 +49,14 @@
     "@ngrx/store-devtools": "^13.0.1",
     "@ngx-translate/core": "^14.0.0",
     "@ngx-translate/http-loader": "^7.0.0",
-<<<<<<< HEAD
     "@syncfusion/ej2-angular-calendars": "^19.4.38",
     "@syncfusion/ej2-angular-dropdowns": "^19.4.40",
     "@syncfusion/ej2-angular-gantt": "^19.4.40",
     "@syncfusion/ej2-angular-inputs": "^19.4.38",
     "@syncfusion/ej2-angular-popups": "^19.4.38",
     "cldr-data": "^36.0.0",
-=======
     "@types/intro.js": "^3.0.2",
     "angular-intro.js": "^3.4.0",
->>>>>>> 6565b5b1afc16ef629402c430d140eef939feac1
     "@popperjs/core": "^2.11.2",
     "@syncfusion/ej2-angular-charts": "^19.4.47",
     "firebase": "^8.10.0",
@@ -71,7 +68,6 @@
     "ngx-clipboard": "^15.0.1",
     "ngx-popperjs": "^13.0.0",
     "rxjs": "~7.4.0",
-    "ts": "^0.2.2",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"
   },

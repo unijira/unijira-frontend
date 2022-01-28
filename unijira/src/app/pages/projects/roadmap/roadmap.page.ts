@@ -527,7 +527,7 @@ export class RoadmapPage {
       this.itemEdited.item.type=args.data.ItemType;
     this.itemEdited.item.status=args.data.Status;
       this.itemEdited.startingDate= args.data.StartDate;
-
+      this.itemEdited.item.id = args.data.TaskID;
       this.itemEdited.endingDate= args.data.EndDate;
       startingDate= this.datePipe.transform( this.itemEdited.startingDate,'yyyy-MM-dd');
       endingDate= this.datePipe.transform( this.itemEdited.endingDate,'yyyy-MM-dd');
@@ -774,7 +774,7 @@ export class RoadmapPage {
                   TaskName: this.itemsOfRoadmap[i].itemDescription,
                   Status: this.itemsOfRoadmap[i].itemStatus,
                   id:this.itemsOfRoadmap[i].roadmapInsertionId,
-                  TaskID: this.taskIdGantt,
+                  TaskID: this.itemsOfRoadmap[i].itemId,
                   StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                   EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
                   ItemType: this.itemsOfRoadmap[i].itemType,
@@ -799,7 +799,7 @@ export class RoadmapPage {
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
                       Status: this.itemsOfRoadmap[i].children[j].itemStatus,
-                      TaskID: this.taskIdGantt,
+                      TaskID: this.itemsOfRoadmap[i].children[j].itemId,
                       StartDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionStartingDate,
                       EndDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionEndingDate,
                       ItemType: this.itemsOfRoadmap[i].children[j].itemType,
@@ -816,7 +816,7 @@ export class RoadmapPage {
                           TaskName: this.itemsOfRoadmap[i].children[j].children[k].itemDescription,
                           id:this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionId,
                           Status: this.itemsOfRoadmap[i].children[j].children[k].itemStatus,
-                          TaskID: this.taskIdGantt,
+                          TaskID: this.itemsOfRoadmap[i].children[j].children[k].itemId,
                           StartDate: this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionStartingDate,
                           EndDate: this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionEndingDate,
                           ItemType: this.itemsOfRoadmap[i].children[j].children[k].itemType,
@@ -827,7 +827,7 @@ export class RoadmapPage {
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
                       Status: this.itemsOfRoadmap[i].children[j].itemStatus,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
-                      TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children[j].children.length,
+                      TaskID: this.itemsOfRoadmap[i].children[j].itemId,
                       StartDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionStartingDate,
                       EndDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionEndingDate,
                       ItemType: this.itemsOfRoadmap[i].children[j].itemType,
@@ -842,7 +842,7 @@ export class RoadmapPage {
                     TaskName: this.itemsOfRoadmap[i].itemDescription,
                     Status: this.itemsOfRoadmap[i].itemStatus,
                     id:this.itemsOfRoadmap[i].roadmapInsertionId,
-                    TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length-cont,
+                    TaskID: this.itemsOfRoadmap[i].itemId,
                     StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                     EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
                     ItemType: this.itemsOfRoadmap[i].itemType,
