@@ -49,7 +49,7 @@
             </h5>
             <ul class="lista-children">
               <li *ngFor="let t of backlogInsertion.item.sons">
-                <b>{{ t.name }}</b> | {{ t.description }} |
+                <b>{{ t.summary }}</b> | {{ t.description }} |
                 {{ backlogInsertion.item.evaluation }}
               </li>
             </ul>
@@ -155,7 +155,7 @@
                   <ion-thumbnail class="icon-avatar">
                     <img
                       class="avatar-img"
-                      [src]="backlogInsertion.item.assignees[0].assignee.avatar"
+                      [src]="backlogInsertion.item.assignees[0].assigneeAvatar"
                     />
                   </ion-thumbnail>
                 </div>
@@ -176,7 +176,7 @@
                     <ion-badge
                       class="weight-badge"
                       color="light"
-                      (save)="editWeight($event, backlogInsertion, 'backlog')"
+
                     >
                       <span>{{ backlogInsertion.item.evaluation }}</span>
                     </ion-badge>
@@ -210,7 +210,7 @@
         <ion-row>
           <ion-col size="12">
             <h5 [translate]="'backlog.detail.task.notes'"></h5>
-            {{ backlogInsertion.item.note }}
+            {{ backlogInsertion.item.notes }}
           </ion-col>
         </ion-row>
       </ion-col>

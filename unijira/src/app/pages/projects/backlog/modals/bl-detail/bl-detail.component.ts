@@ -224,7 +224,7 @@ export class BlDetailComponent implements OnInit {
     return await popOver.present();
   }
 
-  async editPesoPopover(ev: any, item) {
+  async editPesoPopover(ev: any, item, tipo) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditWeightPopoversComponent,
       cssClass: 'backlog-edit-weight-popover',
@@ -238,14 +238,14 @@ export class BlDetailComponent implements OnInit {
     popOver.onDidDismiss().then((data) => {
 
       if (data.data !== undefined) {
-        this.editWeight(data);
+        // this.editWeight(data);
       }
     });
 
     return await popOver.present();
   }
 
-  async editStatusPopover(ev: any, item) {
+  async editStatusPopover(ev: any, item, position) {
     const popOver = await this.popOverCtrl.create({
       component: BacklogEditStatusPopoversComponent,
       cssClass: 'backlog-edit-status-popover',
@@ -269,7 +269,4 @@ export class BlDetailComponent implements OnInit {
     this.backlogInsertion.item.status = data.data.value;
   }
 
-  editWeight(data) {
-    // this.backlogInsertion.item.weight = data.data.value;
-  }
 }

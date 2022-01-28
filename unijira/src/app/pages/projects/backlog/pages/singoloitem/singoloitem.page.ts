@@ -278,7 +278,7 @@ export class SingoloitemPage implements OnInit {
     this.item.status = data.data.value;
   }
 
-  editWeight(data) {
+  editWeight(ev) {
     // this.item.weight = data.data.value;
   }
 }
