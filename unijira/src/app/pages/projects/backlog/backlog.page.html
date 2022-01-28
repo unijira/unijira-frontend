@@ -79,13 +79,13 @@
                 </p>
               </ion-text>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.search.label'"></small>
               </ion-text>
               <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchS"></ion-searchbar>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.status.label'"></small>
               </ion-text>
@@ -96,7 +96,7 @@
                 </ion-select>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.type.label'"></small>
               </ion-text>
@@ -122,11 +122,11 @@
               <ion-button
                 color="light"
                 *ngIf="sprintIsStarted"
-                (click)="stopSprint()"
+                (click)="$event.stopPropagation(); stopSprint()"
               >
                 Stop Sprint
               </ion-button>
-              <ion-button
+              <ion-button (click)="$event.stopPropagation();"
                 color="light"
                 id="open-modal"
                 *ngIf="!sprintIsStarted"
@@ -148,7 +148,7 @@
             </ion-col>
 
             <ion-col size="2" class="ion-align-self-end">
-              <app-sprintlist
+              <app-sprintlist (click)="$event.stopPropagation();"
                 [projectId]="projectId"
                 [backlogId]="backlogId"
                 (sprintSelected)="changeSprint($event)"
@@ -297,13 +297,13 @@
                 </p>
               </ion-text>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.search.label'"></small>
               </ion-text>
               <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchB"></ion-searchbar>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.status.label'"></small>
               </ion-text>
@@ -314,7 +314,7 @@
                 </ion-select>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.type.label'"></small>
               </ion-text>
@@ -338,7 +338,7 @@
               <ion-badge color="success">{{ totalDoneb }}</ion-badge>
             </ion-col>
             <ion-col size="auto" class="ion-align-self-center">
-              <ion-button (click)="createSprint()" color="light">
+              <ion-button  (click)="$event.stopPropagation(); createSprint()" color="light">
                 Crea Sprint
               </ion-button>
             </ion-col>
