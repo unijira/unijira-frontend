@@ -3,7 +3,7 @@
     <ion-row>
       <ion-text [innerHTML]="item.description | filtered:searchedText">{{item.description}}</ion-text>
     </ion-row>
-    <ion-row *ngIf="item.father && item.father.type === 'epic'">
+    <ion-row *ngIf="item.father && item.father.type === itemType.epic">
       <ion-chip class="ion-no-margin ion-margin-top" color="danger">{{item.father.description}}</ion-chip>
     </ion-row>
     <ion-row>

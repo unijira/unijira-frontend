@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../store/session.service';
 import {ProjectService} from '../../../services/project/project.service';
 import {UserService} from '../../../services/user/user.service';
@@ -19,7 +19,7 @@ import {BoardService} from '../../../services/board/board.service';
   templateUrl: './board.page.html',
   styleUrls: ['./board.page.scss'],
 })
-export class BoardPage implements OnInit, OnDestroy {
+export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
 
   sprint: Sprint;
   projectSubscription: Subscription;
@@ -223,6 +223,10 @@ export class BoardPage implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     unsubscribeAll(this.formsSubscription, this.projectSubscription);
+  }
+
+  ngAfterViewInit() {
+    this.storiesToShow = cloneDeep(this.stories);
   }
 
 }
