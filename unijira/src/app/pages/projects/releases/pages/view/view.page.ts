@@ -5,11 +5,11 @@ import {ActivatedRoute} from '@angular/router';
 import {ReleaseService} from '../../../../../services/release/release.service';
 import {Release} from '../../../../../models/releases/Release';
 import {ReleaseStatus} from '../../../../../models/releases/ReleaseStatus';
-import * as moment from 'moment';
-import {AlertController} from '@ionic/angular';
+import {AlertController, ToastController} from '@ionic/angular';
 import {TranslateService} from '@ngx-translate/core';
 import {Item} from '../../../../../models/item/Item';
 import {DateUtils} from '../../../../../classes/date-utils';
+import * as moment from 'moment';
 
 @Component({
   selector: 'app-view',
@@ -30,6 +30,7 @@ export class ViewPage implements AfterViewInit {
     private releaseService: ReleaseService,
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateService,
+    private toastController: ToastController,
     private alertController: AlertController
   ) { }
 
@@ -115,8 +116,17 @@ export class ViewPage implements AfterViewInit {
   save() {
     this.releaseService.updateRelease(this.projectId, this.release).subscribe(release => {
       if(release) {
+
         this.initialRelease = JSON.stringify(release);
         this.release = release;
+
+        this.toastController.create({
+          message: this.translateService.instant('projects.releases.toast.save.success'),
+          color: 'success',
+          duration: 3000,
+          icon: 'checkmark-circle-outline',
+        }).then(toast => toast.present());
+
       } else {
         this.alertController.create({
           header: this.translateService.instant('error.title'),

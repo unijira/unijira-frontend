@@ -38,6 +38,7 @@ import { GanttModule } from '@syncfusion/ej2-angular-gantt';
 import { DialogModule} from '@syncfusion/ej2-angular-popups';
 import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
+import {NgxDropzoneModule} from 'ngx-dropzone';
 
 import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
 import { DatePipe } from '@angular/common';
@@ -65,6 +66,7 @@ export const createTranslateLoader = (http: HttpClient) =>
       mode: 'md',
     }),
     AppRoutingModule,
+    NgxDropzoneModule,
     FontAwesomeModule,
     StoreModule.forRoot({ sessionReducer, taskReducer }),
     HttpClientModule,
@@ -88,7 +90,7 @@ export const createTranslateLoader = (http: HttpClient) =>
     TextBoxModule,
 
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFireStorageModule
+    AngularFireStorageModule,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },

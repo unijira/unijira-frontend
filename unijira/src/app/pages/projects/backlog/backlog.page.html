@@ -18,8 +18,8 @@
     <ion-grid>
       <ion-row class="ion-align-items-center ion-justify-content-end">
         <ion-col class="ion-align-self-start">
-          <ion-text color="dark">
-            <h4>Progetto {{projectId}}</h4>
+          <ion-text color="dark"           >
+            <h4> {{ 'backlog.project.title' | translate }} {{projectId}}</h4>
           </ion-text>
         </ion-col>
         <ion-col class="ion-align-self-end">
@@ -79,13 +79,13 @@
                 </p>
               </ion-text>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.search.label'"></small>
               </ion-text>
               <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchS"></ion-searchbar>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.status.label'"></small>
               </ion-text>
@@ -96,7 +96,7 @@
                 </ion-select>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.type.label'"></small>
               </ion-text>
@@ -122,16 +122,15 @@
               <ion-button
                 color="light"
                 *ngIf="sprintIsStarted"
-                (click)="stopSprint()"
+                (click)="$event.stopPropagation(); stopSprint()"
               >
                 Stop Sprint
               </ion-button>
-              <ion-button
+              <ion-button (click)="$event.stopPropagation();"
                 color="light"
                 id="open-modal"
                 *ngIf="!sprintIsStarted"
-              >
-                Avvia Sprint
+                [translate]="'backlog.buttons.startsprint'">
               </ion-button>
               <ion-modal trigger="open-modal">
                 <ng-template>
@@ -148,7 +147,7 @@
             </ion-col>
 
             <ion-col size="2" class="ion-align-self-end">
-              <app-sprintlist
+              <app-sprintlist (click)="$event.stopPropagation();"
                 [projectId]="projectId"
                 [backlogId]="backlogId"
                 (sprintSelected)="changeSprint($event)"
@@ -167,13 +166,13 @@
                     dragula="bag"
                     [(dragulaModel)]="sprint.insertions"
                     lines="none"
-                    class="light-gray-bg"
+                    color="light"
                   >
-                    <ion-row
+                    <ion-row color="light"
                       *ngFor="let insertion of filteredTicketsS"
-                      class="ion-align-items-end task-item white-bg ion-no-padding ion-no-margin"
+                      class="ion-align-items-end task-item ion-no-padding ion-no-margin"
                     >
-                      <ion-col [id]="'step' + insertion.item.id">
+                      <ion-col  [id]="'step' + insertion.item.id">
                         <ion-item>
                           <ion-avatar slot="start">
                             <ion-img
@@ -186,18 +185,18 @@
                         </ion-item>
                       </ion-col>
 
-                      <ion-col
+                      <ion-col size="auto"
                         class="ion-justify-content-end ion-align-self-center"
                       >
-                      <ion-item>
 
-                        <div *ngIf="insertion.item.father">
+
+                        <ion-item *ngIf="insertion.item.father">
                           <fa-icon
                           [icon]="['fas', 'network-wired']"
                           class="childicon"
                           >
                         </fa-icon>
-                      </div>
+
                     </ion-item>
                       </ion-col>
                       <ion-col
@@ -205,12 +204,15 @@
                         class="ion-align-self-center"
                         *ngIf="insertion.item.sons.length > 0"
                       >
+                      <ion-item>
+
                         <ion-button color="light">
                           <fa-icon [icon]="['fas', 'network-wired']"></fa-icon>
                         </ion-button>
+                      </ion-item>
                       </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
-                        <div
+                        <ion-item
                           (click)="editPesoPopover($event, insertion, 'sprint')"
                         >
                           <ion-badge
@@ -220,10 +222,10 @@
                           >
                             <span>{{ insertion.item.evaluation }}</span>
                           </ion-badge>
-                        </div>
+                        </ion-item>
                       </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
-                        <div
+                        <ion-item
                           (click)="editStatusPopover($event, insertion, 'sprint')"
                         >
                           <ion-badge
@@ -245,34 +247,40 @@
                           class="status-badge"
                           >{{ insertion.item.status }}</ion-badge
                         >
-                        </div>
+                        </ion-item>
                       </ion-col>
 
                       <ion-col size="auto" class="ion-align-self-center">
-                        <ion-thumbnail
+                        <ion-item>
+
+                          <ion-thumbnail
 
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
-                        >
-                         <!-- <img
+                          >
+                          <!-- <img
                             class="avatar-img"
                             [src]="insertion.item.assignees[0].assignee.avatar"
-                          />-->
-                        </ion-thumbnail>
+                            />-->
+                          </ion-thumbnail>
+                        </ion-item>
                       </ion-col>
 
                       <ion-col size="auto" class="ion-align-self-center">
-                        <ion-button
+                        <ion-item>
+
+                          <ion-button
                           class="action-btn"
                           size="small"
                           color="light"
-                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
-                        >
+                          [routerLink]="['/projects', projectId, 'tickets', insertion.item.id]"
+                          >
                           <fa-icon
-                            [icon]="['fas', 'ellipsis-h']"
-                            class="childicon"
+                          [icon]="['fas', 'ellipsis-h']"
+                          class="childicon"
                           ></fa-icon>
                         </ion-button>
+                      </ion-item>
                       </ion-col>
                     </ion-row>
                   </ion-list>
@@ -297,13 +305,13 @@
                 </p>
               </ion-text>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.search.label'"></small>
               </ion-text>
               <ion-searchbar [placeholder]="'projects.tickets.search.placeholder' | translate" [(ngModel)]="filterSearchB"></ion-searchbar>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.status.label'"></small>
               </ion-text>
@@ -314,7 +322,7 @@
                 </ion-select>
               </ion-item>
             </ion-col>
-            <ion-col>
+            <ion-col (click)="$event.stopPropagation();">
               <ion-text color="medium" class="ion-margin">
                 <small [translate]="'projects.tickets.type.label'"></small>
               </ion-text>
@@ -338,8 +346,7 @@
               <ion-badge color="success">{{ totalDoneb }}</ion-badge>
             </ion-col>
             <ion-col size="auto" class="ion-align-self-center">
-              <ion-button (click)="createSprint()" color="light">
-                Crea Sprint
+              <ion-button  (click)="$event.stopPropagation(); createSprint()" color="light" [translate]="'backlog.buttons.newsprint'">
               </ion-button>
             </ion-col>
           </ion-row>
@@ -350,15 +357,14 @@
                   <p [translate]="'backlog.empty'"></p>
                 </div>
                 <div *ngIf="backlog && backlog.insertions">
-                  <ion-list
+                  <ion-list color="light"
                     dragula="bag"
                     lines="none"
-                    class="light-gray-bg"
                     [(dragulaModel)]="backlog.insertions"
                   >
-                    <ion-row
+                    <ion-row color="light"
                       *ngFor="let insertion of filteredTicketsB"
-                      class="ion-align-items-end ion-justify-content-center task-item white-bg"
+                      class="ion-align-items-end ion-justify-content-center task-item"
                     >
                       <ion-col>
                         <ion-item [id]="'step' + insertion.item.id">
@@ -374,13 +380,14 @@
                       </ion-col>
 
                       <ion-col size="auto" class="ion-align-self-center">
-                        <div *ngIf="insertion.item.father">
+
+                        <ion-item *ngIf="insertion.item.father">
                           <fa-icon
                             [icon]="['fas', 'network-wired']"
                             class="childicon"
                           >
                           </fa-icon>
-                        </div>
+                        </ion-item>
                       </ion-col>
                       <ion-col
                         size="auto"
@@ -392,7 +399,7 @@
                         </ion-button>
                       </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
-                        <div
+                        <ion-item
                           (click)="editPesoPopover($event, insertion, 'backlog')"
                         >
                           <ion-badge
@@ -402,11 +409,11 @@
                           >
                             <span>{{ insertion.item.evaluation }}</span>
                           </ion-badge>
-                        </div>
+                        </ion-item>
                       </ion-col>
 
                       <ion-col size="auto" class="ion-align-self-center">
-                        <div
+                        <ion-item
                           (click)="editStatusPopover($event, insertion, 'backlog')"
                         >
                         <ion-badge
@@ -428,32 +435,38 @@
                       class="status-badge"
                       >{{ insertion.item.status }}</ion-badge
                     >
-                        </div>
+                        </ion-item>
                       </ion-col>
 
                       <ion-col size="auto" class="ion-align-self-center">
-                        <ion-thumbnail
+                        <ion-item>
+
+                          <ion-thumbnail
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
-                        >
+                          >
                           <!--<img
                             class="avatar-img"
                             [src]="insertion.item.assignees[0].assignee.avatar"
-                          />-->
-                        </ion-thumbnail>
+                            />-->
+                          </ion-thumbnail>
+                        </ion-item>
                       </ion-col>
                       <ion-col size="auto" class="ion-align-self-center">
-                        <ion-button
+                        <ion-item>
+
+                          <ion-button
                           class="action-btn"
                           size="small"
                           color="light"
-                          [routerLink]="['/projects', projectId, 'backlog','items', insertion.item.id]"
-                        >
+                          [routerLink]="['/projects', projectId, 'tickets', insertion.item.id]"
+                          >
                           <fa-icon
-                            [icon]="['fas', 'ellipsis-h']"
-                            class="childicon"
+                          [icon]="['fas', 'ellipsis-h']"
+                          class="childicon"
                           ></fa-icon>
                         </ion-button>
+                      </ion-item>
                       </ion-col>
                     </ion-row>
                   </ion-list>
