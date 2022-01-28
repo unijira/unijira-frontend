@@ -22,8 +22,8 @@
         <ion-row *ngIf="sprint">
           <ion-text>
             <h6 class="sprint-date" translate
-                [translateParams]="{d1: sprint.startingDate.toLocaleDateString('it-IT'),
-                d2:sprint.endingDate.toLocaleDateString('it-IT')}">
+                [translateParams]="{d1: sprint.startingDate,
+                d2:sprint.endingDate}">
             board.sprintDate
             </h6>
           </ion-text>
