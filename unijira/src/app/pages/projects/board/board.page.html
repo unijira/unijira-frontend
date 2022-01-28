@@ -22,15 +22,15 @@
         <ion-row *ngIf="sprint">
           <ion-text>
             <h6 class="sprint-date" translate
-                [translateParams]="{d1: sprint.startingDate.toLocaleDateString('it-IT'),
-                d2:sprint.endingDate.toLocaleDateString('it-IT')}">
+                [translateParams]="{d1: sprint.startingDate,
+                d2:sprint.endingDate}">
             board.sprintDate
             </h6>
           </ion-text>
         </ion-row>
       </ion-col>
       <ion-col size-lg="auto" size="6" *ngIf="sprint">
-        <ion-button color="primary" (click)="0">
+        <ion-button color="primary" [routerLink]="['/projects/' + project.id + '/backlog']">
           <ion-text translate>board.endSprint</ion-text>
         </ion-button>
       </ion-col>

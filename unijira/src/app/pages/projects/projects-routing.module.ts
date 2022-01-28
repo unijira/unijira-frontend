@@ -34,11 +34,6 @@ const routes: Routes = [
     loadChildren: () => import('./releases/releases.module').then(m => m.ReleasesPageModule)
   },
   {
-    path: ':id/invite',
-    canActivate: [AuthGuard],
-    loadChildren: () => import('./invite/invite.module').then(m => m.InvitePageModule)
-  },
-  {
     path: ':id/settings/details',
     canActivate: [AuthGuard],
     loadChildren: () => import('./settings/details/details.module').then(m => m.DetailsPageModule)
@@ -82,6 +77,11 @@ const routes: Routes = [
     path: ':id/documents',
     loadChildren: () => import('./documents/documents.module').then( m => m.DocumentsPageModule)
   },
+  {
+    path: ':id/charts/cumulative',
+    loadChildren: () => import('./charts/cumulative/cumulative.module').then( m => m.CumulativePageModule)
+  },
+
 
   {
     path: ':id/charts/burndown',

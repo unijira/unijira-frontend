@@ -21,7 +21,7 @@
           </ion-text>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block">
+          <ion-button [disabled]="files.length === 0" (click)="load()" color="primary" expand="block">
             <ion-icon slot="start" name="cloud-upload-outline"></ion-icon>
             <ion-text [translate]="'projects.documents.load'"></ion-text>
           </ion-button>
@@ -31,13 +31,19 @@
   </section>
 
   <!-- Drug and Drop -->
-  <section class="ion-margin">
-    <ngx-dropzone (change)="onSelect($event)">
-      <ngx-dropzone-label>Drop it, baby!</ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+  <section class="ion-margin ion-padding">
+    <ngx-dropzone class="dropzone" (change)="onSelect($event)">
+      <ngx-dropzone-label>
+        <h3><i>{{'projects.documents.drop.title' | translate}}</i></h3>
+        <ion-icon name="cloud-upload-outline" size="large"></ion-icon>
+      </ngx-dropzone-label>
+      <ngx-dropzone-preview class="dropzone-preview" *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name | truncate:36}} <br> <small>({{ f.type }})</small></ngx-dropzone-label>
       </ngx-dropzone-preview>
     </ngx-dropzone>
+    <div *ngIf="uploading" class="ion-margin smooth">
+      <ion-progress-bar *ngIf="uploading" type="indeterminate"></ion-progress-bar>
+    </div>
   </section>
 
   <!-- Filters -->
@@ -55,8 +61,8 @@
             <ion-label position="floating" color="medium" class="ion-margin">
               <span [translate]="'projects.documents.mimes.label'"></span>
             </ion-label>
-            <ion-select [placeholder]="'projects.documents.mimes.placeholder' | translate" [disabled]="!filteredDocuments || filteredDocuments.length === 0" [multiple]="true" interface="popover" class="ion-padding-top w-100">
-              <ion-select-option *ngFor="let mime of filterMimes" [value]="mime">{{ mime }}</ion-select-option>
+            <ion-select [(ngModel)]="filterMimes" [placeholder]="'projects.documents.mimes.placeholder' | translate" [disabled]="!filteredDocuments || filteredDocuments.length === 0" [multiple]="true" interface="popover" class="ion-padding-top w-100">
+              <ion-select-option *ngFor="let mime of mimes" [value]="mime">{{ mime | titlecase}}</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -114,7 +120,7 @@
       </ion-item>
 
       <!-- Documents -->
-      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId" [routerLink]="d.path?.href || ''">
+      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId" class="smooth">
         <ion-grid>
           <ion-row class="ion-align-items-center">
 
@@ -126,7 +132,7 @@
                 </ion-col>
                 <ion-col>
                   <ion-label>
-                    <strong [innerHTML]="d.filename | filtered:filterSearch"></strong>
+                    <span [innerHTML]="d.filename | filtered:filterSearch"></span>
                   </ion-label>
                 </ion-col>
               </ion-row>
@@ -134,7 +140,7 @@
 
             <!-- Mime -->
             <ion-col size="2">
-              <ion-badge color="secondary">
+              <ion-badge [style.background]="color(d.mime)">
                 <ion-label>{{ d.mime | uppercase}}</ion-label>
               </ion-badge>
             </ion-col>
@@ -147,19 +153,36 @@
                     <ion-img [src]="d.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                   </ion-avatar>
                 </ion-col>
-                <ion-col>
-                  <ion-label>
-                    {{ d.userFirstName }} {{ d.userLastName }}
-                  </ion-label>
-                </ion-col>
               </ion-row>
             </ion-col>
 
-            <!-- Load Date -->
             <ion-col size="2">
-              <ion-label>
-                {{ d.createdAt | date:'dd/MM/YYYY' }}
-              </ion-label>
+
+              <ion-row class="ion-align-items-center">
+
+                <!-- Load Date -->
+                <ion-col>
+                  <ion-label>
+                    {{ d.createdAt | date:'dd/MM/YYYY' }}
+                  </ion-label>
+                </ion-col>
+
+                <!-- Download Document -->
+                <ion-col size="auto">
+                  <ion-button size="default" [href]="d.path?.toString() || ''" fill="clear" color="success">
+                    <ion-icon name="download-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+                <!-- Remove Document -->
+                <ion-col size="auto">
+                  <ion-button size="default" (click)="remove(d)" fill="clear" color="danger">
+                    <ion-icon name="trash-outline" color="danger"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
+              </ion-row>
+
             </ion-col>
 
           </ion-row>

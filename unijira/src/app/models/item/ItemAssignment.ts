@@ -9,7 +9,6 @@ export class ItemAssignment {
   public assigneeAvatar: URL;
 
   constructor(itemId: number, assignee: UserInfo) {
-    this.id = null;
     this.itemId = itemId;
     this.assigneeId = assignee.id;
     this.assigneeUsername = assignee.username;
