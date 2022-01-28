@@ -152,6 +152,7 @@
               <app-sprintlist (click)="$event.stopPropagation();"
                 [projectId]="projectId"
                 [backlogId]="backlogId"
+                [sprintId]="sprintId"
                 (sprintSelected)="changeSprint($event)"
               ></app-sprintlist>
             </ion-col>

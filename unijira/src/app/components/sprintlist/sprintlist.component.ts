@@ -9,6 +9,7 @@ import {BacklogAPIService} from 'src/app/services/backlog-api.service';
 export class SprintlistComponent implements OnInit, OnChanges {
   @Input() projectId: number;
   @Input() backlogId: number;
+  @Input() sprintId: number;
   @Output() sprintSelected = new EventEmitter();
 
   sprintList: any;
