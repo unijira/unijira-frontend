@@ -18,8 +18,8 @@
       <ion-col *ngIf="item.assignees && item.assignees.length>0">
         <div style="float: right">
           <ion-row>
-            <ion-avatar class="assignee-img" [title]="item.assignees[0].assignee.username">
-              <ion-img [src]="item.assignees[0].assignee.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+            <ion-avatar class="assignee-img" [title]="item.assignees[0].assigneeUsername">
+              <ion-img [src]="item.assignees[0].assigneeAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
             </ion-avatar>
             <ion-label class="other-assignees" *ngIf="item.assignees.length > 1">+{{item.assignees.length-1}}</ion-label>
           </ion-row>
