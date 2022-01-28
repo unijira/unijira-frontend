@@ -152,6 +152,9 @@ export class RoadmapPage {
     null,
   );
   public roadmap: Roadmap = new Roadmap(null, null, null, null);
+  public roadmapSon: Roadmap = new Roadmap(null, null, null, null);
+  public roadmapSonOfSon: Roadmap = new Roadmap(null, null, null, null);
+
   public itemsOfRoadmap: Array<ItemRoadmapTree>;
   public itemEdited: Roadmap = new Roadmap(null, null, null, null);
   public animationSettingsDialog: Object = {
@@ -666,7 +669,7 @@ export class RoadmapPage {
     this.roadmapService.getItems(this.projectId).pipe(tap(tickets => {
         for (let i=0 ;i< tickets.length; i++){
           this.sons= tickets[i].sons;
-          tickets[i].sons=[];
+          console.log(tickets[i])
           this.roadmap.item= tickets[i];
           this.roadmapService
             .getBacklog(this.projectId)
@@ -690,9 +693,9 @@ export class RoadmapPage {
           if(this.sons.length > 0){
 
             for (let j =0; j<this.sons.length; j++){
+              console.log(this.sons[j])
               this.sonsOfSons= this.sons[j].sons;
-              this.sons[j].sons=[];
-              this.roadmap.item= this.sons[j];
+              this.roadmapSon.item= this.sons[j];
               this.roadmapService
                 .getBacklog(this.projectId)
                 .pipe(
@@ -701,19 +704,21 @@ export class RoadmapPage {
                     this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
                   ),
                   tap((road) =>{ this.roadmapId = road[0].id;
-                    this.roadmap.roadmapId=road[0].id;
+                    this.roadmapSon.roadmapId=road[0].id;
                   }),
                   switchMap((road) =>
                     this.roadmapService.addItemToRoadmap(
                       this.projectId,
                       this.backlogId,
                       road[0].id,
-                      this.roadmap
+                      this.roadmapSon
                     )
                   )).subscribe();
               if(this.sonsOfSons.length >0){
                 for (let k =0; k<this.sonsOfSons.length; k++){
-                  this.roadmap.item= this.sonsOfSons[k];
+                  console.log(this.sonsOfSons[k])
+
+                  this.roadmapSonOfSon.item= this.sonsOfSons[k];
                   this.roadmapService
                     .getBacklog(this.projectId)
                     .pipe(
@@ -722,14 +727,14 @@ export class RoadmapPage {
                         this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
                       ),
                       tap((road) =>{ this.roadmapId = road[0].id;
-                        this.roadmap.roadmapId=road[0].id;
+                        this.roadmapSonOfSon.roadmapId=road[0].id;
                       }),
                       switchMap((road) =>
                         this.roadmapService.addItemToRoadmap(
                           this.projectId,
                           this.backlogId,
                           road[0].id,
-                          this.roadmap
+                          this.roadmapSonOfSon
                         )
                       )).subscribe();
                 }
@@ -758,6 +763,7 @@ export class RoadmapPage {
         )
         .subscribe((items) => {
           this.itemsOfRoadmap = items;
+          console.log(this.itemsOfRoadmap)
           this.data=[];
           let recordFather: object = {};
           let recordMidelFather: object = {};
@@ -794,7 +800,8 @@ export class RoadmapPage {
 
                   this.taskIdGantt=this.taskIdGantt+1;
 
-                  if(this.itemsOfRoadmap[i].children[j] !== null && this.itemsOfRoadmap[i].children[j].children.length<=0){
+                  if(this.itemsOfRoadmap[i].children[j].children.length<=0){
+                    if(this.itemsOfRoadmap[i].children[j]!== null){
                     recordSon = {
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
@@ -805,13 +812,14 @@ export class RoadmapPage {
                       ItemType: this.itemsOfRoadmap[i].children[j].itemType,
                     };
                     sonss=sonss.concat(recordSon);
-
+                  }
                   }
                   else if(this.itemsOfRoadmap[i].children[j].children.length>0){
                     cont=this.itemsOfRoadmap[i].children[j].children.length;
                     for (let k=0 ; k< this.itemsOfRoadmap[i].children[j].children.length; k++){
                       this.taskIdGantt=this.taskIdGantt+1;
                       recordSonOfSon={};
+                      if(this.itemsOfRoadmap[i].children[j].children[k]!== null){
                       recordSonOfSon={
                         TaskName: this.itemsOfRoadmap[i].children[j].children[k].itemDescription,
                         id:this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionId,
@@ -822,6 +830,7 @@ export class RoadmapPage {
                         ItemType: this.itemsOfRoadmap[i].children[j].children[k].itemType,
                       };
                       sonssOfSons= sonssOfSons.concat(recordSonOfSon);
+                    }
                     }
                     recordMidelFather={
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
