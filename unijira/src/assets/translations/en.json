@@ -458,5 +458,13 @@
   "projects.documents.list.type": "Type",
   "projects.documents.list.loadDate": "Upload date",
   "projects.documents.list.owner": "User",
-  "projects.documents.list.empty": "No documents available"
+  "projects.documents.list.empty": "No documents available",
+  "charts.cumulative": "Cumulative flow",
+  "charts.cumulative.title": "Cumulative flow diagram",
+  "charts.cumulative.open": "Open",
+  "charts.cumulative.todo": "In progress",
+  "charts.cumulative.done": "Done",
+  "charts.cumulative.tickets": "Tickets number",
+  "charts.cumulative.reset": "Reset",
+  "charts.cumulative.noData": "No data available"
 }
