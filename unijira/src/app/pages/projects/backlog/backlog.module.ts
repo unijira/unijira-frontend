@@ -15,22 +15,21 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {TranslateModule} from '@ngx-translate/core';
 
 import {PipeModule} from '../../../pipe.module';
-
-import {TicketStatusPipe} from '../tickets/pipes/ticket-status.pipe';
-import {TicketTypePipe} from '../tickets/pipes/ticket-type.pipe';
+import {TicketsPageModule} from '../tickets/tickets.module';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        FormsModule,
-        IonicModule,
-        FontAwesomeModule,
-        BacklogPageRoutingModule,
-        DragulaModule.forRoot(),
-        TranslateModule,
-        PipeModule
-    ],
-    declarations: [BacklogPage, BackloglistComponent, SprintlistComponent, TicketStatusPipe, TicketTypePipe],
+  imports: [
+    CommonModule,
+    FormsModule,
+    IonicModule,
+    FontAwesomeModule,
+    BacklogPageRoutingModule,
+    DragulaModule.forRoot(),
+    TranslateModule,
+    PipeModule,
+    TicketsPageModule
+  ],
+    declarations: [BacklogPage, BackloglistComponent, SprintlistComponent],
     providers: [TaskService]
 })
 export class BacklogPageModule {}
