@@ -261,10 +261,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                           >
-                          <!-- <img
+                          <img
                             class="avatar-img"
-                            [src]="insertion.item.assignees[0].assignee.avatar"
-                            />-->
+                            [src]="insertion.item.assignees[0].assigneeAvatar || 'assets/img/user/avatar.svg'"
+                            />
                           </ion-thumbnail>
                         </ion-item>
                       </ion-col>
@@ -449,10 +449,10 @@
                           class="avatar"
                           *ngIf="insertion.item.assignees?.length > 0"
                           >
-                          <!--<img
+                          <img
                             class="avatar-img"
-                            [src]="insertion.item.assignees[0].assignee.avatar"
-                            />-->
+                            [src]="insertion.item.assignees[0].assigneeAvatar || 'assets/img/user/avatar.svg'"
+                            />
                           </ion-thumbnail>
                         </ion-item>
                       </ion-col>
