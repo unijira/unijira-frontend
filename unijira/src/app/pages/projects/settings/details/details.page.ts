@@ -94,7 +94,7 @@ export class DetailsPage implements OnInit {
     this.keyForm.setValue(this.project && this.project.key);
   }
 
-  onChangeTime(value: string) {
+  onChangeTime() {
 
     if(this.nameForm.value.length >= 3) {
 

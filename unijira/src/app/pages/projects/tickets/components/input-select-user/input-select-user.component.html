@@ -5,8 +5,8 @@
 
         <ion-avatar [id]="'avatar-' + user.id" class="option" [ngClass]="selected(user) ? 'active' : ''" (click)="toggle(user)"
                     [popper]="user.username"
-                    popperPlacement="bottom"
-                    popperTrigger="hover">
+                    [popperPlacement]="ngxPopperjsPlacements.BOTTOM"
+                    [popperTrigger]="ngxPopperjsTriggers.hover">
 
           <ion-img [src]="user.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
         </ion-avatar>

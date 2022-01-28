@@ -76,7 +76,7 @@ export class HomePage implements OnInit {
 
   }
 
-  onSegmentChanged(e: CustomEvent) {
+  onSegmentChanged(e) {
     this.currentSegment = e.detail?.value;
   }
 
