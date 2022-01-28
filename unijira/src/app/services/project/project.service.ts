@@ -103,28 +103,21 @@ export class ProjectService {
 
   getDocuments(projectId: number): Observable<Document[]> {
 
-    // return this.http.get<Document[]>(`/projects/${projectId}/documents`)
-    //   .pipe(catchError(() => of(null)));
-
-    return of([
-      new Document(1, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
-      new Document(2, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@ædmin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
-      new Document(3, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime()),
-      new Document(4, 'Documento.txt', 'text/plain', null, projectId, 1, 'John', 'Doe', null, 'admin@admin.org', DateUtils.toLocalDateTime(), DateUtils.toLocalDateTime())
-    ]);
+    return this.http.get<Document[]>(`/projects/${projectId}/documents`)
+      .pipe(catchError(() => of(null)));
 
   }
 
   deleteDocument(projectId: number, documentId: number): Observable<Document> {
 
-    return this.http.get<Document>(`/projects/${projectId}/documents/${documentId}`)
+    return this.http.delete<Document>(`/projects/${projectId}/documents/${documentId}`)
       .pipe(catchError(() => of(null)));
 
   }
 
   createDocument(filename: string, path: URL, projectId: number, userId: number,
                  userFirstName: string, userLastName: string, userUsername: string,
-                 userAvatar: string, mime: string): Observable<Document> {
+                 userAvatar: URL, mime: string): Observable<Document> {
 
     return this.http.post<Document>(`/projects/${projectId}/documents`,
       {filename, path, projectId, userId,

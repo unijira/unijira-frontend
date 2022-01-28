@@ -57,6 +57,9 @@ export class InvitePage implements OnInit,AfterViewInit {
       this.token = param.q;
       this.resetPassword = param.k;
 
+      console.log(this.token);
+      console.log(this.resetPassword);
+
     });
 
   }

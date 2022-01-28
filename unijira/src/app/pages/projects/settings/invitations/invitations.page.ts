@@ -177,9 +177,9 @@ export class InvitationsPage implements OnInit {
           this.projectService.sendInvitations(this.project.id, [username]).subscribe(i => {
 
             if (i) {
-              this.presentToast(this.translateService.instant('project.settings.invitations.toast.success')).then();
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.success'),'success', 'checkmark-circle-outline').then();
             } else {
-              this.presentToast(this.translateService.instant('project.settings.invitations.toast.failed')).then();
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.failed'), 'danger', 'alert-circle-outline').then();
             }
 
           });
@@ -208,7 +208,7 @@ export class InvitationsPage implements OnInit {
 
             if(i) {
 
-              this.presentToast(this.translateService.instant('project.settings.invitations.toast.success')).then();
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.success'), 'success', 'checkmark-circle-outline').then();
               this.accordionGroup.value = undefined;
               this.invites = [];
 
@@ -224,7 +224,7 @@ export class InvitationsPage implements OnInit {
 
             } else {
 
-              this.presentToast(this.translateService.instant('project.settings.invitations.toast.failed')).then();
+              this.presentToast(this.translateService.instant('project.settings.invitations.toast.failed'),'danger', 'alert-circle-outline').then();
               this.accordionGroup.value = undefined;
               this.invites = [];
 
@@ -238,11 +238,13 @@ export class InvitationsPage implements OnInit {
 
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
       position: 'top',
-      duration: 4000
+      duration: 4000,
+      color,
+      icon
     });
     await toast.present();
   }
@@ -295,7 +297,7 @@ export class InvitationsPage implements OnInit {
 
               if(i === null) {
 
-                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.success')).then();
+                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.success'),'success', 'checkmark-circle-outline').then();
 
                 this.projectService.getMemberships(this.project.id).subscribe(
                   members => {
@@ -310,7 +312,7 @@ export class InvitationsPage implements OnInit {
 
               } else {
 
-                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.failed')).then();
+                this.presentToast(this.translateService.instant('project.settings.invitations.delete.toast.failed'),'danger', 'alert-circle-outline').then();
 
               }
 
