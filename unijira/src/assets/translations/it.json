@@ -486,5 +486,7 @@
   "charts.burnUpChart": "Grafico burn-up",
   "charts.date": "Data ",
   "charts.workingDone": "Lavoro completato",
-  "charts.idealVelocity": "Velocità ideale"
+  "charts.idealVelocity": "Velocità ideale",
+  "charts.remainingWork": "Lavoro rimanente",
+  "charts.burnDownChart": "Grafico burn-down"
 }
