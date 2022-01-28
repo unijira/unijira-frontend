@@ -1,13 +1,11 @@
-import { UserService } from './../../../../services/user/user.service';
+import { UserService } from '../../../../services/user/user.service';
 import {Component, Input, OnInit} from '@angular/core';
 import {HttpService} from '../../../../services/http-service.service';
 import {AccountService} from '../../../../services/account.service';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {Project} from '../../../../models/projects/Project';
-import {BasePath, FileUploadService} from '../../../../services/file-upload/file-upload.service';
+import {FileUploadService} from '../../../../services/file-upload/file-upload.service';
 import {PageService} from '../../../../services/page.service';
-import { setLanguage, setTheme } from 'src/app/util';
-import { TranslateService } from '@ngx-translate/core';
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.page.html',
@@ -18,16 +16,14 @@ export class ProfilePage implements OnInit {
   @Input() user: UserInfo;
 
   @Input() oldPassword: string;
-  @Input() newPassword: string;
 
 
-  @Input() file: File;
-  @Input() image: string;
 
-  @Input() saved = false;
-
+  image: string;
   preferredTheme='';
   preferredLanguage='';
+
+
 
   monthAsString='';
   yearAsString='';
@@ -42,8 +38,7 @@ export class ProfilePage implements OnInit {
     private accountService: AccountService,
     private usersService: UserService,
     private uploadService: FileUploadService,
-    private pageService: PageService,
-    private translate: TranslateService
+    private pageService: PageService
   ) {
     this.pageService.setTitle('profile');
   }
@@ -56,8 +51,6 @@ export class ProfilePage implements OnInit {
         this.user = user;
         this.getCollaborators();
         this.getMemberships();
-        this.preferredLanguage = user.preferedLanguage;
-        this.preferredTheme = user.preferedTheme;
         this.image = this.user.avatar?.toString() || '';
         if (user.createdAt != null) {
           this.splitDate(this.user.createdAt?.toString());
@@ -83,16 +76,7 @@ export class ProfilePage implements OnInit {
 
   }
 
-  setPreferredTheme(value) {
-    this.preferredTheme = value;
-    this.user.preferedTheme = value;
-  }
 
-  setPreferredLanguage(value) {
-    this.preferredLanguage = value;
-    this.user.preferedLanguage = value;
-
-  }
 
 
   getCollaborators() {
@@ -108,43 +92,5 @@ export class ProfilePage implements OnInit {
 
   }
 
-  update() {
-    this.uploadImage();
-    this.usersService.updateUser(this.user.id, this.user).subscribe(value => {});
-    setLanguage(this.translate, this.user.preferedLanguage);
-    setTheme(this.preferredTheme);
-  }
 
-  uploadImage() {
-    if(this.file !== undefined) {
-      this.uploadService.upload(this.user.id, 'avatar', this.file, BasePath.user).subscribe(
-        url => {
-          this.user.avatar = new URL(url);
-          this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-          });
-        }
-          );
-    }
-    else {
-        this.usersService.updateUser(this.user.id, this.user).subscribe(value => {
-      });
-    }
-
-  }
-
-  changePassword() {}
-
-  onFileChanged(event) {
-    const reader = new FileReader();
-
-    this.file = event.target.files[0];
-    reader.readAsDataURL(event.target.files[0]);
-    this.user.avatar =  event.target.files[0];
-    reader.onload = (e) => {
-      this.image = e.target.result as string;
-    };
-
-
-
-  }
 }

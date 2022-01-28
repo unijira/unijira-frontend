@@ -8,6 +8,7 @@ import {ProfileOverviewPageRoutingModule} from './profile-overview-routing.modul
 
 import {TranslateModule} from '@ngx-translate/core';
 import {ProfileOverviewPage} from './profile-overview.page';
+import {ProfilePageModule} from '../settings/profile/profile.module';
 
 @NgModule({
     imports: [
@@ -15,7 +16,8 @@ import {ProfileOverviewPage} from './profile-overview.page';
         FormsModule,
         IonicModule,
         ProfileOverviewPageRoutingModule,
-        TranslateModule
+        TranslateModule,
+        ProfilePageModule
     ],
   declarations: [ProfileOverviewPage]
 })
