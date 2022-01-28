@@ -88,7 +88,7 @@ export class BacklogPage implements OnInit {
   sprintIsStarted = false;
 
   sprintInfo: any;
-
+  sprintDisabled = true;
   introJsOpts = {
     steps: [],
   };
@@ -457,7 +457,9 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService
       .getSprint(this.projectId, this.backlogId, this.sprintId)
       .subscribe((response) => {
+
         that.sprint = response;
+        this.sprintDisabled = false;
         console.log('that.sprint ', that.sprint);
         if (this.sprint.startingDate != null) {
           this.startSprintDate = new Date(this.sprint.startingDate)
@@ -490,6 +492,7 @@ export class BacklogPage implements OnInit {
             that.store.dispatch(TaskActions.setSprintAction({ sprint: tmpS }));
           });
       });
+
   }
   changeBacklog(ev) {
     this.backlogId = ev;
