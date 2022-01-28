@@ -415,6 +415,7 @@
   "projects.tickets.remove.message": "Are you sure you want to remove this ticket?",
   "projects.tickets.remove.cancel": "Cancel",
   "projects.tickets.remove.confirm": "Confirm",
+  "projects.tickets.remove.success": "Ticket removed successfully",
   "discussions.insertTitle": "Insert title",
   "discussions.text": "Text",
   "discussions.insertText": "Insert text",

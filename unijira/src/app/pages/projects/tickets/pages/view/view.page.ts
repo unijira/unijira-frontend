@@ -158,7 +158,17 @@ export class ViewPage implements OnInit {
             this.ticketService.removeTicket(this.projectId, this.ticket).subscribe(response => {
 
               if(response) {
+
                 this.router.navigate(['/projects', this.projectId, 'tickets']).then();
+
+                this.toastController.create({
+                  message: this.translateService.instant('projects.tickets.remove.success'),
+                  duration: 3000,
+                  position: 'top',
+                  color: 'success',
+                  icon: 'checkmark-circle-outline'
+                }).then(toast => toast.present());
+
               } else {
                 this.alertController.create({
                   header: this.translateService.instant('error.title'),
