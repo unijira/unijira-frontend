@@ -52,6 +52,7 @@
     "@popperjs/core": "^2.11.2",
     "@types/intro.js": "^3.0.2",
     "angular-intro.js": "^3.4.0",
+    "@syncfusion/ej2-angular-charts": "^19.4.47",
     "firebase": "^8.10.0",
     "intro.js": "^4.3.0",
     "ionic4-tooltips": "^2.0.0",

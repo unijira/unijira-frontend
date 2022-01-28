@@ -7,8 +7,8 @@
       </ion-buttons>
       <ion-buttons slot="primary">
 
-        <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
-        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end"></ion-toggle>
+        <ion-icon class="ion-hide-md-down" [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+        <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="end" class="ion-margin-end ion-hide-md-down"></ion-toggle>
 
         <ion-button (click)="showNotifications($event)">
           <ion-icon name="notifications"></ion-icon>
@@ -17,14 +17,31 @@
         </ion-button>
 
         <ion-button (click)="_userPopOver($event)">
-          <ion-icon name="person-circle" class="ion-margin-end"></ion-icon>
-          <ion-text class="ion-text-lowercase">{{userInfo?.username || '' }}</ion-text>
+          <ion-icon name="person-circle"></ion-icon>
+          <ion-text class="ion-margin-start ion-text-lowercase ion-hide-md-down">{{userInfo?.username || '' }}</ion-text>
         </ion-button>
 
-        <ion-button class="ion-padding-horizontal" (click)="switchLanguage()">
+        <ion-button class="ion-padding-horizontal ion-hide-md-down" (click)="switchLanguage()">
           <span>{{translateService.currentLang}}</span>
         </ion-button>
 
+        <ion-button id="trigger-button" class="ion-hide-md-up ion-padding-end">
+          <ion-icon name="cog-outline"></ion-icon>
+        </ion-button>
+        <ion-popover trigger="trigger-button" class="ion-hide-md-up ion-no-padding" dismiss-on-select="true" #popoverino>
+          <ng-template>
+            <ion-content class="popover-wrapper ion-padding">
+              <ion-buttons class="ion-justify-content-center">
+                <ion-icon [name]="currentColorTheme === 'dark' ? 'sunny' : 'moon'"></ion-icon>
+                <ion-toggle [checked]="currentColorTheme === 'dark'" (ionChange)="onToggleColorTheme($event)" slot="" class="ion-margin-end"></ion-toggle>
+
+                <ion-button (click)="switchLanguage()">
+                  <span>{{translateService.currentLang}}</span>
+                </ion-button>
+              </ion-buttons>
+            </ion-content>
+          </ng-template>
+        </ion-popover>
       </ion-buttons>
 
       <ion-grid>
@@ -34,7 +51,7 @@
               <ion-img src="/assets/logo-navbar.webp" class="main-icon ion-margin-start"></ion-img>
             </a>
           </ion-col>
-          <ion-col class="ion-hide-md-down">
+          <ion-col>
               <ion-title><b>{{'app.title' | translate | titlecase}}</b></ion-title>
           </ion-col>
         </ion-row>
@@ -68,7 +85,7 @@
           <br>
 
 
-          <div *ngIf="this.router.url.includes('settings')">
+          <div *ngIf="this.router.url.includes('settings') || this.router.url.includes('charts')">
           <ion-menu-toggle auto-hide="false">
             <ion-item routerDirection="root" [routerLink]="['/projects/' + project?.id]"
                       lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
@@ -80,7 +97,7 @@
           <hr>
           </div>
 
-          <ion-menu-toggle auto-hide="false" *ngFor="let element of (this.router.url.includes('settings') ? settings : pages)">
+          <ion-menu-toggle auto-hide="false" *ngFor="let element of getUrls()">
             <ion-item routerDirection="root" [routerLink]="[element?.url]"
                       lines="none" detail="false" routerLinkActive="selected" [routerLinkActiveOptions]="{exact: true}">
               <ion-icon name="{{element?.icon}}"></ion-icon>

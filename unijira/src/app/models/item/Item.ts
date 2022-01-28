@@ -32,6 +32,7 @@ export class Item {
 
   public createdAt: string;
   public updatedAt: string;
+  public doneOn: Date;
 
 
   public father: Item = undefined;
@@ -53,7 +54,8 @@ export class Item {
     fatherId: number,
     sons?: Item[],
     notes?: Note[],
-    assignees?: ItemAssignment[]) {
+    assignees?: ItemAssignment[],
+    doneOn?: Date) {
 
       this.id = id;
       this.summary = summary;
@@ -71,6 +73,7 @@ export class Item {
       this.notes = notes || [];
       this.createdAt = DateUtils.toLocalDateTime();
       this.updatedAt = DateUtils.toLocalDateTime();
+      this.doneOn = doneOn;
     }
 
 }

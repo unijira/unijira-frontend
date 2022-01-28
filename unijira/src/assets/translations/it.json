@@ -180,6 +180,11 @@
   "backlog.edit.status.done": "Completato",
   "backlog.edit.status.open": "Aperto",
   "backlog.edit.status.todo": "Da fare",
+"backlog.server.sprint.created": "Sprint creato",
+  "backlog.edit.measureUnit.storyPoints": "Story Points",
+  "backlog.edit.measureUnit.workingHours": "Ore lavorative",
+  "backlog.edit.measureUnit.workingDays": "Giorni lavorativi",
+
   "backlog.server.hints": "Hints",
   "backlog.server.hints.warning": "Attenzione: non hai nessun suggerimento!",
   "project.settings.details.alert.update.title" : "Sei sicuro di voler salvare?",
@@ -471,5 +476,13 @@
   "project.settings.defOfDone.delete.confirm": "Conferma",
   "project.settings.defOfDone.empty": "La tua Definition of Done è vuota",
   "project.settings.defOfDone.add": "Nuova entry",
-  "project.settings.defOfDone.activeSprint": "Sprint in corso"
+  "project.settings.defOfDone.activeSprint": "Sprint in corso",
+  "charts.storyPoint": "Story point",
+  "charts.workingHours": "Ore di lavoro",
+  "charts.workingDays": "Giorni di lavoro",
+  "charts": "Grafici",
+  "charts.burnUpChart": "Grafico burn-up",
+  "charts.date": "Data ",
+  "charts.workingDone": "Lavoro completato",
+  "charts.idealVelocity": "Velocità ideale"
 }
