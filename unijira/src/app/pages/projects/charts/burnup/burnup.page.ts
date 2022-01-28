@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
@@ -20,7 +20,7 @@ import {SprintStatus} from '../../../../models/SprintStatus';
   templateUrl: './burnup.page.html',
   styleUrls: ['./burnup.page.scss'],
 })
-export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
+export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
   primaryXAxis: any;
   primaryYAxis: any;
@@ -37,7 +37,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
   projectSubscription: Subscription;
   backlog: Backlog;
 
-  sprintSelectedFC: FormControl = new FormControl(0);
+  sprintSelectedFC: FormControl = new FormControl('');
   selectionSubscription: Subscription;
   translationsSubscriptions: Subscription[];
 
@@ -58,27 +58,29 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
             this.backlog = b;
             this.backlogService.getSprintList(p.id, b.id).subscribe(s =>{
               if (s) {
-                this.sprints = s;
+                this.sprints = s.filter(i => i.startingDate && i.endingDate);
                 if (this.sprints.length > 0) {
-                  this.backlogService.getSprintInsertions(p.id, b.id, s[0].id).subscribe(ins => {
+                  this.backlogService.getSprintInsertions(p.id, b.id, this.sprints[0].id).subscribe(ins => {
                     let items = [];
                     ins.forEach(i => items.push(i.item && i.item.status == ItemStatus.done));
-
-                    switch (ins[0].item.measureUnit) {
-                      case MeasureUnit.storyPoints:
-                        this.measureUnitKey = 'charts.storyPoints';
-                        break;
-                      case MeasureUnit.workingDays:
-                        this.measureUnitKey = 'charts.workingDays';
-                        break;
-                      case MeasureUnit.workingHours:
-                        this.measureUnitKey = 'charts.workingHours';
-                        break;
-                    }
-
                     this.itemsToChartData(items);
                     this.sprintSelectedFC.setValue(0);
                     this.selectedSprint = this.sprints[0];
+
+                    if (ins[0]) {
+                      switch (ins[0].item.measureUnit) {
+                        case MeasureUnit.storyPoints:
+                          this.measureUnitKey = 'charts.storyPoints';
+                          break;
+                        case MeasureUnit.workingDays:
+                          this.measureUnitKey = 'charts.workingDays';
+                          break;
+                        case MeasureUnit.workingHours:
+                          this.measureUnitKey = 'charts.workingHours';
+                          break;
+                      }
+                    }
+
                   });
                 } else {
                   this.sprintSelectedFC.disable();
@@ -155,12 +157,12 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
       this.translationsSubscriptions[1]);
   }
 
-  ngAfterContentInit() {
-    this.sprintSelectedFC.setValue(0);
+  ngAfterViewInit() {
+    this.sprintSelectedFC.updateValueAndValidity();
   }
 
   itemsToChartData(items) {
-    if (this.selectedSprint) {
+    if (items.length > 0 && this.selectedSprint) {
       items.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
       let sum = 0;
       const map = new Map();

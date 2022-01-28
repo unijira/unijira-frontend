@@ -30,11 +30,11 @@
         <ion-item lines="none">
           <ion-label position="floating" translate>backlog.sprint</ion-label>
           <ion-select placeholder="{{'board.select' | translate}}" interface="popover" [formControl]="sprintSelectedFC">
-            <ion-select-option [value]="i" *ngFor="let sprint of sprints; let i = index">Sprint {{i+1}}</ion-select-option>
+            <ion-select-option [value]="i" *ngFor="let sprint of sprints; let i = index">Sprint {{sprint.id}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
-    </ion-row>
+    </ion-row> 
   </section>
 
   <ion-row *ngIf="selectedSprint" class="ion-margin-bottom">
