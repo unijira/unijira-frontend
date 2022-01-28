@@ -17,7 +17,7 @@ import {
 import { BacklogAPIService } from '../../../services/backlog-api.service';
 import { BacklogEditWeightPopoversComponent } from './popovers/backlog-edit-weight-popovers/backlog-edit-weight-popovers.component';
 import { BacklogEditStatusPopoversComponent } from './popovers/backlog-edit-status-popovers/backlog-edit-status-popovers.component';
-import { ActivatedRoute, ParamMap, Router } from '@angular/router';
+import { ActivatedRoute, ParamMap, Router, NavigationEnd } from '@angular/router';
 import { Backlog } from '../../../models/Backlog';
 import { BacklogInsertion } from '../../../models/BacklogInsertion';
 import { SprintInsertion } from '../../../models/SprintInsertion';
@@ -108,6 +108,15 @@ export class BacklogPage implements OnInit {
     private toastController: ToastController,
     private translate: TranslateService
   ) {
+
+
+    router.events.subscribe((val) => {
+
+      if(val instanceof NavigationEnd) {
+        this.saveToAPI();
+      }
+  });
+
     this.filterTypeS = [
       ItemType.epic,
       ItemType.story,
@@ -115,7 +124,7 @@ export class BacklogPage implements OnInit {
       ItemType.issue,
     ];
 
-    this.filterStatusS = [ItemStatus.open, ItemStatus.done];
+    this.filterStatusS = [ItemStatus.open, ItemStatus.done, ItemStatus.todo];
 
     this.filterSearchS = '';
 
@@ -126,7 +135,7 @@ export class BacklogPage implements OnInit {
       ItemType.issue,
     ];
 
-    this.filterStatusB = [ItemStatus.open, ItemStatus.done];
+    this.filterStatusB = [ItemStatus.open, ItemStatus.done, ItemStatus.todo];
     this.filterSearchB = '';
 
     this.route.params.subscribe((params) =>
@@ -279,7 +288,9 @@ export class BacklogPage implements OnInit {
         datetoSend1,
         dateToSend2
       )
-      .subscribe((response) => {});
+      .subscribe((response) => {
+        this.saveToAPI();
+      });
   }
   onDateChangeStart(ev) {}
 
@@ -321,7 +332,7 @@ export class BacklogPage implements OnInit {
   editStatus(task, data, type) {
     if (type === 'backlog') {
       const newTask = _.cloneDeep(task);
-      newTask.item.status = ItemStatus[data.data.value];
+      newTask.item.status = data.data.value;
       const backlog = this.backlog;
       backlog.insertions = this.backlog.insertions.map((t) => {
         if (t.id === task.id) {
@@ -334,7 +345,7 @@ export class BacklogPage implements OnInit {
       this.store.dispatch(TaskActions.setBacklogAction({ backlog }));
     } else if (type === 'sprint') {
       const newTask = _.cloneDeep(task);
-      newTask.item.status = ItemStatus[data.data.value];
+      newTask.item.status = data.data.value;
       const sprint = this.sprint;
       sprint.insertions = this.sprint.insertions.map((t) => {
         if (t.id === task.id) {
@@ -348,6 +359,7 @@ export class BacklogPage implements OnInit {
     }
 
     this.countElement();
+    this.saveToAPI();
   }
   avviaSprint($event) {
     console.log('AVVIA SPRINT', $event.detail.value);
@@ -359,7 +371,8 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService
       .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
       .subscribe((response) => {
-        this.getFromApi();
+        this.saveToAPI();
+        // this.getFromApi();
       });
   }
 
@@ -372,7 +385,8 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService
       .updateSprint(this.projectId, this.backlogId, this.sprintId, this.sprint)
       .subscribe((response) => {
-        this.getFromApi();
+        this.saveToAPI();
+        // this.getFromApi();
       });
   }
 
@@ -419,6 +433,7 @@ export class BacklogPage implements OnInit {
         this.store.dispatch(TaskActions.setSprintAction({ sprint }));
       }
     }
+    this.saveToAPI();
   }
 
   getFromApi() {

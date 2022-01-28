@@ -20,7 +20,7 @@ export class BacklogEditStatusPopoversComponent implements OnInit {
       if (ItemStatus.hasOwnProperty(status)) {
         this.statusType.push({
           name: `backlog.edit.status.${status}`,
-          value: status,
+          value: ItemStatus[status],
           className: status,
         });
       }
