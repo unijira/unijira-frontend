@@ -8,11 +8,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserService} from '../../../../services/user/user.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
 import {Project} from '../../../../models/projects/Project';
-import {forkJoin, Subscription, switchMap} from 'rxjs';
+import {forkJoin, Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
-import {BasePath} from '../../../../services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-roles',
@@ -200,44 +199,6 @@ export class RolesPage implements OnInit {
             }
 
           });
-
-          // this.memberships.forEach(member => {
-          //
-          //   this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions).subscribe(i => {
-          //
-          //     if (i) {
-          //
-          //       this.projectService.getMemberships(this.project.id).subscribe(
-          //         members => {
-          //
-          //           this.memberships = members;
-          //
-          //           members.forEach(m => {
-          //               this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
-          //             }
-          //           );
-          //
-          //           this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
-          //           this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
-          //
-          //         }
-          //       );
-          //
-          //       this.updates = false;
-          //
-          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.success'), 'success', 'checkmark-circle-outline').then();
-          //
-          //
-          //
-          //     } else {
-          //
-          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.failed'), 'danger', 'alert-circle-outline').then();
-          //
-          //     }
-          //
-          //   });
-          //
-          // });
 
         }
 
