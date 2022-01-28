@@ -58,7 +58,9 @@ export class ProfileOverviewPage implements OnInit {
         this.user = user;
         this.getCollaborators();
         this.getMemberships();
-        this.image = this.user.avatar.toString();
+        if (this.user.avatar != null) {
+          this.image = this.user.avatar.toString();
+        }
         if (user.createdAt != null) {
           this.splitDate(this.user.createdAt.toString());
         }
@@ -82,14 +84,6 @@ export class ProfileOverviewPage implements OnInit {
 
       }
 
-    }
-
-    setPreferredTheme(value) {
-      this.preferredTheme = value;
-    }
-
-    setPreferredLanguage(value) {
-      this.preferredLanguage = value;
     }
 
 

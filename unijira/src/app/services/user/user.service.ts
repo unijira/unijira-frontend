@@ -34,4 +34,11 @@ export class UserService {
       .pipe(catchError(_ => of(false)));
   }
 
+  resetPassword(user: UserPasswordReset): Observable<boolean> {
+    return this.http
+      .post<boolean>('/auth/password-reset', user)
+      .pipe(map((_) => true))
+      .pipe(catchError((_) => of(false)));
+  }
+
 }

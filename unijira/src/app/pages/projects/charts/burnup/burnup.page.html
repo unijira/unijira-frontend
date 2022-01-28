@@ -30,7 +30,7 @@
         <ion-item lines="none">
           <ion-label position="floating" translate>backlog.sprint</ion-label>
           <ion-select placeholder="{{'board.select' | translate}}" interface="popover" [formControl]="sprintSelectedFC">
-            <ion-select-option [value]="i" *ngFor="let sprint of sprints; let i = index">Sprint {{i+1}}</ion-select-option>
+            <ion-select-option [value]="i" *ngFor="let sprint of sprints; let i = index">Sprint {{sprint.id}}</ion-select-option>
           </ion-select>
         </ion-item>
       </ion-col>
@@ -46,7 +46,7 @@
   </ion-row>
 
 
-  <ejs-chart id="chart-container" [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip">
+  <ejs-chart id="chart-container" #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" class="ion-margin-start ion-margin-end" [background]="background">
     <e-series-collection>
       <e-series [dataSource]="chartData" type="Line" xName="date" yName="points" [name]="'charts.workingDone' | translate" [marker]="marker"></e-series>
       <e-series [dataSource]="startEndChartData" type="Line" xName="date" yName="points" [name]="'charts.idealVelocity' | translate"></e-series>

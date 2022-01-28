@@ -65,9 +65,9 @@ const routes: Routes = [
   },
   {
     path: ':id/charts/burnup',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./charts/burnup/burnup.module').then( m => m.BurnupPageModule)
   },
-
   {
     path: ':id/settings/defofdone',
     canActivate: [AuthGuard],
@@ -77,6 +77,14 @@ const routes: Routes = [
     path: ':id/documents',
     loadChildren: () => import('./documents/documents.module').then( m => m.DocumentsPageModule)
   },
+
+  {
+    path: ':id/charts/burndown',
+    loadChildren: () => import('./charts/burndown/burndown.module').then( m => m.BurndownPageModule)
+  },
+
+
+
 
 
 

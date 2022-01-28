@@ -1,4 +1,4 @@
-import {AfterContentInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
@@ -8,7 +8,7 @@ import {BacklogAPIService} from '../../../../services/backlog-api.service';
 import {Sprint} from '../../../../models/Sprint';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
-import {unsubscribeAll} from '../../../../util';
+import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
@@ -20,7 +20,7 @@ import {SprintStatus} from '../../../../models/SprintStatus';
   templateUrl: './burnup.page.html',
   styleUrls: ['./burnup.page.scss'],
 })
-export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
+export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
   primaryXAxis: any;
   primaryYAxis: any;
@@ -37,11 +37,13 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
   projectSubscription: Subscription;
   backlog: Backlog;
 
-  sprintSelectedFC: FormControl = new FormControl(0);
+  sprintSelectedFC: FormControl = new FormControl('');
   selectionSubscription: Subscription;
   translationsSubscriptions: Subscription[];
 
   measureUnitKey = 'charts.workingHours';
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  @ViewChild('chartContainer') chartConteiner: any;
 
   constructor(private sessionService: SessionService,
               private activatedRoute: ActivatedRoute,
@@ -58,27 +60,36 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
             this.backlog = b;
             this.backlogService.getSprintList(p.id, b.id).subscribe(s =>{
               if (s) {
-                this.sprints = s;
+                this.sprints = s.filter(i => i.startingDate && i.endingDate);
                 if (this.sprints.length > 0) {
                   this.backlogService.getSprintInsertions(p.id, b.id, s[0].id).subscribe(ins => {
-                    const items = [];
-                    ins.forEach(i => items.push(i.item && i.item.status === ItemStatus.done));
-
-                    switch (ins[0].item.measureUnit) {
-                      case MeasureUnit.storyPoints:
-                        this.measureUnitKey = 'charts.storyPoints';
-                        break;
-                      case MeasureUnit.workingDays:
-                        this.measureUnitKey = 'charts.workingDays';
-                        break;
-                      case MeasureUnit.workingHours:
-                        this.measureUnitKey = 'charts.workingHours';
-                        break;
-                    }
-
-                    this.itemsToChartData(items);
+                    const itemsDone = [];
+                    const allItems = [];
+                    ins.forEach(i =>{
+                      if (i.item && i.item.status === ItemStatus.done) {
+                        itemsDone.push(i.item);
+                      }
+                      if (i.item && i.item.evaluation)
+                        {allItems.push(i.item);}
+                    });
+                    this.itemsToChartData(itemsDone, allItems);
                     this.sprintSelectedFC.setValue(0);
                     this.selectedSprint = this.sprints[0];
+
+                    if (ins[0]) {
+                      switch (ins[0].item.measureUnit) {
+                        case MeasureUnit.storyPoints:
+                          this.measureUnitKey = 'charts.storyPoints';
+                          break;
+                        case MeasureUnit.workingDays:
+                          this.measureUnitKey = 'charts.workingDays';
+                          break;
+                        case MeasureUnit.workingHours:
+                          this.measureUnitKey = 'charts.workingHours';
+                          break;
+                      }
+                    }
+
                   });
                 } else {
                   this.sprintSelectedFC.disable();
@@ -104,8 +115,16 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
     //   new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
     //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
     // ];
-    // this.itemsToChartData(items)
-
+    //
+    // const allitems = [
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-01')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 7, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 4, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-05')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.done, null, 1, 0, null, null, null, new Date('2020-01-07')),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.todo, null, 1, 0, null, null, null, null),
+    //   new Item(0, '', '', MeasureUnit.storyPoints, 10, '', ItemType.task, ItemStatus.todo, null, 1, 0, null, null, null, null),
+    // ];
+    // this.itemsToChartData(items, allitems);
 
 
     this.selectionSubscription = this.sprintSelectedFC.statusChanges.subscribe(() => {
@@ -113,12 +132,24 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
         this.selectedSprint = this.sprints[this.sprintSelectedFC.value];
         this.backlogService.getSprintInsertions(this.project.id, this.backlog.id,
           this.sprints[this.sprintSelectedFC.value].id).subscribe(ins => {
-            const items = [];
-            ins.forEach(i => items.push(i.item && i.item.status === ItemStatus.done));
-            this.itemsToChartData(items);
+          const itemsDone = [];
+          const allItems = [];
+          ins.forEach(i =>{
+            if (i.item && i.item.status === ItemStatus.done) {
+              itemsDone.push(i.item);
+            }
+            if (i.item && i.item.evaluation)
+              {allItems.push(i.item);}
+          });
+          this.itemsToChartData(itemsDone, allItems);
         });
       }
     });
+  }
+
+
+  get background() {
+    return isDarkColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
   }
 
   ngOnInit() {
@@ -155,28 +186,29 @@ export class BurnupPage implements OnInit, OnDestroy, AfterContentInit {
       this.translationsSubscriptions[1]);
   }
 
-  ngAfterContentInit() {
-    this.sprintSelectedFC.setValue(0);
+  ngAfterViewInit() {
+    this.sprintSelectedFC.updateValueAndValidity();
+    this.chartConteiner.refresh();
   }
 
-  itemsToChartData(items) {
-    if (this.selectedSprint) {
-      items.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
+  itemsToChartData(itemsDone, allItems) {
+    if (itemsDone.length > 0 && this.selectedSprint) {
+      itemsDone.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
       let sum = 0;
       const map = new Map();
-      items.forEach(i => {
+      itemsDone.forEach(i => {
         sum += i.evaluation;
         map.set(i.doneOn.toDateString(), sum);
       });
 
       this.chartData.push({date: this.selectedSprint.startingDate, points: 0});
-      map.forEach((v, k, m) => {
+      map.forEach((v, k) => {
         this.chartData.push({date: new Date(k), points: v});
       });
 
       this.startEndChartData = [
         {date: this.selectedSprint.startingDate, points: 0},
-        {date: this.selectedSprint.endingDate, points: items.map(item => item.evaluation).reduce((a, b) => a + b)}
+        {date: this.selectedSprint.endingDate, points: allItems.map(item => item.evaluation).reduce((a, b) => a + b)}
       ];
     }
   }

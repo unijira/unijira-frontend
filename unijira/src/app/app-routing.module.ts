@@ -50,6 +50,11 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     loadChildren: () => import('./pages/user/profile-overview/profile-overview.module').then( m => m.ProfileOverviewPageModule)
   },
+  {
+    path: 'projects/:id/roadmap',
+    canActivate: [AuthGuard],
+    loadChildren: () => import('./pages/projects/roadmap/roadmap.module').then( m => m.RoadmapPageModule)
+  },
 
 ];
 
