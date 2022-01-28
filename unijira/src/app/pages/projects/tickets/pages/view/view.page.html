@@ -8,6 +8,7 @@
       </ion-breadcrumb>
       <ion-breadcrumb routerLink="/projects" [translate]="'user.projects.title'"></ion-breadcrumb>
       <ion-breadcrumb [routerLink]="['/projects', projectId || 0, 'tickets']" [translate]="'projects.tickets.title'"></ion-breadcrumb>
+      <ion-breadcrumb separator=""  [routerLink]="['/projects', projectId || 0, 'tickets', ticket.fatherId]" *ngIf="ticket?.fatherId">#{{ticket.fatherId}}</ion-breadcrumb>
       <ion-breadcrumb>#{{ticket?.id || 0}}</ion-breadcrumb>
     </ion-breadcrumbs>
   </section>
@@ -69,8 +70,8 @@
         <ion-col size-lg="6" size="12">
           <ion-item class="ion-align-items-end">
             <ion-label position="floating" [translate]="'projects.tickets.view.evaluation'"></ion-label>
-            <ion-input name="evaluation" type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation"></ion-input>
-            <ion-button id="btn-evaluation" fill="clear" slot="end" class="ion-no-margin ion-margin-vertical" (click)="toggle()"
+            <ion-input name="evaluation" type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation" [disabled]="!ticket.sons || ticket.sons.length > 0"></ion-input>
+            <ion-button id="btn-evaluation" fill="clear" slot="end" class="ion-no-margin ion-margin-vertical" (click)="toggle()" [disabled]="!ticket.sons || ticket.sons.length > 0"
                         [popper]="(hint ? 'projects.tickets.view.evaluation.tooltip' : 'projects.tickets.view.evaluation.tooltip.nohint') | translate:{value: hint}"
                         [popperTrigger]="ngxPopperjsTriggers.hover"
                         popperApplyClass="ion-text-nowrap">
@@ -173,7 +174,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.description'"></ion-label>
-            <ion-textarea name="description" [(ngModel)]="ticket.description" [placeholder]="'projects.tickets.view.description.placeholder'" auto-grow="true" rows="4" maxlength="8192"></ion-textarea>
+            <ion-textarea name="description" [(ngModel)]="ticket.description" [placeholder]="'projects.tickets.view.description.placeholder' | translate" auto-grow="true" rows="4" maxlength="8192"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
