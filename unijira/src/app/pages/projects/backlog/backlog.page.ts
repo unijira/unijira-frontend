@@ -200,7 +200,11 @@ export class BacklogPage implements OnInit {
     this.backlogAPIService.getFirstBacklog(this.projectId).subscribe((res) => {
       console.log('BACKLOG ID:', that.backlogId);
       that.backlogId = res.id;
-      that.sprintId = res.sprints[0].id;
+      if (res.sprints.length > 0) {
+      that.sprintId = res.sprints[0]?.id;
+      } else {
+        that.createSprint();
+      }
       this.getFromApi();
     });
 
