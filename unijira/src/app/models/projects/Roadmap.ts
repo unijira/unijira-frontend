@@ -1,15 +1,15 @@
-import { ItemRoadmap } from "../item/ItemRoadmap";
+import { Item } from "../item/Item";
 
 export class Roadmap {
   public startingDate: Date;
   public endingDate: Date;
-  public item: ItemRoadmap;
+  public item: Item;
   public roadmapId: number;
 
   constructor(
      startingDate: Date,
      endingDate: Date,
-     item: ItemRoadmap,
+     item: Item,
      roadmapId: number){
       this.startingDate= startingDate;
       this.endingDate= endingDate;

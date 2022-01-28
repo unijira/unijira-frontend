@@ -23,7 +23,7 @@
           </ion-button>
         </ion-col>
         <ion-col size-lg="auto" size="6">
-          <ion-button color="primary" expand="block"  (click)="CreaItem()">
+          <ion-button color="primary" expand="block"  routerLink="/projects/{{projectId}}/tickets">
             <ion-icon slot="start" name="add" ></ion-icon>
             <ion-text [translate]="'projects.roadmap.addItem'"></ion-text>
           </ion-button>
@@ -36,8 +36,8 @@
   <ejs-gantt id="ganttDefault" height="70%" [dataSource]="data" [taskFields]="taskSettings"
     [editSettings]="editSettings" [toolbar]="toolbar" [enableContextMenu]="true" [allowSelection]="true"
     [allowSorting]="true" [splitterSettings]="splitterSettings" [sortSettings]="sortSettings" [allowFiltering]="true"
-    [editDialogFields]="editDialogFields" (actionComplete)="onActionComplete($event)"
-    (actionBegin)="actionBegin($event)" (toolbarClick)="toolbarClick($event)"
+    [editDialogFields]="editDialogFields" (actionComplete)="onActionComplete($event)" dateFormat="yyyy/MM/dd"
+    (actionBegin)="actionBegin($event)"  (toolbarClick)="toolbarClick($event)"
     (queryTaskbarInfo)="queryTaskbarInfo($event)" (load)="onLoad($event)" [allowRowDragAndDrop]="true" >
     <e-columns>
       <e-column field="TaskID" headerText="ID" textAlign="Left" width="100"></e-column>
@@ -53,8 +53,10 @@
         </ng-template>
       </e-column>
       <e-column field="TaskName" [headerText]="'project.roadmap.taskName' | translate" width="150"> </e-column>
-      <e-column field="Status" width="150">
-        <ion-badge color="tertiary">{{Status}}</ion-badge>
+      <e-column field="Status" [headerText]="'project.roadmap.status' | translate" width="150" >
+        <ion-badge >
+          <ion-label>{{ "project.roadmap.statusOpen"| translate }}</ion-label>
+        </ion-badge>
       </e-column>
       <e-column field="StartDate" [headerText]="'project.roadmap.startDate' | translate" width="150"></e-column>
       <e-column field="EndDate" [headerText]="'project.roadmap.endDate' | translate" width="150"></e-column>

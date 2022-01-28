@@ -40,6 +40,7 @@ import { TextBoxModule } from '@syncfusion/ej2-angular-inputs';
 import { NewItemComponent } from './pages/projects/backlog/modals/new-item/new-item.component';
 
 import {ClipboardModule, ClipboardService} from 'ngx-clipboard';
+import { DatePipe } from '@angular/common';
 
 export const createTranslateLoader = (http: HttpClient) =>
   new TranslateHttpLoader(http, './assets/translations/', '.json');
@@ -94,7 +95,8 @@ export const createTranslateLoader = (http: HttpClient) =>
     SessionService,
     AuthGuard,
     Title,
-    ClipboardService
+    ClipboardService,
+    DatePipe
 
   ],
   bootstrap: [AppComponent],

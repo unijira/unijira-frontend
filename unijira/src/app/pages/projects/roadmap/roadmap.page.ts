@@ -14,7 +14,6 @@ import { SessionService } from 'src/app/store/session.service';
 import { TranslateService } from '@ngx-translate/core';
 import { L10n, setCulture } from '@syncfusion/ej2-base';
 import { ItemType } from 'src/app/models/item/ItemType';
-import { ItemRoadmap } from 'src/app/models/item/ItemRoadmap';
 import { Roadmap } from 'src/app/models/projects/Roadmap';
 import { PageService } from 'src/app/services/page.service';
 import { RoadmapService } from 'src/app/services/roadmap/roadmap.service';
@@ -25,6 +24,10 @@ import {
   hideSpinner,
 } from '@syncfusion/ej2-angular-popups';
 import { ItemRoadmapTree } from 'src/app/models/item/itemRoadmapTree';
+import { Item } from 'src/app/models/item/Item';
+import { DatePipe } from '@angular/common';
+import { DateUtils } from 'src/app/classes/date-utils';
+
 
 declare var require: any;
 L10n.load({
@@ -34,6 +37,7 @@ L10n.load({
       name: 'Nome',
       startDate: 'Data inizio',
       endDate: 'Data fine',
+      status: 'Stato',
       duration: 'Durata',
       progress: 'Progresso',
       dependency: 'Dipendenza',
@@ -112,33 +116,44 @@ export class RoadmapPage {
   public startingDate: Date = new Date();
   public endingDate: Date = new Date();
   public taskIdGantt = 0;
+  public sons: Item[]= [];
+  public sonsOfSons: Item[]= [];
   public disable: boolean = true;
-  public returnedItem: ItemRoadmap = new ItemRoadmap(
+  public returnedItem:  Item = new Item(
     null,
     '',
     '',
+    null,
+    null,
     '',
     null,
-    '',
     null,
     null,
     null,
-    null
+    null,
+    null,
+    null,
+    null,
   );
-  public itemRoadmap: ItemRoadmap = new ItemRoadmap(
+  public itemRoadmap: Item = new Item(
     null,
     '',
     '',
+    null,
+    null,
     '',
     null,
-    '',
     null,
     null,
     null,
-    null
+    null,
+    null,
+    null,
+    null,
   );
   public roadmap: Roadmap = new Roadmap(null, null, null, null);
   public itemsOfRoadmap: Array<ItemRoadmapTree>;
+  public itemEdited:Roadmap = new Roadmap(null, null, null, null);
   public animationSettingsDialog: Object = {
     effect: 'Zoom',
     duration: 400,
@@ -151,7 +166,8 @@ export class RoadmapPage {
     private activatedRoute: ActivatedRoute,
     private translateService: TranslateService,
     private roadmapService: RoadmapService,
-    private pageService: PageService
+    private pageService: PageService,
+    private datePipe: DatePipe
   ) {
     this.pageService.setTitle('Roadmap');
 
@@ -190,7 +206,6 @@ export class RoadmapPage {
     hideSpinner(document.getElementById('gantt'));
     this.getAllItemsOfRoadmap();
   }
-  public ngOnDestroy() {}
 
   public initGantt() {
     // Init taskSetting
@@ -214,9 +229,10 @@ export class RoadmapPage {
       showDeleteConfirmDialog: true,
     };
     //Iinit toolbar
-    this.toolbar = ['Add', 'Delete', 'Cancel', 'ExpandAll', 'CollapseAll'];
+    this.toolbar =  ['ExpandAll', 'CollapseAll'];
+
     this.splitterSettings = {
-      position: '30%',
+      position: '55%',
     };
     this.sortSettings = {
       columns: [{ field: 'TaskID', direction: 'Ascending' }],
@@ -305,16 +321,13 @@ export class RoadmapPage {
             for (i = 0; i < this.data.length; i++) {
               if (this.data[i].TaskName === father.value.split(' - ')[0]) {
                 let result= this.itemsOfRoadmap.find(item => item.itemSummary === this.data[i].TaskName);
-                console.log(result.itemId)
                 this.itemRoadmap.fatherId= Number(result.itemId);
-                console.log(this.itemRoadmap)
                 this.roadmapService
                .addItem(this.itemRoadmap)
                .pipe(
                  tap((itemR) => {
                   this.roadmap.item = itemR
                    this.roadmap.item.fatherId= this.itemRoadmap.fatherId;
-                  console.log(this.roadmap)
                  }),
                  switchMap((_) =>
                    this.roadmapService.addItemToRoadmap(
@@ -324,8 +337,7 @@ export class RoadmapPage {
                      this.roadmap
                    )
                  ),
-                 tap(data=> console.log(data))
-               ).subscribe(data => console.log(data))
+               ).subscribe()
                 //task has a subtasks already
                 if (this.data[i].subtasks !== undefined) {
                   this.subtasksTmp = this.data[i].subtasks;
@@ -506,7 +518,46 @@ export class RoadmapPage {
     },
   ];
 
-  public onActionComplete(args: any): void {}
+  public onActionComplete(args: any): void {
+    let startingDate;
+    let endingDate;
+    if(args.requestType==='save'){
+      console.log(args.data.taskData.id)
+      this.itemEdited.item= new Item(null,null,null,null,null,null,null,null,null,null,null,null,null,)
+      this.itemEdited.item.type=args.data.ItemType;
+    this.itemEdited.item.status=args.data.Status;
+      this.itemEdited.startingDate= args.data.StartDate;
+
+      this.itemEdited.endingDate= args.data.EndDate;
+      startingDate= this.datePipe.transform( this.itemEdited.startingDate,'yyyy-MM-dd');
+      endingDate= this.datePipe.transform( this.itemEdited.endingDate,'yyyy-MM-dd');
+      this.itemEdited.startingDate=startingDate
+      this.itemEdited.endingDate=endingDate
+      this.itemEdited.item.description= args.data.TaskName;
+
+      this.roadmapService
+      .getBacklog(this.projectId)
+      .pipe(
+        tap((backlog) => (this.backlogId = backlog[0].id)),
+        switchMap((backlog) =>
+          this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+        ),
+        tap((road) =>{ this.roadmapId = road[0].id;
+          this.roadmap.roadmapId=road[0].id;
+        }),
+        switchMap((road) =>
+          this.roadmapService.editItem(
+            this.projectId,
+            this.backlogId,
+            road[0].id,
+            args.data.taskData.id,
+            this.itemEdited
+          )
+        ),
+      ).subscribe(data=>console.log(data));
+    }
+
+  }
 
   public renderAddDialog() {
     this.adddialog.show();
@@ -545,7 +596,8 @@ export class RoadmapPage {
       args.taskbarBgColor = '#e5493a';
     }
   }
-  actionBegin(args: any) {}
+  actionBegin(args: any) {
+  }
   showFathersDropDown(args: any) {
     if (
       args.itemData !== null &&
@@ -594,7 +646,7 @@ export class RoadmapPage {
     this.adddialog.show();
     this.modifyDropDowns();
   }
-  addItem(item: ItemRoadmap) {
+  addItem(item: Item) {
     this.roadmapService.addItem(item).subscribe((data) => {
       this.returnedItem = data;
     });
@@ -607,13 +659,88 @@ export class RoadmapPage {
   ) {
     this.roadmapService
       .addItemToRoadmap(idProject, idBacklog, idRoadmap, roadmap)
-      .subscribe((data) => {
-        console.log(data);
-      });
+      .subscribe();
   }
   getAllItemsOfRoadmap(){
     this.taskIdGantt = 0;
-    this.roadmapService
+    this.roadmapService.getItems(this.projectId).pipe(tap(tickets => {
+      for (let i=0 ;i< tickets.length; i++){
+        this.sons= tickets[i].sons
+        tickets[i].sons=[]
+        this.roadmap.item= tickets[i];
+        this.roadmapService
+        .getBacklog(this.projectId)
+        .pipe(
+          tap((backlog) => (this.backlogId = backlog[0].id)),
+          switchMap((backlog) =>
+            this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+          ),
+          tap((road) =>{ this.roadmapId = road[0].id;
+            this.roadmap.roadmapId=road[0].id;
+          }),
+          switchMap((road) =>
+            this.roadmapService.addItemToRoadmap(
+              this.projectId,
+              this.backlogId,
+              road[0].id,
+              this.roadmap
+            )
+          ),
+        ).subscribe();
+        if(this.sons.length > 0){
+
+          for (let j =0; j<this.sons.length; j++){
+            this.sonsOfSons= this.sons[j].sons
+            this.sons[j].sons=[]
+            this.roadmap.item= this.sons[j];
+            this.roadmapService
+            .getBacklog(this.projectId)
+            .pipe(
+              tap((backlog) => (this.backlogId = backlog[0].id)),
+              switchMap((backlog) =>
+                this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+              ),
+              tap((road) =>{ this.roadmapId = road[0].id;
+                this.roadmap.roadmapId=road[0].id;
+               }),
+              switchMap((road) =>
+                this.roadmapService.addItemToRoadmap(
+                  this.projectId,
+                  this.backlogId,
+                  road[0].id,
+                  this.roadmap
+                )
+              )).subscribe()
+            if(this.sonsOfSons.length >0){
+              for (let k =0; k<this.sonsOfSons.length; k++){
+                this.roadmap.item= this.sonsOfSons[k];
+                this.roadmapService
+                .getBacklog(this.projectId)
+                .pipe(
+                  tap((backlog) => (this.backlogId = backlog[0].id)),
+                  switchMap((backlog) =>
+                    this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+                  ),
+                  tap((road) =>{ this.roadmapId = road[0].id;
+                    this.roadmap.roadmapId=road[0].id;
+                    }),
+                  switchMap((road) =>
+                    this.roadmapService.addItemToRoadmap(
+                      this.projectId,
+                      this.backlogId,
+                      road[0].id,
+                      this.roadmap
+                    )
+                  )).subscribe()
+              }
+            }
+          }
+        }
+
+      }
+
+    }),
+    tap(_=> this.roadmapService
       .getBacklog(this.projectId)
       .pipe(
         tap((backlog) => (this.backlogId = backlog[0].id)),
@@ -631,17 +758,22 @@ export class RoadmapPage {
       )
       .subscribe((items) => {
         this.itemsOfRoadmap = items;
-        console.log(this.itemsOfRoadmap)
+        this.data=[];
         let recordFather: object = {};
+        let recordMidelFather: object = {};
         let recordSon: object = {};
-        let sons:any[]=[];
+        let recordSonOfSon: object = {};
+        let sonss:any[]=[];
+        let cont=0;
+        let sonssOfSons:any[]=[];
         if (this.itemsOfRoadmap.length > 0) {
           for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
             this.taskIdGantt++;
-              if (this.itemsOfRoadmap[i].children.length === 0) {
+              if (this.itemsOfRoadmap[i].children.length ===0 ||this.itemsOfRoadmap[i].children=== null) {
                 recordFather = {
                   TaskName: this.itemsOfRoadmap[i].itemDescription,
                   Status: this.itemsOfRoadmap[i].itemStatus,
+                  id:this.itemsOfRoadmap[i].roadmapInsertionId,
                   TaskID: this.taskIdGantt,
                   StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                   EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
@@ -655,34 +787,66 @@ export class RoadmapPage {
                 );
               }
               else {
+                sonss=[];
                   for (let j=0 ; j< this.itemsOfRoadmap[i].children.length; j++){
                     recordSon={};
+                    recordSonOfSon={};
+
+                    this.taskIdGantt=this.taskIdGantt+1;
+
+                    if(this.itemsOfRoadmap[i].children[j] !== null && this.itemsOfRoadmap[i].children[j].children.length<=0){
                     recordSon = {
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
+                      id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
                       Status: this.itemsOfRoadmap[i].children[j].itemStatus,
-                      TaskID: this.taskIdGantt+1,
+                      TaskID: this.taskIdGantt,
                       StartDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionStartingDate,
                       EndDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionEndingDate,
                       ItemType: this.itemsOfRoadmap[i].children[j].itemType,
                     };
-                    sons=sons.concat(recordSon);
-                    if(this.itemsOfRoadmap[i].children[j].itemType=== this.itemTypeEnum.story){
-                      this.dataFathersDropDown = this.dataFathersDropDown.concat(
-                        this.itemsOfRoadmap[i].children[j].itemDescription +
-                          ' - ' +
-                          this.itemsOfRoadmap[i].children[j].itemType
-                      );
-                    }
-                    this.taskIdGantt++;
+                    sonss=sonss.concat(recordSon);
+
                   }
+                  else if(this.itemsOfRoadmap[i].children[j].children.length>0){
+                    cont=this.itemsOfRoadmap[i].children[j].children.length;
+                    for (let k=0 ; k< this.itemsOfRoadmap[i].children[j].children.length; k++){
+                      this.taskIdGantt=this.taskIdGantt+1;
+                      recordSonOfSon={};
+                        recordSonOfSon={
+                          TaskName: this.itemsOfRoadmap[i].children[j].children[k].itemDescription,
+                          id:this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionId,
+                          Status: this.itemsOfRoadmap[i].children[j].children[k].itemStatus,
+                          TaskID: this.taskIdGantt,
+                          StartDate: this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionStartingDate,
+                          EndDate: this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionEndingDate,
+                          ItemType: this.itemsOfRoadmap[i].children[j].children[k].itemType,
+                        }
+                        sonssOfSons= sonssOfSons.concat(recordSonOfSon)
+                    }
+                    recordMidelFather={
+                      TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
+                      Status: this.itemsOfRoadmap[i].children[j].itemStatus,
+                      id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
+                      TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children[j].children.length,
+                      StartDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionStartingDate,
+                      EndDate: this.itemsOfRoadmap[i].children[j].roadmapInsertionEndingDate,
+                      ItemType: this.itemsOfRoadmap[i].children[j].itemType,
+                      subtasks: sonssOfSons
+                    }
+                    sonss=sonss.concat(recordMidelFather);
+
+                  }
+              }
+
                   recordFather = {
                     TaskName: this.itemsOfRoadmap[i].itemDescription,
                     Status: this.itemsOfRoadmap[i].itemStatus,
-                    TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length,
+                    id:this.itemsOfRoadmap[i].roadmapInsertionId,
+                    TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length-cont,
                     StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                     EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
                     ItemType: this.itemsOfRoadmap[i].itemType,
-                    subtasks: sons
+                    subtasks: sonss
                   };
                   this.data = this.data.concat(recordFather);
                   this.dataFathersDropDown = this.dataFathersDropDown.concat(
@@ -692,7 +856,34 @@ export class RoadmapPage {
                   );
               }
           }
+          console.log(this.data)
         }
-      });
+      }))
+    ).subscribe()
+  }
+  findInsertion():Boolean{
+    var array: any[];
+    this.roadmapService.getBacklog(this.projectId)
+      .pipe(
+        tap((backlog) => (this.backlogId = backlog[0].id)),
+        switchMap((backlog) =>
+          this.roadmapService.getRoadmap(this.projectId, backlog[0].id)
+        ),
+        tap((roadmap) => (this.roadmapId = roadmap[0].id)),
+        switchMap((roadmap) =>
+          this.roadmapService.getItemsOfTheRoadmap(
+            this.projectId,
+            this.backlogId,
+            roadmap[0].id
+          )
+        )
+      )
+      .subscribe((items) => {
+        array=items;
+      })
+      if(array.length >0){
+        return true;
+      }
+      return false;
   }
 }
