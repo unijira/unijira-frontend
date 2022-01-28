@@ -1,4 +1,4 @@
-import {AfterContentInit, AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
+import {AfterViewInit, Component, OnDestroy, OnInit} from '@angular/core';
 import {SessionService} from '../../../../store/session.service';
 import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
@@ -12,8 +12,6 @@ import {unsubscribeAll} from '../../../../util';
 import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
-import {ItemType} from '../../../../models/item/ItemType';
-import {SprintStatus} from '../../../../models/SprintStatus';
 
 @Component({
   selector: 'app-burnup',
@@ -60,9 +58,10 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
               if (s) {
                 this.sprints = s.filter(i => i.startingDate && i.endingDate);
                 if (this.sprints.length > 0) {
-                  this.backlogService.getSprintInsertions(p.id, b.id, this.sprints[0].id).subscribe(ins => {
-                    let items = [];
-                    ins.forEach(i => items.push(i.item && i.item.status == ItemStatus.done));
+                  this.backlogService.getSprintInsertions(p.id, b.id, s[0].id).subscribe(ins => {
+                    const items = [];
+                    ins.forEach(i => items.push(i.item && i.item.status === ItemStatus.done));
+
                     this.itemsToChartData(items);
                     this.sprintSelectedFC.setValue(0);
                     this.selectedSprint = this.sprints[0];
@@ -115,8 +114,8 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
         this.selectedSprint = this.sprints[this.sprintSelectedFC.value];
         this.backlogService.getSprintInsertions(this.project.id, this.backlog.id,
           this.sprints[this.sprintSelectedFC.value].id).subscribe(ins => {
-            let items = [];
-            ins.forEach(i => items.push(i.item && i.item.status == ItemStatus.done));
+            const items = [];
+            ins.forEach(i => items.push(i.item && i.item.status === ItemStatus.done));
             this.itemsToChartData(items);
         });
       }
@@ -168,11 +167,11 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
       const map = new Map();
       items.forEach(i => {
         sum += i.evaluation;
-        map.set(i.doneOn.toDateString(), sum)
+        map.set(i.doneOn.toDateString(), sum);
       });
 
       this.chartData.push({date: this.selectedSprint.startingDate, points: 0});
-      map.forEach((v, k, m) => {
+      map.forEach((v, k) => {
         this.chartData.push({date: new Date(k), points: v});
       });
 
