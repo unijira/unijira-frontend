@@ -799,9 +799,8 @@ export class RoadmapPage {
                   recordSonOfSon={};
 
                   this.taskIdGantt=this.taskIdGantt+1;
-
+                  if(this.itemsOfRoadmap[i].children[j]!== null){
                   if(this.itemsOfRoadmap[i].children[j].children.length<=0){
-                    if(this.itemsOfRoadmap[i].children[j]!== null){
                     recordSon = {
                       TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
@@ -813,7 +812,7 @@ export class RoadmapPage {
                     };
                     sonss=sonss.concat(recordSon);
                   }
-                  }
+
                   else if(this.itemsOfRoadmap[i].children[j].children.length>0){
                     cont=this.itemsOfRoadmap[i].children[j].children.length;
                     for (let k=0 ; k< this.itemsOfRoadmap[i].children[j].children.length; k++){
@@ -845,6 +844,7 @@ export class RoadmapPage {
                     sonss=sonss.concat(recordMidelFather);
 
                   }
+                }
                 }
 
                 recordFather = {
