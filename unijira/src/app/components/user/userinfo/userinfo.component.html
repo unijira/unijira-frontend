@@ -89,7 +89,7 @@ NEL MEZZO DEL CAMMIN DI NOSTRA VITA
           <ion-card-content>
             <ion-chip *ngFor="let collab of collaborators;">
               <ion-avatar>
-                <ion-img [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
+                <ion-img [src]="collab.avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
               </ion-avatar>
               <ion-label *ngIf="collab.firstName && collab.lastName">{{collab.firstName + " " + collab.lastName}}</ion-label>
               <ion-label *ngIf="!collab.firstName || !collab.lastName">{{collab.username}}</ion-label>
