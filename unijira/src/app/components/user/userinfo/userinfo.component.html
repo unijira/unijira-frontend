@@ -91,7 +91,8 @@ NEL MEZZO DEL CAMMIN DI NOSTRA VITA
               <ion-avatar>
                 <ion-img [src]="'/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
               </ion-avatar>
-              <ion-label>{{collab.firstName + " " + collab.lastName}}</ion-label>
+              <ion-label *ngIf="collab.firstName && collab.lastName">{{collab.firstName + " " + collab.lastName}}</ion-label>
+              <ion-label *ngIf="!collab.firstName || !collab.lastName">{{collab.username}}</ion-label>
             </ion-chip>
           </ion-card-content>
         </ion-card>
@@ -105,7 +106,7 @@ NEL MEZZO DEL CAMMIN DI NOSTRA VITA
           <ion-card-content>
             <ion-chip *ngFor="let project of enrolledProjects;">
               <ion-avatar>
-                <ion-img [src]="project.icon" alt=""></ion-img>
+                <ion-img [src]="project.icon || '/assets/img/projects/default-project-icon.svg'" alt=""></ion-img>
               </ion-avatar>
               <ion-label>{{project.name}}</ion-label>
             </ion-chip>
