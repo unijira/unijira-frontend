@@ -765,14 +765,15 @@ export class RoadmapPage {
           let recordSon: object = {};
           let recordSonOfSon: object = {};
           let sonss: any[]=[];
-          let cont=0;
+          let contSons=0;
+          let contSonsOfSons=0;
           let sonssOfSons: any[]=[];
           if (this.itemsOfRoadmap.length > 0) {
             for (let i = 0; i < this.itemsOfRoadmap.length; i++) {
               this.taskIdGantt++;
               if (this.itemsOfRoadmap[i].children.length ===0 ||this.itemsOfRoadmap[i].children=== null) {
                 recordFather = {
-                  TaskName: this.itemsOfRoadmap[i].itemDescription,
+                  TaskName: this.itemsOfRoadmap[i].itemSummary,
                   Status: this.itemsOfRoadmap[i].itemStatus,
                   id:this.itemsOfRoadmap[i].roadmapInsertionId,
                   TaskID: this.taskIdGantt,
@@ -782,12 +783,13 @@ export class RoadmapPage {
                 };
                 this.data = this.data.concat(recordFather);
                 this.dataFathersDropDown = this.dataFathersDropDown.concat(
-                  this.itemsOfRoadmap[i].itemDescription +
+                  this.itemsOfRoadmap[i].itemSummary +
                   ' - ' +
                   this.itemsOfRoadmap[i].itemType
                 );
               }
               else {
+                if(this.itemsOfRoadmap[i].children!== null){
                 sonss=[];
                 for (let j=0 ; j< this.itemsOfRoadmap[i].children.length; j++){
                   recordSon={};
@@ -797,7 +799,7 @@ export class RoadmapPage {
                   if(this.itemsOfRoadmap[i].children[j]!== null){
                   if(this.itemsOfRoadmap[i].children[j].children.length<=0){
                     recordSon = {
-                      TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
+                      TaskName: this.itemsOfRoadmap[i].children[j].itemSummary,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
                       Status: this.itemsOfRoadmap[i].children[j].itemStatus,
                       TaskID: this.taskIdGantt,
@@ -809,13 +811,13 @@ export class RoadmapPage {
                   }
 
                   else if(this.itemsOfRoadmap[i].children[j].children.length>0){
-                    cont=this.itemsOfRoadmap[i].children[j].children.length;
+                    contSons=this.itemsOfRoadmap[i].children[j].children.length;
                     for (let k=0 ; k< this.itemsOfRoadmap[i].children[j].children.length; k++){
                       this.taskIdGantt=this.taskIdGantt+1;
                       recordSonOfSon={};
                       if(this.itemsOfRoadmap[i].children[j].children[k]!== null){
                       recordSonOfSon={
-                        TaskName: this.itemsOfRoadmap[i].children[j].children[k].itemDescription,
+                        TaskName: this.itemsOfRoadmap[i].children[j].children[k].itemSummary,
                         id:this.itemsOfRoadmap[i].children[j].children[k].roadmapInsertionId,
                         Status: this.itemsOfRoadmap[i].children[j].children[k].itemStatus,
                         TaskID: this.taskIdGantt,
@@ -827,7 +829,7 @@ export class RoadmapPage {
                     }
                     }
                     recordMidelFather={
-                      TaskName: this.itemsOfRoadmap[i].children[j].itemDescription,
+                      TaskName: this.itemsOfRoadmap[i].children[j].itemSummary,
                       Status: this.itemsOfRoadmap[i].children[j].itemStatus,
                       id:this.itemsOfRoadmap[i].children[j].roadmapInsertionId,
                       TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children[j].children.length,
@@ -841,12 +843,13 @@ export class RoadmapPage {
                   }
                 }
                 }
+              }
 
                 recordFather = {
-                  TaskName: this.itemsOfRoadmap[i].itemDescription,
+                  TaskName: this.itemsOfRoadmap[i].itemSummary,
                   Status: this.itemsOfRoadmap[i].itemStatus,
                   id:this.itemsOfRoadmap[i].roadmapInsertionId,
-                  TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length-cont,
+                  TaskID: this.taskIdGantt-this.itemsOfRoadmap[i].children.length-contSons,
                   StartDate: this.itemsOfRoadmap[i].roadmapInsertionStartingDate,
                   EndDate: this.itemsOfRoadmap[i].roadmapInsertionEndingDate,
                   ItemType: this.itemsOfRoadmap[i].itemType,
@@ -854,7 +857,7 @@ export class RoadmapPage {
                 };
                 this.data = this.data.concat(recordFather);
                 this.dataFathersDropDown = this.dataFathersDropDown.concat(
-                  this.itemsOfRoadmap[i].itemDescription +
+                  this.itemsOfRoadmap[i].itemSummary +
                   ' - ' +
                   this.itemsOfRoadmap[i].itemType
                 );
