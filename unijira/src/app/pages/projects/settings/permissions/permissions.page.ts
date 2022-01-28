@@ -191,7 +191,6 @@ export class PermissionsPage implements OnInit {
             obs.push(this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions));
           });
 
-
           forkJoin(obs).subscribe(i => {
 
             if(i.filter(j => j).length > 0) {
@@ -235,70 +234,19 @@ export class PermissionsPage implements OnInit {
 
   onChangeUser($event: any) {
 
-    if(this.selectedMembership !== null) {
-
-      this.maskSelect.value = '';
-
-      this.memberships.forEach(membership => {
-          if(membership.userInfo.username === this.selectedMembership.userInfo.username) {
-
-            const p = [];
-            const differences = [];
-
-            this.permissions.forEach(j => {
-              if(j.value) {
-                p.push(j.type);
-              }
-            });
-
-            membership.permissions.forEach(i => {
-              this.permissions.forEach(j => {
-
-                if(j.type === i && !j.value) {
-                  differences.push(j.type);
-                }
-
-                if(membership.permissions.filter(e => e === j.type).length === 0 && j.value) {
-                  differences.push(j.type);
-                }
-
-              });
-            });
-
-            if(differences.length > 0 || p.length > membership.permissions.length ||
-              p.length < membership.permissions.length) {
-
-              membership.permissions = p;
-              this.updates = true;
-
-            }
-
-          }
-      });
-
-    }
-
-    this.permissions.forEach(j => {
-      j.value = false;
-    });
-
     this.memberships.forEach(membership => {
 
-      if(membership.userInfo !== undefined){
+      if(membership.userInfo.username === $event.detail.value) {
 
-        if(membership.userInfo.username === $event.detail.value) {
-
-          membership.permissions.forEach(i => {
-            this.permissions.forEach(j => {
-              if(i === j.type) {
-                j.value = true;
-              }
-            });
+        membership.permissions.forEach(i => {
+          this.permissions.forEach(j => {
+            if(i === j.type) {
+              j.value = true;
+            }
           });
+        });
 
-          this.selectedMembership = membership;
-
-        }
+        this.selectedMembership = membership;
 
       }
 
