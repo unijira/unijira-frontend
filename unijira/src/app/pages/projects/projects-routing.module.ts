@@ -70,9 +70,9 @@ const routes: Routes = [
   },
   {
     path: ':id/charts/burnup',
+    canActivate: [AuthGuard],
     loadChildren: () => import('./charts/burnup/burnup.module').then( m => m.BurnupPageModule)
   },
-
   {
     path: ':id/settings/defofdone',
     canActivate: [AuthGuard],
@@ -86,6 +86,14 @@ const routes: Routes = [
     path: ':id/charts/cumulative',
     loadChildren: () => import('./charts/cumulative/cumulative.module').then( m => m.CumulativePageModule)
   },
+
+
+  {
+    path: ':id/charts/burndown',
+    loadChildren: () => import('./charts/burndown/burndown.module').then( m => m.BurndownPageModule)
+  },
+
+
 
 
 

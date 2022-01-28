@@ -14,11 +14,8 @@ export class EvaluationProposal {
 
 
   constructor(ticketId: number, authorId: number, evaluation: number, content: string) {
-    this.id = null;
     this.ticketId = ticketId;
     this.authorId = authorId;
-    this.authorUsername = null;
-    this.authorAvatar = null;
     this.evaluation = evaluation ?? 0;
     this.content = content ?? '';
     this.createdAt = DateUtils.toLocalDateTime();

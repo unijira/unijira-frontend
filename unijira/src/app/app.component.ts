@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {SessionService} from './store/session.service';
@@ -95,7 +96,8 @@ export class AppComponent implements OnInit, OnDestroy {
 
         this.charts = [
           {name: 'charts.burnUpChart', url: `/projects/${proj.id}/charts/burnup`, icon: 'trending-up-outline'},
-          {name: 'charts.cumulative', url: `/projects/${proj.id}/charts/cumulative`, icon: 'stats-chart-outline'},
+          {name: 'charts.burnDownChart', url: `/projects/${proj.id}/charts/burndown`, icon: 'trending-down-outline'},
+          {name: 'charts.cumulative', url: `/projects/${proj.id}/charts/cumulative`, icon: 'stats-chart-outline'}
         ];
 
       }

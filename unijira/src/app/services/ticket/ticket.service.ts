@@ -81,6 +81,7 @@ export class TicketService {
 
   public removeTicket(projectId: number, ticket: Item): Observable<boolean> {
     return this.http.delete<boolean>(`/items/${ticket.id}`)
+      .pipe(map(_ => true))
       .pipe(catchError(e => of(false)));
   }
 

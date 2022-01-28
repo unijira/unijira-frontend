@@ -51,13 +51,13 @@
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating">{{'projects.tickets.view.summary' | translate}}*</ion-label>
-            <ion-input  [placeholder]="'projects.tickets.view.summary.placeholder' | translate" [(ngModel)]="ticket.summary" maxlength="255"></ion-input>
+            <ion-input name="summary" ngDefaultControl [placeholder]="'projects.tickets.view.summary.placeholder' | translate" [(ngModel)]="ticket.summary" maxlength="255"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.status'"></ion-label>
-            <ion-select [(ngModel)]="ticket.status" [placeholder]="'projects.tickets.view.status.placeholder' | translate" interface="popover" >
+            <ion-select name="status" [(ngModel)]="ticket.status" [placeholder]="'projects.tickets.view.status.placeholder' | translate" interface="popover" >
               <ion-select-option value="{{ticketStatus.open}}">{{ticketStatus.open | ticketStatus | translate}}</ion-select-option>
               <ion-select-option value="{{ticketStatus.todo}}">{{ticketStatus.todo | ticketStatus | translate}}</ion-select-option>
               <ion-select-option value="{{ticketStatus.done}}">{{ticketStatus.done | ticketStatus | translate}}</ion-select-option>
@@ -69,7 +69,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item class="ion-align-items-end">
             <ion-label position="floating" [translate]="'projects.tickets.view.evaluation'"></ion-label>
-            <ion-input type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation"></ion-input>
+            <ion-input name="evaluation" type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation"></ion-input>
             <ion-button id="btn-evaluation" fill="clear" slot="end" class="ion-no-margin ion-margin-vertical" (click)="toggle()"
                         [popper]="(hint ? 'projects.tickets.view.evaluation.tooltip' : 'projects.tickets.view.evaluation.tooltip.nohint') | translate:{value: hint}"
                         popperTrigger="hover"
@@ -81,7 +81,7 @@
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.measureUnit'"></ion-label>
-            <ion-select [(ngModel)]="ticket.measureUnit" [placeholder]="'projects.tickets.view.measureUnit.placeholder' | translate" interface="popover" >
+            <ion-select name="measure-unit" [(ngModel)]="ticket.measureUnit" [placeholder]="'projects.tickets.view.measureUnit.placeholder' | translate" interface="popover" >
               <ion-select-option value="{{measureUnit.storyPoints}}">{{measureUnit.storyPoints | measureUnit | translate | titlecase}}</ion-select-option>
               <ion-select-option value="{{measureUnit.workingDays}}">{{measureUnit.workingDays | measureUnit | translate | titlecase}}</ion-select-option>
               <ion-select-option value="{{measureUnit.workingHours}}">{{measureUnit.workingHours | measureUnit | translate | titlecase}}</ion-select-option>
@@ -130,13 +130,13 @@
                         <ion-col>
                           <ion-item class="ion-align-items-end">
                             <ion-label position="floating" [translate]="'projects.tickets.view.evaluation.propose.label'"></ion-label>
-                            <ion-input type="text" [(ngModel)]="propose.content" [placeholder]="'projects.tickets.view.evaluation.propose.placeholder' | translate" maxlength="255"></ion-input>
+                            <ion-input name="propose-content" type="text" [(ngModel)]="propose.content" [placeholder]="'projects.tickets.view.evaluation.propose.placeholder' | translate" maxlength="255"></ion-input>
                           </ion-item>
                         </ion-col>
                         <ion-col size="3" size-lg="2">
                           <ion-item class="ion-align-items-end">
                             <ion-label position="floating" [translate]="'projects.tickets.view.evaluation.value.label'"></ion-label>
-                            <ion-input type="number" min="1" [(ngModel)]="propose.evaluation" [placeholder]="'projects.tickets.view.evaluation.value.placeholder' | translate"></ion-input>
+                            <ion-input name="propose-evaluation" type="number" min="1" [(ngModel)]="propose.evaluation" [placeholder]="'projects.tickets.view.evaluation.value.placeholder' | translate"></ion-input>
                           </ion-item>
                         </ion-col>
                         <ion-col size="auto">
@@ -157,13 +157,13 @@
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.tags'"></ion-label>
-            <ion-input [placeholder]="'projects.tickets.view.tags.placeholder' | translate" [(ngModel)]="ticket.tags"></ion-input>
+            <ion-input name="tags" [placeholder]="'projects.tickets.view.tags.placeholder' | translate" [(ngModel)]="ticket.tags"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col size-lg="6" size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.release'"></ion-label>
-            <ion-select [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" [disabled]="!releases || releases.length === 0" >
+            <ion-select name="release" [(ngModel)]="ticket.releaseId" [placeholder]="'projects.tickets.view.release.placeholder' | translate" interface="popover" [disabled]="!releases || releases.length === 0" >
               <ion-select-option *ngFor="let release of releases" [value]="release.id">{{release.version}}</ion-select-option>
             </ion-select>
           </ion-item>
@@ -173,7 +173,7 @@
         <ion-col size="12">
           <ion-item>
             <ion-label position="floating" [translate]="'projects.tickets.view.description'"></ion-label>
-            <ion-textarea [(ngModel)]="ticket.description" [placeholder]="'projects.tickets.view.description.placeholder'" auto-grow="true" rows="4" maxlength="8192"></ion-textarea>
+            <ion-textarea name="description" [(ngModel)]="ticket.description" [placeholder]="'projects.tickets.view.description.placeholder'" auto-grow="true" rows="4" maxlength="8192"></ion-textarea>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -196,7 +196,7 @@
           <ion-label position="floating">
             {{'projects.tickets.view.assignedTo' | translate:{value: ticket?.assignees?.length || 0} }}
           </ion-label>
-          <app-input-select-user [memberships]="memberships" [multiple]="true" [(ngModel)]="ticket.assignees"></app-input-select-user>
+          <app-input-select-user name="assignees" ngDefaultControl [memberships]="memberships" [multiple]="true" [(ngModel)]="ticket.assignees"></app-input-select-user>
         </ion-col>
         <ion-col size-lg="6" size="12">
           <ion-label position="floating" [translate]="'projects.tickets.view.owner'"></ion-label>

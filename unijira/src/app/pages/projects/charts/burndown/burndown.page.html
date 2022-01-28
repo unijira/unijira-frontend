@@ -17,7 +17,7 @@
       <ion-row class="ion-align-items-center">
         <ion-col size-lg="" size="12">
           <ion-text>
-            <h1 translate>charts.burnUpChart</h1>
+            <h1 translate>charts.burnDownChart</h1>
           </ion-text>
         </ion-col>
       </ion-row>
@@ -46,10 +46,11 @@
   </ion-row>
 
 
-  <ejs-chart id="chart-container" #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" class="ion-margin-start ion-margin-end" [background]="background">
+  <ejs-chart id="chart-container" #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" class="ion-margin-end ion-margin-start" [background]="background">
     <e-series-collection>
-      <e-series [dataSource]="chartData" type="Line" xName="date" yName="points" [name]="'charts.workingDone' | translate" [marker]="marker"></e-series>
+      <e-series [dataSource]="chartData" type="Line" xName="date" yName="points" [name]="'charts.remainingWork' | translate" [marker]="marker"></e-series>
       <e-series [dataSource]="startEndChartData" type="Line" xName="date" yName="points" [name]="'charts.idealVelocity' | translate"></e-series>
     </e-series-collection>
   </ejs-chart>
 </ion-content>
+

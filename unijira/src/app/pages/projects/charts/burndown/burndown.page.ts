@@ -1,26 +1,26 @@
 import {AfterViewInit, Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {SessionService} from '../../../../store/session.service';
-import {ActivatedRoute} from '@angular/router';
 import {Item} from '../../../../models/item/Item';
-import {MeasureUnit} from '../../../../models/item/MeasureUnit';
-import {ItemStatus} from '../../../../models/item/ItemStatus';
-import {BacklogAPIService} from '../../../../services/backlog-api.service';
 import {Sprint} from '../../../../models/Sprint';
 import {Project} from '../../../../models/projects/Project';
 import {Subscription} from 'rxjs';
-import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
-import {FormControl} from '@angular/forms';
 import {Backlog} from '../../../../models/Backlog';
+import {FormControl} from '@angular/forms';
+import {SessionService} from '../../../../store/session.service';
+import {ActivatedRoute} from '@angular/router';
+import {BacklogAPIService} from '../../../../services/backlog-api.service';
 import {TranslateService} from '@ngx-translate/core';
-import {ItemType} from '../../../../models/item/ItemType';
+import {ItemStatus} from '../../../../models/item/ItemStatus';
+import {MeasureUnit} from '../../../../models/item/MeasureUnit';
+import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {SprintStatus} from '../../../../models/SprintStatus';
+import {ItemType} from '../../../../models/item/ItemType';
 
 @Component({
-  selector: 'app-burnup',
-  templateUrl: './burnup.page.html',
-  styleUrls: ['./burnup.page.scss'],
+  selector: 'app-burndown',
+  templateUrl: './burndown.page.html',
+  styleUrls: ['./burndown.page.scss'],
 })
-export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
+export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
 
   primaryXAxis: any;
   primaryYAxis: any;
@@ -62,7 +62,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
               if (s) {
                 this.sprints = s.filter(i => i.startingDate && i.endingDate);
                 if (this.sprints.length > 0) {
-                  this.backlogService.getSprintInsertions(p.id, b.id, s[0].id).subscribe(ins => {
+                  this.backlogService.getSprintInsertions(p.id, b.id, this.sprints[0].id).subscribe(ins => {
                     const itemsDone = [];
                     const allItems = [];
                     ins.forEach(i =>{
@@ -127,6 +127,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
     // this.itemsToChartData(items, allitems);
 
 
+
     this.selectionSubscription = this.sprintSelectedFC.statusChanges.subscribe(() => {
       if (this.project && this.backlog && this.sprints.length > 0) {
         this.selectedSprint = this.sprints[this.sprintSelectedFC.value];
@@ -145,11 +146,6 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
         });
       }
     });
-  }
-
-
-  get background() {
-    return isDarkColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
   }
 
   ngOnInit() {
@@ -191,26 +187,32 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
     this.chartConteiner.refresh();
   }
 
-  itemsToChartData(itemsDone, allItems) {
-    if (itemsDone.length > 0 && this.selectedSprint) {
-      itemsDone.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
-      let sum = 0;
+  itemsToChartData(doneItems, allItems) {
+    if (doneItems.length > 0 && this.selectedSprint) {
+      doneItems.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
+      let sum = allItems.map(item => item.evaluation).reduce((a, b) => a + b);
       const map = new Map();
-      itemsDone.forEach(i => {
-        sum += i.evaluation;
+      doneItems.forEach(i => {
+        sum -= i.evaluation;
         map.set(i.doneOn.toDateString(), sum);
       });
 
-      this.chartData.push({date: this.selectedSprint.startingDate, points: 0});
-      map.forEach((v, k) => {
+      this.chartData.push({date: this.selectedSprint.startingDate,
+        points: allItems.map(item => item.evaluation).reduce((a, b) => a + b)});
+      map.forEach((v, k, m) => {
         this.chartData.push({date: new Date(k), points: v});
       });
 
       this.startEndChartData = [
-        {date: this.selectedSprint.startingDate, points: 0},
-        {date: this.selectedSprint.endingDate, points: allItems.map(item => item.evaluation).reduce((a, b) => a + b)}
+        {date: this.selectedSprint.startingDate, points: allItems.map(item => item.evaluation).reduce((a, b) => a + b)},
+        {date: this.selectedSprint.endingDate, points: 0}
       ];
     }
+  }
+
+  // eslint-disable-next-line @typescript-eslint/member-ordering
+  get background() {
+    return isDarkColorTheme() ? '#1E1E1E' : '#FFFFFF'; // FIXME: esisterà un metodo migliore per ottenere i colori da ionic?
   }
 
 }
