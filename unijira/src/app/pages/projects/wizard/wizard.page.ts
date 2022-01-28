@@ -179,7 +179,7 @@ export class WizardPage implements OnInit {
     });
   }
 
-  onChangeTime(value: string) {
+  onChangeTime() {
 
       if(this.nameForm.value.length >= 3) {
 

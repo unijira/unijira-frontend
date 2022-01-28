@@ -3,6 +3,7 @@ import {UserInfo} from '../../../../../models/users/UserInfo';
 import {ItemAssignment} from '../../../../../models/item/ItemAssignment';
 import {Membership} from '../../../../../models/projects/Membership';
 import {UserService} from '../../../../../services/user/user.service';
+import {NgxPopperjsPlacements, NgxPopperjsTriggers} from 'ngx-popperjs';
 
 @Component({
   selector: 'app-input-select-user',
@@ -18,6 +19,8 @@ export class InputSelectUserComponent implements OnInit {
   @Output() ngModelChange = new EventEmitter<ItemAssignment[]>();
 
   users: UserInfo[] = [];
+  ngxPopperjsTriggers = NgxPopperjsTriggers;
+  ngxPopperjsPlacements = NgxPopperjsPlacements;
 
 
   constructor(

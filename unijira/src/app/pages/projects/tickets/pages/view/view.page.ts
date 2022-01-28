@@ -20,6 +20,7 @@ import {EvaluationProposal} from '../../../../../models/item/EvaluationProposal'
 import {AccountService} from '../../../../../services/account.service';
 import {UserInfo} from '../../../../../models/users/UserInfo';
 import {MembershipPermission} from '../../../../../models/projects/MembershipPermission';
+import {NgxPopperjsTriggers} from 'ngx-popperjs';
 
 @Component({
   selector: 'app-view',
@@ -45,6 +46,7 @@ export class ViewPage implements OnInit {
   ticketStatus = ItemStatus;
   measureUnit = MeasureUnit;
   ticketType = ItemType;
+  ngxPopperjsTriggers = NgxPopperjsTriggers;
 
   constructor(
     private pageService: PageService,

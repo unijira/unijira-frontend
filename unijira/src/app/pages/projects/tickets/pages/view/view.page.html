@@ -72,7 +72,7 @@
             <ion-input name="evaluation" type="number" [placeholder]="'projects.tickets.view.evaluation.placeholder' | translate" inputmode="numeric" min="1" step="1" [(ngModel)]="ticket.evaluation"></ion-input>
             <ion-button id="btn-evaluation" fill="clear" slot="end" class="ion-no-margin ion-margin-vertical" (click)="toggle()"
                         [popper]="(hint ? 'projects.tickets.view.evaluation.tooltip' : 'projects.tickets.view.evaluation.tooltip.nohint') | translate:{value: hint}"
-                        popperTrigger="hover"
+                        [popperTrigger]="ngxPopperjsTriggers.hover"
                         popperApplyClass="ion-text-nowrap">
               <ion-icon slot="icon-only" name="bulb-outline"></ion-icon>
             </ion-button>
