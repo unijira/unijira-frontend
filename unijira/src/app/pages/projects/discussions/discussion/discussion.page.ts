@@ -67,7 +67,7 @@ export class DiscussionPage implements OnInit, OnDestroy {
 
         if (this.idDiscussion) {
           this.discussionsService.getDiscussion(this.project.id, this.idDiscussion).subscribe(d => {
-            console.log(d);
+
             this.discussion = d;
             this.userService.getUser(d.userId).subscribe(u => this.discussion.user = u);
             this.discussionsService.getMessages(this.project.id, this.discussion.id).subscribe(m => {

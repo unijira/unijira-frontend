@@ -25,7 +25,7 @@ export class LoadingComponent implements OnInit, OnDestroy {
     await this.loading.present();
 
     // const { role, data } = await this.loading.onDidDismiss();
-    console.log('Loading dismissed!');
+    // console.log('Loading dismissed!');
   }
 
 

@@ -19,10 +19,10 @@ export class TaskService {
   getSprint(): Observable<any> {
     const selector = createSelector(
       createFeatureSelector<TaskState>('taskReducer'),
-      (state) => {
-        console.log('getSprint');
-        return state.sprint;
-      }
+      (state) =>
+        // console.log('getSprint');
+         state.sprint
+
     );
 
     return this.store.select(selector);
