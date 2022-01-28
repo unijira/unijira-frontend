@@ -2,3 +2,30 @@
   width: 2rem;
   height: 2rem;
 }
+
+.dropzone {
+  background: var(--ion-background-color);
+}
+
+.dropzone-preview {
+  background: var(--ion-color-light);
+}
+
+.dropzone-preview:hover {
+  background: var(--ion-color-light-shade);
+}
+
+.infinte-width-inner {
+  min-width: 64rem;
+}
+
+.infinte-width {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-scrolling: touch;
+}
+
+.infinte-width::-webkit-scrollbar {
+  display: none;
+}
+

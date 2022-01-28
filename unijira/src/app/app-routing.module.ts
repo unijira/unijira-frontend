@@ -17,6 +17,10 @@ const routes: Routes = [
     loadChildren: () => import('./pages/registration/registration.module').then(m => m.RegistrationPageModule)
   },
   {
+    path: 'invite',
+    loadChildren: () => import('./pages/projects/invite/invite.module').then(m => m.InvitePageModule)
+  },
+  {
     path: 'projects/:id/backlog',
     // canActivate: [AuthGuard],
     loadChildren: () =>
