@@ -23,7 +23,7 @@ export class DocumentsPage implements OnInit {
   userInfo: UserInfo;
 
   filterSearch = '';
-  filterMimes: string[] = [];
+  filterMimes: Set<string> = new Set();
 
   documents: Document[] = null;
   files: File[] = [];
@@ -70,10 +70,7 @@ export class DocumentsPage implements OnInit {
             if(d) {
 
               this.documents = d;
-
-              this.documents.forEach(i => {
-                this.filterMimes.push(i.mime);
-              });
+              this.filterMimes = new Set((this.documents || []).map(e => e.mime));
 
             }
 
