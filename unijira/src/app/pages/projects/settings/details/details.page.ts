@@ -148,10 +148,10 @@ export class DetailsPage implements OnInit {
                   p => {
 
                     if(p !== null) {
-                      this.presentToast(this.translateService.instant('project.settings.details.toast.update.success')).then();
+                      this.presentToast(this.translateService.instant('project.settings.details.toast.update.success'), 'success', 'checkmark-circle-outline').then();
                       this.saved = true;
                     } else {
-                      this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed')).then();
+                      this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed'), 'danger', 'alert-circle-outline').then();
                     }
 
                   }
@@ -166,9 +166,9 @@ export class DetailsPage implements OnInit {
               p => {
 
                 if(p !== null) {
-                  this.presentToast(this.translateService.instant('project.settings.details.toast.update.success')).then();
+                  this.presentToast(this.translateService.instant('project.settings.details.toast.update.success'), 'success', 'checkmark-circle-outline').then();
                 } else {
-                  this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed')).then();
+                  this.presentToast(this.translateService.instant('project.settings.details.toast.update.failed'), 'danger', 'alert-circle-outline').then();
                 }
 
               }
@@ -198,11 +198,11 @@ export class DetailsPage implements OnInit {
               if(p === null) {
 
                 this.router.navigate(['home']).then(
-                  e => this.presentToast(this.translateService.instant('project.settings.details.toast.delete.success')).then()
+                  e => this.presentToast(this.translateService.instant('project.settings.details.toast.delete.success'), 'success', 'checkmark-circle-outline').then()
                 );
 
               } else {
-                this.presentToast(this.translateService.instant('project.settings.details.toast.delete.failed')).then();
+                this.presentToast(this.translateService.instant('project.settings.details.toast.delete.failed'), 'danger', 'alert-circle-outline').then();
               }
 
             }
@@ -214,11 +214,13 @@ export class DetailsPage implements OnInit {
 
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
       position: 'top',
-      duration: 4000
+      duration: 4000,
+      color,
+      icon
     });
     await toast.present();
   }

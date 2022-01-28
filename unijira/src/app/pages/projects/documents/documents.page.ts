@@ -145,9 +145,9 @@ export class DocumentsPage implements OnInit {
 
               this.uploading = false;
 
-              this.presentToast(this.translateService.instant('projects.documents.toast.success')).then();
+              this.presentToast(this.translateService.instant('projects.documents.toast.success'), 'success', 'checkmark-circle-outline').then();
             } else {
-              this.presentToast(this.translateService.instant('projects.documents.toast.failed')).then();
+              this.presentToast(this.translateService.instant('projects.documents.toast.failed'), 'danger', 'alert-circle-outline').then();
             }
 
           });
@@ -160,8 +160,8 @@ export class DocumentsPage implements OnInit {
 
   remove(d: Document) {
 
-    this.showAlert(this.translateService.instant('projects.documents.alert.title'),
-      this.translateService.instant('projects.documents.alert.sure'),
+    this.showAlert(this.translateService.instant('projects.documents.delete.alert.title'),
+      this.translateService.instant('projects.documents.delete.alert.sure'),
       this.translateService.instant('wizard.alert.message.button.cancel'),
       this.translateService.instant('wizard.alert.message.button.confirm'))
       .then(res => {
@@ -170,7 +170,7 @@ export class DocumentsPage implements OnInit {
 
           this.projectService.deleteDocument(this.projectId, d.id).subscribe( i => {
 
-            if(i) {
+            if(i === null) {
 
               this.files = [];
 
@@ -183,10 +183,10 @@ export class DocumentsPage implements OnInit {
 
               });
 
-              this.presentToast(this.translateService.instant('projects.documents.remove.toast.success')).then();
+              this.presentToast(this.translateService.instant('projects.documents.delete.toast.success'), 'success', 'checkmark-circle-outline').then();
 
             } else {
-              this.presentToast(this.translateService.instant('projects.documents.remove.toast.failed')).then();
+              this.presentToast(this.translateService.instant('projects.documents.delete.toast.failed'), 'danger', 'alert-circle-outline').then();
             }
 
           });
@@ -197,11 +197,13 @@ export class DocumentsPage implements OnInit {
 
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
       position: 'top',
-      duration: 4000
+      duration: 4000,
+      color,
+      icon
     });
     await toast.present();
   }

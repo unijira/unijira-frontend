@@ -37,8 +37,8 @@
         <h3><i>{{'projects.documents.drop.title' | translate}}</i></h3>
         <ion-icon name="cloud-upload-outline" size="large"></ion-icon>
       </ngx-dropzone-label>
-      <ngx-dropzone-preview *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
-        <ngx-dropzone-label>{{ f.name }} ({{ f.type }})</ngx-dropzone-label>
+      <ngx-dropzone-preview class="dropzone-preview" *ngFor="let f of files" [removable]="true" (removed)="onRemove(f)">
+        <ngx-dropzone-label>{{ f.name | truncate:36}} <br> <small>({{ f.type }})</small></ngx-dropzone-label>
       </ngx-dropzone-preview>
     </ngx-dropzone>
     <div *ngIf="uploading" class="ion-margin smooth">
@@ -120,7 +120,7 @@
       </ion-item>
 
       <!-- Documents -->
-      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId" [href]="d.path?.toString() || ''">
+      <ion-item *ngFor="let d of filteredDocuments" [disabled]="!projectId" class="smooth">
         <ion-grid>
           <ion-row class="ion-align-items-center">
 
@@ -153,11 +153,6 @@
                     <ion-img [src]="d.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                   </ion-avatar>
                 </ion-col>
-                <ion-col>
-                  <ion-label>
-                    {{ d.userFirstName }} {{ d.userLastName }}
-                  </ion-label>
-                </ion-col>
               </ion-row>
             </ion-col>
 
@@ -172,10 +167,17 @@
                   </ion-label>
                 </ion-col>
 
+                <!-- Download Document -->
+                <ion-col size="auto">
+                  <ion-button size="default" [href]="d.path?.toString() || ''" fill="clear" color="success">
+                    <ion-icon name="download-outline"></ion-icon>
+                  </ion-button>
+                </ion-col>
+
                 <!-- Remove Document -->
                 <ion-col size="auto">
-                  <ion-button fill="clear" color="danger">
-                    <ion-icon (click)="remove(d)" name="trash-outline"></ion-icon>
+                  <ion-button size="default" (click)="remove(d)" fill="clear" color="danger">
+                    <ion-icon name="trash-outline" color="danger"></ion-icon>
                   </ion-button>
                 </ion-col>
 

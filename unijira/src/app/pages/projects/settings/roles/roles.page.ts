@@ -8,10 +8,11 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserService} from '../../../../services/user/user.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
 import {Project} from '../../../../models/projects/Project';
-import {Subscription} from 'rxjs';
+import {forkJoin, Subscription, switchMap} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
+import {BasePath} from '../../../../services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-roles',
@@ -89,7 +90,6 @@ export class RolesPage implements OnInit {
                   this.userMembership = member;
                 }
 
-
                 this.usersService.getUser(member.keyUserId).subscribe(user => {
                     member.userInfo = user;
                   });
@@ -152,41 +152,92 @@ export class RolesPage implements OnInit {
 
         if (results) {
 
-          this.memberships.forEach(member => {
+          forkJoin([...this.memberships.map(member =>
+            this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions)
+          )]).subscribe(i => {
 
-            this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions).subscribe(i => {
+            if (i) {
 
-              if (i) {
+              this.projectService.getMemberships(this.project.id).subscribe(
+                members => {
 
-                this.presentToast(this.translateService.instant('project.settings.roles.toast.success')).then();
-
-                this.projectService.getMemberships(this.project.id).subscribe(
-                  members => {
+                  if(members) {
 
                     this.memberships = members;
 
-                    members.forEach(m => {
-                        this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
+                    this.memberships.forEach(member => {
+
+                        if (member.keyUserId === this.userInfo.id) {
+                          this.userMembership = member;
+                        }
+
+                        this.usersService.getUser(member?.keyUserId).subscribe(user => {
+
+                          if(user) {
+                            member.userInfo = user;
+                            this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+                            this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+                          }
+
+                        });
+
                       }
                     );
 
-                    this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
-                    this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
-
                   }
-                );
 
-                this.updates = false;
+                }
+              );
 
-              } else {
+              this.updates = false;
 
-                this.presentToast(this.translateService.instant('project.settings.roles.toast.failed')).then();
+              this.presentToast(this.translateService.instant('project.settings.roles.toast.success'), 'success', 'checkmark-circle-outline').then();
 
-              }
+            } else {
 
-            });
+              this.presentToast(this.translateService.instant('project.settings.roles.toast.failed'), 'danger', 'alert-circle-outline').then();
+
+            }
 
           });
+
+          // this.memberships.forEach(member => {
+          //
+          //   this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions).subscribe(i => {
+          //
+          //     if (i) {
+          //
+          //       this.projectService.getMemberships(this.project.id).subscribe(
+          //         members => {
+          //
+          //           this.memberships = members;
+          //
+          //           members.forEach(m => {
+          //               this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
+          //             }
+          //           );
+          //
+          //           this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
+          //           this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+          //
+          //         }
+          //       );
+          //
+          //       this.updates = false;
+          //
+          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.success'), 'success', 'checkmark-circle-outline').then();
+          //
+          //
+          //
+          //     } else {
+          //
+          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.failed'), 'danger', 'alert-circle-outline').then();
+          //
+          //     }
+          //
+          //   });
+          //
+          // });
 
         }
 
@@ -197,11 +248,13 @@ export class RolesPage implements OnInit {
 
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
       position: 'top',
-      duration: 4000
+      duration: 4000,
+      color,
+      icon
     });
     await toast.present();
   }

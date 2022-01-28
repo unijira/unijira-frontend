@@ -66,12 +66,13 @@ export class PermissionsPage implements OnInit {
 
     { role: MembershipRoles.productOwner,
       permissions: [MembershipPermission.details, MembershipPermission.admin,
-                    MembershipPermission.invitations],
+                    MembershipPermission.invitations, MembershipPermission.ticket],
       translate: 'project.settings.roles.product.owner'},
 
     { role: MembershipRoles.scrumMaster,
       permissions: [MembershipPermission.details, MembershipPermission.admin,
-                    MembershipPermission.invitations, MembershipPermission.roles],
+                    MembershipPermission.invitations, MembershipPermission.roles,
+                    MembershipPermission.ticket],
       translate: 'project.settings.roles.scrum.master'},
 
     { role: MembershipRoles.manager,
@@ -94,6 +95,7 @@ export class PermissionsPage implements OnInit {
 
   userMembership: Membership;
   membershipPermission = MembershipPermission;
+  currentUserPermission: MembershipPermission[];
 
   constructor(private sessionService: SessionService,
               public alertController: AlertController,
@@ -134,6 +136,7 @@ export class PermissionsPage implements OnInit {
 
                   if (member.keyUserId === this.userInfo.id) {
                     this.userMembership = member;
+                    this.currentUserPermission = member.permissions;
                   }
 
                   this.usersService.getUser(member.keyUserId).subscribe(user => {
@@ -216,10 +219,10 @@ export class PermissionsPage implements OnInit {
                 }
               );
 
-              this.presentToast(this.translateService.instant('project.settings.permissions.toast.success')).then();
+              this.presentToast(this.translateService.instant('project.settings.permissions.toast.success'), 'success', 'checkmark-circle-outline').then();
 
             } else {
-              this.presentToast(this.translateService.instant('project.settings.permissions.toast.failed')).then();
+              this.presentToast(this.translateService.instant('project.settings.permissions.toast.failed'), 'danger', 'alert-circle-outline').then();
             }
 
           });
@@ -371,11 +374,13 @@ export class PermissionsPage implements OnInit {
 
   }
 
-  async presentToast(message: string) {
+  async presentToast(message: string, color: string, icon: string) {
     const toast = await this.toastController.create({
       message,
       position: 'top',
-      duration: 4000
+      duration: 4000,
+      color,
+      icon
     });
     await toast.present();
   }

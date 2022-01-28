@@ -7,11 +7,25 @@
   background: var(--ion-background-color);
 }
 
-.delete-icon {
-  color: lightslategray;
-  cursor: pointer;
+.dropzone-preview {
+  background: var(--ion-color-light);
 }
 
-.delete-icon:hover {
-  color: #eb445a;
+.dropzone-preview:hover {
+  background: var(--ion-color-light-shade);
 }
+
+.infinte-width-inner {
+  min-width: 64rem;
+}
+
+.infinte-width {
+  flex-wrap: nowrap !important;
+  overflow-x: scroll;
+  overflow-scrolling: touch;
+}
+
+.infinte-width::-webkit-scrollbar {
+  display: none;
+}
+
