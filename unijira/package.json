@@ -7,7 +7,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve --port 8100",
-    "prod": "ng serve --port 8100 --configuration production --aot",
+    "prod": "ng serve --port 8100 --configuration production",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

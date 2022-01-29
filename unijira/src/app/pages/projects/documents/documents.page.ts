@@ -9,6 +9,7 @@ import {forkJoin, Subscription, switchMap} from 'rxjs';
 import {UserInfo} from '../../../models/users/UserInfo';
 import {Document} from '../../../models/projects/Document';
 import {BasePath, FileUploadService} from '../../../services/file-upload/file-upload.service';
+import {UserService} from '../../../services/user/user.service';
 
 @Component({
   selector: 'app-documents',
@@ -35,6 +36,7 @@ export class DocumentsPage implements OnInit {
   constructor(
     private projectService: ProjectService,
     private pageService: PageService,
+    private userService: UserService,
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute,
     private alertController: AlertController,
@@ -84,6 +86,16 @@ export class DocumentsPage implements OnInit {
               this.documents = d;
               this.mimes = [...new Set((this.documents || []).map(e => e.mime))];
 
+              this.documents.forEach(doc => {
+
+                this.userService.getUser(doc.userId).subscribe(user => {
+
+                  doc.userAvatar = user.avatar;
+
+                });
+
+              });
+
             }
 
           });
@@ -98,6 +110,7 @@ export class DocumentsPage implements OnInit {
   }
 
   onSelect(event) {
+    console.log(this.documents);
     this.files.push(...event.addedFiles);
   }
 

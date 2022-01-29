@@ -124,6 +124,7 @@ export class ViewPage implements AfterViewInit {
           message: this.translateService.instant('projects.releases.toast.save.success'),
           color: 'success',
           duration: 3000,
+          position: 'top',
           icon: 'checkmark-circle-outline',
         }).then(toast => toast.present());
 

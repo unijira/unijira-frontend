@@ -29,6 +29,8 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
   types: string[] = [];
   epics: Item[] = [];
 
+  projectId: number;
+
   stories: Item[] = [];
   storiesToShow: Item[] = [];
 
@@ -67,7 +69,10 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
 
     this.pageService.setTitle('project.pages.board');
 
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.activatedRoute.params.subscribe(params => {
+      this.sessionService.loadProject(params.id);
+      this.projectId = params.id;
+    });
 
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
 
