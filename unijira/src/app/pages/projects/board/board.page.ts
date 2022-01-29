@@ -132,6 +132,13 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
             this.tags = this.tags.filter(t => t !== '');
             this.epics = [...new Set(this.epics)];
 
+            if (this.epics.length === 0) {
+              this.epicsCheckedFC.disable();
+            }
+            if (this.tags.length === 0) {
+              this.tagsCheckedFC.disable();
+            }
+
             // fine preprocessing da inserire nella subscription
           } else {
             this.searchFC.disable();
@@ -236,6 +243,8 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.storiesToShow = cloneDeep(this.stories);
+
+
   }
 
 }
