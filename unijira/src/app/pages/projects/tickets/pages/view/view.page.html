@@ -1,4 +1,4 @@
-<ion-content>
+<ion-content *ngIf="ticket && projectId">
 
   <!-- Breadcrumbs -->
   <section class="ion-margin">
@@ -272,4 +272,12 @@
   </section>
 
 
+</ion-content>
+
+<ion-content *ngIf="!ticket || !projectId">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center vh-100">
+      <ion-spinner name="dots"></ion-spinner>
+    </ion-row>
+  </ion-grid>
 </ion-content>
