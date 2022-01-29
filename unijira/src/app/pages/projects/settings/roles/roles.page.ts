@@ -141,6 +141,40 @@ export class RolesPage implements OnInit {
   ngOnInit() {
   }
 
+
+  updateChange($event: any, keyUserId: number | undefined) {
+
+    let modify = false;
+
+    this.currentRoles.forEach(item => {
+
+      if(item.keyUserId === keyUserId) {
+        item.role = $event.detail.value;
+      }
+
+    });
+
+
+    this.currentRoles.forEach(i => {
+      this.initialRoles.forEach(j => {
+
+        if(i.keyUserId === j.keyUserId) {
+          if(i.role !== j.role) {
+            this.updates = true;
+            modify = true;
+          }
+        }
+
+      });
+    });
+
+    if(!modify) {
+      this.updates = false;
+    }
+
+
+  }
+
   updateRoles() {
 
     this.showAlert(this.translateService.instant('project.settings.roles.alert.title'),
@@ -253,39 +287,6 @@ export class RolesPage implements OnInit {
       await alert.present();
 
     });
-  }
-
-  updateChange($event: any, keyUserId: number | undefined) {
-
-    let modify = false;
-
-    this.currentRoles.forEach(item => {
-
-      if(item.keyUserId === keyUserId) {
-        item.role = $event.detail.value;
-      }
-
-    });
-
-
-    this.currentRoles.forEach(i => {
-      this.initialRoles.forEach(j => {
-
-        if(i.keyUserId === j.keyUserId) {
-          if(i.role !== j.role) {
-            this.updates = true;
-            modify = true;
-          }
-        }
-
-      });
-    });
-
-    if(!modify) {
-      this.updates = false;
-    }
-
-
   }
 
 }
