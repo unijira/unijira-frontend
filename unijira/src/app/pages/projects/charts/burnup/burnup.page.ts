@@ -14,7 +14,7 @@ import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
 import {ItemType} from '../../../../models/item/ItemType';
 import {SprintStatus} from '../../../../models/SprintStatus';
-import {DateUtils} from "../../../../classes/date-utils";
+import {DateUtils} from '../../../../classes/date-utils';
 
 @Component({
   selector: 'app-burnup',

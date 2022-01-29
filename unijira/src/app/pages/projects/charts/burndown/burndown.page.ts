@@ -14,6 +14,7 @@ import {MeasureUnit} from '../../../../models/item/MeasureUnit';
 import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {SprintStatus} from '../../../../models/SprintStatus';
 import {ItemType} from '../../../../models/item/ItemType';
+import {DateUtils} from '../../../../classes/date-utils';
 
 @Component({
   selector: 'app-burndown',
@@ -200,7 +201,7 @@ export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
       const map = new Map();
       doneItems.forEach(i => {
         sum -= i.evaluation;
-        map.set(new Date(i.doneOn).toDateString(), sum);
+        map.set(DateUtils.toLocalDate(i.doneOn), sum);
       });
 
       this.chartData.push({date: this.selectedSprint.startingDate,
