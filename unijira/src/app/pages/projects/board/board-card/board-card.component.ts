@@ -15,6 +15,9 @@ export class BoardCardComponent implements OnInit {
   @Input()
   searchedText = '';
 
+  @Input()
+  projectId: number;
+
   itemType = ItemType;
 
 
