@@ -13,6 +13,7 @@ import {ItemType} from '../../../models/item/ItemType';
 import {Item} from '../../../models/item/Item';
 import {unsubscribeAll} from '../../../util';
 import {BoardService} from '../../../services/board/board.service';
+import {PageService} from "../../../services/page.service";
 
 @Component({
   selector: 'app-board',
@@ -61,7 +62,10 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
     private projectService: ProjectService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private boardService: BoardService) {
+    private boardService: BoardService,
+    private pageService: PageService,) {
+
+    this.pageService.setTitle('project.pages.board');
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
