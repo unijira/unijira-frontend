@@ -28,7 +28,7 @@ export class TicketDataTableComponent implements OnInit {
       (this.filterSearch === ''         || ticket.summary?.toLowerCase().includes(this.filterSearch.toLowerCase())) &&
       (this.filterStatus?.length === 0  || this.filterStatus?.includes(ticket.status)) &&
       (this.filterType?.length === 0    || this.filterType?.includes(ticket.type))
-    )) || [];
+    )).sort((a, b) => (Date.parse(a.createdAt) - Date.parse(b.createdAt))) || [];
   }
 
   ngOnInit() {
