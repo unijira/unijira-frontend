@@ -228,7 +228,7 @@
 
 
   <!-- Tickets Children -->
-  <section class="ion-margin" *ngIf="ticket">
+  <section class="ion-margin" *ngIf="ticket && ticket.type !== ticketType.issue">
     <ion-grid>
       <ion-row class="ion-align-items-center">
         <ion-col size-lg="" size="12">
@@ -250,13 +250,13 @@
                   </ion-thumbnail>
                   <ion-text [translate]="ticketType.story | ticketType | translate | titlecase"></ion-text>
                 </ion-item>
-                <ion-item button="true" (click)="create(ticketType.task)">
+                <ion-item button="true" (click)="create(ticketType.task)" *ngIf="ticket.type === ticketType.epic || ticket.type === ticketType.story">
                   <ion-thumbnail slot="start" class="row-icon">
                     <ion-img src="/assets/img/tickets/TASK.svg"></ion-img>
                   </ion-thumbnail>
                   <ion-text [translate]="ticketType.task | ticketType | translate | titlecase"></ion-text>
                 </ion-item>
-                <ion-item button="true" (click)="create(ticketType.issue)">
+                <ion-item button="true" (click)="create(ticketType.issue)" *ngIf="ticket.type === ticketType.epic || ticket.type === ticketType.story || ticket.type === ticketType.task">
                   <ion-thumbnail slot="start" class="row-icon">
                     <ion-img src="/assets/img/tickets/ISSUE.svg"></ion-img>
                   </ion-thumbnail>
