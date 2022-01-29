@@ -98,3 +98,10 @@
   </ejs-dialog> -->
 
 </ion-content>
+<ion-content *ngIf="spinner">
+  <ion-grid>
+    <ion-row class="ion-align-items-center ion-justify-content-center">
+      <ion-spinner name="lines" color="primary"></ion-spinner>
+    </ion-row>
+  </ion-grid>
+</ion-content>
