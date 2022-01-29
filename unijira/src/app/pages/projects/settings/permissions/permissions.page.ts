@@ -234,13 +234,17 @@ export class PermissionsPage implements OnInit {
 
   onChangeUser($event: any) {
 
+    this.permissions.forEach(j => {
+      j.value = false;
+    });
+
     this.memberships.forEach(membership => {
 
       if(membership.userInfo.username === $event.detail.value) {
 
         membership.permissions.forEach(i => {
           this.permissions.forEach(j => {
-            if(i === j.type) {
+            if(j.type === i) {
               j.value = true;
             }
           });
