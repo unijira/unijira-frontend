@@ -87,7 +87,7 @@ NEL MEZZO DEL CAMMIN DI NOSTRA VITA
             <ion-card-title class="ion-justify-content-center">{{'works.with' | translate}}</ion-card-title>
           </ion-card-header>
           <ion-card-content>
-            <ion-chip *ngFor="let collab of collaborators;">
+            <ion-chip *ngFor="let collab of collaborators;" [routerLink]="['/users/'+collab.id]">
               <ion-avatar>
                 <ion-img [src]="collab.avatar || '/assets/img/projects/default-project-icon.svg'" class="ion-no-margin"></ion-img>
               </ion-avatar>
