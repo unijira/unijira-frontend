@@ -9,7 +9,6 @@ import {MembershipStatus} from '../../models/projects/MembershipStatus';
 import {MembershipPermission} from '../../models/projects/MembershipPermission';
 import {Document} from '../../models/projects/Document';
 import {DefinitionOfDoneEntry} from '../../models/projects/DefinitionOfDoneEntry';
-import {DateUtils} from '../../classes/date-utils';
 import {ItemStatusHistory} from '../../models/item/ItemStatusHistory';
 
 @Injectable({

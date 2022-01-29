@@ -158,7 +158,7 @@
 
             <ion-col size="2">
 
-              <ion-row class="ion-align-items-center">
+              <ion-row class="ion-align-items-center ion-nowrap">
 
                 <!-- Load Date -->
                 <ion-col>
@@ -168,14 +168,14 @@
                 </ion-col>
 
                 <!-- Download Document -->
-                <ion-col size="auto">
-                  <ion-button size="default" [href]="d.path?.toString() || ''" fill="clear" color="success">
+                <ion-col size="auto" class="ion-no-padding ion-no-margin">
+                  <ion-button size="default" [href]="d.path?.toString() || ''" target="_blank" fill="clear" color="success">
                     <ion-icon name="download-outline"></ion-icon>
                   </ion-button>
                 </ion-col>
 
                 <!-- Remove Document -->
-                <ion-col size="auto">
+                <ion-col size="auto" class="ion-no-padding ion-no-margin">
                   <ion-button size="default" (click)="remove(d)" fill="clear" color="danger">
                     <ion-icon name="trash-outline" color="danger"></ion-icon>
                   </ion-button>

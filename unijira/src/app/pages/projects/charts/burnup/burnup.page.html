@@ -46,7 +46,8 @@
   </ion-row>
 
 
-  <ejs-chart id="chart-container" #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis" [tooltip]="tooltip" class="ion-margin-start ion-margin-end" [background]="background">
+  <ejs-chart id="chart-container" #chartContainer [primaryXAxis]="primaryXAxis" [primaryYAxis]="primaryYAxis"
+             [tooltip]="tooltip" class="ion-margin-start ion-margin-end" [background]="background" [margin]="margin">
     <e-series-collection>
       <e-series [dataSource]="chartData" type="Line" xName="date" yName="points" [name]="'charts.workingDone' | translate" [marker]="marker"></e-series>
       <e-series [dataSource]="startEndChartData" type="Line" xName="date" yName="points" [name]="'charts.idealVelocity' | translate"></e-series>

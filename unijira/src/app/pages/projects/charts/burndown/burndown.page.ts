@@ -14,6 +14,7 @@ import {MeasureUnit} from '../../../../models/item/MeasureUnit';
 import {isDarkColorTheme, unsubscribeAll} from '../../../../util';
 import {SprintStatus} from '../../../../models/SprintStatus';
 import {ItemType} from '../../../../models/item/ItemType';
+import {DateUtils} from '../../../../classes/date-utils';
 
 @Component({
   selector: 'app-burndown',
@@ -28,6 +29,7 @@ export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
   startEndChartData: any[] = [];
   tooltip: any;
   marker: any;
+  margin: any;
 
   items: Item[] = [];
   sprints: Sprint[] = [];
@@ -43,7 +45,7 @@ export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
 
   measureUnitKey = 'charts.workingHours';
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  @ViewChild('chartContainer') chartConteiner: any;
+  @ViewChild('chartContainer') chartContainer: any;
 
   constructor(private sessionService: SessionService,
               private activatedRoute: ActivatedRoute,
@@ -152,7 +154,7 @@ export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
 
     this.tooltip = {enable: true};
     this.marker = { visible: true, width: 10, height: 10 };
-
+    this.margin = { left: 40, right: 40, top: 40, bottom: 40 };
     this.translationsSubscriptions = [
       this.translateService.get(this.measureUnitKey).subscribe(t => {
         this.primaryYAxis = {
@@ -184,23 +186,30 @@ export class BurndownPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.sprintSelectedFC.updateValueAndValidity();
-    this.chartConteiner.refresh();
+    setTimeout(() => {
+      if(this.chartContainer !== undefined) {
+        this.chartContainer.refresh();
+      }
+    }, 500);
   }
 
   itemsToChartData(doneItems, allItems) {
+    this.chartData = [];
     if (doneItems.length > 0 && this.selectedSprint) {
       doneItems.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
       let sum = allItems.map(item => item.evaluation).reduce((a, b) => a + b);
       const map = new Map();
       doneItems.forEach(i => {
         sum -= i.evaluation;
-        map.set(i.doneOn.toDateString(), sum);
+        map.set(DateUtils.toLocalDate(i.doneOn), sum);
       });
 
       this.chartData.push({date: this.selectedSprint.startingDate,
         points: allItems.map(item => item.evaluation).reduce((a, b) => a + b)});
       map.forEach((v, k, m) => {
-        this.chartData.push({date: new Date(k), points: v});
+        if (! (new Date(this.selectedSprint.startingDate) > new Date(k))) {
+          this.chartData.push({date: new Date(k), points: v});
+        }
       });
 
       this.startEndChartData = [

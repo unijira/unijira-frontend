@@ -13,6 +13,7 @@ import {ItemType} from '../../../models/item/ItemType';
 import {Item} from '../../../models/item/Item';
 import {unsubscribeAll} from '../../../util';
 import {BoardService} from '../../../services/board/board.service';
+import {PageService} from "../../../services/page.service";
 
 @Component({
   selector: 'app-board',
@@ -27,6 +28,8 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
   tags: string[] = [];
   types: string[] = [];
   epics: Item[] = [];
+
+  projectId: number;
 
   stories: Item[] = [];
   storiesToShow: Item[] = [];
@@ -61,9 +64,15 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
     private projectService: ProjectService,
     private userService: UserService,
     private activatedRoute: ActivatedRoute,
-    private boardService: BoardService) {
+    private boardService: BoardService,
+    private pageService: PageService,) {
 
-    this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
+    this.pageService.setTitle('project.pages.board');
+
+    this.activatedRoute.params.subscribe(params => {
+      this.sessionService.loadProject(params.id);
+      this.projectId = params.id;
+    });
 
     this.projectSubscription = this.sessionService.getProject().subscribe((p) => {
 
@@ -122,6 +131,13 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
             this.tags = [...new Set(this.tags)];
             this.tags = this.tags.filter(t => t !== '');
             this.epics = [...new Set(this.epics)];
+
+            if (this.epics.length === 0) {
+              this.epicsCheckedFC.disable();
+            }
+            if (this.tags.length === 0) {
+              this.tagsCheckedFC.disable();
+            }
 
             // fine preprocessing da inserire nella subscription
           } else {
@@ -227,6 +243,8 @@ export class BoardPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.storiesToShow = cloneDeep(this.stories);
+
+
   }
 
 }

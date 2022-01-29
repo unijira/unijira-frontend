@@ -70,7 +70,7 @@
             <ion-col size="8" class="ion-align-self-center">
               <ion-item>
                 <ion-label position="floating">{{'projects.settings.permissions.filter.user.type' | translate}}</ion-label>
-                <ion-select disabled="{{currentUserPermission?.includes(membershipPermission.admin) ? 'false' : 'true'}}"
+                <ion-select [disabled]="!currentUserPermission?.includes(membershipPermission.admin)"
                             interface="popover" #userSelect (ionChange)="onChangeUser($event)">
                   <ion-select-option *ngFor="let membership of memberships || []" value='{{membership?.userInfo?.username}}'>
                     <ion-item>
@@ -85,8 +85,9 @@
             <ion-col size="4" class="ion-align-self-center">
               <ion-item>
                 <ion-label position="floating">{{'projects.settings.permissions.filter.mask.type' | translate}}</ion-label>
-                <ion-select disabled="{{currentUserPermission?.includes(membershipPermission.admin) &&
-                                        this.selectedMembership?.keyUserId !== this.project?.ownerId ? 'false' : 'true'}}"
+                <ion-select [disabled]="!currentUserPermission?.includes(membershipPermission.admin) ||
+                                        this.selectedMembership?.keyUserId === this.project?.ownerId ||
+                                        this.selectedMembership?.keyUserId === this.userInfo.id"
                             interface="popover" #maskSelect (ionChange)="onChangeMask($event)">
                   <ion-select-option *ngFor="let mask of masks" value='{{mask.role}}'>{{ mask.translate | translate }}</ion-select-option>
                 </ion-select>
@@ -122,7 +123,7 @@
 
                 <!-- Status -->
                 <ion-checkbox [disabled]="this.selectedMembership.keyUserId === this.userInfo.id || this.selectedMembership.keyUserId === this.project.ownerId"
-                              [(ngModel)]="permission.value" mode="ios" slot="end"></ion-checkbox>
+                  [(ngModel)]="permission.value" mode="ios" slot="end"></ion-checkbox>
 
               </ion-item>
             </ion-list>
@@ -135,15 +136,23 @@
           <!-- Update Permissions -->
           <ion-col>
             <ion-row *ngIf="selectedMembership !== null" class="ion-justify-content-end">
-              <ion-button [disabled]="userMembership.keyUserId === project.ownerId || this.selectedMembership.keyUserId === this.userInfo.id"
+
+              <!-- Delete All -->
+              <ion-button [disabled]="userMembership.keyUserId === project.ownerId ||
+                                      this.selectedMembership.keyUserId === this.userInfo.id ||
+                                      this.selectedMembership.keyUserId === project.ownerId"
                           id="restore-permissions" color="light" (click)="restorePermissions()">
                 <ion-icon name="trash-outline"></ion-icon>
               </ion-button>
               &nbsp;&nbsp;&nbsp;
-              <ion-button id="update-permissions" [disabled]="!check() || this.selectedMembership.keyUserId === this.userInfo.id" (click)="updatePermissions()">
+
+              <!-- Save -->
+              <ion-button id="update-permissions" [disabled]="!check() ||
+                          this.selectedMembership.keyUserId === this.userInfo.id" (click)="updatePermissions()">
                 <ion-icon slot="start" name="key-outline"></ion-icon>
                 <span [translate]="'project.settings.permissions.update'"></span>
               </ion-button>
+
             </ion-row>
           </ion-col>
 

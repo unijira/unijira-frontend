@@ -8,11 +8,10 @@ import {TranslateService} from '@ngx-translate/core';
 import {UserService} from '../../../../services/user/user.service';
 import {MembershipRoles} from '../../../../models/projects/MembershipRoles';
 import {Project} from '../../../../models/projects/Project';
-import {forkJoin, Subscription, switchMap} from 'rxjs';
+import {forkJoin, Observable, Subscription} from 'rxjs';
 import {Membership} from '../../../../models/projects/Membership';
 import {UserInfo} from '../../../../models/users/UserInfo';
 import {MembershipPermission} from '../../../../models/projects/MembershipPermission';
-import {BasePath} from '../../../../services/file-upload/file-upload.service';
 
 @Component({
   selector: 'app-roles',
@@ -84,7 +83,7 @@ export class RolesPage implements OnInit {
 
               this.memberships = members;
 
-              members.forEach(member => {
+              this.memberships.forEach(member => {
 
                 if (member.keyUserId === this.userInfo.id) {
                   this.userMembership = member;
@@ -142,6 +141,40 @@ export class RolesPage implements OnInit {
   ngOnInit() {
   }
 
+
+  updateChange($event: any, keyUserId: number | undefined) {
+
+    let modify = false;
+
+    this.currentRoles.forEach(item => {
+
+      if(item.keyUserId === keyUserId) {
+        item.role = $event.detail.value;
+      }
+
+    });
+
+
+    this.currentRoles.forEach(i => {
+      this.initialRoles.forEach(j => {
+
+        if(i.keyUserId === j.keyUserId) {
+          if(i.role !== j.role) {
+            this.updates = true;
+            modify = true;
+          }
+        }
+
+      });
+    });
+
+    if(!modify) {
+      this.updates = false;
+    }
+
+
+  }
+
   updateRoles() {
 
     this.showAlert(this.translateService.instant('project.settings.roles.alert.title'),
@@ -152,11 +185,15 @@ export class RolesPage implements OnInit {
 
         if (results) {
 
-          forkJoin([...this.memberships.map(member =>
-            this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions)
-          )]).subscribe(i => {
+          const obs: Observable<Membership>[] = [];
 
-            if (i) {
+          this.memberships.forEach(member => {
+            obs.push(this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions));
+          });
+
+          forkJoin(obs).subscribe(i => {
+
+            if (i.filter(j => j).length > 0) {
 
               this.projectService.getMemberships(this.project.id).subscribe(
                 members => {
@@ -165,21 +202,22 @@ export class RolesPage implements OnInit {
 
                     this.memberships = members;
 
-                    this.memberships.forEach(member => {
+                    this.memberships.forEach(m => {
 
-                        if (member.keyUserId === this.userInfo.id) {
-                          this.userMembership = member;
+                        if (m?.keyUserId === this.userInfo.id) {
+                          this.userMembership = m;
                         }
 
-                        this.usersService.getUser(member?.keyUserId).subscribe(user => {
+                        this.usersService.getUser(m?.keyUserId).subscribe(user => {
 
                           if(user) {
-                            member.userInfo = user;
-                            this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
-                            this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
+                            m.userInfo = user;
                           }
 
                         });
+
+                      this.currentRoles.push({keyUserId: m?.keyUserId, role: m?.role});
+                      this.initialRoles.push({keyUserId: m?.keyUserId, role: m?.role});
 
                       }
                     );
@@ -199,45 +237,8 @@ export class RolesPage implements OnInit {
 
             }
 
-          });
 
-          // this.memberships.forEach(member => {
-          //
-          //   this.projectService.updateMemberships(member.keyProjectId, member.keyUserId, member.role, member.status, member.permissions).subscribe(i => {
-          //
-          //     if (i) {
-          //
-          //       this.projectService.getMemberships(this.project.id).subscribe(
-          //         members => {
-          //
-          //           this.memberships = members;
-          //
-          //           members.forEach(m => {
-          //               this.usersService.getUser(m.keyUserId).subscribe(user => m.userInfo = user);
-          //             }
-          //           );
-          //
-          //           this.currentRoles.push({keyUserId: member.keyUserId, role: member.role});
-          //           this.initialRoles.push({keyUserId: member.keyUserId, role: member.role});
-          //
-          //         }
-          //       );
-          //
-          //       this.updates = false;
-          //
-          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.success'), 'success', 'checkmark-circle-outline').then();
-          //
-          //
-          //
-          //     } else {
-          //
-          //       this.presentToast(this.translateService.instant('project.settings.roles.toast.failed'), 'danger', 'alert-circle-outline').then();
-          //
-          //     }
-          //
-          //   });
-          //
-          // });
+          });
 
         }
 
@@ -286,38 +287,6 @@ export class RolesPage implements OnInit {
       await alert.present();
 
     });
-  }
-
-  updateChange($event: any, keyUserId: number | undefined) {
-
-    let modify = false;
-
-    this.currentRoles.forEach(item => {
-
-      if(item.keyUserId === keyUserId) {
-        item.role = $event.detail.value;
-      }
-
-    });
-
-
-    this.currentRoles.forEach(i => {
-      this.initialRoles.forEach(j => {
-
-        if(i.keyUserId === j.keyUserId) {
-          if(i.role !== j.role) {
-            this.updates = true;
-            modify = true;
-          }
-        }
-
-      });
-    });
-
-    if(!modify) {
-      this.updates = false;
-    }
-
   }
 
 }

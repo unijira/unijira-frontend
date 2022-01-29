@@ -18,7 +18,7 @@ export class InputSelectUserComponent implements OnInit {
   @Input() ngModel: ItemAssignment[];
   @Output() ngModelChange = new EventEmitter<ItemAssignment[]>();
 
-  users: UserInfo[] = [];
+  users: UserInfo[] = null;
   ngxPopperjsTriggers = NgxPopperjsTriggers;
   ngxPopperjsPlacements = NgxPopperjsPlacements;
 
@@ -30,7 +30,7 @@ export class InputSelectUserComponent implements OnInit {
   ngOnInit() {
     this.memberships?.forEach(membership => {
       this.userService.getUser(membership.keyUserId).subscribe(user => {
-        this.users.push(user);
+        this.users = [ ...(this.users || []), user];
       });
     });
   }

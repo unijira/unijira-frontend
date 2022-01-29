@@ -203,9 +203,12 @@ export class CumulativePage implements OnInit, OnDestroy, AfterViewInit {
   }
 
   ngAfterViewInit() {
-    if(this.chartContainer !== undefined) {
-      this.chartContainer.refresh();
-    }
+
+    setTimeout(() => {
+      if(this.chartContainer !== undefined) {
+        this.chartContainer.refresh();
+      }
+    }, 500);
   }
 
   changeDate(begin: boolean, value: string) {
