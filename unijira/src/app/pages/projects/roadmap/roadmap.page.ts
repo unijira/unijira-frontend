@@ -118,7 +118,9 @@ export class RoadmapPage {
   public taskIdGantt = 0;
   public sons: Item[]= [];
   public sonsOfSons: Item[]= [];
+  public items: Item[]=[]
   public disable = true;
+  public spinner= true;
   public returnedItem:  Item = new Item(
     null,
     '',
@@ -631,8 +633,8 @@ export class RoadmapPage {
   };
   export() {
     /**let csv = '';
-     csv += Object.keys(this.tickets[0]).join(';') + '\n';
-     csv += Object.values(this.filteredTickets).map(ticket => Object.values(ticket).join(';')).join('\n');
+     csv += Object.keys(this.items[0]).join(';') + '\n';
+     csv += Object.values(this.filtereditems).map(ticket => Object.values(ticket).join(';')).join('\n');
 
      const blob = new Blob([csv], {type: 'text/csv'});
      const url = window.URL.createObjectURL(blob);
@@ -640,7 +642,7 @@ export class RoadmapPage {
 
      a.setAttribute('hidden', '');
      a.setAttribute('href', url);
-     a.setAttribute('download', 'tickets.csv');
+     a.setAttribute('download', 'items.csv');
      a.click();
      */
   }
@@ -666,9 +668,11 @@ export class RoadmapPage {
   getAllItemsOfRoadmap(){
     this.taskIdGantt = 0;
     this.roadmapService.getItems(this.projectId).pipe(tap(tickets => {
-        for (let i=0 ;i< tickets.length; i++){
-          this.sons= tickets[i].sons;
-          this.roadmap.item= tickets[i];
+      this.items= tickets;
+        for (let i=0 ;i< this.items.length; i++){
+          console.log(this.items[i])
+          this.sons= this.items[i].sons;
+          this.roadmap.item= this.items[i];
           this.roadmapService
             .getBacklog(this.projectId)
             .pipe(
@@ -689,7 +693,7 @@ export class RoadmapPage {
               ),
             ).subscribe();
           if(this.sons.length > 0){
-
+            console.log(this.sons)
             for (let j =0; j<this.sons.length; j++){
               this.sonsOfSons= this.sons[j].sons;
               this.roadmapSon.item= this.sons[j];
@@ -712,8 +716,8 @@ export class RoadmapPage {
                     )
                   )).subscribe();
               if(this.sonsOfSons.length >0){
+                console.log(this.sonsOfSons)
                 for (let k =0; k<this.sonsOfSons.length; k++){
-
                   this.roadmapSonOfSon.item= this.sonsOfSons[k];
                   this.roadmapService
                     .getBacklog(this.projectId)
@@ -759,6 +763,8 @@ export class RoadmapPage {
         )
         .subscribe((items) => {
           this.itemsOfRoadmap = items;
+          console.log("ciao")
+          console.log(this.itemsOfRoadmap)
           this.data=[];
           let recordFather: object = {};
           let recordMidelFather: object = {};
@@ -812,6 +818,7 @@ export class RoadmapPage {
 
                   else if(this.itemsOfRoadmap[i].children[j].children.length>0){
                     contSons=this.itemsOfRoadmap[i].children[j].children.length;
+                    sonssOfSons=[]
                     for (let k=0 ; k< this.itemsOfRoadmap[i].children[j].children.length; k++){
                       this.taskIdGantt=this.taskIdGantt+1;
                       recordSonOfSon={};
@@ -863,6 +870,7 @@ export class RoadmapPage {
                 );
               }
             }
+            this.spinner=false
           }
         }))
     ).subscribe();
