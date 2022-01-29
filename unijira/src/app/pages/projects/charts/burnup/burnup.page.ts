@@ -14,6 +14,7 @@ import {Backlog} from '../../../../models/Backlog';
 import {TranslateService} from '@ngx-translate/core';
 import {ItemType} from '../../../../models/item/ItemType';
 import {SprintStatus} from '../../../../models/SprintStatus';
+import {DateUtils} from '../../../../classes/date-utils';
 
 @Component({
   selector: 'app-burnup',
@@ -32,6 +33,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
   items: Item[] = [];
   sprints: Sprint[] = [];
   selectedSprint: Sprint;
+  margin: any;
 
   project: Project;
   projectSubscription: Subscription;
@@ -43,7 +45,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
   measureUnitKey = 'charts.workingHours';
   // eslint-disable-next-line @typescript-eslint/member-ordering
-  @ViewChild('chartContainer') chartConteiner: any;
+  @ViewChild('chartContainer') chartContainer: any;
 
   constructor(private sessionService: SessionService,
               private activatedRoute: ActivatedRoute,
@@ -69,10 +71,13 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
                       if (i.item && i.item.status === ItemStatus.done) {
                         itemsDone.push(i.item);
                       }
-                      if (i.item && i.item.evaluation)
-                        {allItems.push(i.item);}
+                      if (i.item && i.item.evaluation) {
+                        allItems.push(i.item);
+                      }
                     });
                     this.itemsToChartData(itemsDone, allItems);
+                    console.log(itemsDone);
+                    console.log(allItems);
                     this.sprintSelectedFC.setValue(0);
                     this.selectedSprint = this.sprints[0];
 
@@ -156,6 +161,7 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
     this.tooltip = {enable: true};
     this.marker = { visible: true, width: 10, height: 10 };
+    this.margin = { left: 40, right: 40, top: 40, bottom: 40 };
 
     this.translationsSubscriptions = [
       this.translateService.get(this.measureUnitKey).subscribe(t => {
@@ -176,7 +182,6 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
     ];
 
 
-
   }
 
   ngOnDestroy() {
@@ -188,23 +193,34 @@ export class BurnupPage implements OnInit, OnDestroy, AfterViewInit {
 
   ngAfterViewInit() {
     this.sprintSelectedFC.updateValueAndValidity();
-    this.chartConteiner.refresh();
+    setTimeout(() => {
+      if(this.chartContainer !== undefined) {
+        this.chartContainer.refresh();
+      }
+    }, 500)
   }
 
   itemsToChartData(itemsDone, allItems) {
+    this.chartData = [];
     if (itemsDone.length > 0 && this.selectedSprint) {
+      console.log(itemsDone);
+      console.log(allItems);
       itemsDone.sort((a, b) => (a.doneOn > b.doneOn) ? 1 : ((b.doneOn > a.doneOn) ? -1 : 0));
       let sum = 0;
       const map = new Map();
       itemsDone.forEach(i => {
         sum += i.evaluation;
-        map.set(i.doneOn.toDateString(), sum);
+        map.set(DateUtils.toLocalDate(i.doneOn), sum);
       });
 
       this.chartData.push({date: this.selectedSprint.startingDate, points: 0});
       map.forEach((v, k) => {
-        this.chartData.push({date: new Date(k), points: v});
+        if (! (new Date(this.selectedSprint.startingDate) > new Date(k))) {
+          this.chartData.push({date: k, points: v});
+        }
       });
+
+      console.log(this.chartData);
 
       this.startEndChartData = [
         {date: this.selectedSprint.startingDate, points: 0},

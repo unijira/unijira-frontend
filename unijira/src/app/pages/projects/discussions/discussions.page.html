@@ -119,8 +119,8 @@
               </ion-text>
             </ion-col>
             <ion-col size="1">
-                <ion-avatar class="avatar-center row-icon user-avatar" [title]="topic.userUsername || ''" [routerLink]="['/users', topic.userId]">
-                  <ion-img [src]="topic.userAvatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
+                <ion-avatar class="avatar-center row-icon user-avatar" [title]="topic.user?.username || ''" [routerLink]="['/users', topic.userId]">
+                  <ion-img [src]="topic.user?.avatar || '/assets/img/user/avatar.svg'" alt=""></ion-img>
                 </ion-avatar>
             </ion-col>
             <ion-col size="2" class="ion-text-center">

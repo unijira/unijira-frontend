@@ -13,6 +13,7 @@ import {FormControl} from '@angular/forms';
 import {Message} from '../../../../models/topic/Message';
 import {TopicType} from '../../../../models/topic/TopicType';
 import {TranslateService} from '@ngx-translate/core';
+import {PageService} from '../../../../services/page.service';
 
 @Component({
   selector: 'app-discussion',
@@ -51,12 +52,15 @@ export class DiscussionPage implements OnInit, OnDestroy {
               private toastController: ToastController,
               private router: Router,
               private alertController: AlertController,
-              private translateService: TranslateService) {
+              private translateService: TranslateService,
+              private pageService: PageService) {
 
     this.activatedRoute.params.subscribe(params => {
       this.sessionService.loadProject(params.id);
       this.idDiscussion = params.idTopic;
     });
+
+    this.pageService.setTitle('project.pages.discussions');
 
     this.sessionService.getUserInfo().pipe(first()).subscribe(u => this.user = u);
 

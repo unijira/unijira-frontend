@@ -9,6 +9,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {DiscussionsService} from '../../../services/discussions/discussions.service';
 import {unsubscribeAll} from '../../../util';
+import {UserService} from '../../../services/user/user.service';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-discussions',
@@ -39,8 +41,12 @@ export class DiscussionsPage implements OnInit, OnDestroy {
   constructor(
     private sessionService: SessionService,
     private activatedRoute: ActivatedRoute,
-    private discussionsService: DiscussionsService
+    private discussionsService: DiscussionsService,
+    private userService: UserService,
+    private pageService: PageService,
     ) {
+
+    this.pageService.setTitle('project.pages.discussions');
 
     this.activatedRoute.params.subscribe(params => this.sessionService.loadProject(params.id));
 
@@ -52,6 +58,14 @@ export class DiscussionsPage implements OnInit, OnDestroy {
         this.discussionsService.getDiscussions(this.project.id).subscribe(top => {
 
           this.topics = top;
+          this.filteredTopics = cloneDeep(this.topics);
+          this.topics.forEach((t, i) => {
+            this.userService.getUser(t.userId).subscribe(u => {
+              this.filteredTopics[i].user = u;
+              t.user = u;
+              console.log(t);
+            });
+          });
 
           // Mock objects for testing and demos, to remove
           // this.topics = [
@@ -72,7 +86,6 @@ export class DiscussionsPage implements OnInit, OnDestroy {
           // });
           // end mock object
 
-          this.filteredTopics = cloneDeep(this.topics);
 
           this.topics.forEach((t, i) => {
             this.discussionsService.getNumMessages(this.project.id, t.id).subscribe(num => {
