@@ -91,7 +91,6 @@ export class DocumentsPage implements OnInit {
                 this.userService.getUser(doc.userId).subscribe(user => {
 
                   doc.userAvatar = user.avatar;
-                  console.log(doc.userAvatar);
 
                 });
 
