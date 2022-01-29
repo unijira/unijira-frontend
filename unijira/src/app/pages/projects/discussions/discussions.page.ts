@@ -9,8 +9,8 @@ import {FormControl, FormGroup} from '@angular/forms';
 import {cloneDeep} from 'lodash';
 import {DiscussionsService} from '../../../services/discussions/discussions.service';
 import {unsubscribeAll} from '../../../util';
-import {UserService} from "../../../services/user/user.service";
-import {PageService} from "../../../services/page.service";
+import {UserService} from '../../../services/user/user.service';
+import {PageService} from '../../../services/page.service';
 
 @Component({
   selector: 'app-discussions',
